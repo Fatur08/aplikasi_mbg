@@ -1,0 +1,31 @@
+Tabel Data Supplier
+1. Nama			Varchar
+2. Total Harga		Int
+3. Nota			File
+4. Bukti Terima		File
+
+
+
+Tabel Informasi Supplier
+Nama
+Nomor Telpon
+Alamat
+
+
+
+Tabel Data Koperasi
+Modal Masuk		INT
+Modal Keluar		INT
+Margin 			INT
+Tanggal			Date
+Laporan Keuangan 	Cetak
+
+
+Tabel Laporan Stok
+Nama			Varchar
+Kecamatan		Varchar
+Tanggal			Date
+Jumlah Masuk		Int
+Jumlah Keluar		Int
+Total			Int
+
