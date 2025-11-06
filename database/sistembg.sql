@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2025 at 09:59 AM
+-- Generation Time: Nov 06, 2025 at 06:06 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -104,6 +104,33 @@ INSERT INTO `bahan_menu` (`id_bahan_menu`, `id_menu_harian`, `id_jadwal_menu_har
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `barang_modal_keluar`
+--
+
+CREATE TABLE `barang_modal_keluar` (
+  `id_barang_modal_keluar` int(255) NOT NULL,
+  `id_data_koperasi` int(255) DEFAULT NULL,
+  `nomor_dapur_barang_modal_keluar` int(255) DEFAULT NULL,
+  `nama_barang_modal_keluar` varchar(255) DEFAULT NULL,
+  `jumlah_barang_modal_keluar` int(255) DEFAULT NULL,
+  `satuan_barang_modal_keluar` varchar(255) DEFAULT NULL,
+  `harga_barang_modal_keluar` int(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `barang_modal_keluar`
+--
+
+INSERT INTO `barang_modal_keluar` (`id_barang_modal_keluar`, `id_data_koperasi`, `nomor_dapur_barang_modal_keluar`, `nama_barang_modal_keluar`, `jumlah_barang_modal_keluar`, `satuan_barang_modal_keluar`, `harga_barang_modal_keluar`) VALUES
+(1, 24, 1, 'Kompor Gas', 5, 'pcs', 250000),
+(2, 38, 1, 'Beras', 10, 'kg', 250000),
+(3, 38, 1, 'Ulekan', 10, 'pcs', 300000),
+(4, 38, 1, 'Kuali', 10, 'pcs', 200000),
+(5, 38, 1, 'Kangkung', 15, 'iket', 150000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `barang_supplier`
 --
 
@@ -122,11 +149,11 @@ CREATE TABLE `barang_supplier` (
 --
 
 INSERT INTO `barang_supplier` (`id_barang_supplier`, `id_informasi_supplier`, `nomor_dapur_barang_supplier`, `nama_barang_supplier`, `jumlah_barang_supplier`, `satuan_barang_supplier`, `harga_barang_supplier`) VALUES
-(19, 1, 1, 'Minyak Goreng', 10, 'Liter', 500000),
-(20, 1, 1, 'Telur', 20, 'kg', 500000),
-(21, 1, 1, 'Kompor Gas 12 Kg', 10, 'tabung', 1200000),
-(22, 1, 1, 'Bawang', 50, 'kg', 800000),
-(26, 1, 1, 'Bawang', 10, 'kg', 500000);
+(34, 1, 1, 'Kuali', 10, 'pcs', 25000),
+(38, 1, 1, 'Beras', 10, 'kg', 500000),
+(51, 1, 1, 'Kompor Gas', 10, 'pcs', 500000),
+(52, 1, 1, 'Bawang', 15, 'kg', 400000),
+(53, 1, 1, 'Paprika', 20, 'kg', 500000);
 
 -- --------------------------------------------------------
 
@@ -167,8 +194,6 @@ CREATE TABLE `data_koperasi` (
   `jenis_data_koperasi` varchar(255) DEFAULT NULL,
   `kategori_data_koperasi` varchar(255) DEFAULT NULL,
   `harga_data_koperasi` int(255) DEFAULT NULL,
-  `modal_masuk` int(255) DEFAULT NULL,
-  `modal_keluar` int(255) DEFAULT NULL,
   `status_data_koperasi` int(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -176,11 +201,40 @@ CREATE TABLE `data_koperasi` (
 -- Dumping data for table `data_koperasi`
 --
 
-INSERT INTO `data_koperasi` (`id_data_koperasi`, `id_informasi_supplier`, `nomor_dapur_data_koperasi`, `tanggal_data_koperasi`, `jenis_data_koperasi`, `kategori_data_koperasi`, `harga_data_koperasi`, `modal_masuk`, `modal_keluar`, `status_data_koperasi`) VALUES
-(17, 1, 1, '2025-10-24', 'Pengeluaran', 'Pembelian bahan dari supplier', 3500000, NULL, NULL, 0),
-(18, 1, 1, '2025-10-24', 'Pemasukan', 'Anggaran Pemerintah', 4000000, NULL, NULL, 1),
-(21, NULL, 1, '2025-10-24', 'Pemasukan', 'Donasi Panti', 1000000, NULL, NULL, 0),
-(22, NULL, 1, '2025-10-24', 'Pengeluaran', 'Belanja Alat', 0, NULL, NULL, 0);
+INSERT INTO `data_koperasi` (`id_data_koperasi`, `id_informasi_supplier`, `nomor_dapur_data_koperasi`, `tanggal_data_koperasi`, `jenis_data_koperasi`, `kategori_data_koperasi`, `harga_data_koperasi`, `status_data_koperasi`) VALUES
+(17, 1, 1, '2025-10-24', 'modal_keluar', 'Pembelian bahan dari supplier', NULL, 0),
+(18, 1, 1, '2025-10-24', 'modal_masuk', 'Pemerintah Anggaran', 6000000, 0),
+(24, NULL, 1, '2025-10-25', 'modal_keluar', 'Belanja Alat', 1000000, 1),
+(25, NULL, 1, '2025-10-25', 'modal_masuk', 'Donasi Panti', 2000000, 1),
+(37, NULL, 1, '2025-11-03', 'modal_masuk', 'Donasi Panti', 2000000, 0),
+(38, NULL, 1, '2025-11-03', 'modal_keluar', 'Belanja Alat', 0, 0),
+(39, NULL, 1, '2025-11-03', 'modal_masuk', 'Anggaran Pemerintah', 1000000, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `data_pekerja`
+--
+
+CREATE TABLE `data_pekerja` (
+  `id_data_pekerja` int(255) NOT NULL,
+  `nomor_dapur_data_pekerja` int(255) DEFAULT NULL,
+  `nama_data_pekerja` varchar(255) DEFAULT NULL,
+  `peran_data_pekerja` varchar(255) DEFAULT NULL,
+  `no_hp_data_pekerja` varchar(255) DEFAULT NULL,
+  `foto_data_pekerja` varchar(255) DEFAULT NULL,
+  `ktp_data_pekerja` varchar(255) DEFAULT NULL,
+  `status_validasi_data_pekerja` int(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `data_pekerja`
+--
+
+INSERT INTO `data_pekerja` (`id_data_pekerja`, `nomor_dapur_data_pekerja`, `nama_data_pekerja`, `peran_data_pekerja`, `no_hp_data_pekerja`, `foto_data_pekerja`, `ktp_data_pekerja`, `status_validasi_data_pekerja`) VALUES
+(13, 2, 'Rahma Tia', 'Petugas Pembersih', '081234567890', 'Foto_Rahma Tia.png', 'KTP_Rahma Tia.png', 1),
+(14, 1, 'Aldian Alfi Putra', 'Juru Masak', '081234567890', 'Foto_Aldian Alfi Putra.png', 'KTP_Aldian Alfi Putra.png', 2),
+(16, 2, 'Gilang Azka', 'Penata Makanan', '081234567890', 'Foto_Gilang Azka.png', 'KTP_Gilang Azka.png', 0);
 
 -- --------------------------------------------------------
 
@@ -208,9 +262,9 @@ CREATE TABLE `distribusi` (
 --
 
 INSERT INTO `distribusi` (`id_distribusi`, `nomor_dapur_distribusi`, `nama_distributor`, `kecamatan_sekolah`, `tanggal_distribusi`, `tujuan_distribusi`, `jumlah_paket`, `menu_makanan`, `bukti_pengiriman`, `kendala_distribusi`, `lokasi_distribusi`, `status_distribusi`) VALUES
-(13, 1, 'distributor test', 'Raman Utara', '2025-10-19', 'SMAN 1 Kalianda', 100, 'Tumis Kangkung', 'Bukti Terima_distributor test_2025-10-18_11-33-47.png', NULL, '-5.736859,105.59143800000001', 1),
-(14, 1, 'distributor test', 'Raman Utara', '2025-10-19', 'SMAN 3 Kalianda', 100, 'Tumis Kangkung', 'Bukti Terima_distributor test_2025-10-18_11-35-22.png', NULL, '-5.736859,105.59143800000001', 1),
-(15, 1, 'distributor test', 'Raman Utara', '2025-10-25', 'SMAN 2 Kalianda', 200, 'Tumis Kangkung', 'Bukti Terima_distributor test_2025-10-25_12-41-11.png', NULL, '-5.7367975,105.591852', 1),
+(13, 1, 'distributor test', 'Raman Utara', '2025-10-30', 'SMAN 1 Kalianda', 100, 'Tumis Kangkung', 'Bukti Terima_distributor test_2025-10-18_11-33-47.png', NULL, '-5.736859,105.59143800000001', 1),
+(14, 1, 'distributor test', 'Raman Utara', '2025-10-30', 'SMAN 3 Kalianda', 100, 'Tumis Kangkung', 'Bukti Terima_distributor test_2025-10-18_11-35-22.png', NULL, '-5.736859,105.59143800000001', 1),
+(15, 1, 'distributor test', 'Raman Utara', '2025-10-30', 'SMAN 2 Kalianda', 200, 'Tumis Kangkung', 'Bukti Terima_distributor test_2025-10-25_12-41-11.png', NULL, '-5.7367975,105.591852', 0),
 (16, 1, 'distributor test', 'Raman Utara', '2025-10-25', 'SMAN 2 Kalianda', 200, 'Tumis Kangkung', NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
@@ -248,6 +302,7 @@ INSERT INTO `distributor` (`id_distributor`, `nama_distributor`, `email_distribu
 CREATE TABLE `informasi_supplier` (
   `id_informasi_supplier` int(255) DEFAULT NULL,
   `nama_informasi_supplier` varchar(255) DEFAULT NULL,
+  `nomor_dapur_informasi_supplier` int(255) DEFAULT NULL,
   `nota_informasi_supplier` varchar(255) DEFAULT NULL,
   `bukti_terima_informasi_supplier` varchar(255) DEFAULT NULL,
   `status_informasi_supplier` int(50) DEFAULT NULL
@@ -257,10 +312,10 @@ CREATE TABLE `informasi_supplier` (
 -- Dumping data for table `informasi_supplier`
 --
 
-INSERT INTO `informasi_supplier` (`id_informasi_supplier`, `nama_informasi_supplier`, `nota_informasi_supplier`, `bukti_terima_informasi_supplier`, `status_informasi_supplier`) VALUES
-(1, 'Dila Cantika Putri', 'Nota_Dila Cantika Putri.png', 'Bukti Terima_Dila Cantika Putri.png', 0),
-(4, 'Gibran Rakabuming', 'Nota_Gibran Rakabuming.jpeg', 'Bukti Terima_Gibran Rakabuming.png', 1),
-(9, 'Ari Apendi', 'Nota_Ari Apendi.png', 'Bukti Terima_Ari Apendi.jpg', 0);
+INSERT INTO `informasi_supplier` (`id_informasi_supplier`, `nama_informasi_supplier`, `nomor_dapur_informasi_supplier`, `nota_informasi_supplier`, `bukti_terima_informasi_supplier`, `status_informasi_supplier`) VALUES
+(1, 'Dila Cantika Putri', 1, 'Nota_Dila Cantika Putri.png', 'Bukti Terima_Dila Cantika Putri.png', 0),
+(4, 'Gibran Rakabuming', 1, 'Nota_Gibran Rakabuming.jpeg', 'Bukti Terima_Gibran Rakabuming.png', 0),
+(9, 'Ari Apendi', 2, 'Nota_Ari Apendi.png', 'Bukti Terima_Ari Apendi.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -322,6 +377,7 @@ INSERT INTO `kepala_dapur` (`id`, `nama_lengkap`, `email`, `alamat`, `no_hp`, `f
 CREATE TABLE `keuangan` (
   `id_laporan_keuangan` int(255) NOT NULL,
   `id_data_koperasi` int(255) DEFAULT NULL,
+  `id_informasi_supplier` int(255) DEFAULT NULL,
   `nomor_dapur_keuangan` int(255) DEFAULT NULL,
   `tanggal_laporan_keuangan` date DEFAULT NULL,
   `jenis_transaksi` varchar(255) DEFAULT NULL,
@@ -334,19 +390,13 @@ CREATE TABLE `keuangan` (
 -- Dumping data for table `keuangan`
 --
 
-INSERT INTO `keuangan` (`id_laporan_keuangan`, `id_data_koperasi`, `nomor_dapur_keuangan`, `tanggal_laporan_keuangan`, `jenis_transaksi`, `kategori_laporan_keuangan`, `keterangan_laporan_keuangan`, `jumlah_dana`) VALUES
-(1, NULL, 1, '2025-10-21', 'Pemasukan', 'Anggaran Pemerintah', '-', 1000000),
-(2, NULL, 1, '2025-10-21', 'Pengeluaran', 'Belanja Bahan Dapur', '-', 500000),
-(3, NULL, 1, '2025-10-22', 'Pemasukan', 'Anggaran Pemerintah', '-', 1500000),
-(4, NULL, 1, '2025-10-22', 'Pengeluaran', 'Belanja Bahan Dapur', '-', 700000),
-(5, NULL, 1, '2025-10-23', 'Pemasukan', 'Anggaran Pemerintah', '-', 800000),
-(6, NULL, 1, '2025-10-23', 'Pengeluaran', 'Belanja Bahan Dapur', '-', 400000),
-(26, NULL, 1, '2025-09-21', 'Pemasukan', 'Anggaran Pemerintah', '-', 1000000),
-(27, NULL, 1, '2025-09-21', 'Pengeluaran', 'Belanja Bahan Dapur', '-', 500000),
-(28, NULL, 1, '2025-09-22', 'Pemasukan', 'Anggaran Pemerintah', '-', 1500000),
-(29, NULL, 1, '2025-09-22', 'Pengeluaran', 'Belanja Bahan Dapur', '-', 700000),
-(30, NULL, 1, '2025-09-23', 'Pemasukan', 'Anggaran Pemerintah', '-', 800000),
-(31, NULL, 1, '2025-09-23', 'Pengeluaran', 'Belanja Bahan Dapur', '-', 400000);
+INSERT INTO `keuangan` (`id_laporan_keuangan`, `id_data_koperasi`, `id_informasi_supplier`, `nomor_dapur_keuangan`, `tanggal_laporan_keuangan`, `jenis_transaksi`, `kategori_laporan_keuangan`, `keterangan_laporan_keuangan`, `jumlah_dana`) VALUES
+(3, NULL, 1, 1, '2025-10-22', 'Pemasukan', 'Anggaran Pemerintah', '-', 1500000),
+(4, NULL, 1, 1, '2025-10-22', 'Pengeluaran', 'Belanja Bahan Dapur', '-', 700000),
+(5, 18, NULL, 1, '2025-10-23', 'Pemasukan', 'Anggaran Pemerintah', '-', 800000),
+(6, 17, NULL, 1, '2025-10-23', 'Pengeluaran', 'Belanja Bahan Dapur', '-', 400000),
+(38, 24, NULL, 1, '2025-10-25', 'Pengeluaran', NULL, NULL, NULL),
+(39, 25, NULL, 1, '2025-10-25', 'Pemasukan', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -476,7 +526,7 @@ CREATE TABLE `stok_keluar` (
 
 INSERT INTO `stok_keluar` (`id_stok_keluar`, `id_stok_masuk`, `id_bahan`, `nomor_dapur_stok_keluar`, `tanggal_keluar`, `jumlah_keluar`, `tujuan_stok_keluar`, `keterangan_stok_keluar`) VALUES
 (16, 16, 1, 1, '2025-10-04', 9000, 'Dimasak', '-'),
-(22, 17, 2, 1, '2025-10-08', 10000, 'Dimasak', '-'),
+(22, 17, 2, 1, '2025-10-05', 10000, 'Dimasak', '-'),
 (23, 16, 1, 1, '2025-10-05', 6000, 'Dimasak', '-');
 
 -- --------------------------------------------------------
@@ -552,6 +602,12 @@ ALTER TABLE `bahan_menu`
   ADD PRIMARY KEY (`id_bahan_menu`);
 
 --
+-- Indexes for table `barang_modal_keluar`
+--
+ALTER TABLE `barang_modal_keluar`
+  ADD PRIMARY KEY (`id_barang_modal_keluar`);
+
+--
 -- Indexes for table `barang_supplier`
 --
 ALTER TABLE `barang_supplier`
@@ -568,6 +624,12 @@ ALTER TABLE `dapur`
 --
 ALTER TABLE `data_koperasi`
   ADD PRIMARY KEY (`id_data_koperasi`);
+
+--
+-- Indexes for table `data_pekerja`
+--
+ALTER TABLE `data_pekerja`
+  ADD PRIMARY KEY (`id_data_pekerja`);
 
 --
 -- Indexes for table `distribusi`
@@ -671,22 +733,34 @@ ALTER TABLE `bahan_menu`
   MODIFY `id_bahan_menu` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT for table `barang_modal_keluar`
+--
+ALTER TABLE `barang_modal_keluar`
+  MODIFY `id_barang_modal_keluar` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `barang_supplier`
 --
 ALTER TABLE `barang_supplier`
-  MODIFY `id_barang_supplier` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_barang_supplier` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `dapur`
 --
 ALTER TABLE `dapur`
-  MODIFY `id_dapur` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_dapur` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `data_koperasi`
 --
 ALTER TABLE `data_koperasi`
-  MODIFY `id_data_koperasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_data_koperasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT for table `data_pekerja`
+--
+ALTER TABLE `data_pekerja`
+  MODIFY `id_data_pekerja` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `distribusi`
@@ -716,7 +790,7 @@ ALTER TABLE `kepala_dapur`
 -- AUTO_INCREMENT for table `keuangan`
 --
 ALTER TABLE `keuangan`
-  MODIFY `id_laporan_keuangan` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_laporan_keuangan` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `menu_harian`
