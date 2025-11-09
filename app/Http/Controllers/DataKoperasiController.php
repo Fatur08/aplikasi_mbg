@@ -753,6 +753,14 @@ class DataKoperasiController extends Controller
                     'jenis_transaksi'            => 'Pemasukan',
                     'jumlah_dana'                => $harga_data_koperasi,
                 ]);
+            } elseif ($jenis_data_koperasi === 'modal_keluar') {
+                DB::table('keuangan')->insert([
+                    'id_data_koperasi'           => $id_data_koperasi,
+                    'nomor_dapur_keuangan'       => $nomor_dapur_admin,
+                    'tanggal_laporan_keuangan'   => $tanggal_data_koperasi,
+                    'kategori_laporan_keuangan'  => $kategori_data_koperasi,
+                    'jenis_transaksi'            => 'Pengeluaran',
+                ]);
             }
 
             // 3️⃣ Commit transaksi jika semua berhasil
