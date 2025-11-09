@@ -70,7 +70,7 @@
 
 <div class="login-container">
     <div class="login-title">
-        Sistem Program Makanan Bergizi<br>Kabupaten Lampung Timur
+        Sistem Program MBG<br>Kabupaten Lampung Selatan
     </div>
 
     <img src="{{ asset('assets/img/logo_SPPG_lampung_timur(200x200).png') }}" 
