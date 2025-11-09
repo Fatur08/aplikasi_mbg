@@ -723,27 +723,48 @@ class DataKoperasiController extends Controller
         // Ambil data admin yang sedang login
         $admin = Auth::guard('admin')->user();
         $nomor_dapur_admin = $admin->nomor_dapur_admin;
-        
+
         $jenis_data_koperasi    = $request->jenis_data_koperasi;
         $kategori_data_koperasi = $request->kategori_data_koperasi;
         $tanggal_data_koperasi  = $request->tanggal_data_koperasi;
         $harga_data_koperasi    = $request->harga_data_koperasi;
 
-        $data = [
-            'nomor_dapur_data_koperasi'   => $nomor_dapur_admin,
-            'jenis_data_koperasi'         => $jenis_data_koperasi,
-            'kategori_data_koperasi'      => $kategori_data_koperasi,
-            'tanggal_data_koperasi'       => $tanggal_data_koperasi,
-            'harga_data_koperasi'         => $harga_data_koperasi,
-            'status_data_koperasi'        => 0, // default: menunggu validasi
-        ];
+        // Mulai transaksi database agar aman jika salah satu gagal
+        DB::beginTransaction();
 
-        $simpan = DB::table('data_koperasi')->insert($data);
+        try {
+            // 1️⃣ Simpan data ke tabel data_koperasi
+            $id_data_koperasi = DB::table('data_koperasi')->insertGetId([
+                'nomor_dapur_data_koperasi' => $nomor_dapur_admin,
+                'jenis_data_koperasi'       => $jenis_data_koperasi,
+                'kategori_data_koperasi'    => $kategori_data_koperasi,
+                'tanggal_data_koperasi'     => $tanggal_data_koperasi,
+                'harga_data_koperasi'       => $harga_data_koperasi,
+                'status_data_koperasi'      => 0, // default: menunggu validasi
+            ]);
 
-        if ($simpan) {
+            // 2️⃣ Jika jenis_data_koperasi adalah "modal_masuk", tambahkan juga ke tabel keuangan
+            if ($jenis_data_koperasi === 'modal_masuk') {
+                DB::table('keuangan')->insert([
+                    'id_data_koperasi'           => $id_data_koperasi,
+                    'nomor_dapur_keuangan'       => $nomor_dapur_admin,
+                    'tanggal_laporan_keuangan'   => $tanggal_data_koperasi,
+                    'kategori_laporan_keuangan'  => $kategori_data_koperasi,
+                    'jenis_transaksi'            => 'Pemasukan',
+                    'jumlah_dana'                => $harga_data_koperasi,
+                ]);
+            }
+
+            // 3️⃣ Commit transaksi jika semua berhasil
+            DB::commit();
+
             return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
-        } else {
-            return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
+
+        } catch (\Exception $e) {
+            // Jika ada error, rollback agar data tidak setengah masuk
+            DB::rollBack();
+
+            return Redirect::back()->with(['warning' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
 
