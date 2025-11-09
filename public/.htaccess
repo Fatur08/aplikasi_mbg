@@ -20,8 +20,11 @@
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
-    # Send Requests To Front Controller...
+    # === Arahkan semua asset ke folder public ===
+    RewriteRule ^(assets|tabler|images|uploads|storage)/(.*)$ public/$1/$2 [L]
+
+    # === Kirim semua request ke index.php dalam folder public ===
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ public/$1 [L]
+    RewriteRule ^(.*)$ index.php [L]
 </IfModule>
