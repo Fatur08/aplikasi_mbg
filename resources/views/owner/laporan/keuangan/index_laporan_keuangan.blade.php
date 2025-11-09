@@ -160,16 +160,29 @@
                                         <tbody>
                                             @forelse ($grouped as $tanggal => $data_per_tanggal)
                                                 @php
+                                                    // Pisahkan data berdasarkan jenis transaksi
                                                     $pemasukan = $data_per_tanggal->where('jenis_transaksi', 'Pemasukan');
                                                     $pengeluaran = $data_per_tanggal->where('jenis_transaksi', 'Pengeluaran');
-                                                    $total_pemasukan = $pemasukan->sum('jumlah_dana');
-                                                    $total_pengeluaran = $pengeluaran->sum('jumlah_dana');
+                                                                                    
+                                                    // Hitung total pemasukan dari sumber berbeda
+                                                    $total_pemasukan_koperasi = $pemasukan->whereNotNull('id_data_koperasi')->sum('jumlah_dana_koperasi');
+                                                    $total_pemasukan_supplier = $pemasukan->whereNotNull('id_informasi_supplier')->sum('jumlah_dana_supplier');
+                                                    $total_pemasukan = $total_pemasukan_koperasi + $total_pemasukan_supplier;
+                                                                                    
+                                                    // Hitung total pengeluaran dari sumber berbeda
+                                                    $total_pengeluaran_koperasi = $pengeluaran->whereNotNull('id_data_koperasi')->sum('jumlah_dana_koperasi');
+                                                    $total_pengeluaran_supplier = $pengeluaran->whereNotNull('id_informasi_supplier')->sum('jumlah_dana_supplier');
+                                                    $total_pengeluaran = $total_pengeluaran_koperasi + $total_pengeluaran_supplier;
+                                                                                    
+                                                    // Selisih total
                                                     $selisih = $total_pemasukan - $total_pengeluaran;
-                                    
-                                                    // ambil id pertama (misalnya untuk tombol edit/hapus)
-                                                    $id_laporan = optional($data_per_tanggal->first())->id_laporan_keuangan;
-
-                                                    // cek apakah ada data koperasi atau supplier
+                                                                                    
+                                                    // Ambil data pertama untuk id & status validasi
+                                                    $laporan = $data_per_tanggal->first();
+                                                    $id_laporan = optional($laporan)->id_laporan_keuangan;
+                                                    $status_validasi = optional($laporan)->status_validasi;
+                                                                                    
+                                                    // Cek apakah ada sumber koperasi atau supplier
                                                     $ada_koperasi = $data_per_tanggal->contains('id_data_koperasi', '!=', null);
                                                     $ada_supplier = $data_per_tanggal->contains('id_informasi_supplier', '!=', null);
                                                 @endphp
