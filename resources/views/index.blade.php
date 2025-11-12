@@ -70,7 +70,7 @@
 
 <div class="login-container">
     <div class="login-title">
-        Sistem Program MBG<br>Kabupaten Lampung Timur
+        Sistem Program MBGGGGGG<br>Kabupaten Lampung Timur
     </div>
 
     <img src="{{ asset('assets/img/logo_SPPG_lampung_timur(200x200).png') }}" 
