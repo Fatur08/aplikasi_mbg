@@ -130,13 +130,46 @@ class LaporanKeuanganController extends Controller
          */
         $data = DB::table('keuangan')
             ->join('data_koperasi', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
+                
+            ->leftJoin('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
+            ->leftJoin('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
+                
             ->select(
                 'keuangan.tanggal_laporan_keuangan',
-                DB::raw('SUM(CASE WHEN data_koperasi.jenis_data_koperasi = "modal_masuk" THEN data_koperasi.harga_data_koperasi ELSE 0 END) AS total_pemasukan'),
-                DB::raw('SUM(CASE WHEN data_koperasi.jenis_data_koperasi = "modal_keluar" THEN data_koperasi.harga_data_koperasi ELSE 0 END) AS total_pengeluaran'),
-                DB::raw('(SUM(CASE WHEN data_koperasi.jenis_data_koperasi = "modal_masuk" THEN data_koperasi.harga_data_koperasi ELSE 0 END) -
-                          SUM(CASE WHEN data_koperasi.jenis_data_koperasi = "modal_keluar" THEN data_koperasi.harga_data_koperasi ELSE 0 END)) AS margin')
+            
+                // ✅ TOTAL PEMASUKAN (TETAP)
+                DB::raw('SUM(
+                    CASE 
+                        WHEN data_koperasi.jenis_data_koperasi = "modal_masuk" 
+                        THEN data_koperasi.harga_data_koperasi 
+                        ELSE 0 
+                    END
+                ) AS total_pemasukan'),
+            
+                // ✅ TOTAL PENGELUARAN (SUPPLIER + MODAL KELUAR)
+                DB::raw('
+                    SUM(COALESCE(barang_supplier.harga_barang_supplier, 0)) +
+                    SUM(COALESCE(barang_modal_keluar.harga_barang_modal_keluar, 0))
+                    AS total_pengeluaran
+                '),
+            
+                // ✅ MARGIN
+                DB::raw('
+                    SUM(
+                        CASE 
+                            WHEN data_koperasi.jenis_data_koperasi = "modal_masuk"
+                            THEN data_koperasi.harga_data_koperasi
+                            ELSE 0
+                        END
+                    ) -
+                    (
+                        SUM(COALESCE(barang_supplier.harga_barang_supplier, 0)) +
+                        SUM(COALESCE(barang_modal_keluar.harga_barang_modal_keluar, 0))
+                    )
+                    AS margin
+                ')
             )
+            
             ->when($dari_tanggal, function ($query) use ($dari_tanggal) {
                 $query->whereDate('keuangan.tanggal_laporan_keuangan', '>=', $dari_tanggal);
             })
@@ -147,6 +180,7 @@ class LaporanKeuanganController extends Controller
                 $query->whereMonth('keuangan.tanggal_laporan_keuangan', $bulanSekarang)
                       ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
             })
+        
             ->groupBy('keuangan.tanggal_laporan_keuangan')
             ->orderBy('keuangan.tanggal_laporan_keuangan', 'asc')
             ->get()
@@ -155,14 +189,6 @@ class LaporanKeuanganController extends Controller
                     ->translatedFormat('d F Y');
                 return $item;
             });
-    
-
-        dd(
-            $total_pemasukan,
-            $total_pengeluaran_supplier,
-            $total_pengeluaran_modal_keluar,
-            $total_pengeluaran
-        );
         
         return view('owner.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
