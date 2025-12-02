@@ -22,7 +22,9 @@ class LaporanKeuanganController extends Controller
         $tahunSekarang = Carbon::now()->year;
     
         // 🔹 Query utama laporan keuangan
-        $query = DB::table('keuangan')->select('*');
+        $query = DB::table('keuangan')
+            ->leftJoin('data_koperasi', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
+            ->select('keuangan.*', 'data_koperasi.*');
     
         // Filter tanggal
         if (empty($dari_tanggal) && empty($sampai_tanggal)) {
@@ -61,6 +63,9 @@ class LaporanKeuanganController extends Controller
     
         // 🔹 Ambil daftar laporan (pagination tetap sama)
         $laporan_keuangan = $query->orderBy('tanggal_laporan_keuangan', 'desc')->paginate(300);
+
+        $grouped = $laporan_keuangan->getCollection()
+            ->groupBy('tanggal_laporan_keuangan');
     
         /**
          * 🔹 Perhitungan total pemasukan & pengeluaran
@@ -128,6 +133,7 @@ class LaporanKeuanganController extends Controller
         
         return view('owner.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
+            'grouped',
             'total_pemasukan',
             'total_pengeluaran',
             'sisa_dana',
