@@ -158,7 +158,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($grouped as $data => $data_per_tanggal)
+                                            @forelse ($grouped as $tanggal => $data_per_tanggal)
                                                 @php
                                                     // Pisahkan data berdasarkan jenis transaksi
                                                     $pemasukan = $data_per_tanggal->where('jenis_transaksi', 'Pemasukan');
@@ -189,7 +189,7 @@
                                     
                                                 <tr style="text-align: center; vertical-align: middle;">
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $data }}</td>
+                                                    <td>{{ $tanggal }}</td>
                                                     {{-- kolom koperasi --}}
                                                     <td>
                                                         @if($ada_koperasi)
