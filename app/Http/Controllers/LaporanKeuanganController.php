@@ -155,6 +155,9 @@ class LaporanKeuanganController extends Controller
             
             ->whereMonth('keuangan.tanggal_laporan_keuangan', $pilih_bulan)
             ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang)
+            ->when($pilih_dapur, function ($query) use ($pilih_dapur) {
+                $query->where('keuangan.nomor_dapur_keuangan', $pilih_dapur);
+            })
         
             ->groupBy('keuangan.tanggal_laporan_keuangan')
             ->orderBy('keuangan.tanggal_laporan_keuangan', 'asc')
