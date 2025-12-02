@@ -14,20 +14,15 @@ class LaporanKeuanganController extends Controller
     // BAGIAN OWNER
     public function index_owner_laporan_keuangan(Request $request)
     {
-        $dari_tanggal     = $request->dari_tanggal;
-        $sampai_tanggal   = $request->sampai_tanggal;
-        $jenis_transaksi  = $request->cari_jenis_transaksi;
-    
-        $bulanSekarang = Carbon::now()->month;
+        $pilih_bulan   = $request->pilih_bulan;
+        $pilih_dapur   = $request->pilih_dapur;
         $tahunSekarang = Carbon::now()->year;
     
         // 🔹 Query utama laporan keuangan
         $query = DB::table('keuangan')
             ->leftJoin('data_koperasi', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
-            
             ->leftJoin('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
             ->leftJoin('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
-            
             ->select(
                 'keuangan.*',
                 'data_koperasi.*',
@@ -35,39 +30,18 @@ class LaporanKeuanganController extends Controller
                 'barang_modal_keluar.harga_barang_modal_keluar'
             );
     
-        // Filter tanggal
-        if (empty($dari_tanggal) && empty($sampai_tanggal)) {
-            $query->whereMonth('tanggal_laporan_keuangan', $bulanSekarang)
-                  ->whereYear('tanggal_laporan_keuangan', $tahunSekarang);
+        // Filter bulan
+        if (!empty($pilih_bulan)) {
+            $query->whereMonth('keuangan.tanggal_laporan_keuangan', $pilih_bulan)
+                  ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
         } else {
-            if (!empty($dari_tanggal)) {
-                try {
-                    $dari_tanggal = Carbon::parse($dari_tanggal)->format('Y-m-d');
-                } catch (\Exception $e) {
-                    $dari_tanggal = null;
-                }
-            }
-        
-            if (!empty($sampai_tanggal)) {
-                try {
-                    $sampai_tanggal = Carbon::parse($sampai_tanggal)->format('Y-m-d');
-                } catch (\Exception $e) {
-                    $sampai_tanggal = null;
-                }
-            }
-        
-            if (!empty($dari_tanggal) && !empty($sampai_tanggal)) {
-                $query->whereBetween('tanggal_laporan_keuangan', [$dari_tanggal, $sampai_tanggal]);
-            } elseif (!empty($dari_tanggal)) {
-                $query->whereDate('tanggal_laporan_keuangan', '>=', $dari_tanggal);
-            } elseif (!empty($sampai_tanggal)) {
-                $query->whereDate('tanggal_laporan_keuangan', '<=', $sampai_tanggal);
-            }
+            // Default: bulan berjalan
+            $query->whereMonth('keuangan.tanggal_laporan_keuangan', Carbon::now()->month)
+                  ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
         }
-    
-        // Filter jenis transaksi
-        if (!empty($jenis_transaksi)) {
-            $query->where('jenis_transaksi', $jenis_transaksi);
+
+        if (!empty($pilih_dapur)) {
+            $query->where('keuangan.nomor_dapur_keuangan', $pilih_dapur);
         }
     
         // 🔹 Ambil daftar laporan (pagination tetap sama)
@@ -82,32 +56,32 @@ class LaporanKeuanganController extends Controller
         $total_pemasukan = DB::table('data_koperasi')
             ->join('keuangan', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
             ->where('data_koperasi.jenis_data_koperasi', 'modal_masuk')
-            ->when($dari_tanggal, function ($q) use ($dari_tanggal) {
-                $q->whereDate('keuangan.tanggal_laporan_keuangan', '>=', $dari_tanggal);
-            })
-            ->when($sampai_tanggal, function ($q) use ($sampai_tanggal) {
-                $q->whereDate('keuangan.tanggal_laporan_keuangan', '<=', $sampai_tanggal);
-            })
-            ->when(empty($dari_tanggal) && empty($sampai_tanggal), function ($q) use ($bulanSekarang, $tahunSekarang) {
-                $q->whereMonth('keuangan.tanggal_laporan_keuangan', $bulanSekarang)
+
+            ->when($pilih_bulan, function ($q) use ($pilih_bulan, $tahunSekarang) {
+                $q->whereMonth('keuangan.tanggal_laporan_keuangan', $pilih_bulan)
                   ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
             })
+        
+            ->when($pilih_dapur, function ($q) use ($pilih_dapur) {
+                $q->where('data_koperasi.nomor_dapur', $pilih_dapur);
+            })
+        
             ->sum('data_koperasi.harga_data_koperasi');
         
         
         $total_pengeluaran_supplier = DB::table('data_koperasi')
             ->join('keuangan', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
             ->join('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
-            ->when($dari_tanggal, function ($q) use ($dari_tanggal) {
-                $q->whereDate('keuangan.tanggal_laporan_keuangan', '>=', $dari_tanggal);
-            })
-            ->when($sampai_tanggal, function ($q) use ($sampai_tanggal) {
-                $q->whereDate('keuangan.tanggal_laporan_keuangan', '<=', $sampai_tanggal);
-            })
-            ->when(empty($dari_tanggal) && empty($sampai_tanggal), function ($q) use ($bulanSekarang, $tahunSekarang) {
-                $q->whereMonth('keuangan.tanggal_laporan_keuangan', $bulanSekarang)
+
+            ->when($pilih_bulan, function ($q) use ($pilih_bulan, $tahunSekarang) {
+                $q->whereMonth('keuangan.tanggal_laporan_keuangan', $pilih_bulan)
                   ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
             })
+        
+            ->when($pilih_dapur, function ($q) use ($pilih_dapur) {
+                $q->where('data_koperasi.nomor_dapur', $pilih_dapur);
+            })
+        
             ->sum('barang_supplier.harga_barang_supplier');
 
 
@@ -115,16 +89,16 @@ class LaporanKeuanganController extends Controller
         $total_pengeluaran_modal_keluar = DB::table('data_koperasi')
             ->join('keuangan', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
             ->join('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
-            ->when($dari_tanggal, function ($q) use ($dari_tanggal) {
-                $q->whereDate('keuangan.tanggal_laporan_keuangan', '>=', $dari_tanggal);
-            })
-            ->when($sampai_tanggal, function ($q) use ($sampai_tanggal) {
-                $q->whereDate('keuangan.tanggal_laporan_keuangan', '<=', $sampai_tanggal);
-            })
-            ->when(empty($dari_tanggal) && empty($sampai_tanggal), function ($q) use ($bulanSekarang, $tahunSekarang) {
-                $q->whereMonth('keuangan.tanggal_laporan_keuangan', $bulanSekarang)
+
+            ->when($pilih_bulan, function ($q) use ($pilih_bulan, $tahunSekarang) {
+                $q->whereMonth('keuangan.tanggal_laporan_keuangan', $pilih_bulan)
                   ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
             })
+        
+            ->when($pilih_dapur, function ($q) use ($pilih_dapur) {
+                $q->where('data_koperasi.nomor_dapur', $pilih_dapur);
+            })
+        
             ->sum('barang_modal_keluar.harga_barang_modal_keluar');
     
 
@@ -179,16 +153,8 @@ class LaporanKeuanganController extends Controller
                 ')
             )
             
-            ->when($dari_tanggal, function ($query) use ($dari_tanggal) {
-                $query->whereDate('keuangan.tanggal_laporan_keuangan', '>=', $dari_tanggal);
-            })
-            ->when($sampai_tanggal, function ($query) use ($sampai_tanggal) {
-                $query->whereDate('keuangan.tanggal_laporan_keuangan', '<=', $sampai_tanggal);
-            })
-            ->when(empty($dari_tanggal) && empty($sampai_tanggal), function ($query) use ($bulanSekarang, $tahunSekarang) {
-                $query->whereMonth('keuangan.tanggal_laporan_keuangan', $bulanSekarang)
-                      ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
-            })
+            ->whereMonth('keuangan.tanggal_laporan_keuangan', $pilih_bulan)
+            ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang)
         
             ->groupBy('keuangan.tanggal_laporan_keuangan')
             ->orderBy('keuangan.tanggal_laporan_keuangan', 'asc')
@@ -214,7 +180,8 @@ class LaporanKeuanganController extends Controller
             'total_pengeluaran',
             'sisa_dana',
             'data',
-            'bulanSekarang',
+            'pilih_bulan',
+            'pilih_dapur',
             'dapurList'
         ));
     }
