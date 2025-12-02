@@ -88,14 +88,22 @@ class LaporanKeuanganController extends Controller
                          ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
         }
     
-        // Hitung total pemasukan & pengeluaran langsung dari data_koperasi
+        // Hitung total pemasukan dari data_koperasi
         $total_pemasukan = (clone $baseKoperasi)
             ->where('data_koperasi.jenis_data_koperasi', 'modal_masuk')
             ->sum('data_koperasi.harga_data_koperasi');
-    
-        $total_pengeluaran = (clone $baseKoperasi)
-            ->where('data_koperasi.jenis_data_koperasi', 'modal_keluar')
-            ->sum('data_koperasi.harga_data_koperasi');
+        
+        // Hitung total pengeluaran dari barang_modal_keluar / barang_supplier
+        $total_pengeluaran_supplier = (clone $baseKoperasi)
+            ->join('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
+            ->sum('barang_supplier.harga_barang_supplier');
+
+        $total_pengeluaran_modal_keluar = (clone $baseKoperasi)
+            ->join('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
+            ->sum('barang_modal_keluar.harga_barang_modal_keluar');
+
+        // ✅ GABUNGKAN
+        $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
     
         $sisa_dana = $total_pemasukan - $total_pengeluaran;
     
