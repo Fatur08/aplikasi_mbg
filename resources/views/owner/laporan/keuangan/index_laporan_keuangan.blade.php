@@ -54,6 +54,59 @@
                                     <form action="/owner/laporan/keuangan" method="GET">
                                         <div class="row g-2 align-items-end">
                                             <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <select name="bulan" id="bulan" class="form-select">
+                                                        <option value="">Pilih Bulan</option>
+                                                        <option value="Januari">Januari</option>
+                                                        <option value="Februari">Februari</option>
+                                                        <option value="Maret">Maret</option>
+                                                        <option value="April">April</option>
+                                                        <option value="Mei">Mei</option>
+                                                        <option value="Juni">Juni</option>
+                                                        <option value="Juli">Juli</option>
+                                                        <option value="Agustus">Agustus</option>
+                                                        <option value="September">September</option>
+                                                        <option value="Oktober">Oktober</option>
+                                                        <option value="November">November</option>
+                                                        <option value="Desember">Desember</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="input-icon">
+                                                    <select name="pilih_dapur" id="pilih_dapur" class="form-select">
+                                                        <option value="">Pilih Dapur</option>
+                                                        @foreach($dapurList as $dapur)
+                                                            <option value="{{ $dapur->nomor_dapur }}">{{ $dapur->nama_dapur }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-primary w-100">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                                                        Cari    
+                                                    </button>
+                                                </div>
+                                            </div>
+                                    </form>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <a href="#" class="btn btn-success w-100" id="cetak_laporan_keuangan" >
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-printer"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></svg>
+                                                        Cetak
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <form action="/owner/laporan/keuangan" method="GET">
+                                        <div class="row g-2 align-items-end">
+                                            <div class="col-md-2">
                                                 <div class="input-icon">
                                                     <span class="input-icon-addon">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>

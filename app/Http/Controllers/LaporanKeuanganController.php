@@ -198,6 +198,14 @@ class LaporanKeuanganController extends Controller
                     ->translatedFormat('d F Y');
                 return $item;
             });
+
+
+
+        // Ambil semua data dapur
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
         
         return view('owner.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
@@ -206,7 +214,8 @@ class LaporanKeuanganController extends Controller
             'total_pengeluaran',
             'sisa_dana',
             'data',
-            'bulanSekarang'
+            'bulanSekarang',
+            'dapurList'
         ));
     }
 
