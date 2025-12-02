@@ -63,7 +63,7 @@ class LaporanKeuanganController extends Controller
             })
         
             ->when($pilih_dapur, function ($q) use ($pilih_dapur) {
-                $q->where('data_koperasi.nomor_dapur_data_koperasi', $pilih_dapur);
+                $q->where('keuangan.nomor_dapur_keuangan', $pilih_dapur);
             })
         
             ->sum('data_koperasi.harga_data_koperasi');
@@ -79,7 +79,7 @@ class LaporanKeuanganController extends Controller
             })
         
             ->when($pilih_dapur, function ($q) use ($pilih_dapur) {
-                $q->where('data_koperasi.nomor_dapur_data_koperasi', $pilih_dapur);
+                $q->where('keuangan.nomor_dapur_keuangan', $pilih_dapur);
             })
         
             ->sum('barang_supplier.harga_barang_supplier');
@@ -96,7 +96,7 @@ class LaporanKeuanganController extends Controller
             })
         
             ->when($pilih_dapur, function ($q) use ($pilih_dapur) {
-                $q->where('data_koperasi.nomor_dapur_data_koperasi', $pilih_dapur);
+                $q->where('keuangan.nomor_dapur_keuangan', $pilih_dapur);
             })
         
             ->sum('barang_modal_keluar.harga_barang_modal_keluar');
