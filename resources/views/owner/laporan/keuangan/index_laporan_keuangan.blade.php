@@ -184,7 +184,7 @@
                                                     <td>{{ $tanggal }}</td>
                                                     {{-- kolom koperasi --}}
                                                     <td>
-                                                        @if($ada_koperasi)
+                                                        @if($ada_koperasi && !$ada_koperasi)
                                                             ✅
                                                         @endif
                                                     </td>
