@@ -465,11 +465,10 @@
     });
 
     document.getElementById("cetak_laporan_keuangan").addEventListener("click", function() {
-        let dari = document.getElementById("dari_tanggal").value;
-        let sampai = document.getElementById("sampai_tanggal").value;
-        let jenis_transaksi = document.getElementById("cari_jenis_transaksi").value;
+        let bulan = document.getElementById("pilih_bulan").value;
+        let dapur = document.getElementById("pilih_dapur").value;
 
-        let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?dari_tanggal=${dari}&sampai_tanggal=${sampai}&jenis_transaksi=${jenis_transaksi}`;
+        let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?bulan=${bulan}&dapur=${dapur}`;
         window.open(url, "_blank");
     });
 
