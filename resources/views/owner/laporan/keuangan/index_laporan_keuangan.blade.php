@@ -164,12 +164,12 @@
                                                     $pemasukan = $data_per_tanggal->where('jenis_transaksi', 'Pemasukan');
                                                     $pengeluaran = $data_per_tanggal->where('jenis_transaksi', 'Pengeluaran');
                                                                                     
-                                                    // Hitung total pemasukan dari sumber berbeda
+                                                    // Hitung total pemasukan
                                                     $total_pemasukan = $pemasukan->whereNotNull('id_data_koperasi')->sum('harga_data_koperasi');
                                                                                     
                                                     // Hitung total pengeluaran dari sumber berbeda
-                                                    $total_pengeluaran_koperasi = $pengeluaran->whereNotNull('id_data_koperasi')->sum('jumlah_dana_koperasi');
-                                                    $total_pengeluaran_supplier = $pengeluaran->whereNotNull('id_informasi_supplier')->sum('jumlah_dana_supplier');
+                                                    $total_pengeluaran_koperasi = $pengeluaran->whereNotNull('id_data_koperasi')->sum('harga_data_koperasi');
+                                                    $total_pengeluaran_supplier = $pengeluaran->whereNotNull('id_informasi_supplier')->sum('harga_barang_supplier');
                                                     $total_pengeluaran = $total_pengeluaran_koperasi + $total_pengeluaran_supplier;
                                                                                     
                                                     // Selisih total
