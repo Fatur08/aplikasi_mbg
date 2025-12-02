@@ -12,7 +12,7 @@
                                     Halaman
                                 </div>
                                 <h2 class="page-title">
-                                    Laporan Keuangan
+                                    Laporan Keuangan Hai
                                 </h2>
                             </td>
                             <!--<td style="text-align:right">
