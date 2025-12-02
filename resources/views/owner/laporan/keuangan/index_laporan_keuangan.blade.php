@@ -165,7 +165,10 @@
                                                     $pengeluaran = $data_per_tanggal->where('jenis_transaksi', 'Pengeluaran');
                                                                                     
                                                     // Hitung total pemasukan
-                                                    $total_pemasukan = $pemasukan->whereNotNull('id_data_koperasi')->sum('harga_data_koperasi');
+                                                    $total_pemasukan = $data_per_tanggal
+                                                        ->where('jenis_data_koperasi', 'modal_masuk')
+                                                        ->where('status_data_koperasi', 1)
+                                                        ->sum('harga_data_koperasi');
                                                                                     
                                                     // Hitung total pengeluaran dari sumber berbeda
                                                     $total_pengeluaran_koperasi = $pengeluaran->whereNotNull('id_data_koperasi')->sum('harga_data_koperasi');
@@ -208,14 +211,6 @@
                                                             Rp {{ number_format($selisih, 0, ',', '.') }}
                                                         </strong>
                                                     </td>
-                                                    <!--<td style="text-align:center">
-                                                        <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <a href="#" class="btn btn-info btn-sm">Validasi</a>
-                                                        </div>
-                                                    </td>-->
                                                 </tr>
                                             @empty
                                                 <tr>
