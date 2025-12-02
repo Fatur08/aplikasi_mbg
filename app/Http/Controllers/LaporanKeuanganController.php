@@ -344,7 +344,7 @@ class LaporanKeuanganController extends Controller
     
         $sisa_dana = $total_pemasukan - $total_pengeluaran;
 
-        return view('owner.laporan.keuangan.cetak_laporan_keuangan', compact('grouped', 'sisa_dana', 'total_pemasukan', 'total_pengeluaran'));
+        return view('owner.laporan.keuangan.cetak_laporan_keuangan', compact('grouped', 'sisa_dana'));
     }
 
     public function delete_owner_laporan_keuangan($id)
