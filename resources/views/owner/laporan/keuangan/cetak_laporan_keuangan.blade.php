@@ -102,42 +102,76 @@
         });
     @endphp
 
-    <table border="1" cellspacing="0" cellpadding="6" width="100%" style="border-collapse: collapse; font-size: 14px;">
-        <thead style="background-color:#e3f2fd; text-align:center;">
+    <table class="table table-bordered align-middle">
+        <thead class="table-primary text-center">
             <tr>
-                <th rowspan="2" style="vertical-align:middle;">No.</th>
-                <th rowspan="2" style="vertical-align:middle;">Tanggal</th>
-                <th colspan="2" style="vertical-align:middle;">Sumber</th>
-                <th colspan="2" style="vertical-align:middle;">Jumlah</th>
-                <th rowspan="2" style="vertical-align:middle;">Selisih</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
+                <th style="text-align: center; vertical-align: middle;" colspan="2">Sumber</th>
+                <th style="text-align: center; vertical-align: middle;" colspan="2">Jumlah</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="2">Selisih</th>
+                <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
             </tr>
             <tr>
-                <th style="vertical-align:middle;">Koperasi</th>
-                <th style="vertical-align:middle;">Supplier</th>
-                <th style="vertical-align:middle;">Pemasukan</th>
-                <th style="vertical-align:middle;">Pengeluaran</th>
+                <th style="text-align: center; vertical-align: middle;">Koperasi</th>
+                <th style="text-align: center; vertical-align: middle;">Supplier</th>
+                <th style="text-align: center; vertical-align: middle;">Pemasukan</th>
+                <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($grouped as $tanggal => $data_per_tanggal)
                 @php
+                    // Pisahkan data berdasarkan jenis transaksi
                     $pemasukan = $data_per_tanggal->where('jenis_transaksi', 'Pemasukan');
                     $pengeluaran = $data_per_tanggal->where('jenis_transaksi', 'Pengeluaran');
-                    $total_pemasukan = $pemasukan->sum('jumlah_dana');
-                    $total_pengeluaran = $pengeluaran->sum('jumlah_dana');
+                                                    
+                    // Hitung total pemasukan
+                    $total_pemasukan = $data_per_tanggal
+                        ->where('jenis_data_koperasi', 'modal_masuk')
+                        ->where('status_data_koperasi', 1)
+                        ->sum('harga_data_koperasi');
+                                                    
+                    // Hitung total pengeluaran dari sumber berbeda
+                    $total_pengeluaran_supplier = $data_per_tanggal
+                        ->whereNotNull('harga_barang_supplier')
+                        ->sum('harga_barang_supp
+                    $total_pengeluaran_modal_keluar = $data_per_tanggal
+                        ->whereNotNull('harga_barang_modal_keluar')
+                        ->sum('harga_barang_modal_ke
+                    $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
+                                                    
+                    // Selisih total
                     $selisih = $total_pemasukan - $total_pengeluaran;
-
+                                                    
+                    // Ambil data pertama untuk id & status validasi
+                    $laporan = $data_per_tanggal->first();
+                    $id_laporan = optional($laporan)->id_laporan_keuangan;
+                    $status_validasi = optional($laporan)->status_validasi;
+                                                    
+                    // Cek apakah pengeluaran dari data koperasi atau supplier
                     $ada_koperasi = $data_per_tanggal->contains('id_data_koperasi', '!=', null);
                     $ada_supplier = $data_per_tanggal->contains('id_informasi_supplier', '!=', null);
                 @endphp
-
-                <tr>
-                    <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>
+    
+                <tr style="text-align: center; vertical-align: middle;">
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $tanggal }}</td>
-                    <td style="text-align: center; vertical-align: middle;">@if($ada_koperasi) ✅ @endif</td>
-                    <td style="text-align: center; vertical-align: middle;">@if($ada_supplier) ✅ @endif</td>
-                    <td>Rp {{ number_format($total_pemasukan, 0, ',', '.') }}</td>
-                    <td>Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}</td>
+                    {{-- kolom koperasi --}}
+                    <td>
+                        {{ ($ada_koperasi && !$ada_supplier) ? '✅' : '' }}
+                    </td>
+                                                        
+                    <td>
+                        {{ ($ada_koperasi && $ada_supplier) ? '✅' : '' }}
+                    </td>
+                    <td class="text-success">
+                        Rp {{ number_format($total_pemasukan, 0, ',', '.') }}
+                    </td>
+                    <td class="text-danger">
+                        Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}
+                    </td>
                     <td>
                         <strong class="{{ $selisih >= 0 ? 'text-success' : 'text-danger' }}">
                             Rp {{ number_format($selisih, 0, ',', '.') }}
@@ -146,7 +180,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7" style="text-align:center; color:gray;">Tidak ada data</td>
+                    <td colspan="7" class="text-center text-muted">Tidak ada data</td>
                 </tr>
             @endforelse
         </tbody>
