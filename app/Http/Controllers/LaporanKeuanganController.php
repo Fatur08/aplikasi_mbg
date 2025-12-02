@@ -288,6 +288,8 @@ class LaporanKeuanganController extends Controller
 
         $grouped = $laporan_keuangan->getCollection()
             ->groupBy('tanggal_laporan_keuangan');
+
+        dd($grouped);
         
         
         $total_pemasukan = DB::table('data_koperasi')
