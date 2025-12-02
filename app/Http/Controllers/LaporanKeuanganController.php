@@ -254,8 +254,8 @@ class LaporanKeuanganController extends Controller
 
     public function cetak_owner_laporan_keuangan(Request $request)
     {
-        $pilih_bulan   = $request->pilih_bulan;
-        $pilih_dapur   = $request->pilih_dapur;
+        $pilih_bulan   = $request->bulan;
+        $pilih_dapur   = $request->dapur;
         $tahunSekarang = Carbon::now()->year;
 
         $query = DB::table('keuangan')
@@ -286,10 +286,9 @@ class LaporanKeuanganController extends Controller
         // 🔹 Ambil daftar laporan (pagination tetap sama)
         $laporan_keuangan = $query->orderBy('tanggal_laporan_keuangan', 'desc')->paginate(300);
 
-        $grouped = $laporan_keuangan->getCollection()
-            ->groupBy('tanggal_laporan_keuangan');
-
-        dd($grouped);
+        $grouped = $laporan_keuangan->getCollection()->groupBy(function ($item) {
+            return Carbon::parse($item->tanggal_laporan_keuangan)->format('Y-m-d');
+        });
         
         
         $total_pemasukan = DB::table('data_koperasi')
