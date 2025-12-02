@@ -136,10 +136,10 @@
                     // Hitung total pengeluaran dari sumber berbeda
                     $total_pengeluaran_supplier = $data_per_tanggal
                         ->whereNotNull('harga_barang_supplier')
-                        ->sum('harga_barang_supp
+                        ->sum('harga_barang_supplier');
                     $total_pengeluaran_modal_keluar = $data_per_tanggal
                         ->whereNotNull('harga_barang_modal_keluar')
-                        ->sum('harga_barang_modal_ke
+                        ->sum('harga_barang_modal_keluar');
                     $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
                                                     
                     // Selisih total
