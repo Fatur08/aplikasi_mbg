@@ -159,11 +159,11 @@
                                                     $total_pengeluaran_supplier = $data_per_tanggal
                                                         ->whereNotNull('harga_barang_supplier')
                                                         ->sum('harga_barang_supplier');
-                                                                                        
+
                                                     $total_pengeluaran_modal_keluar = $data_per_tanggal
                                                         ->whereNotNull('harga_barang_modal_keluar')
                                                         ->sum('harga_barang_modal_keluar');
-                                                                                        
+
                                                     $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
                                                                                     
                                                     // Selisih total
@@ -174,7 +174,7 @@
                                                     $id_laporan = optional($laporan)->id_laporan_keuangan;
                                                     $status_validasi = optional($laporan)->status_validasi;
                                                                                     
-                                                    // Cek apakah ada sumber koperasi atau supplier
+                                                    // Cek apakah pengeluaran dari data koperasi atau supplier
                                                     $ada_koperasi = $data_per_tanggal->contains('id_data_koperasi', '!=', null);
                                                     $ada_supplier = $data_per_tanggal->contains('id_informasi_supplier', '!=', null);
                                                 @endphp
@@ -191,7 +191,7 @@
 
                                                     {{-- kolom supplier --}}
                                                     <td>
-                                                        @if($ada_supplier)
+                                                        @if($ada_supplier && $ada_koperasi)
                                                             ✅
                                                         @endif
                                                     </td>
