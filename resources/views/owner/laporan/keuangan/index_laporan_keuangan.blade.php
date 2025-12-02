@@ -204,8 +204,12 @@
                                                             ✅
                                                         @endif
                                                     </td>
-                                                    <td>Rp {{ number_format($total_pemasukan, 0, ',', '.') }}</td>
-                                                    <td>Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}</td>
+                                                    <td class="text-success">
+                                                        Rp {{ number_format($total_pemasukan, 0, ',', '.') }}
+                                                    </td>
+                                                    <td class="text-danger">
+                                                        Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}
+                                                    </td>
                                                     <td>
                                                         <strong class="{{ $selisih >= 0 ? 'text-success' : 'text-danger' }}">
                                                             Rp {{ number_format($selisih, 0, ',', '.') }}
