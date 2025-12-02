@@ -158,7 +158,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($grouped as $tanggal => $data_per_tanggal)
+                                            @forelse ($grouped as $data => $data_per_tanggal)
                                                 @php
                                                     // Pisahkan data berdasarkan jenis transaksi
                                                     $pemasukan = $data_per_tanggal->where('jenis_transaksi', 'Pemasukan');
