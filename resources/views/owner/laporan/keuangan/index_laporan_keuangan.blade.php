@@ -184,16 +184,11 @@
                                                     <td>{{ $tanggal }}</td>
                                                     {{-- kolom koperasi --}}
                                                     <td>
-                                                        @if($ada_koperasi && !$ada_koperasi)
-                                                            ✅
-                                                        @endif
+                                                        {{ ($ada_koperasi && !$ada_supplier) ? '✅' : '' }}
                                                     </td>
-
-                                                    {{-- kolom supplier --}}
+                                                                                        
                                                     <td>
-                                                        @if($ada_supplier && $ada_koperasi)
-                                                            ✅
-                                                        @endif
+                                                        {{ ($ada_koperasi && $ada_supplier) ? '✅' : '' }}
                                                     </td>
                                                     <td class="text-success">
                                                         Rp {{ number_format($total_pemasukan, 0, ',', '.') }}
