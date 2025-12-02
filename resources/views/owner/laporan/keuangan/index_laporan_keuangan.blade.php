@@ -104,65 +104,6 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/owner/laporan/keuangan" method="GET">
-                                        <div class="row g-2 align-items-end">
-                                            <div class="col-md-2">
-                                                <div class="input-icon">
-                                                    <span class="input-icon-addon">
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
-                                                    </span>
-                                                    <input type="text" value="" id="dari_tanggal" name="dari_tanggal" class="form-control" placeholder="Dari Tanggal" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="input-icon">
-                                                    <span class="input-icon-addon">
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
-                                                    </span>
-                                                    <input type="text" value="" id="sampai_tanggal" name="sampai_tanggal" class="form-control" placeholder="Sampai Tanggal" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="input-icon">
-                                                    <select name="dapur_kecamatan" id="dapur_kecamatan" class="form-select">
-                                                        <option value="">Pilih Dapur</option>
-                                                        <option value="1">Dapur 1</option>
-                                                        <option value="2">Dapur 2</option>
-                                                        <option value="3">Dapur 3</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="input-icon">
-                                                    <select name="cari_jenis_transaksi" id="cari_jenis_transaksi" class="form-select">
-                                                        <option value="">Jenis Transaksi</option>
-                                                        <option value="Pemasukan">Pemasukan</option>
-                                                        <option value="Pengeluaran">Pengeluaran</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary w-100">
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-                                                        Cari    
-                                                    </button>
-                                                </div>
-                                            </div>
-                                    </form>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <a href="#" class="btn btn-success w-100" id="cetak_laporan_keuangan" >
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-printer"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></svg>
-                                                        Cetak
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-12">
                                     <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
                                         <canvas id="koperasiChart" height="340"></canvas>
                                     </div>
