@@ -69,42 +69,59 @@ class LaporanKeuanganController extends Controller
     
         /**
          * 🔹 Perhitungan total pemasukan & pengeluaran
-         * Sekarang diambil dari tabel data_koperasi
-         * berdasarkan jenis_data_koperasi ('modal_masuk' / 'modal_keluar')
          */
-        $baseKoperasi = DB::table('data_koperasi')
+        $total_pemasukan = DB::table('data_koperasi')
             ->join('keuangan', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
-            ->select('data_koperasi.*', 'keuangan.tanggal_laporan_keuangan');
-    
-        // Terapkan filter tanggal yang sama
-        if (!empty($dari_tanggal) && !empty($sampai_tanggal)) {
-            $baseKoperasi->whereBetween('keuangan.tanggal_laporan_keuangan', [$dari_tanggal, $sampai_tanggal]);
-        } elseif (!empty($dari_tanggal)) {
-            $baseKoperasi->whereDate('keuangan.tanggal_laporan_keuangan', '>=', $dari_tanggal);
-        } elseif (!empty($sampai_tanggal)) {
-            $baseKoperasi->whereDate('keuangan.tanggal_laporan_keuangan', '<=', $sampai_tanggal);
-        } else {
-            $baseKoperasi->whereMonth('keuangan.tanggal_laporan_keuangan', $bulanSekarang)
-                         ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
-        }
-    
-        // Hitung total pemasukan dari data_koperasi
-        $total_pemasukan = (clone $baseKoperasi)
             ->where('data_koperasi.jenis_data_koperasi', 'modal_masuk')
+            ->when($dari_tanggal, function ($q) use ($dari_tanggal) {
+                $q->whereDate('keuangan.tanggal_laporan_keuangan', '>=', $dari_tanggal);
+            })
+            ->when($sampai_tanggal, function ($q) use ($sampai_tanggal) {
+                $q->whereDate('keuangan.tanggal_laporan_keuangan', '<=', $sampai_tanggal);
+            })
+            ->when(empty($dari_tanggal) && empty($sampai_tanggal), function ($q) use ($bulanSekarang, $tahunSekarang) {
+                $q->whereMonth('keuangan.tanggal_laporan_keuangan', $bulanSekarang)
+                  ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
+            })
             ->sum('data_koperasi.harga_data_koperasi');
         
-        // Hitung total pengeluaran dari barang_modal_keluar / barang_supplier
-        $total_pengeluaran_supplier = (clone $baseKoperasi)
+        
+        $total_pengeluaran_supplier = DB::table('data_koperasi')
+            ->join('keuangan', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
             ->join('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
+            ->when($dari_tanggal, function ($q) use ($dari_tanggal) {
+                $q->whereDate('keuangan.tanggal_laporan_keuangan', '>=', $dari_tanggal);
+            })
+            ->when($sampai_tanggal, function ($q) use ($sampai_tanggal) {
+                $q->whereDate('keuangan.tanggal_laporan_keuangan', '<=', $sampai_tanggal);
+            })
+            ->when(empty($dari_tanggal) && empty($sampai_tanggal), function ($q) use ($bulanSekarang, $tahunSekarang) {
+                $q->whereMonth('keuangan.tanggal_laporan_keuangan', $bulanSekarang)
+                  ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
+            })
             ->sum('barang_supplier.harga_barang_supplier');
 
-        $total_pengeluaran_modal_keluar = (clone $baseKoperasi)
-            ->join('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
-            ->sum('barang_modal_keluar.harga_barang_modal_keluar');
 
-        // ✅ GABUNGKAN
-        $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
+
+        $total_pengeluaran_modal_keluar = DB::table('data_koperasi')
+            ->join('keuangan', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
+            ->join('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
+            ->when($dari_tanggal, function ($q) use ($dari_tanggal) {
+                $q->whereDate('keuangan.tanggal_laporan_keuangan', '>=', $dari_tanggal);
+            })
+            ->when($sampai_tanggal, function ($q) use ($sampai_tanggal) {
+                $q->whereDate('keuangan.tanggal_laporan_keuangan', '<=', $sampai_tanggal);
+            })
+            ->when(empty($dari_tanggal) && empty($sampai_tanggal), function ($q) use ($bulanSekarang, $tahunSekarang) {
+                $q->whereMonth('keuangan.tanggal_laporan_keuangan', $bulanSekarang)
+                  ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang);
+            })
+            ->sum('barang_modal_keluar.harga_barang_modal_keluar');
     
+
+
+        $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
+        
         $sisa_dana = $total_pemasukan - $total_pengeluaran;
     
         /**
