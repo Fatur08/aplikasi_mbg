@@ -155,6 +155,14 @@ class LaporanKeuanganController extends Controller
                     ->translatedFormat('d F Y');
                 return $item;
             });
+    
+
+        dd(
+            $total_pemasukan,
+            $total_pengeluaran_supplier,
+            $total_pengeluaran_modal_keluar,
+            $total_pengeluaran
+        );
         
         return view('owner.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
