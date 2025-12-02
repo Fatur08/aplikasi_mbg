@@ -24,7 +24,16 @@ class LaporanKeuanganController extends Controller
         // 🔹 Query utama laporan keuangan
         $query = DB::table('keuangan')
             ->leftJoin('data_koperasi', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
-            ->select('keuangan.*', 'data_koperasi.*');
+            
+            ->leftJoin('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
+            ->leftJoin('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
+            
+            ->select(
+                'keuangan.*',
+                'data_koperasi.*',
+                'barang_supplier.harga_barang_supplier',
+                'barang_modal_keluar.harga_barang_modal_keluar'
+            );
     
         // Filter tanggal
         if (empty($dari_tanggal) && empty($sampai_tanggal)) {
@@ -130,10 +139,10 @@ class LaporanKeuanganController extends Controller
          */
         $data = DB::table('keuangan')
             ->join('data_koperasi', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
-                
+
             ->leftJoin('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
             ->leftJoin('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
-                
+
             ->select(
                 'keuangan.tanggal_laporan_keuangan',
             
