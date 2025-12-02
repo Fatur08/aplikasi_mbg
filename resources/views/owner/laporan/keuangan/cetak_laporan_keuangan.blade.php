@@ -96,11 +96,8 @@
         <strong>Sisa Seluruh Dana : Rp {{ number_format($sisa_dana, 0, ',', '.') }}</strong>
     </div>
 
-    @php
-        $grouped = $data->groupBy(function ($item) {
-            return \Carbon\Carbon::parse($item->tanggal_laporan_keuangan)->translatedFormat('d F Y');
-        });
-    @endphp
+
+    
 
     <table class="table table-bordered align-middle">
         <thead class="table-primary text-center">
