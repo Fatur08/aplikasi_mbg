@@ -189,7 +189,7 @@
                                     
                                                 <tr style="text-align: center; vertical-align: middle;">
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $tanggal }}</td>
+                                                    <td>{{ $data }}</td>
                                                     {{-- kolom koperasi --}}
                                                     <td>
                                                         @if($ada_koperasi)
