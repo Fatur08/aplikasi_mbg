@@ -264,8 +264,7 @@
                                                         <th rowspan="2">Satuan</th>
                                                         <th colspan="2">Stok Bulan Ini</th>
                                                         <th rowspan="2">Sisa</th>
-                                                        <th rowspan="2">Validasi</th>
-                                                        <th rowspan="2">Aksi</th>
+                                                        <th rowspan="2">Ket</th>
                                                     </tr>
                                                     <tr>
                                                         <th>Masuk</th>
@@ -274,28 +273,35 @@
                                                 </thead>
                                                 <tbody>
                                                     @php $no = 1; @endphp
-                                                    @foreach($sisa_perbahan as $item)
+                                                    @foreach($data_laporan as $item)
+                                                                                        
                                                         @php
-                                                            $stok_akhir = $item->sisa_per_bahan;
-                                                            $statusBadge = $stok_akhir <= 0 
-                                                                ? '<span class="badge bg-danger">Habis</span>' 
-                                                                : '<span class="badge bg-warning">Menunggu</span>';
+                                                            switch($item['keterangan']){
+                                                                case 'Aman':
+                                                                    $badge = 'bg-success';
+                                                                    break;
+                                                                case 'Menipis':
+                                                                    $badge = 'bg-warning';
+                                                                    break;
+                                                                case 'Habis':
+                                                                    $badge = 'bg-danger';
+                                                                    break;
+                                                                default:
+                                                                    $badge = 'bg-dark';
+                                                            }
                                                         @endphp
-                                    
-                                                        <tr @if($stok_akhir <= 0) class="table-warning" @endif>
-                                                            <td style="text-align: center; vertical-align: middle;">{{ $no++ }}</td>
-                                                            <td>{{ $item->nama_bahan }}</td>
-                                                            <td>{{ $item->satuan_bahan }}</td>
-                                                            <td>{{ $item->total_masuk }}</td>
-                                                            <td>{{ $item->total_keluar }}</td>
-                                                            <td>{{ $stok_akhir }}</td>
-                                                            <td style="text-align: center; vertical-align: middle;">{!! $statusBadge !!}</td>
-                                                            <td style="text-align: center; vertical-align: middle;">
-                                                                <a href="/owner/stok/{{ $item->id_bahan }}/detail" class="btn-status btn-validasi">
-                                                                    Validasi
-                                                                </a>
-                                                            </td>
-                                                        </tr>
+                                                        
+                                                    <tr>
+                                                        <td class="text-center">{{ $no++ }}</td>
+                                                        <td>{{ $item['nama_bahan'] }}</td>
+                                                        <td>{{ $item['satuan'] }}</td>
+                                                        <td class="text-center">{{ $item['total_masuk'] }}</td>
+                                                        <td class="text-center">{{ $item['total_keluar'] }}</td>
+                                                        <td class="text-center">{{ $item['stok_akhir'] }}</td>
+                                                        <td class="text-center">
+                                                            <span class="badge {{ $badge }}">{{ $item['keterangan'] }}</span>
+                                                        </td>
+                                                    </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
