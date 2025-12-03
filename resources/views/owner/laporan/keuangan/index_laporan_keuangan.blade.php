@@ -51,7 +51,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/owner/laporan/keuangan" method="GET">
+                                    <form action="/owner/laporan/keuangan" method="GET" id="FormLaporanKeuangan">
                                         <div class="row g-2 align-items-end">
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -390,60 +390,27 @@
             });
         });
 
-        $("#frmLprnKngn").submit(function(){
-            var tanggal_laporan_keuangan = $("#tanggal_laporan_keuangan").val();
-            var jenis_laporan_keuangan = $("#jenis_laporan_keuangan").val();
-            var kategori_laporan_keuangan = $("#kategori_laporan_keuangan").val();
-            var keterangan_laporan_keuangan = $("#keterangan_laporan_keuangan").val();
-            var jumlah_dana = $("#jumlah_dana").val();
-            if(tanggal_laporan_keuangan==""){
+        $("#FormLaporanKeuangan").submit(function(){
+            var pilih_bulan = $("#pilih_bulan").val();
+            var pilih_dapur = $("#pilih_dapur").val();
+            if(pilih_bulan==""){
                 Swal.fire({
                     title: 'Warning!',
-                    text: 'Tanggal Harus Diisi',
+                    text: 'Bulan Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#tanggal_laporan_keuangan").focus();
+                      $("#pilih_bulan").focus();
                   });
                 return false;
-            } else if (jenis_laporan_keuangan==""){
+            } else if (pilih_dapur==""){
                 Swal.fire({
                     title: 'Warning!',
-                    text: 'Jenis Harus Diisi',
+                    text: 'Dapur Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#jenis_laporan_keuangan").focus();
-                  });
-                return false;
-            } else if (kategori_laporan_keuangan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Kategori Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#kategori_laporan_keuangan").focus();
-                  });
-                return false;
-            } else if (keterangan_laporan_keuangan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Keterangan Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#keterangan_laporan_keuangan").focus();
-                  });
-                return false;
-            } else if (jumlah_dana==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Jumlah Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#jumlah_dana").focus();
+                      $("#pilih_dapur").focus();
                   });
                 return false;
             }
