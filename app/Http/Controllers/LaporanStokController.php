@@ -262,81 +262,77 @@ class LaporanStokController extends Controller
         $tanggal = $request->pilih_tanggal ?? date('Y-m-d');
         $tanggal_kemarin = date('Y-m-d', strtotime($tanggal . ' -1 day'));
 
-        $stok_awal = DB::table('stok_masuk as sm')
-            ->leftJoin('stok_keluar as sk', 'sm.id_stok_masuk', '=', 'sk.id_stok_masuk')
-            ->leftJoin('bahan as b', 'sm.id_bahan', '=', 'b.id_bahan')
-            ->where('sm.nomor_dapur_stok_masuk', $nomor_dapur)
-            ->whereDate('sm.tanggal_masuk', '<=', $tanggal_kemarin)
-            ->select(
-                'b.nama_bahan',
-                'b.satuan_bahan',
-                DB::raw('SUM(sm.jumlah_masuk) as total_masuk'),
-                DB::raw('COALESCE(SUM(sk.jumlah_keluar),0) as total_keluar'),
-                DB::raw('(SUM(sm.jumlah_masuk) - COALESCE(SUM(sk.jumlah_keluar),0)) as stok_awal')
-            )
-            ->groupBy('b.nama_bahan', 'b.satuan_bahan')
+        // =======================
+        // STOK AWAL (s/d kemarin)
+        // =======================
+        $stok_awal_masuk = DB::table('stok_masuk')
+            ->whereDate('tanggal_masuk', '<=', $tanggal_kemarin)
+            ->where('nomor_dapur_stok_masuk', $nomor_dapur)
+            ->select('id_bahan', DB::raw('SUM(jumlah_masuk) as total'))
+            ->groupBy('id_bahan')
             ->get()
-            ->keyBy('nama_bahan');
-
-
-
-
-        $stok_masuk_hari_ini = DB::table('stok_masuk as sm')
-            ->leftJoin('bahan as b', 'sm.id_bahan', '=', 'b.id_bahan')
-            ->where('sm.nomor_dapur_stok_masuk', $nomor_dapur)
-            ->whereDate('sm.tanggal_masuk', $tanggal)
-            ->select(
-                'b.nama_bahan',
-                DB::raw('SUM(sm.jumlah_masuk) as stok_masuk')
-            )
-            ->groupBy('b.nama_bahan')
+            ->keyBy('id_bahan');
+            
+        $stok_awal_keluar = DB::table('stok_keluar')
+            ->whereDate('tanggal_keluar', '<=', $tanggal_kemarin)
+            ->where('nomor_dapur_stok_keluar', $nomor_dapur)
+            ->select('id_bahan', DB::raw('SUM(jumlah_keluar) as total'))
+            ->groupBy('id_bahan')
             ->get()
-            ->keyBy('nama_bahan');
-
-
-
-
-        $stok_keluar_hari_ini = DB::table('stok_keluar as sk')
-            ->leftJoin('bahan as b', 'sk.id_bahan', '=', 'b.id_bahan')
-            ->where('sk.nomor_dapur_stok_keluar', $nomor_dapur)
-            ->whereDate('sk.tanggal_keluar', $tanggal)
-            ->select(
-                'b.nama_bahan',
-                DB::raw('SUM(sk.jumlah_keluar) as stok_keluar')
-            )
-            ->groupBy('b.nama_bahan')
+            ->keyBy('id_bahan');
+            
+        // =======================
+        // STOK MASUK HARI INI
+        // =======================
+        $stok_masuk_hari_ini = DB::table('stok_masuk')
+            ->whereDate('tanggal_masuk', $tanggal)
+            ->where('nomor_dapur_stok_masuk', $nomor_dapur)
             ->get()
-            ->keyBy('nama_bahan');
-
-
-
-
-
-        $data_stok = [];
-
+            ->groupBy('id_bahan');
+            
+        // =======================
+        // STOK KELUAR HARI INI
+        // =======================
+        $stok_keluar_hari_ini = DB::table('stok_keluar')
+            ->whereDate('tanggal_keluar', $tanggal)
+            ->where('nomor_dapur_stok_keluar', $nomor_dapur)
+            ->get()
+            ->groupBy('id_bahan');
+            
+        // =======================
+        // AMBIL SEMUA BAHAN YANG TERLIBAT
+        // =======================
         $semua_bahan = collect()
-            ->merge($stok_awal)
-            ->merge($stok_masuk_hari_ini)
-            ->merge($stok_keluar_hari_ini)
-            ->keys()
+            ->merge($stok_awal_masuk->keys())
+            ->merge($stok_awal_keluar->keys())
+            ->merge($stok_masuk_hari_ini->keys())
+            ->merge($stok_keluar_hari_ini->keys())
             ->unique();
-
-        foreach ($semua_bahan as $nama_bahan) {
-            $awal   = $stok_awal[$nama_bahan]->stok_awal ?? 0;
-            $masuk  = $stok_masuk_hari_ini[$nama_bahan]->stok_masuk ?? 0;
-            $keluar = $stok_keluar_hari_ini[$nama_bahan]->stok_keluar ?? 0;
-            $akhir  = $awal + $masuk - $keluar;
+            
+        // =======================
+        // BENTUK DATA LAPORAN FINAL
+        // =======================
+        $data_laporan = [];
+            
+        foreach ($semua_bahan as $id_bahan) {
+            $awal_masuk  = $stok_awal_masuk[$id_bahan]->total ?? 0;
+            $awal_keluar = $stok_awal_keluar[$id_bahan]->total ?? 0;
         
-            $satuan = $stok_awal[$nama_bahan]->satuan_bahan
-                   ?? DB::table('bahan')->where('nama_bahan', $nama_bahan)->value('satuan_bahan');
+            $stok_awal   = $awal_masuk - $awal_keluar;
+            $stok_masuk  = $stok_masuk_hari_ini[$id_bahan]->sum('jumlah_masuk') ?? 0;
+            $stok_keluar = $stok_keluar_hari_ini[$id_bahan]->sum('jumlah_keluar') ?? 0;
         
-            $data_stok[] = [
-                'nama_bahan' => $nama_bahan,
-                'satuan'     => $satuan,
-                'awal'       => $awal,
-                'masuk'      => $masuk,
-                'keluar'     => $keluar,
-                'akhir'      => $akhir,
+            $stok_akhir  = $stok_awal + $stok_masuk - $stok_keluar;
+        
+            $bahan = DB::table('bahan')->where('id_bahan', $id_bahan)->first();
+        
+            $data_laporan[] = [
+                'nama_bahan'  => $bahan->nama_bahan ?? '-',
+                'satuan'      => $bahan->satuan_bahan ?? '-',
+                'stok_awal'   => $stok_awal,
+                'masuk'       => $stok_masuk,
+                'keluar'      => $stok_keluar,
+                'stok_akhir'  => $stok_akhir,
             ];
         }
 

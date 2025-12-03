@@ -261,41 +261,19 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php $no = 1; @endphp
-
-                                                    @forelse($data_stok as $row)
-                                                        <tr @if($row['akhir'] <= 0) class="table-warning" @endif>
-                                                            <td style="text-align: center;">{{ $no++ }}</td>
+                                                    @forelse ($data_laporan as $no => $row)
+                                                        <tr>
+                                                            <td>{{ $no + 1 }}</td>
                                                             <td>{{ $row['nama_bahan'] }}</td>
-                                                            <td>{{ $row['satuan'] }}</td>
-
-                                                            {{-- ✅ STOK AWAL (H-1) --}}
-                                                            <td>{{ $row['awal'] }}</td>
-
-                                                            {{-- ✅ STOK MASUK (HARI INI) --}}
-                                                            <td>{{ $row['masuk'] }}</td>
-
-                                                            {{-- ✅ STOK KELUAR (HARI INI) --}}
-                                                            <td>{{ $row['keluar'] }}</td>
-
-                                                            {{-- ✅ STOK AKHIR (AWAL + MASUK - KELUAR) --}}
-                                                            <td>{{ $row['akhir'] }}</td>
-
-                                                            {{-- VALIDASI (tetap) --}}
-                                                            <td style="text-align: center;">
-                                                                <span class="badge bg-warning">Menunggu</span>
-                                                            </td>
-
-                                                            {{-- AKSI (tetap) --}}
-                                                            <td style="text-align: center;">
-                                                                <a href="#" class="btn-status btn-validasi">Validasi</a>
-                                                            </td>
+                                                            <td class="text-center">{{ $row['satuan'] }}</td>
+                                                            <td class="text-end">{{ number_format($row['stok_awal']) }}</td>
+                                                            <td class="text-end">{{ number_format($row['masuk']) }}</td>
+                                                            <td class="text-end">{{ number_format($row['keluar']) }}</td>
+                                                            <td class="text-end fw-bold">{{ number_format($row['stok_akhir']) }}</td>
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="9" class="text-center text-muted">
-                                                                Data stok tidak tersedia untuk tanggal ini.
-                                                            </td>
+                                                            <td colspan="7" class="text-center">Tidak ada data stok</td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>
