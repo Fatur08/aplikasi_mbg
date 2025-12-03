@@ -136,7 +136,7 @@
                                     Laporan Stok Harian
                                 </h2>
                             </td>
-                            <td style="text-align:right">
+                            <!--<td style="text-align:right">
                                 <a href="#" class="btn btn-primary" id="btnTambahDataKoperasi">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                          viewBox="0 0 24 24" fill="none" stroke="currentColor" 
@@ -148,7 +148,7 @@
                                     </svg>
                                     Tambah Data
                                 </a>
-                            </td>
+                            </td>-->
                         </tr>
                     </tbody>
                 </table>
@@ -178,7 +178,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/owner/laporan/stok_harian" method="GET">
+                                    <form action="/owner/laporan/stok_harian" method="GET" id="FormLaporanStokHarian">
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -313,6 +313,34 @@ flatpickr("#tampilan_tanggal", {
             // ini yang DIKIRIM ke controller
             document.getElementById('pilih_tanggal').value = `${yyyy}-${mm}-${dd}`;
         }
+    }
+});
+
+
+
+$("#FormLaporanStokHarian").submit(function(){
+    var pilih_dapur = $("#pilih_dapur").val();
+    var tampilan_tanggal = $("#tampilan_tanggal").val();
+    if(tampilan_tanggal==""){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Tanggal Harus Diisi',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          }).then(()=> {
+              $("#tampilan_tanggal").focus();
+          });
+        return false;
+    } else if (pilih_dapur==""){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Dapur Harus Diisi',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          }).then(()=> {
+              $("#pilih_dapur").focus();
+          });
+        return false;
     }
 });
 </script>
