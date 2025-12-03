@@ -325,8 +325,10 @@
 @push('myscript')
 <script>
 flatpickr("#tampilan_tanggal", {
-    dateFormat: "d/m/Y",   // yang dilihat user
-    locale: "id",
+    dateFormat: "d F Y", // format tampilan: 15 September 2025
+    altInput: true,
+    altFormat: "d F Y",
+    locale: "id", // biar bulan pakai bahasa Indonesia
 
     onChange: function(selectedDates) {
         if (selectedDates.length > 0) {
