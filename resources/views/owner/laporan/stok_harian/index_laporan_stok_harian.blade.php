@@ -275,7 +275,7 @@
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="7" style="text-align:center; color:red;">
+                                                            <td colspan="8" style="text-align:center; color:red;">
                                                                 Tidak ada data stok pada tanggal ini
                                                             </td>
                                                         </tr>
