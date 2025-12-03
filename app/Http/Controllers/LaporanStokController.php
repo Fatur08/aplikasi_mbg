@@ -289,13 +289,25 @@ class LaporanStokController extends Controller
             ->where('nomor_dapur_stok_masuk', $nomor_dapur)
             ->get()
             ->groupBy('id_bahan');
+
+
+        // =======================
+        // STOK KELUAR HARI INI
+        // =======================
+        $stok_keluar_hari_ini = DB::table('stok_keluar')
+            ->whereDate('tanggal_keluar', $tanggal)
+            ->where('nomor_dapur_stok_keluar', $nomor_dapur)
+            ->get()
+            ->groupBy('id_bahan');
+        
+
             
         // pastikan semua collection sudah di-keyBy id_bahan untuk konsistensi
         $stok_awal_masuk = $stok_awal_masuk->keyBy('id_bahan');
         $stok_awal_keluar = $stok_awal_keluar->keyBy('id_bahan');
         $stok_masuk_hari_ini = $stok_masuk_hari_ini->keyBy('id_bahan');
         $stok_keluar_hari_ini = $stok_keluar_hari_ini->keyBy('id_bahan');
-            
+
         // kumpulkan semua id_bahan yang terlibat (id numerik)
         $semua_bahan = collect()
             ->merge($stok_awal_masuk->keys())
@@ -305,9 +317,9 @@ class LaporanStokController extends Controller
             ->map(function($k){ return (int) $k; })
             ->unique()
             ->values();
-            
+
         $data_laporan = [];
-            
+
         foreach ($semua_bahan as $id_bahan) {
             $awal_masuk_obj  = $stok_awal_masuk->get($id_bahan);
             $awal_keluar_obj = $stok_awal_keluar->get($id_bahan);
