@@ -195,7 +195,11 @@
                                                     <span class="input-icon-addon">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
                                                     </span>
-                                                    <input type="text" value="" id="dari_tanggal" name="dari_tanggal" class="form-control" placeholder="Pilih Tanggal" autocomplete="off">
+                                                    <!-- Yang tampil -->
+                                                    <input type="text" id="tampilan_tanggal" class="form-control" placeholder="Pilih Tanggal" autocomplete="off">
+                                                    
+                                                    <!-- Yang dikirim ke server -->
+                                                     <input type="hidden" id="pilih_tanggal" name="pilih_tanggal">
                                                 </div>
                                             </div>
                                             <div class="col-4">
@@ -320,20 +324,22 @@
 @endsection
 @push('myscript')
 <script>
-    $(function(){
-        $("#dari_tanggal").datepicker({ 
-        autoclose: true, 
-        todayHighlight: true,
-        format:'yyyy-mm-dd'
-        });
+flatpickr("#tampilan_tanggal", {
+    dateFormat: "d/m/Y",   // yang dilihat user
+    locale: "id",
 
+    onChange: function(selectedDates) {
+        if (selectedDates.length > 0) {
+            let date = selectedDates[0];
 
-        flatpickr("#dari_tanggal", {
-            dateFormat: "d F Y", // format tampilan: 15 September 2025
-            altInput: true,
-            altFormat: "d F Y",
-            locale: "id" // biar bulan pakai bahasa Indonesia
-        });
-    });
+            let yyyy = date.getFullYear();
+            let mm = String(date.getMonth() + 1).padStart(2, '0');
+            let dd = String(date.getDate()).padStart(2, '0');
+
+            // ini yang DIKIRIM ke controller
+            document.getElementById('pilih_tanggal').value = `${yyyy}-${mm}-${dd}`;
+        }
+    }
+});
 </script>
 @endpush

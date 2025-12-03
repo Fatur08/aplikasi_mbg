@@ -259,17 +259,16 @@ class LaporanStokController extends Controller
     public function index_owner_laporan_stok_harian(Request $request)
     {
         $nomor_dapur = $request->pilih_dapur;
-        $dari_tanggal = $request->dari_tanggal;
+        $tanggal = $request->pilih_tanggal;
     
         // --- 1️⃣ Ambil detail stok masuk per baris (supaya sisa per batch tetap ada)
-        $stok_masuk = DB::table('stok_masuk')
+        $stokMasukQuery = DB::table('stok_masuk')
             ->leftJoin('bahan', 'stok_masuk.id_bahan', '=', 'bahan.id_bahan')
             ->leftJoin(DB::raw('(
                 SELECT id_stok_masuk, SUM(jumlah_keluar) as total_keluar
                 FROM stok_keluar
                 GROUP BY id_stok_masuk
             ) as keluar'), 'stok_masuk.id_stok_masuk', '=', 'keluar.id_stok_masuk')
-            ->where('stok_masuk.nomor_dapur_stok_masuk', $nomor_dapur)
             ->select(
                 'stok_masuk.id_stok_masuk',
                 'stok_masuk.tanggal_masuk',
@@ -280,40 +279,32 @@ class LaporanStokController extends Controller
                 DB::raw('IFNULL(keluar.total_keluar, 0) as total_keluar'),
                 DB::raw('(stok_masuk.jumlah_masuk - IFNULL(keluar.total_keluar, 0)) as sisa_stok'),
                 'stok_masuk.sumber_stok_masuk',
-                'stok_masuk.keterangan_stok_masuk'
+                'stok_masuk.keterangan_stok_masuk',
+                'stok_masuk.nomor_dapur_stok_masuk'
             );
-
-        if (!empty($dari_tanggal)) {
-            $stok_masuk->whereDate('stok_masuk.tanggal_masuk', $dari_tanggal);
+        
+        // ✅ filter dapur
+        if (!empty($nomor_dapur)) {
+            $stokMasukQuery->where('stok_masuk.nomor_dapur_stok_masuk', $nomor_dapur);
         }
-    
-        $stok_masuk = $stok_masuk->orderBy('stok_masuk.tanggal_masuk', 'asc')->get();
-    
-        // --- 2️⃣ Hitung total sisa keseluruhan dari semua data di atas
+
+        // ✅ filter tanggal (langsung pakai)
+        if (!empty($tanggal)) {
+            $stokMasukQuery->whereDate('stok_masuk.tanggal_masuk', $tanggal);
+        }
+
+        // ✅ eksekusi
+        $stok_masuk = $stokMasukQuery
+            ->orderBy('stok_masuk.tanggal_masuk', 'asc')
+            ->get();
+
+        // ✅ total sisa keseluruhan
         $total_sisa_keseluruhan = $stok_masuk
-            ->groupBy('id_bahan') // kelompokkan per bahan
+            ->groupBy('id_bahan')
             ->map(function ($items) {
-                return $items->sum('sisa_stok'); // jumlahkan sisa per bahan
+                return $items->sum('sisa_stok');
             })
-            ->sum(); // lalu jumlahkan semua bahan
-    
-        // --- 3️⃣ Data filter dropdown bahan
-        $bahan = DB::table('bahan')
-            ->select('id_bahan', 'nama_bahan')
-            ->orderBy('nama_bahan', 'asc')
-            ->get();
-
-        $dapurs = DB::table('dapur')
-            ->select('nomor_dapur', 'nama_dapur')
-            ->groupBy('nama_dapur', 'nomor_dapur') // pastikan unik
-            ->get();
-    
-        $nama_bahan_filter = null;
-        if (!empty($filter_bahan)) {
-            $nama_bahan_filter = DB::table('bahan')
-                ->where('id_bahan', $filter_bahan)
-                ->value('nama_bahan');
-        }
+            ->sum();
 
 
 
@@ -369,8 +360,8 @@ class LaporanStokController extends Controller
             );
 
         
-        if (!empty($dari_tanggal)) {
-            $stok_keluar->whereDate('sk.tanggal_keluar', $dari_tanggal);
+        if (!empty($pilih_tanggal)) {
+            $stok_keluar->whereDate('sk.tanggal_keluar', $pilih_tanggal);
         }
 
     
@@ -450,8 +441,8 @@ class LaporanStokController extends Controller
             ->orderBy('stok_masuk.tanggal_masuk', 'asc');
 
 
-        if (!empty($dari_tanggal)) {
-            $stok_limit->whereDate('stok_masuk.tanggal_masuk', $dari_tanggal);
+        if (!empty($pilih_tanggal)) {
+            $stok_limit->whereDate('stok_masuk.tanggal_masuk', $pilih_tanggal);
         }
 
     
@@ -463,7 +454,7 @@ class LaporanStokController extends Controller
         
         
         $dataKosong = $stok_masuk->isEmpty();
-        $sudahCari = !empty($nomor_dapur) || !empty($dari_tanggal);
+        $sudahCari = !empty($nomor_dapur) || !empty($pilih_tanggal);
 
         // Ambil semua data dapur
         $dapurList = DB::table('dapur')
@@ -484,7 +475,7 @@ class LaporanStokController extends Controller
             'sisa_perbahan',
             'dapurList',
             'nomor_dapur',
-            'dari_tanggal'
+            'pilih_tanggal'
         ));
     }
 
