@@ -447,7 +447,7 @@
             }
         
             // ✅ JIKA SUDAH LENGKAP, BARU BUKA HALAMAN CETAK
-            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?pilih_bulan=${pilih_bulan}&pilih_dapur=${pilih_dapur}`;
+            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?bulan=${pilih_bulan}&dapur=${pilih_dapur}`;
             window.open(url, '_blank');
         });
 
@@ -470,7 +470,7 @@
 
 
 
-    
+
 
 
 
