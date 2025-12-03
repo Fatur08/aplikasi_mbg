@@ -178,7 +178,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/owner/laporan/stok_bulanan" method="GET">
+                                    <form action="/owner/laporan/stok_bulanan" method="GET" id="FormLaporanStokBulanan">
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -319,3 +319,32 @@
     </div>
 </div>
 @endsection
+@push('myscript')
+<script>
+$("#FormLaporanStokBulanan").submit(function(){
+    var pilih_dapur = $("#pilih_dapur").val();
+    var bulan = $("#bulan").val();
+    if(bulan==""){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Bulan Harus Diisi',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          }).then(()=> {
+              $("#bulan").focus();
+          });
+        return false;
+    } else if (pilih_dapur==""){
+        Swal.fire({
+            title: 'Warning!',
+            text: 'Dapur Harus Diisi',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          }).then(()=> {
+              $("#pilih_dapur").focus();
+          });
+        return false;
+    }
+});
+</script>
+@endpush
