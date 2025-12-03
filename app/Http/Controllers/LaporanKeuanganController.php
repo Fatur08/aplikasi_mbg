@@ -345,7 +345,69 @@ class LaporanKeuanganController extends Controller
     
         $sisa_dana = $total_pemasukan - $total_pengeluaran;
 
-        return view('owner.laporan.keuangan.cetak_laporan_keuangan', compact('grouped', 'sisa_dana'));
+
+        /**
+         * 🔹 Data grafik batang berdasarkan tanggal laporan keuangan
+         * Dikelompokkan berdasarkan tanggal, dengan sum dari data_koperasi
+         */
+        $data = DB::table('keuangan')
+            ->join('data_koperasi', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
+
+            ->leftJoin('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
+            ->leftJoin('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
+
+            ->select(
+                'keuangan.tanggal_laporan_keuangan',
+            
+                // ✅ TOTAL PEMASUKAN (TETAP)
+                DB::raw('SUM(
+                    CASE 
+                        WHEN data_koperasi.jenis_data_koperasi = "modal_masuk" 
+                        THEN data_koperasi.harga_data_koperasi 
+                        ELSE 0 
+                    END
+                ) AS total_pemasukan'),
+            
+                // ✅ TOTAL PENGELUARAN (SUPPLIER + MODAL KELUAR)
+                DB::raw('
+                    SUM(COALESCE(barang_supplier.harga_barang_supplier, 0)) +
+                    SUM(COALESCE(barang_modal_keluar.harga_barang_modal_keluar, 0))
+                    AS total_pengeluaran
+                '),
+            
+                // ✅ MARGIN
+                DB::raw('
+                    SUM(
+                        CASE 
+                            WHEN data_koperasi.jenis_data_koperasi = "modal_masuk"
+                            THEN data_koperasi.harga_data_koperasi
+                            ELSE 0
+                        END
+                    ) -
+                    (
+                        SUM(COALESCE(barang_supplier.harga_barang_supplier, 0)) +
+                        SUM(COALESCE(barang_modal_keluar.harga_barang_modal_keluar, 0))
+                    )
+                    AS margin
+                ')
+            )
+            
+            ->whereMonth('keuangan.tanggal_laporan_keuangan', $pilih_bulan)
+            ->whereYear('keuangan.tanggal_laporan_keuangan', $tahunSekarang)
+            ->when($pilih_dapur, function ($query) use ($pilih_dapur) {
+                $query->where('keuangan.nomor_dapur_keuangan', $pilih_dapur);
+            })
+        
+            ->groupBy('keuangan.tanggal_laporan_keuangan')
+            ->orderBy('keuangan.tanggal_laporan_keuangan', 'asc')
+            ->get()
+            ->map(function ($item) {
+                $item->tanggal_laporan_keuangan = Carbon::parse($item->tanggal_laporan_keuangan)
+                    ->translatedFormat('d F Y');
+                return $item;
+            });
+
+        return view('owner.laporan.keuangan.cetak_laporan_keuangan', compact('grouped', 'sisa_dana', 'data'));
     }
 
     public function delete_owner_laporan_keuangan($id)
