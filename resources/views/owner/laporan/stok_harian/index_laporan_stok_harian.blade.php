@@ -220,39 +220,23 @@
                                         use Illuminate\Support\Facades\DB;
                                         use Carbon\Carbon;
 
-                                        // Cari nama dapur jika nomor ada
+                                        // ✅ Ambil nama dapur
                                         $namaDapur = $nomor_dapur
                                             ? DB::table('dapur')
                                                 ->where('nomor_dapur', $nomor_dapur)
-                                                ->pluck('nama_dapur')
-                                                ->unique()
-                                                ->join(', ') // atau ->implode(', ')
+                                                ->value('nama_dapur')
                                             : '-';
-
-                                        // --- 4️⃣ Tentukan tanggal untuk ditampilkan di tampilan
-                                        if (!empty($dari_tanggal)) {
-                                            $tanggalDisplay = Carbon::parse($dari_tanggal)->translatedFormat('d F Y');
-                                        } else {
-                                            // fallback seperti sebelumnya
-                                            if ($stok_keluar->isNotEmpty()) {
-                                                $minTanggal = Carbon::parse($stok_keluar->min('tanggal_keluar'));
-                                                $maxTanggal = Carbon::parse($stok_keluar->max('tanggal_keluar'));
-                                            
-                                                if ($minTanggal->eq($maxTanggal)) {
-                                                    $tanggalDisplay = $minTanggal->translatedFormat('d F Y');
-                                                } else {
-                                                    $tanggalDisplay = $minTanggal->translatedFormat('d F Y') . ' — ' . $maxTanggal->translatedFormat('d F Y');
-                                                }
-                                            } else {
-                                                $tanggalDisplay = '-';
-                                            }
-                                        }
                                     @endphp
                                     <!-- === Section Info Dapur === -->
                                     <div class="section-info">
                                         <div class="info-card">
                                             <h4>Nama Dapur : <span style="color:#2563eb;">{{ $namaDapur }}</span></h4>
-                                            <p>Tanggal : <strong>{{ $tanggalDisplay }}</strong></p>
+                                            <p>
+                                                Tanggal :
+                                                <strong>
+                                                    {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
+                                                </strong>
+                                            </p>
                                         </div>
                                     </div>
 
@@ -278,36 +262,42 @@
                                                 </thead>
                                                 <tbody>
                                                     @php $no = 1; @endphp
-                                                    @foreach($stok_keluar->groupBy('nama_bahan') as $namaBahan => $items)
-                                                        @php
-                                                            $satuan = $items->first()->satuan_bahan ?? '-';
-                                                            $total_keluar = $items->sum('jumlah_keluar');
-                                                            $stokMasukBahan = $stok_masuk->where('nama_bahan', $namaBahan);
-                                                            $tanggalKeluarPertama = $items->min('tanggal_keluar');
-                                                            $total_masuk = $tanggalKeluarPertama
-                                                                ? $stokMasukBahan->where('tanggal_masuk', $tanggalKeluarPertama)->sum('jumlah_masuk')
-                                                                : 0;
-                                                            $stokSebelumnya = $stokMasukBahan
-                                                                ->filter(fn($m)=>!empty($m->tanggal_masuk))
-                                                                ->where('tanggal_masuk', '<', $tanggalKeluarPertama)
-                                                                ->sortByDesc('tanggal_masuk')
-                                                                ->first();
-                                                            $stok_awal = $stokSebelumnya->jumlah_masuk ?? 0;
-                                                            $stok_akhir = $stok_awal + $total_masuk - $total_keluar;
-                                                        @endphp
 
-                                                        <tr @if($stok_akhir <= 0) class="table-warning" @endif>
-                                                            <td style="text-align: center; vertical-align: middle;">{{ $no++ }}</td>
-                                                            <td>{{ $namaBahan }}</td>
-                                                            <td>{{ $satuan }}</td>
-                                                            <td>{{ $stok_awal }}</td>
-                                                            <td>{{ $total_masuk }}</td>
-                                                            <td>{{ $total_keluar }}</td>
-                                                            <td>{{ $stok_akhir }}</td>
-                                                            <td style="text-align: center; vertical-align: middle;"><span class="badge bg-warning">Menunggu</span></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><a href="/kepala_dapur/stok/{{ $namaBahan }}/detail" class="btn-status btn-validasi">Validasi</a></td>
+                                                    @forelse($data_stok as $row)
+                                                        <tr @if($row['akhir'] <= 0) class="table-warning" @endif>
+                                                            <td style="text-align: center;">{{ $no++ }}</td>
+                                                            <td>{{ $row['nama_bahan'] }}</td>
+                                                            <td>{{ $row['satuan'] }}</td>
+
+                                                            {{-- ✅ STOK AWAL (H-1) --}}
+                                                            <td>{{ $row['awal'] }}</td>
+
+                                                            {{-- ✅ STOK MASUK (HARI INI) --}}
+                                                            <td>{{ $row['masuk'] }}</td>
+
+                                                            {{-- ✅ STOK KELUAR (HARI INI) --}}
+                                                            <td>{{ $row['keluar'] }}</td>
+
+                                                            {{-- ✅ STOK AKHIR (AWAL + MASUK - KELUAR) --}}
+                                                            <td>{{ $row['akhir'] }}</td>
+
+                                                            {{-- VALIDASI (tetap) --}}
+                                                            <td style="text-align: center;">
+                                                                <span class="badge bg-warning">Menunggu</span>
+                                                            </td>
+
+                                                            {{-- AKSI (tetap) --}}
+                                                            <td style="text-align: center;">
+                                                                <a href="#" class="btn-status btn-validasi">Validasi</a>
+                                                            </td>
                                                         </tr>
-                                                    @endforeach
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="9" class="text-center text-muted">
+                                                                Data stok tidak tersedia untuk tanggal ini.
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
                                                 </tbody>
                                             </table>
                                         </div>
