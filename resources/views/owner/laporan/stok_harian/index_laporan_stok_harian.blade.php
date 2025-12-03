@@ -252,7 +252,6 @@
                                                         <th rowspan="2">Awal</th>
                                                         <th colspan="2">Stok</th>
                                                         <th rowspan="2">Akhir</th>
-                                                        <th rowspan="2">Validasi</th>
                                                         <th rowspan="2">Aksi</th>
                                                     </tr>
                                                     <tr>
@@ -266,12 +265,13 @@
                                                             <td style="text-align:center;">{{ $loop->iteration }}</td>
                                                             <td>{{ $row['nama_bahan'] }}</td>
                                                             <td style="text-align:center;">{{ $row['satuan'] }}</td>
-                                                            <td style="text-align:right;">{{ number_format($row['stok_awal'], 0, ',', '.') }}</td>
-                                                            <td style="text-align:right;">{{ number_format($row['masuk'], 0, ',', '.') }}</td>
-                                                            <td style="text-align:right;">{{ number_format($row['keluar'], 0, ',', '.') }}</td>
-                                                            <td style="text-align:right; font-weight:bold;">
+                                                            <td style="text-align:left;">{{ number_format($row['stok_awal'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:left;">{{ number_format($row['masuk'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:left;">{{ number_format($row['keluar'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:left; font-weight:bold;">
                                                                 {{ number_format($row['stok_akhir'], 0, ',', '.') }}
                                                             </td>
+                                                            <td></td>
                                                         </tr>
                                                     @empty
                                                         <tr>
