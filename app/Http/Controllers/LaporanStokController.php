@@ -290,48 +290,50 @@ class LaporanStokController extends Controller
             ->get()
             ->groupBy('id_bahan');
             
-        // =======================
-        // STOK KELUAR HARI INI
-        // =======================
-        $stok_keluar_hari_ini = DB::table('stok_keluar')
-            ->whereDate('tanggal_keluar', $tanggal)
-            ->where('nomor_dapur_stok_keluar', $nomor_dapur)
-            ->get()
-            ->groupBy('id_bahan');
+        // pastikan semua collection sudah di-keyBy id_bahan untuk konsistensi
+        $stok_awal_masuk = $stok_awal_masuk->keyBy('id_bahan');
+        $stok_awal_keluar = $stok_awal_keluar->keyBy('id_bahan');
+        $stok_masuk_hari_ini = $stok_masuk_hari_ini->keyBy('id_bahan');
+        $stok_keluar_hari_ini = $stok_keluar_hari_ini->keyBy('id_bahan');
             
-        // =======================
-        // AMBIL SEMUA BAHAN YANG TERLIBAT
-        // =======================
+        // kumpulkan semua id_bahan yang terlibat (id numerik)
         $semua_bahan = collect()
             ->merge($stok_awal_masuk->keys())
             ->merge($stok_awal_keluar->keys())
             ->merge($stok_masuk_hari_ini->keys())
             ->merge($stok_keluar_hari_ini->keys())
-            ->unique();
+            ->map(function($k){ return (int) $k; })
+            ->unique()
+            ->values();
             
-        // =======================
-        // BENTUK DATA LAPORAN FINAL
-        // =======================
         $data_laporan = [];
             
         foreach ($semua_bahan as $id_bahan) {
-            $awal_masuk  = $stok_awal_masuk[$id_bahan]->total ?? 0;
-            $awal_keluar = $stok_awal_keluar[$id_bahan]->total ?? 0;
+            $awal_masuk_obj  = $stok_awal_masuk->get($id_bahan);
+            $awal_keluar_obj = $stok_awal_keluar->get($id_bahan);
         
-            $stok_awal   = $awal_masuk - $awal_keluar;
-            $stok_masuk  = $stok_masuk_hari_ini[$id_bahan]->sum('jumlah_masuk') ?? 0;
-            $stok_keluar = $stok_keluar_hari_ini[$id_bahan]->sum('jumlah_keluar') ?? 0;
+            $awal_masuk_total  = $awal_masuk_obj->total ?? 0;
+            $awal_keluar_total = $awal_keluar_obj->total ?? 0;
         
-            $stok_akhir  = $stok_awal + $stok_masuk - $stok_keluar;
+            $stok_awal = $awal_masuk_total - $awal_keluar_total;
+        
+            $masuk_group = $stok_masuk_hari_ini->get($id_bahan);
+            $keluar_group = $stok_keluar_hari_ini->get($id_bahan);
+        
+            $stok_masuk_hari = $masuk_group ? $masuk_group->sum('jumlah_masuk') : 0;
+            $stok_keluar_hari = $keluar_group ? $keluar_group->sum('jumlah_keluar') : 0;
+        
+            $stok_akhir = $stok_awal + $stok_masuk_hari - $stok_keluar_hari;
         
             $bahan = DB::table('bahan')->where('id_bahan', $id_bahan)->first();
         
             $data_laporan[] = [
-                'nama_bahan'  => $bahan->nama_bahan ?? '-',
+                'id_bahan'    => $id_bahan,
+                'nama_bahan'  => $bahan->nama_bahan ?? ('ID-'.$id_bahan),
                 'satuan'      => $bahan->satuan_bahan ?? '-',
                 'stok_awal'   => $stok_awal,
-                'masuk'       => $stok_masuk,
-                'keluar'      => $stok_keluar,
+                'masuk'       => $stok_masuk_hari,
+                'keluar'      => $stok_keluar_hari,
                 'stok_akhir'  => $stok_akhir,
             ];
         }
