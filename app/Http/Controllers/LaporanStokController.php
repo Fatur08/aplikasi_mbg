@@ -307,7 +307,7 @@ class LaporanStokController extends Controller
         $stok_awal_keluar = $stok_awal_keluar->keyBy('id_bahan');
         $stok_masuk_hari_ini = $stok_masuk_hari_ini->keyBy('id_bahan');
         $stok_keluar_hari_ini = $stok_keluar_hari_ini->keyBy('id_bahan');
-
+            
         // kumpulkan semua id_bahan yang terlibat (id numerik)
         $semua_bahan = collect()
             ->merge($stok_awal_masuk->keys())
@@ -317,9 +317,9 @@ class LaporanStokController extends Controller
             ->map(function($k){ return (int) $k; })
             ->unique()
             ->values();
-
+            
         $data_laporan = [];
-
+            
         foreach ($semua_bahan as $id_bahan) {
             $awal_masuk_obj  = $stok_awal_masuk->get($id_bahan);
             $awal_keluar_obj = $stok_awal_keluar->get($id_bahan);
