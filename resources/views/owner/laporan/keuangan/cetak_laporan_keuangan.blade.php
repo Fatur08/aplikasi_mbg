@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Laporan Keuangan</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -74,7 +75,7 @@
         }
     </style>
 </head>
-<body onload="window.print()">
+<body>
 
     <div class="header" style="text-align:center; margin-bottom:20px;">
         <h2 style="margin:0;">LAPORAN KEUANGAN</h2>
@@ -96,6 +97,14 @@
         <strong>Sisa Seluruh Dana : Rp {{ number_format($sisa_dana, 0, ',', '.') }}</strong>
     </div>
 
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
+                <canvas id="koperasiChart" height="340"></canvas>
+            </div>
+        </div>
+    </div>
 
     
 
@@ -219,6 +228,52 @@
             }
         }
     </style>
+
+    <script>
+        let koperasiData = @json($data);
+        
+        const labels      = koperasiData.map(item => item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal');
+        const modalMasuk  = koperasiData.map(item => item.total_pemasukan);
+        const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
+        const margin      = koperasiData.map(item => item.margin);
+        
+        const ctxBar = document.getElementById('koperasiChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Pemasukan',
+                        data: modalMasuk,
+                        backgroundColor: 'rgba(0, 76, 255, 1)'
+                    },
+                    {
+                        label: 'Pengeluaran',
+                        data: modalKeluar,
+                        backgroundColor: 'rgba(255, 0, 0, 0.7)'
+                    },
+                    {
+                        label: 'Margin',
+                        data: margin,
+                        backgroundColor: 'rgba(47, 255, 0, 0.7)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { font: { size: 14 } } }
+                }
+            }
+        });
+    
+        // ✅ PRINT SETELAH GRAFIK SELESAI DIRAWAT
+        setTimeout(() => {
+            window.print();
+        }, 1000);
+    </script>
 
 </body>
 </html>
