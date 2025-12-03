@@ -152,15 +152,13 @@
                     $ada_supplier = $data_per_tanggal->contains('id_informasi_supplier', '!=', null);
                 @endphp
     
-                <tr style="text-align: center; vertical-align: middle;">
-                    <td>{{ $loop->iteration }}</td>
+                <tr>
+                    <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>
                     <td>{{ $tanggal }}</td>
-                    {{-- kolom koperasi --}}
-                    <td>
+                    <td style="text-align: center; vertical-align: middle;">
                         {{ ($ada_koperasi && !$ada_supplier) ? '✅' : '' }}
-                    </td>
-                                                        
-                    <td>
+                    </td>                         
+                    <td style="text-align: center; vertical-align: middle;">
                         {{ ($ada_koperasi && $ada_supplier) ? '✅' : '' }}
                     </td>
                     <td class="text-success">
