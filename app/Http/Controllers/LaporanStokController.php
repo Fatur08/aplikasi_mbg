@@ -282,23 +282,26 @@ class LaporanStokController extends Controller
             ->keyBy('id_bahan');
             
         // =======================
-        // STOK MASUK HARI INI
+        // STOK MASUK HARI INI (FIX)
         // =======================
         $stok_masuk_hari_ini = DB::table('stok_masuk')
             ->whereDate('tanggal_masuk', $tanggal)
             ->where('nomor_dapur_stok_masuk', $nomor_dapur)
+            ->select('id_bahan', DB::raw('SUM(jumlah_masuk) as total'))
+            ->groupBy('id_bahan')
             ->get()
-            ->groupBy('id_bahan');
-
+            ->keyBy('id_bahan');
 
         // =======================
-        // STOK KELUAR HARI INI
+        // STOK KELUAR HARI INI (FIX)
         // =======================
         $stok_keluar_hari_ini = DB::table('stok_keluar')
             ->whereDate('tanggal_keluar', $tanggal)
             ->where('nomor_dapur_stok_keluar', $nomor_dapur)
+            ->select('id_bahan', DB::raw('SUM(jumlah_keluar) as total'))
+            ->groupBy('id_bahan')
             ->get()
-            ->groupBy('id_bahan');
+            ->keyBy('id_bahan');
         
 
             
@@ -307,19 +310,19 @@ class LaporanStokController extends Controller
         $stok_awal_keluar = $stok_awal_keluar->keyBy('id_bahan');
         $stok_masuk_hari_ini = $stok_masuk_hari_ini->keyBy('id_bahan');
         $stok_keluar_hari_ini = $stok_keluar_hari_ini->keyBy('id_bahan');
-            
+
         // kumpulkan semua id_bahan yang terlibat (id numerik)
         $semua_bahan = collect()
             ->merge($stok_awal_masuk->keys())
             ->merge($stok_awal_keluar->keys())
             ->merge($stok_masuk_hari_ini->keys())
             ->merge($stok_keluar_hari_ini->keys())
-            ->map(function($k){ return (int) $k; })
+            ->filter(fn($id) => $id > 0)   // ✅ buang ID 0 / null
             ->unique()
             ->values();
-            
+
         $data_laporan = [];
-            
+
         foreach ($semua_bahan as $id_bahan) {
             $awal_masuk_obj  = $stok_awal_masuk->get($id_bahan);
             $awal_keluar_obj = $stok_awal_keluar->get($id_bahan);
@@ -329,11 +332,8 @@ class LaporanStokController extends Controller
         
             $stok_awal = $awal_masuk_total - $awal_keluar_total;
         
-            $masuk_group = $stok_masuk_hari_ini->get($id_bahan);
-            $keluar_group = $stok_keluar_hari_ini->get($id_bahan);
-        
-            $stok_masuk_hari = $masuk_group ? $masuk_group->sum('jumlah_masuk') : 0;
-            $stok_keluar_hari = $keluar_group ? $keluar_group->sum('jumlah_keluar') : 0;
+            $stok_masuk_hari = $stok_masuk_hari_ini->get($id_bahan)->total ?? 0;
+            $stok_keluar_hari = $stok_keluar_hari_ini->get($id_bahan)->total ?? 0;
         
             $stok_akhir = $stok_awal + $stok_masuk_hari - $stok_keluar_hari;
         
