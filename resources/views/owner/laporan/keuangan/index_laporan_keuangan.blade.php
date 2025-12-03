@@ -416,6 +416,43 @@
             }
         });
 
+
+        $("#cetak_laporan_keuangan").click(function(e){
+            e.preventDefault(); // Mencegah langsung pindah halaman
+                
+            var pilih_bulan = $("#pilih_bulan").val();
+            var pilih_dapur = $("#pilih_dapur").val();
+                
+            if(pilih_bulan == ""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Bulan Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then(()=> {
+                    $("#pilih_bulan").focus();
+                });
+                return false;
+            
+            } else if(pilih_dapur == ""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Dapur Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then(()=> {
+                    $("#pilih_dapur").focus();
+                });
+                return false;
+            }
+        
+            // ✅ JIKA SUDAH LENGKAP, BARU BUKA HALAMAN CETAK
+            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?pilih_bulan=${pilih_bulan}&pilih_dapur=${pilih_dapur}`;
+            window.open(url, '_blank');
+        });
+
+
+
         flatpickr("#dari_tanggal", {
             dateFormat: "d F Y", // format tampilan: 15 September 2025
             altInput: true,
@@ -431,18 +468,9 @@
         });
     });
 
-    document.getElementById("cetak_laporan_keuangan").addEventListener("click", function() {
-        let bulan = document.getElementById("pilih_bulan").value;
-        let dapur = document.getElementById("pilih_dapur").value;
-
-        let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?bulan=${bulan}&dapur=${dapur}`;
-        window.open(url, "_blank");
-    });
 
 
-
-
-
+    
 
 
 
