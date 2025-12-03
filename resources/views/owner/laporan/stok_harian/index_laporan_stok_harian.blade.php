@@ -261,19 +261,23 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @forelse ($data_laporan as $no => $row)
+                                                    @forelse($data_laporan as $no => $row)
                                                         <tr>
-                                                            <td>{{ $no + 1 }}</td>
+                                                            <td style="text-align:center;">{{ $loop->iteration }}</td>
                                                             <td>{{ $row['nama_bahan'] }}</td>
-                                                            <td class="text-center">{{ $row['satuan'] }}</td>
-                                                            <td class="text-end">{{ number_format($row['stok_awal']) }}</td>
-                                                            <td class="text-end">{{ number_format($row['masuk']) }}</td>
-                                                            <td class="text-end">{{ number_format($row['keluar']) }}</td>
-                                                            <td class="text-end fw-bold">{{ number_format($row['stok_akhir']) }}</td>
+                                                            <td style="text-align:center;">{{ $row['satuan'] }}</td>
+                                                            <td style="text-align:right;">{{ number_format($row['stok_awal'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:right;">{{ number_format($row['masuk'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:right;">{{ number_format($row['keluar'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:right; font-weight:bold;">
+                                                                {{ number_format($row['stok_akhir'], 0, ',', '.') }}
+                                                            </td>
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="7" class="text-center">Tidak ada data stok</td>
+                                                            <td colspan="7" style="text-align:center; color:red;">
+                                                                Tidak ada data stok pada tanggal ini
+                                                            </td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>
