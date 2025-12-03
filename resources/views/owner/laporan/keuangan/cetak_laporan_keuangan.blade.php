@@ -69,7 +69,7 @@
         @media print {
             @page {
                 size: F4 portrait;
-                margin: 1.5cm 1cm;
+                margin: 1cm 1cm;
             }
         }
     </style>
@@ -154,7 +154,7 @@
     
                 <tr>
                     <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>
-                    <td>{{ $tanggal }}</td>
+                    <td>{{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}</td>
                     <td style="text-align: center; vertical-align: middle;">
                         {{ ($ada_koperasi && !$ada_supplier) ? '✅' : '' }}
                     </td>                         
