@@ -363,7 +363,7 @@ class LaporanStokController extends Controller
             ->get();
     
         return view('owner.laporan.stok_harian.index_laporan_stok_harian', compact(
-            'data_stok',
+            'data_laporan',
             'dapurList',
             'nomor_dapur',
             'tanggal'
