@@ -466,16 +466,12 @@ class LaporanStokController extends Controller
             'stok_masuk',
             'stok_keluar',
             'stok_limit',
-            'dapurs',
-            'bahan',
             'dataKosong',
             'sudahCari',
-            'nama_bahan_filter',
             'total_sisa_keseluruhan',
             'sisa_perbahan',
             'dapurList',
-            'nomor_dapur',
-            'pilih_tanggal'
+            'nomor_dapur'
         ));
     }
 
