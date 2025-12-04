@@ -273,7 +273,7 @@
                                                         <td>{{ $item->jumlah_porsi_menu_harian }}</td>
                                                         <td style="text-align: center; width:25%"> 
                                                             <div class="align-items-center">
-                                                                <a href="#" class="lihat_bahan_terpakai btn btn-info btn-sm" data-id="{{ $menu->id_jadwal_menu_harian }}">
+                                                                <a href="#" class="lihat_bahan_terpakai btn btn-info btn-sm" data-id="{{ $item->id_jadwal_menu_harian }}">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                                         stroke-linecap="round" stroke-linejoin="round"
@@ -289,7 +289,7 @@
                                                         </td>
                                                         <td style="text-align: center; width:25%"> 
                                                             <div class="align-items-center">
-                                                                <a href="#" class="lihat_kendala btn btn-info btn-sm" data-id="{{ $menu->id_jadwal_menu_harian }}">
+                                                                <a href="#" class="lihat_kendala btn btn-info btn-sm" data-id="{{ $item->id_jadwal_menu_harian }}">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                                         stroke-linecap="round" stroke-linejoin="round"
