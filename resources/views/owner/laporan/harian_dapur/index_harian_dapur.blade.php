@@ -405,7 +405,7 @@
                                         <tr>
                                             <th colspan="7">
                                                 Nama Menu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                                {{ $menus->first()->nama_menu_harian ?? '-' }}
+                                                
                                             </th>
                                         </tr>
                                         <tr>
