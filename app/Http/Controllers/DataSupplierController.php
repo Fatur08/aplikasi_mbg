@@ -559,8 +559,11 @@ class DataSupplierController extends Controller
 
     public function store_owner_barang_supplier(Request $request)
     {
-        $nomor_dapur = 1;
         $id_informasi_supplier = $request->id;
+        $nomor_dapur = DB::table('informasi_supplier')
+            ->where('id_informasi_supplier', $id_informasi_supplier)
+            ->value('nomor_dapur_informasi_supplier');
+
         $tanggal_hari_ini = date('Y-m-d');
 
         // Daftar input barang dari form
@@ -617,10 +620,6 @@ class DataSupplierController extends Controller
                 ->where('id_informasi_supplier', $id_informasi_supplier)
                 ->update(['status_informasi_supplier' => 0]);
 
-            // Hitung total harga barang yang dimasukkan hari ini untuk nomor dapur & informasi supplier terkait
-            $totalHariIni = BarangSupplier::where('nomor_dapur_barang_supplier', $nomor_dapur)
-                ->sum(DB::raw('harga_barang_supplier'));
-
             // Cek apakah sudah ada data koperasi hari ini
             $dataKoperasi = DB::table('data_koperasi')
                 ->where('nomor_dapur_data_koperasi', $nomor_dapur)
@@ -628,11 +627,9 @@ class DataSupplierController extends Controller
                 ->first();
 
             if ($dataKoperasi) {
-                // Jika sudah ada → update total harga (harga_data_koperasi)
                 DB::table('data_koperasi')
                     ->where('id_data_koperasi', $dataKoperasi->id_data_koperasi)
                     ->update([
-                        'harga_data_koperasi' => $totalHariIni,
                         'status_data_koperasi' => 0
                     ]);
             } else {
@@ -641,9 +638,8 @@ class DataSupplierController extends Controller
                     'id_informasi_supplier' => $id_informasi_supplier,
                     'nomor_dapur_data_koperasi' => $nomor_dapur,
                     'tanggal_data_koperasi' => $tanggal_hari_ini,
-                    'jenis_data_koperasi' => 'Pengeluaran',
+                    'jenis_data_koperasi' => 'modal_keluar',
                     'kategori_data_koperasi' => 'Pembelian bahan dari supplier',
-                    'harga_data_koperasi' => $totalHariIni,
                     'status_data_koperasi' => 0,
                 ]);
             }
