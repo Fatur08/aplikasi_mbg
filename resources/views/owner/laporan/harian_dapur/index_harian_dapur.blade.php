@@ -266,6 +266,31 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @forelse($jadwal_menu_harian as $item)
+                                                    <tr class="text-center">
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $item->nama_menu_harian }}</td>
+                                                        <td>{{ $item->jumlah_porsi_menu_harian }}</td>
+                                                        <td>{{ $item->bahan ?? '-' }}</td>
+                                                        <td>{{ $item->kendala ?? '-' }}</td>
+                                                        <td>
+                                                            @if($item->status_jadwal_menu_harian == 1)
+                                                                <span class="badge bg-success">Selesai</span>
+                                                            @else
+                                                                <span class="badge bg-warning">Belum</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-sm btn-info">Detail</a>
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="7" class="text-center text-danger">
+                                                            Tidak ada data laporan pada tanggal ini
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
