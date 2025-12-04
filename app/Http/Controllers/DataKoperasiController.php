@@ -401,55 +401,69 @@ class DataKoperasiController extends Controller
 
     public function update_validasi_owner_data_koperasi($id, Request $request)
     {
-        $id = $request->id;
+        $id = $request->id; 
         $status_data_koperasi = $request->status_data_koperasi;
-
+    
+        DB::beginTransaction();
+    
         try {
-            // Ambil data koperasi berdasarkan id
-            $koperasi = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
-
+            // ✅ 1. Ambil data koperasi berdasarkan id_data_koperasi
+            $koperasi = DB::table('data_koperasi')
+                ->where('id_data_koperasi', $id)
+                ->first();
+        
             if (!$koperasi) {
                 return Redirect::back()->with(['error' => 'Data koperasi tidak ditemukan']);
             }
-
-            // Update status validasi
+        
+            // ✅ 2. Update status_data_koperasi
             DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
-                ->update(['status_data_koperasi' => $status_data_koperasi]);
+                ->update([
+                    'status_data_koperasi' => $status_data_koperasi
+                ]);
+            
+            // ✅ 3. Update status_informasi_supplier juga (1 atau 2 mengikuti status_koperasi)
+            if (!empty($koperasi->id_informasi_supplier)) {
+                DB::table('informasi_supplier')
+                    ->where('id_informasi_supplier', $koperasi->id_informasi_supplier)
+                    ->update([
+                        'status_informasi_supplier' => $status_data_koperasi
+                    ]);
+            }
+        
+            // ✅ 4. Proses keuangan jika status = 1 ATAU 2
+            if (in_array($status_data_koperasi, [1, 2])) {
 
-            // Jika status validasi adalah "disetujui" atau valid (silakan sesuaikan kondisi jika perlu)
-            if ($status_data_koperasi == 1) {
-
-                // Tentukan jenis transaksi
-                $jenisTransaksi = null;
-                if ($koperasi->jenis_data_koperasi == 'modal_masuk') {
-                    $jenisTransaksi = 'Pemasukan';
-                } elseif ($koperasi->jenis_data_koperasi == 'modal_keluar') {
-                    $jenisTransaksi = 'Pengeluaran';
-                }
-
-                // Cek apakah data keuangan untuk id_data_koperasi ini sudah ada (agar tidak duplikat)
+                // Cek apakah data keuangan sudah ada
                 $cekKeuangan = DB::table('keuangan')
                     ->where('id_data_koperasi', $id)
                     ->first();
-
+            
                 if (!$cekKeuangan) {
-                    // Insert data baru ke tabel keuangan
+                    // ✅ Insert keuangan hanya jika belum ada
                     DB::table('keuangan')->insert([
                         'id_data_koperasi' => $koperasi->id_data_koperasi,
                         'id_informasi_supplier' => $koperasi->id_informasi_supplier ?? null,
                         'nomor_dapur_keuangan' => $koperasi->nomor_dapur_data_koperasi,
                         'tanggal_laporan_keuangan' => $koperasi->tanggal_data_koperasi,
-                        'jenis_transaksi' => $jenisTransaksi,
+                        'jenis_transaksi' => $koperasi->jenis_data_koperasi,
                     ]);
                 }
             }
-
-            return Redirect::back()->with(['success' => 'Data Berhasil Divalidasi dan Disimpan ke Keuangan']);
-
+        
+            DB::commit();
+        
+            return Redirect::back()->with([
+                'success' => 'Status koperasi & supplier berhasil diperbarui dan data keuangan diproses'
+            ]);
+        
         } catch (\Exception $e) {
-            // dd($e);
-            return Redirect::back()->with(['error' => 'Data Gagal Divalidasi: ' . $e->getMessage()]);
+            DB::rollBack();
+        
+            return Redirect::back()->with([
+                'error' => 'Data Gagal Divalidasi: ' . $e->getMessage()
+            ]);
         }
     }
 
@@ -457,50 +471,50 @@ class DataKoperasiController extends Controller
     public function batalkan_validasi_owner_data_koperasi($id, Request $request)
     {
         $id = $request->id; // id_data_koperasi
-    
+
         DB::beginTransaction();
-    
+
         try {
             // ✅ 1. Ambil data koperasi berdasarkan id_data_koperasi
             $dataKoperasi = DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
                 ->first();
-        
+
             if (!$dataKoperasi) {
                 return Redirect::back()->with(['error' => 'Data koperasi tidak ditemukan']);
             }
-        
+
             // ✅ 2. Ambil id_informasi_supplier dari data koperasi
             $id_informasi_supplier = $dataKoperasi->id_informasi_supplier;
-        
+
             // ✅ 3. Update status_data_koperasi jadi 0
             DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
                 ->update([
                     'status_data_koperasi' => 0
                 ]);
-            
+
             // ✅ 4. Update status_informasi_supplier jadi 0
             DB::table('informasi_supplier')
                 ->where('id_informasi_supplier', $id_informasi_supplier)
                 ->update([
                     'status_informasi_supplier' => 0
                 ]);
-            
+
             // ✅ 5. Hapus data keuangan yang terkait
             DB::table('keuangan')
                 ->where('id_data_koperasi', $id)
                 ->delete();
-            
+
             DB::commit();
-            
+
             return Redirect::back()->with([
                 'success' => 'Validasi berhasil dibatalkan, status supplier diperbarui, dan data keuangan dihapus'
             ]);
-        
+
         } catch (\Exception $e) {
             DB::rollBack();
-        
+
             return Redirect::back()->with([
                 'error' => 'Terjadi kesalahan: ' . $e->getMessage()
             ]);
