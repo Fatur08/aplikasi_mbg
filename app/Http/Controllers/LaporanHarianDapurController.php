@@ -50,7 +50,16 @@ class LaporanHarianDapurController extends Controller
             ->select('id_menu_harian', 'nama_menu_harian')
             ->get();
 
-        return view('owner.laporan.harian_dapur.index_harian_dapur', compact('jadwal_menu_harian', 'nomor_dapur', 'menu_harian'));
+
+
+
+        // Ambil semua data dapur
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
+
+        return view('owner.laporan.harian_dapur.index_harian_dapur', compact('jadwal_menu_harian', 'nomor_dapur', 'menu_harian', 'dapurList'));
     }
 
 

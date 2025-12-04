@@ -73,7 +73,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <div class="input-icon">
+                                                <div class="form-group">
                                                     <select name="pilih_dapur" id="pilih_dapur" class="form-select">
                                                         <option value="">Pilih Dapur</option>
                                                         @foreach($dapurList as $dapur)
