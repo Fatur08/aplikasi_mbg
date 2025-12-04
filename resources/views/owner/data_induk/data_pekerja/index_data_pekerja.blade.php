@@ -1,5 +1,126 @@
 @extends('layouts.owner.tabler')
 @section('content')
+<style>
+/* === Section Info Dapur === */
+.section-info {
+    margin-top: 40px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+.info-card {
+    display: inline-block;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    padding: 25px 40px;
+    border: 1px solid #e5e7eb;
+    transition: 0.2s;
+}
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.info-card h4 {
+    color: #111827;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+.info-card p {
+    color: #6b7280;
+    margin: 0;
+    font-size: 18px;
+}
+
+/* === Table Style === */
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+}
+
+.custom-table thead th {
+    background: linear-gradient(135deg, #007bff, #00bcd4);
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    padding: 12px;
+    border: none;
+}
+
+.custom-table thead tr:first-child th {
+    background: linear-gradient(135deg, #0069d9, #17a2b8);
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.custom-table tbody td, 
+.custom-table tbody th {
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #dee2e6;
+    font-size: 16px;
+    color: #333;
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #e9f5ff;
+    transition: 0.3s;
+}
+
+.table-container {
+    max-width: 1600px;
+}
+
+/* === Buttons === */
+.btn-status {
+    font-size: 13px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    border: none;
+    color: #fff;
+}
+.btn-menunggu {
+    background-color: #facc15;
+    color: #111827;
+}
+.btn-validasi {
+    background-color: #38bdf8;
+}
+.btn-menunggu:hover {
+    background-color: #eab308;
+}
+.btn-validasi:hover {
+    background-color: #0ea5e9;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .info-card {
+        width: 100%;
+        padding: 20px;
+    }
+    .info-card h4 {
+        font-size: 18px;
+    }
+    .table-modern {
+        font-size: 13px;
+    }
+}
+</style>
 <div class="page-header d-print-none">
     <div class="container-xl">
         <div class="row g-2 align-items-center">
@@ -116,91 +237,95 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row mt-2 table-container">
                             <div class="col-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align:center">No.</th>
-                                            <th style="text-align:center">Nama</th>
-                                            <th style="text-align:center">Dapur</th>
-                                            <th style="text-align:center">Peran</th>
-                                            <th style="text-align:center">No. HP</th>
-                                            <th style="text-align:center">Foto</th>
-                                            <th style="text-align:center">KTP</th>
-                                            <th style="text-align:center">Validasi</th>
-                                            <th style="text-align:center">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data_pekerja as $d)
-                                        @php
-                                            $path = Storage::url('uploads/data_induk/data_pekerja/foto/'.$d->foto_data_pekerja);
-                                        @endphp
-                                        <tr>
-                                            <td style="text-align:center">{{ $loop->iteration + $data_pekerja->firstItem()-1 }}</td>
-                                            <td>{{ $d->nama_data_pekerja }}</td>
-                                            <td>{{ $d->nama_dapur ?? '-' }}</td>
-                                            <td>{{ $d->peran_data_pekerja }}</td>
-                                            <td>{{ $d->no_hp_data_pekerja }}</td>
-                                            <td style="text-align:center">
-                                                @if (empty($d->foto_data_pekerja))
-                                                <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
-                                                @else
-                                                <img src="{{ url($path) }}" class="avatar" alt="">
-                                                @endif
-                                            </td>
-                                            <td style="text-align:center"> 
-                                                <a href="#" class="ktp_data_pekerja btn btn-info btn-sm" id="{{ $d->id_data_pekerja }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
-                                                                 c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                                                    </svg>
-                                                    <span>Lihat</span>
-                                                </a>
-                                            </td>
-                                            <td style="text-align:center">
-                                                @if($d->status_validasi_data_pekerja == 0)
-                                                    <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                @elseif($d->status_validasi_data_pekerja == 1)
-                                                    <button class="btn btn-success btn-sm">Disetujui</button>
-                                                @elseif($d->status_validasi_data_pekerja == 2)
-                                                    <button class="btn btn-danger btn-sm">Ditolak</button>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    @if ($d->status_validasi_data_pekerja==0)
-                                                    <a href="#" class="status_validasi_data_pekerja btn btn-info btn-sm" id="{{ $d->id_data_pekerja }}" >
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                        Validasi
-                                                    </a>
-                                                    @else
-                                                    <a href="/owner/data_induk/data_pekerja/{{ $d->id_data_pekerja }}/batalkan_status_validasi_data_pekerja" class="btn btn-sm bg-danger">
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10l4 4m0 -4l-4 4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
-                                                        Batalkan
-                                                    </a>
-                                                    @endif
-                                                    <!--<a href="#" class="edit_data_pekerja btn btn-info btn-sm" id="{{ $d->id_data_pekerja }}" >
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                    </a>
-                                                    <form action="/owner/data_induk/data_pekerja/{{ $d->id_data_pekerja }}/delete_data_pekerja" style="margin-left: 5px;" method="POST">
-                                                        @csrf
-                                                        <a class="btn btn-danger btn-sm delete-confirm-data_pekerja" >
-                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                <div class="table-wrapper">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:center">No.</th>
+                                                    <th style="text-align:center">Nama</th>
+                                                    <th style="text-align:center">Dapur</th>
+                                                    <th style="text-align:center">Peran</th>
+                                                    <th style="text-align:center">No. HP</th>
+                                                    <th style="text-align:center">Foto</th>
+                                                    <th style="text-align:center">KTP</th>
+                                                    <th style="text-align:center">Validasi</th>
+                                                    <th style="text-align:center">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data_pekerja as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_induk/data_pekerja/foto/'.$d->foto_data_pekerja);
+                                                @endphp
+                                                <tr>
+                                                    <td style="text-align:center">{{ $loop->iteration + $data_pekerja->firstItem()-1 }}</td>
+                                                    <td>{{ $d->nama_data_pekerja }}</td>
+                                                    <td>{{ $d->nama_dapur ?? '-' }}</td>
+                                                    <td>{{ $d->peran_data_pekerja }}</td>
+                                                    <td>{{ $d->no_hp_data_pekerja }}</td>
+                                                    <td style="text-align:center">
+                                                        @if (empty($d->foto_data_pekerja))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center"> 
+                                                        <a href="#" class="ktp_data_pekerja btn btn-info btn-sm" id="{{ $d->id_data_pekerja }}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
+                                                                         c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                            </svg>
+                                                            <span>Lihat</span>
                                                         </a>
-                                                    </form>-->
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @if($d->status_validasi_data_pekerja == 0)
+                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                        @elseif($d->status_validasi_data_pekerja == 1)
+                                                            <button class="btn btn-success btn-sm">Disetujui</button>
+                                                        @elseif($d->status_validasi_data_pekerja == 2)
+                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            @if ($d->status_validasi_data_pekerja==0)
+                                                            <a href="#" class="status_validasi_data_pekerja btn btn-info btn-sm" id="{{ $d->id_data_pekerja }}" >
+                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                Validasi
+                                                            </a>
+                                                            @else
+                                                            <a href="/owner/data_induk/data_pekerja/{{ $d->id_data_pekerja }}/batalkan_status_validasi_data_pekerja" class="btn btn-sm bg-danger">
+                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10l4 4m0 -4l-4 4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                                                                Batalkan
+                                                            </a>
+                                                            @endif
+                                                            <!--<a href="#" class="edit_data_pekerja btn btn-info btn-sm" id="{{ $d->id_data_pekerja }}" >
+                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                            </a>
+                                                            <form action="/owner/data_induk/data_pekerja/{{ $d->id_data_pekerja }}/delete_data_pekerja" style="margin-left: 5px;" method="POST">
+                                                                @csrf
+                                                                <a class="btn btn-danger btn-sm delete-confirm-data_pekerja" >
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                                                </a>
+                                                            </form>-->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {{ $data_pekerja->links('vendor.pagination.bootstrap-5') }}
