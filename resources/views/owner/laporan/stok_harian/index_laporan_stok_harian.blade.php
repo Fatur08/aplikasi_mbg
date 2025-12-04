@@ -260,45 +260,26 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if(count($data_laporan) == 0)
+                                                    @forelse($data_laporan as $no => $row)
+                                                        <tr>
+                                                            <td style="text-align:center;">{{ $loop->iteration }}</td>
+                                                            <td>{{ $row['nama_bahan'] }}</td>
+                                                            <td style="text-align:center;">{{ $row['satuan'] }}</td>
+                                                            <td style="text-align:right;">{{ number_format($row['stok_awal'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:right;">{{ number_format($row['masuk'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:right;">{{ number_format($row['keluar'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:right; font-weight:bold;">
+                                                                {{ number_format($row['stok_akhir'], 0, ',', '.') }}
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    @empty
                                                         <tr>
                                                             <td colspan="8" style="text-align:center; color:red;">
-                                                                Tidak ada data stok pada bulan ini
+                                                                Tidak ada data stok pada tanggal ini
                                                             </td>
                                                         </tr>
-                                                    @else
-                                                        @php $no = 1; @endphp
-                                                        @foreach($data_laporan as $item)
-                                                
-                                                            @php
-                                                                switch($item['keterangan']){
-                                                                    case 'Aman':
-                                                                        $badge = 'bg-success';
-                                                                        break;
-                                                                    case 'Menipis':
-                                                                        $badge = 'bg-warning';
-                                                                        break;
-                                                                    case 'Habis':
-                                                                        $badge = 'bg-danger';
-                                                                        break;
-                                                                    default:
-                                                                        $badge = 'bg-dark';
-                                                                }
-                                                            @endphp
-                                                            
-                                                            <tr>
-                                                                <td class="text-center">{{ $no++ }}</td>
-                                                                <td>{{ $item['nama_bahan'] }}</td>
-                                                                <td>{{ $item['satuan'] }}</td>
-                                                                <td class="text-center">{{ $item['total_masuk'] }}</td>
-                                                                <td class="text-center">{{ $item['total_keluar'] }}</td>
-                                                                <td class="text-center">{{ $item['stok_akhir'] }}</td>
-                                                                <td class="text-center">
-                                                                    <span class="badge {{ $badge }}">{{ $item['keterangan'] }}</span>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
+                                                    @endforelse
                                                 </tbody>
                                             </table>
                                         </div>
