@@ -16,22 +16,22 @@ class LaporanHarianDapurController extends Controller
         $nomor_dapur = $request->pilih_dapur;
         $tanggal     = $request->pilih_tanggal ?? date('Y-m-d');
         $id_menu     = $request->id_menu_harian;
-    
+
         // ✅ Query utama
         $query = DB::table('jadwal_menu_harian')
             ->join('menu_harian', 'jadwal_menu_harian.id_menu_harian', '=', 'menu_harian.id_menu_harian')
             ->whereDate('jadwal_menu_harian.tanggal_jadwal_menu_harian', $tanggal);
-    
+
         // ✅ Filter dapur jika dipilih
         if (!empty($nomor_dapur)) {
             $query->where('jadwal_menu_harian.nomor_dapur_jadwal_menu_harian', $nomor_dapur);
         }
-    
+
         // ✅ Filter menu jika dipilih
         if (!empty($id_menu)) {
             $query->where('jadwal_menu_harian.id_menu_harian', $id_menu);
         }
-    
+
         // ✅ Ambil data final
         $jadwal_menu_harian = $query->select(
             'jadwal_menu_harian.id_jadwal_menu_harian',
@@ -41,23 +41,22 @@ class LaporanHarianDapurController extends Controller
             'jadwal_menu_harian.tanggal_jadwal_menu_harian',
             'jadwal_menu_harian.jumlah_porsi_menu_harian',
             'jadwal_menu_harian.status_jadwal_menu_harian',
-            'jadwal_menu_harian.kendala',
-            'jadwal_menu_harian.bahan'
+            'jadwal_menu_harian.kendala_jadwal_menu_harian'
         )
         ->orderBy('jadwal_menu_harian.tanggal_jadwal_menu_harian', 'asc')
         ->get();
-        
+
         // ✅ Ambil master menu
         $menu_harian = DB::table('menu_harian')
             ->select('id_menu_harian', 'nama_menu_harian')
             ->get();
-        
+
         // ✅ Ambil master dapur
         $dapurList = DB::table('dapur')
             ->select('nomor_dapur', 'nama_dapur')
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
-        
+
         // ✅ Kirim ke view
         return view('owner.laporan.harian_dapur.index_harian_dapur', compact(
             'jadwal_menu_harian',
