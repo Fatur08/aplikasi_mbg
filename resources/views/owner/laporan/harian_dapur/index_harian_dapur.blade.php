@@ -180,7 +180,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <form action="/owner/laporan/harian_dapur" method="GET">
+                                <form action="/owner/laporan/harian_dapur" method="GET" id="FormLaporanHarianDapur">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -504,17 +504,6 @@
 
 
     $(function(){
-        $("#tanggal_jadwal_menu_harian").datepicker({ 
-        autoclose: true, 
-        todayHighlight: true,
-        format:'yyyy-mm-dd'
-        });
-
-
-        $("#btnTambahMenuHarian").click(function(){
-            $("#modal-inputmenuharian").modal("show");
-        });
-
         $(".lihat_bahan_terpakai").click(function(){
             var id = $(this).attr('data-id');
             $.ajax({
@@ -572,27 +561,27 @@
             });
         });
 
-        $("#frmMnHrn").submit(function(){
-            var tanggal_jadwal_menu_harian = $("#tanggal_jadwal_menu_harian").val();
-            var jumlah_porsi_menu_harian = $("#jumlah_porsi_menu_harian").val();
-            if(tanggal_jadwal_menu_harian==""){
+        $("#FormLaporanHarianDapur").submit(function(){
+            var pilih_dapur = $("#pilih_dapur").val();
+            var pilih_tanggal = $("#pilih_tanggal").val();
+            if(pilih_dapur==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Dapur Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#pilih_dapur").focus();
+                  });
+                return false;
+            } else if (pilih_tanggal==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Tanggal Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#tanggal_jadwal_menu_harian").focus();
-                  });
-                return false;
-            } else if (jumlah_porsi_menu_harian==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Jumlah Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#jumlah_porsi_menu_harian").focus();
+                      $("#pilih_tanggal").focus();
                   });
                 return false;
             }
