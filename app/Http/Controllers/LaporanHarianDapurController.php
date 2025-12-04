@@ -12,7 +12,9 @@ class LaporanHarianDapurController extends Controller
     // BAGIAN OWNER
     public function index_owner_harian_dapur(Request $request)
     {
-        $nomor_dapur = 1;
+        $nomor_dapur = $request->pilih_dapur;
+        $tanggal     = $request->pilih_tanggal ?? date('Y-m-d');
+        $menu        = $request->id_menu_harian;
 
         $bulan = $request->input('bulan') ?? date('m');
         $id_menu_harian = $request->input('id_menu_harian');
@@ -59,7 +61,7 @@ class LaporanHarianDapurController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
 
-        return view('owner.laporan.harian_dapur.index_harian_dapur', compact('jadwal_menu_harian', 'nomor_dapur', 'menu_harian', 'dapurList'));
+        return view('owner.laporan.harian_dapur.index_harian_dapur', compact('jadwal_menu_harian', 'nomor_dapur', 'menu_harian', 'dapurList', 'tanggal'));
     }
 
 

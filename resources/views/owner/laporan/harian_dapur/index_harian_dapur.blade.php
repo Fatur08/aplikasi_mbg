@@ -105,6 +105,67 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="row mt-2 table-container">
+                            <div class="col-12">
+                                @php
+                                    use Illuminate\Support\Facades\DB;
+                                    use Carbon\Carbon;
+                                    // ✅ Ambil nama dapur
+                                    $namaDapur = $nomor_dapur
+                                        ? DB::table('dapur')
+                                            ->where('nomor_dapur', $nomor_dapur)
+                                            ->value('nama_dapur')
+                                        : '-';
+                                @endphp
+                                <!-- === Section Info Dapur === -->
+                                <div class="section-info">
+                                    <div class="info-card">
+                                        <h4>Nama Dapur : <span style="color:#2563eb;">{{ $namaDapur }}</span></h4>
+                                        <p>
+                                            Tanggal :
+                                            <strong>
+                                                {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
+                                            </strong>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- === Table Section === -->
+                                <div class="table-wrapper">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table">
+                                            <thead style="text-align: center; vertical-align: middle;">
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Menu</th>
+                                                    <th>Porsi</th>
+                                                    <th>Bahan</th>
+                                                    <th>Kendala</th>
+                                                    <th>Status</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <div class="row mt-2">
                             <div class="col-12">
                                 <form action="/owner/laporan/harian_dapur" method="GET">
@@ -403,15 +464,15 @@
         altInput: true,
         altFormat: "d F Y",
         locale: "id", // biar bulan pakai bahasa Indonesia
-        
+
         onChange: function(selectedDates) {
             if (selectedDates.length > 0) {
                 let date = selectedDates[0];
-            
+
                 let yyyy = date.getFullYear();
                 let mm = String(date.getMonth() + 1).padStart(2, '0');
                 let dd = String(date.getDate()).padStart(2, '0');
-            
+
                 // ini yang DIKIRIM ke controller
                 document.getElementById('pilih_tanggal').value = `${yyyy}-${mm}-${dd}`;
             }
