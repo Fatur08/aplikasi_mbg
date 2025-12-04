@@ -456,25 +456,54 @@ class DataKoperasiController extends Controller
 
     public function batalkan_validasi_owner_data_koperasi($id, Request $request)
     {
-        $id = $request->id;
+        $id = $request->id; // id_data_koperasi
+    
+        DB::beginTransaction();
     
         try {
-            // 🔹 Ubah status validasi koperasi menjadi 0 (dibatalkan)
-            $update = DB::table('data_koperasi')
+            // ✅ 1. Ambil data koperasi berdasarkan id_data_koperasi
+            $dataKoperasi = DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
-                ->update(['status_data_koperasi' => 0]);
+                ->first();
         
-            if ($update) {
-                // 🔹 Hapus data keuangan yang terkait dengan id_data_koperasi ini
-                DB::table('keuangan')->where('id_data_koperasi', $id)->delete();
-            
-                return Redirect::back()->with(['success' => 'Validasi berhasil dibatalkan dan data keuangan telah dihapus']);
+            if (!$dataKoperasi) {
+                return Redirect::back()->with(['error' => 'Data koperasi tidak ditemukan']);
             }
         
-            return Redirect::back()->with(['error' => 'Data tidak ditemukan atau gagal diperbarui']);
+            // ✅ 2. Ambil id_informasi_supplier dari data koperasi
+            $id_informasi_supplier = $dataKoperasi->id_informasi_supplier;
+        
+            // ✅ 3. Update status_data_koperasi jadi 0
+            DB::table('data_koperasi')
+                ->where('id_data_koperasi', $id)
+                ->update([
+                    'status_data_koperasi' => 0
+                ]);
+            
+            // ✅ 4. Update status_informasi_supplier jadi 0
+            DB::table('informasi_supplier')
+                ->where('id_informasi_supplier', $id_informasi_supplier)
+                ->update([
+                    'status_informasi_supplier' => 0
+                ]);
+            
+            // ✅ 5. Hapus data keuangan yang terkait
+            DB::table('keuangan')
+                ->where('id_data_koperasi', $id)
+                ->delete();
+            
+            DB::commit();
+            
+            return Redirect::back()->with([
+                'success' => 'Validasi berhasil dibatalkan, status supplier diperbarui, dan data keuangan dihapus'
+            ]);
         
         } catch (\Exception $e) {
-            return Redirect::back()->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            DB::rollBack();
+        
+            return Redirect::back()->with([
+                'error' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ]);
         }
     }
 
