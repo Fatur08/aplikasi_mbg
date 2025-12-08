@@ -217,7 +217,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th colspan="5">Nama Distributor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nama_distributor }}</th>
-                                                            <th colspan="4">Kecamatan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $kecamatan_sekolah }}</th>
+                                                            <th colspan="4">Kecamatan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $kecamatan }}</th>
                                                         </tr>
                                                         <tr>
                                                             <th style="text-align:center">No.</th>

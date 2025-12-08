@@ -199,22 +199,22 @@ class LaporanDistribusiController extends Controller
     
         // 🔹 Mulai query dasar
         $query = LaporanDistribusi::query();
-            
+
         // 🔹 Filter berdasarkan kecamatan
         if (!empty($kecamatan)) {
             $query->where('kecamatan_sekolah', 'like', '%' . $kecamatan . '%');
         }
-        
+
         // 🔹 Filter berdasarkan dapur
         if (!empty($nomor_dapur)) {
             $query->where('nomor_dapur_distribusi', $nomor_dapur);
         }
-        
+
         // ✅ 🔹 Filter berdasarkan bulan saja (TANPA tahun)
         if (!empty($bulan)) {
             $query->whereMonth('tanggal_distribusi', $bulan);
         }
-        
+
         // 🔹 Eksekusi query
         $distribusi = $query->orderBy('tanggal_distribusi', 'desc')->paginate(300);
         $dataKosong = $distribusi->isEmpty();// 🔹 Cek apakah hasilnya kosong
@@ -261,7 +261,7 @@ class LaporanDistribusiController extends Controller
         return view('admin.laporan.distribusi.index_laporan_distribusi', compact(
             'distribusi',
             'nama_distributor',
-            'kecamatan_sekolah',
+            'kecamatan',
             'dataKosong',
             'sudahCari',
             'dapurList',
