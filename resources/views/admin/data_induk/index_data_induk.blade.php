@@ -2,6 +2,7 @@
 @section('content')
 <style>
 .section-info {
+    margin-bottom: 15px;
     text-align: center;
 }
 .info-card {
