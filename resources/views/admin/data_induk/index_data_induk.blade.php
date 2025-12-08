@@ -464,11 +464,9 @@
                     <div class="card-body">
                         <div class="row table-container">
                             <div class="col-12">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div class="section-info">
-                                        <div class="info-card">
-                                            <h3><span style="color:#2563eb;">DATA PEKERJA</span></h3>
-                                        </div>
+                                <div class="section-info">
+                                    <div class="info-card">
+                                        <h3><span style="color:#2563eb;">DATA PEKERJA</span></h3>
                                     </div>
                                 </div>
                                 <a href="#" class="btn btn-primary" id="btnTambahDataPekerja">
