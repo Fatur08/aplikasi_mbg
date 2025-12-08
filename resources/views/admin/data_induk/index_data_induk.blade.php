@@ -183,7 +183,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <form action="/admin/data_induk/kepala_dapur" method="GET">
+                                <form action="/admin/data_induk/" method="GET">
                                     <div class="row">
                                         <div class="col-10">
                                             <div class="form-group">
