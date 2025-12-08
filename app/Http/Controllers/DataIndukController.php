@@ -82,8 +82,8 @@ class DataIndukController extends Controller
         // BAGIAN DATA PEKERJA
         $querydatapekerja = DataPekerja::query();
         $querydatapekerja->select('*');
-        if(!empty($nama_lengkap_cari)){
-            $querydatapekerja->where('nama_data_pekerja','like','%'.$nama_lengkap_cari.'%');
+        if(!empty($cari_nama)){
+            $querydatapekerja->where('nama_data_pekerja','like','%'.$cari_nama.'%');
         }
         $data_pekerja = $querydatapekerja->get();
         $data_pekerja = $querydatapekerja->paginate(50);
