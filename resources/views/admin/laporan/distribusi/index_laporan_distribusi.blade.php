@@ -159,18 +159,32 @@
                                 <div class="col-12">
                                     <form action="/admin/laporan/distribusi" method="GET">
                                         <div class="row">
-                                            <!--<div class="col-5">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="cari_nama_distributor" id="cari_nama_distributor" placeholder="Nama Distributor">
-                                                </div>
-                                            </div>-->
-                                            <div class="col-10">
+                                            <div class="col-5">
                                                 <div class="form-group">
                                                     <select name="cari_kecamatan_sekolah" id="cari_kecamatan_sekolah" class="form-select">
                                                         <option value="">Pilih Kecamatan</option>
                                                         @foreach ($data_kecamatan as $kecamatan)
                                                             <option value="{{ $kecamatan }}">{{ $kecamatan }}</option>
                                                         @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="form-group">
+                                                    <select name="cari_bulan" id="cari_bulan" class="form-select">
+                                                        <option value="">Bulan</option>
+                                                        <option value="Januari">Januari</option>
+                                                        <option value="Februari">Februari</option>
+                                                        <option value="Maret">Maret</option>
+                                                        <option value="April">April</option>
+                                                        <option value="Mei">Mei</option>
+                                                        <option value="Juni">Juni</option>
+                                                        <option value="Juli">Juli</option>
+                                                        <option value="Agustus">Agustus</option>
+                                                        <option value="September">September</option>
+                                                        <option value="Oktober">Oktober</option>
+                                                        <option value="November">November</option>
+                                                        <option value="Desember">Desember</option>
                                                     </select>
                                                 </div>
                                             </div>
