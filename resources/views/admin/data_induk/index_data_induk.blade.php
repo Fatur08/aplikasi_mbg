@@ -466,10 +466,10 @@
                             <div class="col-12">
                                 <div class="section-info">
                                     <div class="info-card">
-                                        <h3><span style="color:#2563eb;">DATA PEKERJA</span></h3>
+                                        <h2><span style="color:#2563eb;">DATA PEKERJA</span></h2>
                                     </div>
                                 </div>
-                                <a href="#" class="btn btn-primary" id="btnTambahDataPekerja">
+                                <a href="#" class="btn btn-primary mb-3" id="btnTambahDataPekerja">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                          viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
