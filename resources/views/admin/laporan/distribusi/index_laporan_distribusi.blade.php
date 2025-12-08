@@ -157,7 +157,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/admin/laporan/distribusi" method="GET">
+                                    <form action="/admin/laporan/distribusi" method="GET" id="FormLaporanDistribusi">
                                         <div class="row">
                                             <div class="col-5">
                                                 <div class="form-group">
@@ -443,6 +443,34 @@
                 }
             });
             $("#modal-kendaladistribusi").modal("show");
+        });
+
+
+
+        $("#FormLaporanDistribusi").submit(function(){
+            var cari_kecamatan = $("#cari_kecamatan").val();
+            var cari_bulan     = $("#cari_bulan").val();
+            if(cari_kecamatan==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Kecamatan Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#cari_kecamatan").focus();
+                  });
+                return false;
+            } else if (cari_bulan==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Bulan Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#cari_bulan").focus();
+                  });
+                return false;
+            }
         });
     });
 </script>
