@@ -465,18 +465,22 @@
                         <div class="row table-container">
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h3 class="m-0">DATA PEKERJA</h3>
-                                    <a href="#" class="btn btn-primary" id="btnTambahDataPekerja">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                             class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <path d="M12 5l0 14" />
-                                            <path d="M5 12l14 0" />
-                                        </svg>
-                                        Tambah Data Pekerja
-                                    </a>
+                                    <div class="section-info">
+                                        <div class="info-card">
+                                            <h3>Tambah Data Pekerja</h3>
+                                        </div>
+                                        <a href="#" class="btn btn-primary" id="btnTambahDataPekerja">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                 class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M12 5l0 14" />
+                                                <path d="M5 12l14 0" />
+                                            </svg>
+                                            Tambah Data Pekerja
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="table-wrapper">
                                     <div class="table-responsive">
