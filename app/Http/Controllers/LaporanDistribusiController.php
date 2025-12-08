@@ -192,39 +192,45 @@ class LaporanDistribusiController extends Controller
     // BAGIAN ADMIN
     public function index_admin_laporan_distribusi(Request $request)
     {
-        $admin = DB::table('admin')->where('id_admin', auth()->id())->first();
-        $nomor_dapur = $admin->nomor_dapur_admin ?? null;
-        $kecamatan_sekolah   = $request->cari_dapur_kecamatan_distributor;
+        $admin               = DB::table('admin')->where('id_admin', auth()->id())->first();
+        $nomor_dapur         = $admin->nomor_dapur_admin ?? null;
+        $kecamatan           = $request->cari_kecamatan;
+        $bulan               = $request->cari_bulan;
     
         // 🔹 Mulai query dasar
         $query = LaporanDistribusi::query();
-
-        // 🔹 Filter berdasarkan kecamatan (jika diisi)
-        if (!empty($kecamatan_sekolah)) {
-            $query->where('kecamatan_sekolah', 'like', '%' . $kecamatan_sekolah . '%');
+            
+        // 🔹 Filter berdasarkan kecamatan
+        if (!empty($kecamatan)) {
+            $query->where('kecamatan_sekolah', 'like', '%' . $kecamatan . '%');
         }
-
-        // 🔹 Filter berdasarkan dapur (jika diisi)
+        
+        // 🔹 Filter berdasarkan dapur
         if (!empty($nomor_dapur)) {
             $query->where('nomor_dapur_distribusi', $nomor_dapur);
         }
-
-        // 🔹 Jalankan query dengan pagination
+        
+        // ✅ 🔹 Filter berdasarkan bulan saja (TANPA tahun)
+        if (!empty($bulan)) {
+            $query->whereMonth('tanggal_distribusi', $bulan);
+        }
+        
+        // 🔹 Eksekusi query
         $distribusi = $query->orderBy('tanggal_distribusi', 'desc')->paginate(300);
         $dataKosong = $distribusi->isEmpty();// 🔹 Cek apakah hasilnya kosong
         $dataKosong = $distribusi->isEmpty();
 
         // 🔹 Ambil nama distributor (jika ada kecamatan atau dapur dipilih)
         $nama_distributor = '';
-        if (!$dataKosong && (!empty($kecamatan_sekolah) || !empty($nomor_dapur))) {
+        if (!$dataKosong && (!empty($kecamatan) || !empty($nomor_dapur))) {
             $nama_distributor = LaporanDistribusi::query()
-                ->when($kecamatan_sekolah, fn($q) => $q->where('kecamatan_sekolah', 'like', '%' . $kecamatan_sekolah . '%'))
+                ->when($kecamatan, fn($q) => $q->where('kecamatan_sekolah', 'like', '%' . $kecamatan . '%'))
                 ->when($nomor_dapur, fn($q) => $q->where('nomor_dapur_distribusi', $nomor_dapur))
                 ->value('nama_distributor');
         }
 
         // 🔹 Deteksi apakah user sudah melakukan pencarian
-        $sudahCari = !empty($kecamatan_sekolah) || !empty($nomor_dapur);
+        $sudahCari = !empty($kecamatan) || !empty($nomor_dapur);
 
         
         // 🔹 Ambil nama dapur berdasarkan nomor dapur
