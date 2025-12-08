@@ -113,7 +113,7 @@
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h3 class="m-0">KEPALA DAPUR</h3>
-                                    <a href="#" class="btn btn-primary" id="btnTambahDapur">
+                                    <!--<a href="#" class="btn btn-primary" id="btnTambahDapur">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
@@ -123,7 +123,7 @@
                                             <path d="M5 12l14 0" />
                                         </svg>
                                         Tambah Kepala Dapur
-                                    </a>
+                                    </a>-->
                                 </div>
                                 <table class="table table-bordered">
                                     <thead>
@@ -180,7 +180,7 @@
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h3 class="m-0">DISTRIBUTOR</h3>
-                                    <a href="#" class="btn btn-primary" id="btnTambahDapur">
+                                    <!--<a href="#" class="btn btn-primary" id="btnTambahDapur">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
@@ -190,7 +190,7 @@
                                             <path d="M5 12l14 0" />
                                         </svg>
                                         Tambah Distributor
-                                    </a>
+                                    </a>-->
                                 </div>
                                 <table class="table table-bordered">
                                     <thead>
