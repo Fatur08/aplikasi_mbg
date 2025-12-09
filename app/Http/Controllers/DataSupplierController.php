@@ -20,12 +20,17 @@ class DataSupplierController extends Controller
     public function index_owner_supplier(Request $request)
     {        
         $nama_supplier_cari = $request->nama_supplier_cari;
+        $nomor_dapur        = $request->pilih_dapur;
         $query = Supplier::query();
         $query->select('*');
         if(!empty($nama_supplier_cari)){
             $query->where('nama_supplier','like','%'.$nama_supplier_cari.'%');
         }
-        $supplier = $query->get();
+        if (!empty($nomor_dapur)) {
+            $query->where('nomor_dapur_supplier', $nomor_dapur);
+        }
+
+        // ✅ Cukup satu kali ambil data
         $supplier = $query->paginate(10);
         $nama_supplier = DB::table('supplier')->select('id_supplier', 'nama_supplier')->get();
         // Ambil semua data dapur
