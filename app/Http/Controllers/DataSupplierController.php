@@ -1288,27 +1288,14 @@ class DataSupplierController extends Controller
                     'kategori_data_koperasi'    => 'Pembelian bahan dari supplier',
                     'status_data_koperasi'      => 0,
                 ]);
+            } else {                                            // ✅ JIKA SUDAH ADA → RESET STATUS JADI 0 LAGI
+                DB::table('data_koperasi')
+                    ->where('id_data_koperasi', $dataKoperasi->id_data_koperasi)
+                    ->update([
+                        'status_data_koperasi' => 0,
+                        'tanggal_data_koperasi' => $tanggal_hari_ini
+                    ]);
             }
-
-
-            
-            
-            // BAGIAN LAPORAN KEUANGAN
-            // Cek apakah sudah ada data laporan keuangan untuk supplier ini (bukan berdasarkan tanggal)
-            //$laporanKeuangan = DB::table('keuangan')
-            //    ->where('nomor_dapur_keuangan', $nomor_dapur_admin)
-            //    ->where('id_informasi_supplier', $id_informasi_supplier)
-            //    ->first();
-            //        
-            //if (!$laporanKeuangan) {
-            //    // Jika belum ada → buat data koperasi baru
-            //    DB::table('keuangan')->insert([
-            //        'id_informasi_supplier' => $id_informasi_supplier,
-            //        'nomor_dapur_keuangan' => $nomor_dapur_admin,
-            //        'tanggal_laporan_keuangan' => $tanggal_hari_ini,
-            //        'jenis_transaksi' => 'Pengeluaran',
-            //    ]);
-            //}
 
             DB::commit();
             return Redirect::back()->with(['success' => 'Data barang supplier berhasil disimpan dan dicatat ke data koperasi']);
