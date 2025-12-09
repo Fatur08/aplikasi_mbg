@@ -26,12 +26,13 @@ class DataSupplierController extends Controller
             ->select(
                 'supplier.*',
                 'dapur.nama_dapur' // ✅ ambil nama dapur
-            );
-        
+            )
+            ->distinct();
+
         if (!empty($nama_supplier_cari)) {
             $query->where('supplier.nama_supplier', 'like', '%' . $nama_supplier_cari . '%');
         }
-    
+
         if (!empty($nomor_dapur)) {
             $query->where('supplier.nomor_dapur_supplier', $nomor_dapur);
         }
