@@ -231,7 +231,7 @@
                                                     <tr>
                                                         <td style="text-align:center">{{ $loop->iteration + $supplier->firstItem()-1 }}</td>
                                                         <td>{{ $d->nama_supplier }}</td>
-                                                        <td></td>
+                                                        <td>{{ $d->nomor_dapur_supplier }}</td>
                                                         <td>{{ $d->alamat_supplier }}</td>
                                                         <td>{{ $d->no_hp_supplier }}</td>
                                                         <td style="text-align:center">
