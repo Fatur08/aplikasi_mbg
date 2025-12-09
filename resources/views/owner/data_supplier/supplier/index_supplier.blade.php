@@ -215,7 +215,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="text-align:center">No.</th>
-                                                        <th style="text-align:center">Nama Supplier</th>
+                                                        <th style="text-align:center">Nama</th>
+                                                        <th style="text-align:center">Dapur</th>
                                                         <th style="text-align:center">Alamat</th>
                                                         <th style="text-align:center">No. HP</th>
                                                         <th style="text-align:center">Validasi</th>
@@ -230,6 +231,7 @@
                                                     <tr>
                                                         <td style="text-align:center">{{ $loop->iteration + $supplier->firstItem()-1 }}</td>
                                                         <td>{{ $d->nama_supplier }}</td>
+                                                        <td></td>
                                                         <td>{{ $d->alamat_supplier }}</td>
                                                         <td>{{ $d->no_hp_supplier }}</td>
                                                         <td style="text-align:center">
