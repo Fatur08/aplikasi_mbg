@@ -739,15 +739,18 @@ class DataSupplierController extends Controller
 
     public function store_admin_supplier(Request $request)
     {
-        $nama_supplier = $request->nama_supplier;
-        $alamat_supplier = $request->alamat_supplier;
-        $no_hp = $request->no_hp;
+        $admin              = Auth::guard('admin')->user();
+        $nomor_dapur        = $admin->nomor_dapur_admin;
+        $nama_supplier      = $request->nama_supplier;
+        $alamat_supplier    = $request->alamat_supplier;
+        $no_hp              = $request->no_hp;
 
         $data = [
-            'nama_supplier' => $nama_supplier,
-            'alamat_supplier' => $alamat_supplier,
-            'no_hp_supplier' => $no_hp,
-            'status_supplier' => 0
+            'nomor_dapur_supplier' => $nomor_dapur,
+            'nama_supplier'        => $nama_supplier,
+            'alamat_supplier'      => $alamat_supplier,
+            'no_hp_supplier'       => $no_hp,
+            'status_supplier'      => 0
         ];
 
         $simpan = DB::table('supplier')->insert($data);
