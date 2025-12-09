@@ -199,6 +199,9 @@
                                                 <div class="form-group">
                                                     <select name="pilih_validasi" id="pilih_validasi" class="form-select">
                                                         <option value="">Pilih Validasi</option>
+                                                        <option value="0">Menunggu</option>
+                                                        <option value="1">Disetujui</option>
+                                                        <option value="2">Ditolak</option>
                                                     </select>
                                                 </div>
                                             </div>

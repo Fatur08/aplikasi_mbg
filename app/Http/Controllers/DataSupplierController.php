@@ -21,6 +21,7 @@ class DataSupplierController extends Controller
     {        
         $nama_supplier_cari = $request->nama_supplier_cari;
         $nomor_dapur        = $request->pilih_dapur;
+        $validasi           = $request->pilih_validasi;
         $query = Supplier::query()
             ->leftJoin('dapur', 'supplier.nomor_dapur_supplier', '=', 'dapur.nomor_dapur')
             ->select(
@@ -35,6 +36,10 @@ class DataSupplierController extends Controller
 
         if (!empty($nomor_dapur)) {
             $query->where('supplier.nomor_dapur_supplier', $nomor_dapur);
+        }
+
+        if (!empty($validasi)) {
+            $query->where('supplier.status_supplier', $validasi);
         }
 
         // ✅ Cukup satu kali ambil data
