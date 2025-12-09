@@ -38,7 +38,7 @@ class DataSupplierController extends Controller
             $query->where('supplier.nomor_dapur_supplier', $nomor_dapur);
         }
 
-        if (!empty($validasi)) {
+        if ($validasi !== null && $validasi !== '') {
             $query->where('supplier.status_supplier', $validasi);
         }
 
