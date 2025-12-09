@@ -730,6 +730,8 @@ class DataSupplierController extends Controller
     // BAGIAN SUPPLIER
     public function index_admin_supplier(Request $request)
     {        
+        $admin              = Auth::guard('admin')->user();
+        $nomor_dapur        = $admin->nomor_dapur_admin;
         $nama_supplier_cari = $request->nama_supplier_cari;
         $validasi           = $request->pilih_validasi;
         $query = Supplier::query();
@@ -740,8 +742,11 @@ class DataSupplierController extends Controller
         if ($validasi !== null && $validasi !== '') {
             $query->where('status_supplier', $validasi);
         }
+        if ($nomor_dapur !== null && $nomor_dapur !== '') {
+            $query->where('nomor_dapur_supplier', $nomor_dapur);
+        }
         $supplier = $query->get();
-        $supplier = $query->paginate(10);
+        $supplier = $query->paginate(1000);
         $nama_supplier = DB::table('supplier')->select('id_supplier', 'nama_supplier')->get();
         return view('admin.data_supplier.supplier.index_supplier' ,compact('supplier'));
     }
