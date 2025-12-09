@@ -579,6 +579,21 @@ class DataSupplierController extends Controller
         try {
             $id = $request->id;
         
+            
+            // ✅ Ambil data koperasi berdasarkan id_informasi_supplier
+            $koperasi = DB::table('data_koperasi')
+                ->where('id_informasi_supplier', $id)
+                ->first();
+            
+            
+                // Jika data koperasi ada, hapus data keuangan terkait
+            if ($koperasi) {
+                DB::table('keuangan')
+                    ->where('id_data_koperasi', $koperasi->id_data_koperasi)
+                    ->delete();
+            }
+            
+            
             // Update status di tabel informasi_supplier
             DB::table('informasi_supplier')
                 ->where('id_informasi_supplier', $id)
@@ -592,8 +607,9 @@ class DataSupplierController extends Controller
                 ->update([
                     'status_data_koperasi' => 0
                 ]);
+                
             
-            return Redirect::back()->with(['success' => 'Data Berhasil Divalidasi']);
+            return Redirect::back()->with(['success' => 'Validasi Berhasil Dibatalkan!']);
         
         } catch (\Exception $e) {
             // dd($e);
