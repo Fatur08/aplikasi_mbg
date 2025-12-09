@@ -1295,6 +1295,20 @@ class DataSupplierController extends Controller
                         'status_data_koperasi' => 0,
                         'tanggal_data_koperasi' => $tanggal_hari_ini
                     ]);
+                
+                // =========================================
+                // ✅ TAMBAHAN PENGECEKAN TABEL KEUANGAN
+                // =========================================
+                $cekKeuangan = DB::table('keuangan')
+                    ->where('id_data_koperasi', $dataKoperasi->id_data_koperasi)
+                    ->first();
+                            
+                if ($cekKeuangan) {
+                    // ✅ Jika data keuangan SUDAH ADA → HAPUS (karena validasi diulang)
+                    DB::table('keuangan')
+                        ->where('id_data_koperasi', $dataKoperasi->id_data_koperasi)
+                        ->delete();
+                }
             }
 
             DB::commit();
