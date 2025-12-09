@@ -904,6 +904,8 @@ class DataSupplierController extends Controller
     // BAGIAN INFORMASI SUPPLIER
     public function index_admin_informasi_supplier(Request $request)
     {
+        $admin              = Auth::guard('admin')->user();
+        $nomor_dapur        = $admin->nomor_dapur_admin;
         $nama_supplier_cari = $request->nama_supplier_cari;
 
         $query = InformasiSupplier::with(['BarangSupplier' => function($q) {
@@ -914,8 +916,12 @@ class DataSupplierController extends Controller
             $query->where('nama_informasi_supplier', 'like', '%' . $nama_supplier_cari . '%');
         }
 
+        if ($nomor_dapur !== null && $nomor_dapur !== '') {
+            $query->where('nomor_dapur_informasi_supplier', $nomor_dapur);
+        }
+
         // Ambil data dengan pagination
-        $informasi_supplier = $query->paginate(10);
+        $informasi_supplier = $query->paginate(1000);
 
         // Hitung total harga otomatis dari tabel barang supplier
         foreach ($informasi_supplier as $info) {
