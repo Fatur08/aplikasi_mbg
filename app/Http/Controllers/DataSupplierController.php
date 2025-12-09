@@ -726,10 +726,13 @@ class DataSupplierController extends Controller
 
     public function lihat_owner_barang_supplier(Request $request)
     {
-        $nomor_dapur = 1;
-
-        // Ambil ID jadwal menu harian dari parameter URL atau request
+        // Ambil ID informasi supplier dari request
         $id_informasi_supplier = $request->id;
+        
+        // ✅ Ambil SATU nomor_dapur berdasarkan id_informasi_supplier
+        $nomor_dapur = DB::table('barang_supplier')
+            ->where('id_informasi_supplier', $id_informasi_supplier)
+            ->value('nomor_dapur_barang_supplier'); // hanya ambil 1 nilai saja
 
         // Ambil data bahan dari tabel bahan_menu
         $barang_supplier = DB::table('barang_supplier')
