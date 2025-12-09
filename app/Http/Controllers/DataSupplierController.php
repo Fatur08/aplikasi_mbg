@@ -28,7 +28,12 @@ class DataSupplierController extends Controller
         $supplier = $query->get();
         $supplier = $query->paginate(10);
         $nama_supplier = DB::table('supplier')->select('id_supplier', 'nama_supplier')->get();
-        return view('owner.data_supplier.supplier.index_supplier' ,compact('supplier'));
+        // Ambil semua data dapur
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
+        return view('owner.data_supplier.supplier.index_supplier' ,compact('supplier', 'dapurList'));
     }
 
     public function store_owner_supplier(Request $request)

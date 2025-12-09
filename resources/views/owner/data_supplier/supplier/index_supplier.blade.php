@@ -189,9 +189,9 @@
                                                 <div class="form-group">
                                                     <select name="pilih_dapur" id="pilih_dapur" class="form-select">
                                                         <option value="">Pilih Dapur</option>
-                                                        <option value="Dapur 1">Dapur 1</option>
-                                                        <option value="Dapur 2">Dapur 2</option>
-                                                        <option value="Dapur 3">Dapur 3</option>
+                                                        @foreach($dapurList as $dapur)
+                                                            <option value="{{ $dapur->nomor_dapur }}">{{ $dapur->nama_dapur }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
