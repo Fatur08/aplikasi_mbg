@@ -538,6 +538,15 @@ class DataSupplierController extends Controller
 
             if (in_array($status_validasi, [1, 2])) {
 
+                // ✅ Konversi jenis transaksi
+                if ($koperasi->jenis_data_koperasi === 'modal_keluar') {
+                    $jenis_transaksi = 'Pengeluaran';
+                } elseif ($koperasi->jenis_data_koperasi === 'modal_masuk') {
+                    $jenis_transaksi = 'Pemasukan';
+                } else {
+                    $jenis_transaksi = $koperasi->jenis_data_koperasi; // fallback jika ada jenis lain
+                }
+                
                 // Cek apakah data keuangan sudah ada
                 $cekKeuangan = DB::table('keuangan')
                     ->where('id_data_koperasi', $id)
@@ -550,7 +559,7 @@ class DataSupplierController extends Controller
                         'id_informasi_supplier'     => $koperasi->id_informasi_supplier ?? null,
                         'nomor_dapur_keuangan'      => $koperasi->nomor_dapur_data_koperasi,
                         'tanggal_laporan_keuangan'  => $koperasi->tanggal_data_koperasi,
-                        'jenis_transaksi'           => $koperasi->jenis_data_koperasi,
+                        'jenis_transaksi'           => $jenis_transaksi,
                     ]);
                 }
             }
