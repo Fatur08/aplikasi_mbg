@@ -532,7 +532,7 @@ class DataSupplierController extends Controller
 
 
             $koperasi = DB::table('data_koperasi')
-                ->where('id_data_koperasi', $id)
+                ->where('id_informasi_supplier', $id)
                 ->first();
 
 
