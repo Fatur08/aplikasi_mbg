@@ -21,13 +21,19 @@ class DataSupplierController extends Controller
     {        
         $nama_supplier_cari = $request->nama_supplier_cari;
         $nomor_dapur        = $request->pilih_dapur;
-        $query = Supplier::query();
-        $query->select('*');
-        if(!empty($nama_supplier_cari)){
-            $query->where('nama_supplier','like','%'.$nama_supplier_cari.'%');
+        $query = Supplier::query()
+            ->leftJoin('dapur', 'supplier.nomor_dapur_supplier', '=', 'dapur.nomor_dapur')
+            ->select(
+                'supplier.*',
+                'dapur.nama_dapur' // ✅ ambil nama dapur
+            );
+        
+        if (!empty($nama_supplier_cari)) {
+            $query->where('supplier.nama_supplier', 'like', '%' . $nama_supplier_cari . '%');
         }
+    
         if (!empty($nomor_dapur)) {
-            $query->where('nomor_dapur_supplier', $nomor_dapur);
+            $query->where('supplier.nomor_dapur_supplier', $nomor_dapur);
         }
 
         // ✅ Cukup satu kali ambil data
