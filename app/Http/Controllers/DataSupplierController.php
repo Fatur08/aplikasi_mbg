@@ -38,7 +38,7 @@ class DataSupplierController extends Controller
         }
 
         // ✅ Cukup satu kali ambil data
-        $supplier = $query->paginate(10);
+        $supplier = $query->paginate(1000);
         $nama_supplier = DB::table('supplier')->select('id_supplier', 'nama_supplier')->get();
         // Ambil semua data dapur
         $dapurList = DB::table('dapur')
