@@ -536,7 +536,7 @@ class DataSupplierController extends Controller
                 ->first();
 
 
-            if (in_array($status_validasi, [1, 2])) {
+            if ($status_validasi == 1) {
 
                 // ✅ Konversi jenis transaksi
                 if ($koperasi->jenis_data_koperasi === 'modal_keluar') {
