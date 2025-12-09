@@ -763,24 +763,25 @@ class DataSupplierController extends Controller
 
     public function edit_admin_supplier(Request $request)
     {
-        $id = $request->id;
-        $supplier = DB::table('supplier')->get();
-        $data = DB::table('supplier')->where('id_supplier', $id)->first();
+        $id         = $request->id;
+        $supplier   = DB::table('supplier')->get();
+        $data       = DB::table('supplier')->where('id_supplier', $id)->first();
         return view('admin.data_supplier.supplier.edit_supplier',compact('supplier','data'));
     }
 
     public function update_admin_supplier($id, Request $request)
     {
-        $nama_supplier = $request->nama_supplier;
-        $alamat_supplier = $request->alamat_supplier;
-        $no_hp_supplier = $request->no_hp_supplier;
+        $nama_supplier      = $request->nama_supplier;
+        $alamat_supplier    = $request->alamat_supplier;
+        $no_hp_supplier     = $request->no_hp_supplier;
 
         try {
             // Update data supplier
             $data = [
-                'nama_supplier' => $nama_supplier,
-                'alamat_supplier' => $alamat_supplier,
-                'no_hp_supplier' => $no_hp_supplier
+                'nama_supplier'     => $nama_supplier,
+                'alamat_supplier'   => $alamat_supplier,
+                'no_hp_supplier'    => $no_hp_supplier,
+                'status_supplier'   => 0
             ];
             $update = DB::table('supplier')->where('id_supplier', $id)->update($data);
 
