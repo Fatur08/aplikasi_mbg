@@ -731,10 +731,14 @@ class DataSupplierController extends Controller
     public function index_admin_supplier(Request $request)
     {        
         $nama_supplier_cari = $request->nama_supplier_cari;
+        $validasi           = $request->pilih_validasi;
         $query = Supplier::query();
         $query->select('*');
         if(!empty($nama_supplier_cari)){
             $query->where('nama_supplier','like','%'.$nama_supplier_cari.'%');
+        }
+        if ($validasi !== null && $validasi !== '') {
+            $query->where('status_supplier', $validasi);
         }
         $supplier = $query->get();
         $supplier = $query->paginate(10);
