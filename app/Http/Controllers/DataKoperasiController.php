@@ -401,8 +401,8 @@ class DataKoperasiController extends Controller
 
     public function update_validasi_owner_data_koperasi($id, Request $request)
     {
-        $id = $request->id; 
-        $status_data_koperasi = $request->status_data_koperasi;
+        $id                     = $request->id; 
+        $status_data_koperasi   = $request->status_data_koperasi;
     
         DB::beginTransaction();
     
@@ -443,11 +443,11 @@ class DataKoperasiController extends Controller
                 if (!$cekKeuangan) {
                     // ✅ Insert keuangan hanya jika belum ada
                     DB::table('keuangan')->insert([
-                        'id_data_koperasi' => $koperasi->id_data_koperasi,
-                        'id_informasi_supplier' => $koperasi->id_informasi_supplier ?? null,
-                        'nomor_dapur_keuangan' => $koperasi->nomor_dapur_data_koperasi,
-                        'tanggal_laporan_keuangan' => $koperasi->tanggal_data_koperasi,
-                        'jenis_transaksi' => $koperasi->jenis_data_koperasi,
+                        'id_data_koperasi'          => $koperasi->id_data_koperasi,
+                        'id_informasi_supplier'     => $koperasi->id_informasi_supplier ?? null,
+                        'nomor_dapur_keuangan'      => $koperasi->nomor_dapur_data_koperasi,
+                        'tanggal_laporan_keuangan'  => $koperasi->tanggal_data_koperasi,
+                        'jenis_transaksi'           => $koperasi->jenis_data_koperasi,
                     ]);
                 }
             }

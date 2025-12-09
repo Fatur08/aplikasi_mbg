@@ -508,8 +508,8 @@ class DataSupplierController extends Controller
 
     public function update_validasi_owner_informasi_supplier($id, Request $request)
     {
-        $id = $request->id;
-        $status_informasi_supplier = $request->status_informasi_supplier;
+        $id                 = $request->id;
+        $status_validasi    = $request->status_informasi_supplier;
 
         try {
             DB::beginTransaction();
@@ -518,7 +518,7 @@ class DataSupplierController extends Controller
             $updateSupplier = DB::table('informasi_supplier')
                 ->where('id_informasi_supplier', $id)
                 ->update([
-                    'status_informasi_supplier' => $status_informasi_supplier
+                    'status_informasi_supplier' => $status_validasi
                 ]);
 
             // 2️⃣ Jika berhasil, update juga status data koperasi yang berkaitan
@@ -526,8 +526,33 @@ class DataSupplierController extends Controller
                 DB::table('data_koperasi')
                     ->where('id_informasi_supplier', $id)
                     ->update([
-                        'status_data_koperasi' => $status_informasi_supplier
+                        'status_data_koperasi' => $status_validasi
                     ]);
+            }
+
+
+            $koperasi = DB::table('data_koperasi')
+                ->where('id_data_koperasi', $id)
+                ->first();
+
+
+            if (in_array($status_validasi, [1, 2])) {
+
+                // Cek apakah data keuangan sudah ada
+                $cekKeuangan = DB::table('keuangan')
+                    ->where('id_data_koperasi', $id)
+                    ->first();
+            
+                if (!$cekKeuangan) {
+                    // ✅ Insert keuangan hanya jika belum ada
+                    DB::table('keuangan')->insert([
+                        'id_data_koperasi'          => $koperasi->id_data_koperasi,
+                        'id_informasi_supplier'     => $koperasi->id_informasi_supplier ?? null,
+                        'nomor_dapur_keuangan'      => $koperasi->nomor_dapur_data_koperasi,
+                        'tanggal_laporan_keuangan'  => $koperasi->tanggal_data_koperasi,
+                        'jenis_transaksi'           => $koperasi->jenis_data_koperasi,
+                    ]);
+                }
             }
 
             DB::commit();
@@ -937,8 +962,8 @@ class DataSupplierController extends Controller
 
     public function store_admin_informasi_supplier(Request $request)
     {
-        $id_supplier = $request->id_supplier;
-        $nama_informasi_supplier = DB::table('supplier')->where('id_supplier', $id_supplier)->value('nama_supplier');
+        $id_supplier                = $request->id_supplier;
+        $nama_informasi_supplier    = DB::table('supplier')->where('id_supplier', $id_supplier)->value('nama_supplier');
 
         if($request->hasFile('nota_informasi_supplier')){
             $nota_informasi_supplier = "Nota_".$nama_informasi_supplier.".".$request
@@ -957,10 +982,10 @@ class DataSupplierController extends Controller
         }
 
         $data = [
-            'id_informasi_supplier' => $id_supplier,
-            'nama_informasi_supplier' => $nama_informasi_supplier,
-            'nota_informasi_supplier'=>$nota_informasi_supplier,
-            'bukti_terima_informasi_supplier' => $bukti_terima_informasi_supplier
+            'id_informasi_supplier'             => $id_supplier,
+            'nama_informasi_supplier'           => $nama_informasi_supplier,
+            'nota_informasi_supplier'           =>$nota_informasi_supplier,
+            'bukti_terima_informasi_supplier'   => $bukti_terima_informasi_supplier
         ];
 
         $simpan = DB::table('informasi_supplier')->insert($data);
@@ -1155,18 +1180,18 @@ class DataSupplierController extends Controller
 
     public function tambah_admin_barang_supplier(Request $request)
     {
-        $id = $request->id;
+        $id                 = $request->id;
         $informasi_supplier = DB::table('informasi_supplier')->get();
-        $data = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
+        $data               = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
         return view('admin.data_supplier.informasi_supplier.tambah_barang_supplier',compact('informasi_supplier','data'));
     }
 
     public function store_admin_barang_supplier(Request $request)
     {
-        $admin = Auth::guard('admin')->user();
-        $nomor_dapur_admin = $admin->nomor_dapur_admin;
-        $id_informasi_supplier = $request->id;
-        $tanggal_hari_ini = date('Y-m-d');
+        $admin                  = Auth::guard('admin')->user();
+        $nomor_dapur_admin      = $admin->nomor_dapur_admin;
+        $id_informasi_supplier  = $request->id;
+        $tanggal_hari_ini       = date('Y-m-d');
 
         // Daftar input barang dari form
         $inputBarang = [
@@ -1231,12 +1256,12 @@ class DataSupplierController extends Controller
             if (!$dataKoperasi) {
                 // Jika belum ada → buat data koperasi baru
                 DB::table('data_koperasi')->insert([
-                    'id_informasi_supplier' => $id_informasi_supplier,
+                    'id_informasi_supplier'     => $id_informasi_supplier,
                     'nomor_dapur_data_koperasi' => $nomor_dapur_admin,
-                    'tanggal_data_koperasi' => $tanggal_hari_ini,
-                    'jenis_data_koperasi' => 'modal_keluar',
-                    'kategori_data_koperasi' => 'Pembelian bahan dari supplier',
-                    'status_data_koperasi' => 0,
+                    'tanggal_data_koperasi'     => $tanggal_hari_ini,
+                    'jenis_data_koperasi'       => 'modal_keluar',
+                    'kategori_data_koperasi'    => 'Pembelian bahan dari supplier',
+                    'status_data_koperasi'      => 0,
                 ]);
             }
 
