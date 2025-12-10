@@ -636,7 +636,7 @@ class DataSupplierController extends Controller
             ->where('id_informasi_supplier', $id_informasi_supplier)
             ->value('nomor_dapur_informasi_supplier');
 
-        $tanggal_hari_ini       = '2025-10-26';
+        $tanggal_hari_ini       = date('Y-m-d');
 
         // Daftar input barang dari form
         $inputBarang = [
@@ -711,8 +711,8 @@ class DataSupplierController extends Controller
                     'nomor_dapur_data_koperasi' => $nomor_dapur,
                     'tanggal_data_koperasi' => $tanggal_hari_ini,
                     'jenis_data_koperasi' => 'modal_keluar',
-                    'kategori_data_koperasi' => 'Pembelian bahan dari supplier stress',
-                    'status_data_koperasi' => 1,
+                    'kategori_data_koperasi' => 'Pembelian bahan dari supplier',
+                    'status_data_koperasi' => 0,
                 ]);
             }
 
@@ -1219,7 +1219,7 @@ class DataSupplierController extends Controller
         $admin                  = Auth::guard('admin')->user();
         $nomor_dapur_admin      = $admin->nomor_dapur_admin;
         $id_informasi_supplier  = $request->id;
-        $tanggal_hari_ini       = '2025-10-27';
+        $tanggal_hari_ini       = date('Y-m-d');
 
         // Daftar input barang dari form
         $inputBarang = [
@@ -1288,15 +1288,14 @@ class DataSupplierController extends Controller
                     'nomor_dapur_data_koperasi' => $nomor_dapur_admin,
                     'tanggal_data_koperasi'     => $tanggal_hari_ini,
                     'jenis_data_koperasi'       => 'modal_keluar',
-                    'kategori_data_koperasi'    => 'Pembelian bahan dari supplier gila',
-                    'status_data_koperasi'      => 2,
+                    'kategori_data_koperasi'    => 'Pembelian bahan dari supplier',
+                    'status_data_koperasi'      => 0,
                 ]);
             } else {                                            // ✅ JIKA SUDAH ADA → RESET STATUS JADI 0 LAGI
                 DB::table('data_koperasi')
                     ->where('id_data_koperasi', $dataKoperasi->id_data_koperasi)
                     ->update([
                         'status_data_koperasi' => 0,
-                        'tanggal_data_koperasi' => $tanggal_hari_ini
                     ]);
                 
                 // =========================================
