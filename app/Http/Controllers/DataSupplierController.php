@@ -1067,132 +1067,119 @@ class DataSupplierController extends Controller
             ->select('nama_informasi_supplier')
             ->first();
     
-        $nama_informasi_supplier = $informasi_supplier ? $informasi_supplier->nama_informasi_supplier : null;
+        $nama = $informasi_supplier->nama_informasi_supplier ?? 'Supplier';
     
-        $old_nota = $request->old_nota_informasi_supplier;
-        $old_bukti_terima = $request->old_bukti_terima_informasi_supplier;
+        $oldNota  = $request->old_nota_informasi_supplier;
+        $oldBukti = $request->old_bukti_terima_informasi_supplier;
     
         try {
         
-            $statusChanged = false;   // untuk menjalankan reset status koperasi & hapus keuangan
-            $message = null;          // notifikasi berbeda untuk tiap update
+            $statusChanged = false;
+            $messages = []; // ✅ sekarang bisa banyak notifikasi
         
             /* ============================================================
-             * 1. HANDLE UPDATE NOTA
+             * 1. UPDATE NOTA
              * ============================================================ */
             if ($request->hasFile('nota_informasi_supplier')) {
             
-                $nota_new = "Nota_" . $nama_informasi_supplier . "." .
-                    $request->file('nota_informasi_supplier')->getClientOriginalExtension();
+                $notaNew = "Nota_" . $nama . "." . $request->file('nota_informasi_supplier')->getClientOriginalExtension();
             
-                $folderpath = "public/uploads/data_supplier/informasi_supplier/nota/";
-                $storageFolderPath = storage_path('app/' . $folderpath);
-                $publicPath = public_path('storage/uploads/data_supplier/informasi_supplier/nota/');
+                $folder = "public/uploads/data_supplier/informasi_supplier/nota/";
+                $storagePath = storage_path('app/' . $folder);
+                $publicPath  = public_path('storage/uploads/data_supplier/informasi_supplier/nota/');
             
                 if (!is_dir($publicPath)) mkdir($publicPath, 0777, true);
             
                 // Hapus file lama
-                $baseFileName = pathinfo($old_nota, PATHINFO_FILENAME);
-                $extensions = ['png','jpg','jpeg','pdf','webp'];
-            
-                foreach ($extensions as $ext) {
-                    $oldStorage = $storageFolderPath . $baseFileName . '.' . $ext;
-                    $oldPublic  = $publicPath . $baseFileName . '.' . $ext;
-                
-                    if (file_exists($oldStorage)) unlink($oldStorage);
-                    if (file_exists($oldPublic)) unlink($oldPublic);
+                if ($oldNota) {
+                    $base = pathinfo($oldNota, PATHINFO_FILENAME);
+                    foreach (['png','jpg','jpeg','pdf','webp'] as $ext) {
+                        @unlink($storagePath.$base.'.'.$ext);
+                        @unlink($publicPath.$base.'.'.$ext);
+                    }
                 }
             
                 // Simpan file baru
-                $request->file('nota_informasi_supplier')->storeAs($folderpath, $nota_new);
-                copy(storage_path('app/'.$folderpath.$nota_new), $publicPath.$nota_new);
+                $request->file('nota_informasi_supplier')->storeAs($folder, $notaNew);
+                copy(storage_path('app/'.$folder.$notaNew), $publicPath.$notaNew);
             
-                // Update database
                 DB::table('informasi_supplier')
                     ->where('id_informasi_supplier', $id)
-                    ->update(['nota_informasi_supplier' => $nota_new]);
+                    ->update(['nota_informasi_supplier' => $notaNew]);
             
                 $statusChanged = true;
-                $message = "Nota berhasil diperbarui & status direset!";
+                $messages[] = "✅ Nota berhasil diperbarui";
             }
         
             /* ============================================================
-             * 2. HANDLE UPDATE BUKTI TERIMA
+             * 2. UPDATE BUKTI TERIMA
              * ============================================================ */
             if ($request->hasFile('bukti_terima_informasi_supplier')) {
             
-                $buktil_new = "Bukti Terima_" . $nama_informasi_supplier . "." .
-                    $request->file('bukti_terima_informasi_supplier')->getClientOriginalExtension();
+                $buktiNew = "Bukti Terima_" . $nama . "." . $request->file('bukti_terima_informasi_supplier')->getClientOriginalExtension();
             
-                $folderpath = "public/uploads/data_supplier/informasi_supplier/bukti_terima/";
-                $storageFolderPath = storage_path('app/' . $folderpath);
-                $publicPath = public_path('storage/uploads/data_supplier/informasi_supplier/bukti_terima/');
+                $folder = "public/uploads/data_supplier/informasi_supplier/bukti_terima/";
+                $storagePath = storage_path('app/' . $folder);
+                $publicPath  = public_path('storage/uploads/data_supplier/informasi_supplier/bukti_terima/');
             
                 if (!is_dir($publicPath)) mkdir($publicPath, 0777, true);
             
                 // Hapus file lama
-                $baseFileName = pathinfo($old_bukti_terima, PATHINFO_FILENAME);
-                $extensions = ['png','jpg','jpeg','pdf','webp'];
-            
-                foreach ($extensions as $ext) {
-                    $oldStorage = $storageFolderPath . $baseFileName . '.' . $ext;
-                    $oldPublic  = $publicPath . $baseFileName . '.' . $ext;
-                
-                    if (file_exists($oldStorage)) unlink($oldStorage);
-                    if (file_exists($oldPublic)) unlink($oldPublic);
+                if ($oldBukti) {
+                    $base = pathinfo($oldBukti, PATHINFO_FILENAME);
+                    foreach (['png','jpg','jpeg','pdf','webp'] as $ext) {
+                        @unlink($storagePath.$base.'.'.$ext);
+                        @unlink($publicPath.$base.'.'.$ext);
+                    }
                 }
             
                 // Simpan file baru
-                $request->file('bukti_terima_informasi_supplier')->storeAs($folderpath, $buktil_new);
-                copy(storage_path('app/'.$folderpath.$buktil_new), $publicPath.$buktil_new);
+                $request->file('bukti_terima_informasi_supplier')->storeAs($folder, $buktiNew);
+                copy(storage_path('app/'.$folder.$buktiNew), $publicPath.$buktiNew);
             
-                // Update database
                 DB::table('informasi_supplier')
                     ->where('id_informasi_supplier', $id)
-                    ->update(['bukti_terima_informasi_supplier' => $buktil_new]);
+                    ->update(['bukti_terima_informasi_supplier' => $buktiNew]);
             
                 $statusChanged = true;
-                $message = "Bukti Terima berhasil diperbarui & status direset!";
+                $messages[] = "✅ Bukti Terima berhasil diperbarui";
             }
         
             /* ============================================================
-             * 3. RESET STATUS & HAPUS DATA KEUANGAN (Jika salah satu berubah)
+             * 3. RESET STATUS & HAPUS KEUANGAN (HANYA SEKALI)
              * ============================================================ */
             if ($statusChanged) {
             
-                // 3.1 Reset status informasi supplier
                 DB::table('informasi_supplier')
                     ->where('id_informasi_supplier', $id)
                     ->update(['status_informasi_supplier' => 0]);
             
-                // 3.2 Ambil data koperasi terkait supplier
                 $dataKop = DB::table('data_koperasi')
                     ->where('id_informasi_supplier', $id)
                     ->first();
             
                 if ($dataKop) {
                 
-                    // Reset status data koperasi
                     DB::table('data_koperasi')
                         ->where('id_data_koperasi', $dataKop->id_data_koperasi)
                         ->update(['status_data_koperasi' => 0]);
                 
-                    // 3.3 Hapus data keuangan berdasarkan id_data_koperasi
                     DB::table('keuangan')
                         ->where('id_data_koperasi', $dataKop->id_data_koperasi)
                         ->delete();
                 }
             
-                return Redirect::back()->with(['success' => $message]);
+                $messages[] = "🔄 Status & data keuangan berhasil direset";
+            
+                return Redirect::back()->with([
+                    'success' => implode(' | ', $messages)
+                ]);
             }
         
-            /* ============================================================
-             * 4. Jika tidak ada perubahan file
-             * ============================================================ */
-            return Redirect::back()->with(['warning' => 'Tidak ada perubahan pada Nota atau Bukti Terima']);
+            return Redirect::back()->with(['warning' => 'Tidak ada perubahan file']);
         
         } catch (\Exception $e) {
-            return Redirect::back()->with(['error' => 'Terjadi Kesalahan: '.$e->getMessage()]);
+            return Redirect::back()->with(['error' => 'Gagal update: '.$e->getMessage()]);
         }
     }
 
