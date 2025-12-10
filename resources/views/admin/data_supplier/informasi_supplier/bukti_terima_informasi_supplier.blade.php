@@ -10,7 +10,12 @@
 
 <div>
     @if(!empty($data->bukti_terima_informasi_supplier))
-        <img src="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/'.$data->bukti_terima_informasi_supplier) }}" 
+        @php
+            $buktiPath = 'storage/uploads/data_supplier/informasi_supplier/bukti_terima/' . $data->bukti_terima_informasi_supplier;
+            $buktiUrl  = asset($buktiPath) . '?v=' . filemtime(public_path($buktiPath));
+        @endphp
+
+        <img src="{{ $buktiUrl }}" 
              alt="Bukti Terima {{ $data->nama_informasi_supplier }}" 
              class="bukti-terima-img">
     @else

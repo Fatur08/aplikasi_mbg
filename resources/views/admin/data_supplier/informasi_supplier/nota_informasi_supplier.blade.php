@@ -10,7 +10,12 @@
 
 <div>
     @if(!empty($data->nota_informasi_supplier))
-        <img src="{{ asset('storage/uploads/data_supplier/informasi_supplier/nota/'.$data->nota_informasi_supplier) }}" 
+        @php
+            $notaPath = 'storage/uploads/data_supplier/informasi_supplier/nota/' . $data->nota_informasi_supplier;
+            $notaUrl  = asset($notaPath) . '?v=' . filemtime(public_path($notaPath));
+        @endphp
+
+        <img src="{{ $notaUrl }}" 
              alt="Nota {{ $data->nama_informasi_supplier }}" 
              class="nota-img">
     @else
