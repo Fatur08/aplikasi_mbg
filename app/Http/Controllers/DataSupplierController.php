@@ -960,6 +960,7 @@ class DataSupplierController extends Controller
         $admin              = Auth::guard('admin')->user();
         $nomor_dapur        = $admin->nomor_dapur_admin;
         $nama_supplier_cari = $request->nama_supplier_cari;
+        $validasi           = $request->pilih_validasi;
 
         $query = InformasiSupplier::with(['BarangSupplier' => function($q) {
             $q->select('id_informasi_supplier', 'harga_barang_supplier', 'jumlah_barang_supplier');
@@ -971,6 +972,10 @@ class DataSupplierController extends Controller
 
         if ($nomor_dapur !== null && $nomor_dapur !== '') {
             $query->where('nomor_dapur_informasi_supplier', $nomor_dapur);
+        }
+
+        if ($validasi !== null && $validasi !== '') {
+            $query->where('status_informasi_supplier', $validasi);
         }
 
         // Ambil data dengan pagination
