@@ -623,20 +623,20 @@ class DataSupplierController extends Controller
 
     public function tambah_owner_barang_supplier(Request $request)
     {
-        $id = $request->id;
+        $id                 = $request->id;
         $informasi_supplier = DB::table('informasi_supplier')->get();
-        $data = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
+        $data               = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
         return view('owner.data_supplier.informasi_supplier.tambah_barang_supplier',compact('informasi_supplier','data'));
     }
 
     public function store_owner_barang_supplier(Request $request)
     {
-        $id_informasi_supplier = $request->id;
-        $nomor_dapur = DB::table('informasi_supplier')
+        $id_informasi_supplier  = $request->id;
+        $nomor_dapur            = DB::table('informasi_supplier')
             ->where('id_informasi_supplier', $id_informasi_supplier)
             ->value('nomor_dapur_informasi_supplier');
 
-        $tanggal_hari_ini = date('Y-m-d');
+        $tanggal_hari_ini       = date('Y-m-d');
 
         // Daftar input barang dari form
         $inputBarang = [
@@ -712,7 +712,7 @@ class DataSupplierController extends Controller
                     'tanggal_data_koperasi' => $tanggal_hari_ini,
                     'jenis_data_koperasi' => 'modal_keluar',
                     'kategori_data_koperasi' => 'Pembelian bahan dari supplier stress',
-                    'status_data_koperasi' => 0,
+                    'status_data_koperasi' => 1,
                 ]);
             }
 
@@ -1289,7 +1289,7 @@ class DataSupplierController extends Controller
                     'tanggal_data_koperasi'     => $tanggal_hari_ini,
                     'jenis_data_koperasi'       => 'modal_keluar',
                     'kategori_data_koperasi'    => 'Pembelian bahan dari supplier gila',
-                    'status_data_koperasi'      => 0,
+                    'status_data_koperasi'      => 2,
                 ]);
             } else {                                            // ✅ JIKA SUDAH ADA → RESET STATUS JADI 0 LAGI
                 DB::table('data_koperasi')
