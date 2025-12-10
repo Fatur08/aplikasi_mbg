@@ -636,7 +636,7 @@ class DataSupplierController extends Controller
             ->where('id_informasi_supplier', $id_informasi_supplier)
             ->value('nomor_dapur_informasi_supplier');
 
-        $tanggal_hari_ini       = date('Y-m-d');
+        $tanggal_hari_ini       = '2025-10-26';
 
         // Daftar input barang dari form
         $inputBarang = [
@@ -1219,7 +1219,7 @@ class DataSupplierController extends Controller
         $admin                  = Auth::guard('admin')->user();
         $nomor_dapur_admin      = $admin->nomor_dapur_admin;
         $id_informasi_supplier  = $request->id;
-        $tanggal_hari_ini       = date('Y-m-d');
+        $tanggal_hari_ini       = '2025-10-27';
 
         // Daftar input barang dari form
         $inputBarang = [
