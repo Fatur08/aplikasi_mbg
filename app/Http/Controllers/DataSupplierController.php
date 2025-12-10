@@ -1288,7 +1288,7 @@ class DataSupplierController extends Controller
                     'nomor_dapur_data_koperasi' => $nomor_dapur_admin,
                     'tanggal_data_koperasi'     => $tanggal_hari_ini,
                     'jenis_data_koperasi'       => 'modal_keluar',
-                    'kategori_data_koperasi'    => 'Pembelian bahan dari supplier',
+                    'kategori_data_koperasi'    => 'Pembelian bahan dari supplier gila',
                     'status_data_koperasi'      => 0,
                 ]);
             } else {                                            // ✅ JIKA SUDAH ADA → RESET STATUS JADI 0 LAGI
