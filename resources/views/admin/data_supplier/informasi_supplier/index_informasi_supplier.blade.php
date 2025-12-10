@@ -331,7 +331,7 @@
                                     <option value="">-- Pilih Nama Supplier --</option>
                                     @foreach($nama_supplier as $d)
                                         <option value="{{ $d->id_supplier }}">
-                                            {{ $d->nama_supplier }}
+                                            {{ $loop->iteration }}. {{ $d->nama_supplier }}
                                         </option>
                                     @endforeach
                                 </select>
