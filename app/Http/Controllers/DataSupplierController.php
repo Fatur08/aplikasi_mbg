@@ -986,11 +986,14 @@ class DataSupplierController extends Controller
         $nama_supplier = DB::table('supplier')
             ->select('supplier.id_supplier', 'supplier.nama_supplier')
             ->where('supplier.nomor_dapur_supplier', $nomor_dapur) // ✅ filter dapur admin
+            ->where('supplier.status_supplier', 1)                 // ✅ hanya supplier yang DISUTUJUI
             ->whereNotExists(function ($query) {
                 $query->select(DB::raw(1))
                     ->from('informasi_supplier')
-                    ->whereColumn('informasi_supplier.nama_informasi_supplier', 'supplier.nama_supplier')
-                    ->where('informasi_supplier.status_supplier', 1); // ✅ hanya yang SUDAH DISETUJUI
+                    ->whereColumn(
+                        'informasi_supplier.nama_informasi_supplier',
+                        'supplier.nama_supplier'
+                    );
             })
             ->get();
 
