@@ -984,8 +984,14 @@ class DataSupplierController extends Controller
         }
 
         $nama_supplier = DB::table('supplier')
-            ->select('id_supplier', 'nama_supplier')
-            ->where('nomor_dapur_supplier', $nomor_dapur) // ✅ filter berdasarkan dapur admin
+            ->select('supplier.id_supplier', 'supplier.nama_supplier')
+            ->where('supplier.nomor_dapur_supplier', $nomor_dapur) // ✅ filter dapur admin
+            ->whereNotExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('informasi_supplier')
+                    ->whereColumn('informasi_supplier.nama_informasi_supplier', 'supplier.nama_supplier')
+                    ->where('informasi_supplier.status_supplier', 1); // ✅ hanya yang SUDAH DISETUJUI
+            })
             ->get();
 
         return view('admin.data_supplier.informasi_supplier.index_informasi_supplier', compact('nama_supplier', 'informasi_supplier'));
