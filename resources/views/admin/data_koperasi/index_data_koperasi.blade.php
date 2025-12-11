@@ -56,7 +56,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <form action="/admin/data_koperasi" method="GET" id="FormDataKoperasiAdmin">
+                                <form action="/admin/data_koperasi" method="GET">
                                     <div class="row g-2 align-items-end">
                                         <div class="col-md-3">
                                             <div class="input-icon">
