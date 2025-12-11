@@ -623,8 +623,6 @@
     });
 
     document.getElementById("cetak_data_koperasi").addEventListener("click", function() {
-        let dari = document.getElementById("dari_tanggal").value;
-        let sampai = document.getElementById("sampai_tanggal").value;
         let bulan = document.getElementById("bulan").value;
 
         let url = `/owner/data_koperasi/cetak_data_koperasi?dari_tanggal=${dari}&sampai_tanggal=${sampai}&bulan=${bulan}`;
