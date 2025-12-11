@@ -855,68 +855,73 @@ class DataKoperasiController extends Controller
 
     public function tambah_admin_barang_modal_keluar(Request $request)
     {
-        $id = $request->id;
-        $data_koperasi = DB::table('data_koperasi')->get();
-        $data = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
+        $id                 = $request->id;
+        $data_koperasi      = DB::table('data_koperasi')->get();
+        $data               = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
+
+        $nomor_dapur_admin  = DB::table('barang_supplier')
+            ->where('id_informasi_supplier', $id)
+            ->value('nomor_dapur');
+
         // Ambil semua data dapur
-        $dapurList = DB::table('dapur')
+        $dapurList          = DB::table('dapur')
             ->select('nomor_dapur', 'nama_dapur')
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
-        return view('admin.data_koperasi.tambah_barang_modal_keluar',compact('data_koperasi','data','dapurList'));
+        return view('admin.data_koperasi.tambah_barang_modal_keluar',compact('data_koperasi','data','dapurList', 'nomor_dapur_admin'));
     }
 
     public function store_admin_barang_modal_keluar(Request $request)
     {
         DB::beginTransaction();
-    
+
         try {
-        
+
             $nomor_dapur = $request->pilih_dapur_modal_keluar;
             $id_data_koperasi = $request->id_data_koperasi;
-        
+
             // Ambil data koperasi terlebih dahulu
             $dataKoperasi = DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id_data_koperasi)
                 ->first();
-        
+
             if (!$dataKoperasi) {
                 return Redirect::back()->with(['error' => 'Data koperasi tidak ditemukan']);
             }
-        
+
             $id_informasi_supplier = $dataKoperasi->id_informasi_supplier ?? null;
-        
+
             //
             // ============================================================
             //   1. RESET STATUS VALIDASI (KOPERASI + SUPPLIER)
             // ============================================================
             //
-        
+
             // 🔹 Reset status_data_koperasi → 0 (Menunggu)
             DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id_data_koperasi)
                 ->update(['status_data_koperasi' => 0]);
-        
+
             // 🔹 Reset status_informasi_supplier → 0 (Menunggu)
             if (!empty($id_informasi_supplier)) {
                 DB::table('informasi_supplier')
                     ->where('id_informasi_supplier', $id_informasi_supplier)
                     ->update(['status_informasi_supplier' => 0]);
             }
-        
+
             //
             // ============================================================
             //   2. HAPUS DATA KEUANGAN TERKAIT
             // ============================================================
             //
             DB::table('keuangan')->where('id_data_koperasi', $id_data_koperasi)->delete();
-        
+
             //
             // ============================================================
             //   3. INPUT DATA BARANG SESUAI KATEGORI
             // ============================================================
             //
-        
+
             $inputBarang = [
                 [
                     'nama'   => $request->nama_barang_modal_keluar_1,
@@ -937,13 +942,13 @@ class DataKoperasiController extends Controller
                     'harga'  => $request->harga_barang_modal_keluar_3,
                 ],
             ];
-        
+
             foreach ($inputBarang as $barang) {
                 if (!empty($barang['nama']) && !empty($barang['jumlah'])) {
-                
+
                     // Jika terkait supplier → simpan ke barang_supplier
                     if (!empty($id_informasi_supplier)) {
-                    
+
                         DB::table('barang_supplier')->insert([
                             'id_informasi_supplier' => $id_informasi_supplier,
                             'nama_barang_supplier'  => $barang['nama'],
@@ -952,11 +957,11 @@ class DataKoperasiController extends Controller
                             'harga_barang_supplier' => $barang['harga'],
                             'nomor_dapur_barang_supplier' => $nomor_dapur
                         ]);
-                    
+
                     } 
                     // Jika tidak terkait supplier → simpan ke barang_modal_keluar
                     else {
-                    
+
                         DB::table('barang_modal_keluar')->insert([
                             'nama_barang_modal_keluar'    => $barang['nama'],
                             'jumlah_barang_modal_keluar'  => $barang['jumlah'],
@@ -968,13 +973,13 @@ class DataKoperasiController extends Controller
                     }
                 }
             }
-        
+
             DB::commit();
-        
+
             return Redirect::back()->with(['success' => 'Data berhasil disimpan dan status validasi telah direset']);
-        
+
         } catch (\Exception $e) {
-        
+
             DB::rollBack();
             return Redirect::back()->with(['warning' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
