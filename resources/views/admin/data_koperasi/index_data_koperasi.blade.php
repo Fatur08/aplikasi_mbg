@@ -56,7 +56,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <form action="/admin/data_koperasi" method="GET">
+                                <form action="/admin/data_koperasi" method="GET" id="FormDataKoperasiAdmin">
                                     <div class="row g-2 align-items-end">
                                         <div class="col-md-3">
                                             <div class="input-icon">
@@ -594,38 +594,38 @@
             });
         });
 
-        $("#frmDtKprs").submit(function(){
-            var nama_supplier = $("#nama_supplier").val();
-            var alamat = $("#alamat").val();
-            var no_hp = $("#no_hp").val();
-            if(nama_supplier==""){
+        $("#FormDataKoperasiAdmin").submit(function(){
+            var dari_tanggal = $("#dari_tanggal").val();
+            var sampai_tanggal = $("#sampai_tanggal").val();
+            var bulan = $("#bulan").val();
+            if(dari_tanggal==""){
                 Swal.fire({
                     title: 'Warning!',
-                    text: 'Nama Supplier Harus Diisi',
+                    text: 'Dari Tanggal Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#nama_supplier").focus();
+                      $("#dari_tanggal").focus();
                   });
                 return false;
-            } else if (alamat==""){
+            } else if (sampai_tanggal==""){
                 Swal.fire({
                     title: 'Warning!',
-                    text: 'Alamat Harus Diisi',
+                    text: 'Sampai Tanggal Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#alamat").focus();
+                      $("#sampai_tanggal").focus();
                   });
                 return false;
-            } else if (no_hp==""){
+            } else if (bulan==""){
                 Swal.fire({
                     title: 'Warning!',
-                    text: 'No. HP Harus Diisi',
+                    text: 'Bulan Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#no_hp").focus();
+                      $("#bulan").focus();
                   });
                 return false;
             }
@@ -651,7 +651,7 @@
         let dari = document.getElementById("dari_tanggal");
         let sampai = document.getElementById("sampai_tanggal");
         let bulan = document.getElementById("bulan");
-            
+
         function toggleBulan() {
             if (dari.value && sampai.value) {
                 bulan.disabled = true;
@@ -660,7 +660,7 @@
                 bulan.disabled = false;
             }
         }
-    
+
         function toggleTanggal() {
             if (bulan.value) {
                 dari.disabled = true;
@@ -672,17 +672,17 @@
                 sampai.disabled = false;
             }
         }
-    
+
         dari.addEventListener("change", toggleBulan);
         sampai.addEventListener("change", toggleBulan);
         bulan.addEventListener("change", toggleTanggal);
     });
-    
+
     document.getElementById("cetak_data_koperasi").addEventListener("click", function() {
         let dari = document.getElementById("dari_tanggal").value;
         let sampai = document.getElementById("sampai_tanggal").value;
         let bulan = document.getElementById("bulan").value;
-    
+
         let url = `/admin/data_koperasi/cetak_data_koperasi?dari_tanggal=${dari}&sampai_tanggal=${sampai}&bulan=${bulan}`;
         window.open(url, "_blank");
     });
