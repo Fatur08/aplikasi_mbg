@@ -559,9 +559,10 @@
         });
 
         $("#FormDataKoperasiOwner").submit(function(){
-            var dari_tanggal = $("#dari_tanggal").val();
-            var sampai_tanggal = $("#sampai_tanggal").val();
-            var bulan = $("#bulan").val();
+            var dari_tanggal        = $("#dari_tanggal").val();
+            var sampai_tanggal      = $("#sampai_tanggal").val();
+            var bulan               = $("#bulan").val();
+            var pilih_dapur         = $("#pilih_dapur").val();
             if(dari_tanggal==""){
                 Swal.fire({
                     title: 'Warning!',
@@ -590,6 +591,16 @@
                     confirmButtonText: 'OK'
                   }).then(()=> {
                       $("#bulan").focus();
+                  });
+                return false;
+            } else if (pilih_dapur==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Dapur Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#pilih_dapur").focus();
                   });
                 return false;
             }
