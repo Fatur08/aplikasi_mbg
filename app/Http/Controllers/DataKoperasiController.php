@@ -864,7 +864,7 @@ class DataKoperasiController extends Controller
             ->select('nomor_dapur', 'nama_dapur')
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
-        return view('admin.data_koperasi.tambah_barang_modal_keluar',compact('data_koperasi','data','dapurList', 'nomor_dapur_admin'));
+        return view('admin.data_koperasi.tambah_barang_modal_keluar',compact('data_koperasi','data','dapurList'));
     }
 
     public function store_admin_barang_modal_keluar(Request $request)
