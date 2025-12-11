@@ -869,14 +869,54 @@ class DataKoperasiController extends Controller
     public function store_admin_barang_modal_keluar(Request $request)
     {
         DB::beginTransaction();
+    
         try {
+        
             $nomor_dapur = $request->pilih_dapur_modal_keluar;
             $id_data_koperasi = $request->id_data_koperasi;
-
-            // Cek apakah data koperasi memiliki id_informasi_supplier
-            $dataKoperasi = DB::table('data_koperasi')->where('id_data_koperasi', $id_data_koperasi)->first();
-
-            // Daftar input barang dari form
+        
+            // Ambil data koperasi terlebih dahulu
+            $dataKoperasi = DB::table('data_koperasi')
+                ->where('id_data_koperasi', $id_data_koperasi)
+                ->first();
+        
+            if (!$dataKoperasi) {
+                return Redirect::back()->with(['error' => 'Data koperasi tidak ditemukan']);
+            }
+        
+            $id_informasi_supplier = $dataKoperasi->id_informasi_supplier ?? null;
+        
+            //
+            // ============================================================
+            //   1. RESET STATUS VALIDASI (KOPERASI + SUPPLIER)
+            // ============================================================
+            //
+        
+            // 🔹 Reset status_data_koperasi → 0 (Menunggu)
+            DB::table('data_koperasi')
+                ->where('id_data_koperasi', $id_data_koperasi)
+                ->update(['status_data_koperasi' => 0]);
+        
+            // 🔹 Reset status_informasi_supplier → 0 (Menunggu)
+            if (!empty($id_informasi_supplier)) {
+                DB::table('informasi_supplier')
+                    ->where('id_informasi_supplier', $id_informasi_supplier)
+                    ->update(['status_informasi_supplier' => 0]);
+            }
+        
+            //
+            // ============================================================
+            //   2. HAPUS DATA KEUANGAN TERKAIT
+            // ============================================================
+            //
+            DB::table('keuangan')->where('id_data_koperasi', $id_data_koperasi)->delete();
+        
+            //
+            // ============================================================
+            //   3. INPUT DATA BARANG SESUAI KATEGORI
+            // ============================================================
+            //
+        
             $inputBarang = [
                 [
                     'nama'   => $request->nama_barang_modal_keluar_1,
@@ -897,39 +937,44 @@ class DataKoperasiController extends Controller
                     'harga'  => $request->harga_barang_modal_keluar_3,
                 ],
             ];
-
-            // Hanya masukkan data yang tidak kosong
+        
             foreach ($inputBarang as $barang) {
                 if (!empty($barang['nama']) && !empty($barang['jumlah'])) {
-
-                    // Jika ada id_informasi_supplier di data koperasi → masuk ke tabel barang_supplier
-                    if (!empty($dataKoperasi->id_informasi_supplier)) {
+                
+                    // Jika terkait supplier → simpan ke barang_supplier
+                    if (!empty($id_informasi_supplier)) {
+                    
                         DB::table('barang_supplier')->insert([
-                            'id_informasi_supplier' => $dataKoperasi->id_informasi_supplier,
+                            'id_informasi_supplier' => $id_informasi_supplier,
                             'nama_barang_supplier'  => $barang['nama'],
                             'jumlah_barang_supplier'=> $barang['jumlah'],
                             'satuan_barang_supplier'=> $barang['satuan'],
                             'harga_barang_supplier' => $barang['harga'],
                             'nomor_dapur_barang_supplier' => $nomor_dapur
                         ]);
+                    
                     } 
-                    // Jika tidak ada → masuk ke tabel barang_modal_keluar
+                    // Jika tidak terkait supplier → simpan ke barang_modal_keluar
                     else {
+                    
                         DB::table('barang_modal_keluar')->insert([
                             'nama_barang_modal_keluar'    => $barang['nama'],
                             'jumlah_barang_modal_keluar'  => $barang['jumlah'],
                             'satuan_barang_modal_keluar'  => $barang['satuan'],
                             'harga_barang_modal_keluar'   => $barang['harga'],
-                            'nomor_dapur_barang_modal_keluar'    => $nomor_dapur,
+                            'nomor_dapur_barang_modal_keluar' => $nomor_dapur,
                             'id_data_koperasi'            => $id_data_koperasi
                         ]);
                     }
                 }
             }
-
+        
             DB::commit();
-            return Redirect::back()->with(['success' => 'Data berhasil disimpan ke tabel yang sesuai']);
+        
+            return Redirect::back()->with(['success' => 'Data berhasil disimpan dan status validasi telah direset']);
+        
         } catch (\Exception $e) {
+        
             DB::rollBack();
             return Redirect::back()->with(['warning' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
@@ -941,28 +986,28 @@ class DataKoperasiController extends Controller
     public function edit_modal_keluar_admin_data_koperasi(Request $request)
     {
         $id = $request->id;
-    
+
         // Ambil data koperasi berdasarkan ID
         $data = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
-    
+
         if (!$data) {
             return Redirect::back()->with(['error' => 'Data koperasi tidak ditemukan']);
         }
-    
+
         // Ambil id_informasi_supplier
         $id_informasi_supplier = $data->id_informasi_supplier ?? null;
-    
+
         try {
-        
+
             DB::beginTransaction();
-        
+
             // ✅ 1. Update status_data_koperasi ke 0 (Menunggu)
             DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
                 ->update([
                     'status_data_koperasi' => 0
                 ]);
-            
+
             // ✅ 2. Update status_informasi_supplier ke 0 jika ada supplier
             if (!empty($id_informasi_supplier)) {
                 DB::table('informasi_supplier')
@@ -971,29 +1016,29 @@ class DataKoperasiController extends Controller
                         'status_informasi_supplier' => 0
                     ]);
             }
-        
+
             // ✅ 3. Hapus data keuangan yang terkait dengan id_data_koperasi
             DB::table('keuangan')->where('id_data_koperasi', $id)->delete();
-        
+
             DB::commit();
-        
+
         } catch (\Exception $e) {
             DB::rollBack();
             return Redirect::back()->with(['error' => 'Gagal memperbarui status: ' . $e->getMessage()]);
         }
-    
+
         // Ambil semua data koperasi (opsional)
         $data_koperasi = DB::table('data_koperasi')->get();
-    
+
         // Ambil nomor dapur
         $nomor_dapur = $data->nomor_dapur_data_koperasi;
-    
+
         // Inisialisasi
         $barang_list = collect();
-    
+
         // === Ambil barang berdasarkan supplier atau modal keluar ===
         if (!empty($id_informasi_supplier) && $id_informasi_supplier > 0) {
-        
+
             // Barang supplier
             $barang_list = DB::table('barang_supplier')
                 ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
@@ -1008,9 +1053,9 @@ class DataKoperasiController extends Controller
                     'informasi_supplier.nama_informasi_supplier as supplier'
                 )
                 ->get();
-                
+
         } else {
-        
+
             // Barang modal keluar
             $barang_list = DB::table('barang_modal_keluar')
                 ->where('id_data_koperasi', $id)
@@ -1024,7 +1069,7 @@ class DataKoperasiController extends Controller
                 )
                 ->get();
         }
-    
+
         return view('admin.data_koperasi.edit_modal_keluar_data_koperasi', compact(
             'data_koperasi',
             'data',
