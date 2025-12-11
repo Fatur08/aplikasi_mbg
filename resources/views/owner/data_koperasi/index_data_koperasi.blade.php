@@ -622,37 +622,6 @@
         });
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        let dari = document.getElementById("dari_tanggal");
-        let sampai = document.getElementById("sampai_tanggal");
-        let bulan = document.getElementById("bulan");
-            
-        function toggleBulan() {
-            if (dari.value && sampai.value) {
-                bulan.disabled = true;   // disable select bulan
-                bulan.value = "";        // reset pilihannya
-            } else {
-                bulan.disabled = false;  // aktifkan lagi
-            }
-        }
-    
-        function toggleTanggal() {
-            if (bulan.value) {
-                dari.readOnly = true;    
-                sampai.readOnly = true;  
-                dari.value = "";         
-                sampai.value = "";       
-            } else {
-                dari.readOnly = false;   
-                sampai.readOnly = false; 
-            }
-        }
-    
-        dari.addEventListener("change", toggleBulan);
-        sampai.addEventListener("change", toggleBulan);
-        bulan.addEventListener("change", toggleTanggal);
-    });
-
     document.getElementById("cetak_data_koperasi").addEventListener("click", function() {
         let dari = document.getElementById("dari_tanggal").value;
         let sampai = document.getElementById("sampai_tanggal").value;
