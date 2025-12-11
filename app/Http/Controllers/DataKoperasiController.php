@@ -859,10 +859,6 @@ class DataKoperasiController extends Controller
         $data_koperasi      = DB::table('data_koperasi')->get();
         $data               = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
 
-        $nomor_dapur_admin  = DB::table('barang_supplier')
-            ->where('id_informasi_supplier', $id)
-            ->value('nomor_dapur');
-
         // Ambil semua data dapur
         $dapurList          = DB::table('dapur')
             ->select('nomor_dapur', 'nama_dapur')
