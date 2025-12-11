@@ -654,22 +654,22 @@
             
         function toggleBulan() {
             if (dari.value && sampai.value) {
-                bulan.disabled = true;   // disable select bulan
-                bulan.value = "";        // reset pilihannya
+                bulan.disabled = true;
+                bulan.value = "";
             } else {
-                bulan.disabled = false;  // aktifkan lagi
+                bulan.disabled = false;
             }
         }
     
         function toggleTanggal() {
             if (bulan.value) {
-                dari.readOnly = true;    
-                sampai.readOnly = true;  
-                dari.value = "";         
-                sampai.value = "";       
+                dari.disabled = true;
+                sampai.disabled = true;
+                dari.value = "";
+                sampai.value = "";
             } else {
-                dari.readOnly = false;   
-                sampai.readOnly = false; 
+                dari.disabled = false;
+                sampai.disabled = false;
             }
         }
     
@@ -677,12 +677,12 @@
         sampai.addEventListener("change", toggleBulan);
         bulan.addEventListener("change", toggleTanggal);
     });
-
+    
     document.getElementById("cetak_data_koperasi").addEventListener("click", function() {
         let dari = document.getElementById("dari_tanggal").value;
         let sampai = document.getElementById("sampai_tanggal").value;
         let bulan = document.getElementById("bulan").value;
-
+    
         let url = `/admin/data_koperasi/cetak_data_koperasi?dari_tanggal=${dari}&sampai_tanggal=${sampai}&bulan=${bulan}`;
         window.open(url, "_blank");
     });
