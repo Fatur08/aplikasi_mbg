@@ -517,16 +517,6 @@
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Jumlah (Rp)',
-                        font: { size: 16 }
-                    },
-                    ticks: { font: { size: 14 } }
-                }
-            },
             plugins: {
                 legend: { labels: { font: { size: 14 } } }
             }
