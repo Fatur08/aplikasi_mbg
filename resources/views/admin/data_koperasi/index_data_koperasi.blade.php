@@ -677,10 +677,9 @@
     });
 
     document.getElementById("cetak_data_koperasi").addEventListener("click", function() {
-        let dapur = document.getElementById("pilih_dapur").value;
         let bulan = document.getElementById("bulan").value;
 
-        let url = `/admin/data_koperasi/cetak_data_koperasi?dapur=${dapur}&bulan=${bulan}`;
+        let url = `/admin/data_koperasi/cetak_data_koperasi?bulan=${bulan}`;
         window.open(url, "_blank");
     });
 </script>
