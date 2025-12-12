@@ -209,7 +209,7 @@
                                         // ✅ Ambil nama dapur
                                         $namaDapur = $dapur
                                             ? DB::table('dapur')
-                                                ->where('nomor_dapur', $nomor_dapur)
+                                                ->where('nomor_dapur', $dapur)
                                                 ->value('nama_dapur')
                                             : '-';
                                     @endphp
