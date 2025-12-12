@@ -324,6 +324,7 @@
 </div>
 @endsection
 @push('myscript')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     $(function(){
         $("#tanggal_laporan_keuangan").datepicker({ 
