@@ -79,7 +79,7 @@
         <h2>LAPORAN DATA KOPERASI</h2>
         <h4 style="margin:0;">
             Periode Bulan 
-            {{ \Carbon\Carbon::createFromFormat('m', $bulan)->translatedFormat('F') }}
+            {{ $bulan }}
         </h4>
     </div>
 
