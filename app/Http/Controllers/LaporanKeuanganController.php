@@ -450,6 +450,7 @@ class LaporanKeuanganController extends Controller
     public function index_admin_laporan_keuangan(Request $request)
     {
         $admin         = Auth::guard('admin')->user();
+        dd($admin->nomor_dapur_admin);
         $dapur         = $admin->nomor_dapur_admin;
         $pilih_bulan   = $request->pilih_bulan;
         $tahunSekarang = Carbon::now()->year;
