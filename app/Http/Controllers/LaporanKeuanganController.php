@@ -604,8 +604,6 @@ class LaporanKeuanganController extends Controller
                 return $item;
             });
         
-        dd($data); // TAMBAHKAN INI
-        
         return view('admin.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
             'grouped',

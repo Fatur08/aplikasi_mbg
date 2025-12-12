@@ -465,5 +465,6 @@
             }
         }
     });
+    console.log(Chart);
 </script>
 @endpush
