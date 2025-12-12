@@ -80,7 +80,8 @@
     <div class="header" style="text-align:center; margin-bottom:20px;">
         <h2 style="margin:0;">LAPORAN KEUANGAN</h2>
         <h4 style="margin:0;">
-            Periode Bulan {{ $pilih_bulan }}
+            Periode Bulan 
+            {{ \Carbon\Carbon::createFromFormat('m', $pilih_bulan)->translatedFormat('F') }}
         </h4>
     </div>
 
