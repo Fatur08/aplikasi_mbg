@@ -152,11 +152,11 @@
                                         <td>Rp {{ number_format($d->harga_data_koperasi, 0, ',', '.') }}</td>
                                         <td class="text-center">
                                             @if($d->status_data_koperasi == 0)
-                                                <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                <span class="badge bg-warning text-dark px-3 py-2">Menunggu</span>
                                             @elseif($d->status_data_koperasi == 1)
-                                                <button class="btn btn-success btn-sm">Disetujui</button>
+                                                <span class="badge bg-success px-3 py-2">Disetujui</span>
                                             @else
-                                                <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                <span class="badge bg-danger px-3 py-2">Ditolak</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -198,11 +198,11 @@
         
                                         <td class="text-center">
                                             @if($d->status_data_koperasi == 0)
-                                                <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                <span class="badge bg-warning text-dark px-3 py-2">Menunggu</span>
                                             @elseif($d->status_data_koperasi == 1)
-                                                <button class="btn btn-success btn-sm">Disetujui</button>
+                                                <span class="badge bg-success px-3 py-2">Disetujui</span>
                                             @else
-                                                <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                <span class="badge bg-danger px-3 py-2">Ditolak</span>
                                             @endif
                                         </td>
                                     </tr>
