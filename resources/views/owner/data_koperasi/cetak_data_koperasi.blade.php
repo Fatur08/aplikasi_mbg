@@ -77,14 +77,9 @@
 <body onload="window.print()">
     <div class="header">
         <h2>LAPORAN DATA KOPERASI</h2>
-        <h4>Periode 
-            @if(request('dari_tanggal') && request('sampai_tanggal'))
-                {{ request('dari_tanggal') }} s/d {{ request('sampai_tanggal') }}
-            @elseif(request('bulan'))
-                Bulan {{ request('bulan') }}
-            @else
-                Semua Periode
-            @endif
+        <h4 style="margin:0;">
+            Periode Bulan 
+            {{ \Carbon\Carbon::createFromFormat('m', $pilih_bulan)->translatedFormat('F') }}
         </h4>
     </div>
 

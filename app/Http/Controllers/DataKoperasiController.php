@@ -153,7 +153,7 @@ class DataKoperasiController extends Controller
     
         $sisa_dana = $total_pemasukan - $total_pengeluaran;
     
-        return view('owner.data_koperasi.cetak_data_koperasi', compact('data','sisa_dana'));
+        return view('owner.data_koperasi.cetak_data_koperasi', compact('data','sisa_dana', 'bulan'));
     }
 
     public function store_owner_data_koperasi(Request $request)
