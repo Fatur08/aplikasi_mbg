@@ -207,7 +207,7 @@
                                         use Carbon\Carbon;
 
                                         // ✅ Ambil nama dapur
-                                        $namaDapur = $nomor_dapur
+                                        $namaDapur = $dapur
                                             ? DB::table('dapur')
                                                 ->where('nomor_dapur', $nomor_dapur)
                                                 ->value('nama_dapur')
