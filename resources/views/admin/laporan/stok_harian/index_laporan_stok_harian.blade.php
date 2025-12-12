@@ -136,7 +136,7 @@
                                     Laporan Stok Harian
                                 </h2>
                             </td>
-                            <td style="text-align:right">
+                            <!--<td style="text-align:right">
                                 <a href="#" class="btn btn-primary" id="btnTambahDataKoperasi">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                          viewBox="0 0 24 24" fill="none" stroke="currentColor" 
@@ -148,7 +148,7 @@
                                     </svg>
                                     Tambah Data
                                 </a>
-                            </td>
+                            </td>-->
                         </tr>
                     </tbody>
                 </table>

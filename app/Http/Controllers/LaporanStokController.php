@@ -852,147 +852,96 @@ class LaporanStokController extends Controller
 
     public function index_admin_laporan_stok_bulanan(Request $request)
     {
-        $admin = Auth::guard('admin')->user();
-        $nomor_dapur = $admin->nomor_dapur_admin;
-        
-        $bulan = $request->bulan; // Format: YYYY-MM (misal: 2025-10)
-        $filter_bahan = $request->filter_bahan;
+        $admin  = Auth::guard('admin')->user();
+        $dapur  = $admin->nomor_dapur_admin;
 
-        // Pecah bulan dan tahun dari input
-        $bulan = null;
-        $tahun = null;
-        if (!empty($bulan)) {
-            $tanggalObj = Carbon::parse($bulan . '-01');
-            $bulan = $tanggalObj->month;
-            $tahun = $tanggalObj->year;
+        // ============================
+        // PROSES BULAN & TAHUN
+        // ============================
+        $bulan_map = [
+            'Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4,
+            'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8,
+            'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12
+        ];
+
+        $nama_bulan = $request->bulan;
+        $bulan = $bulan_map[$nama_bulan] ?? date('m');
+        $tahun = date('Y');
+
+        $filter_bulan = $tahun . '-' . str_pad($bulan, 2, '0', STR_PAD_LEFT);
+
+        // ============================
+        // STOK MASUK BULANAN
+        // ============================
+        $stok_masuk_bulanan = DB::table('stok_masuk')
+            ->whereMonth('tanggal_masuk', $bulan)
+            ->whereYear('tanggal_masuk', $tahun)
+            ->where('nomor_dapur_stok_masuk', $dapur)
+            ->select('id_bahan', DB::raw('SUM(jumlah_masuk) as total'))
+            ->groupBy('id_bahan')
+            ->get()
+            ->keyBy('id_bahan');
+
+        // ============================
+        // STOK KELUAR BULANAN
+        // ============================
+        $stok_keluar_bulanan = DB::table('stok_keluar')
+            ->whereMonth('tanggal_keluar', $bulan)
+            ->whereYear('tanggal_keluar', $tahun)
+            ->where('nomor_dapur_stok_keluar', $dapur)
+            ->select('id_bahan', DB::raw('SUM(jumlah_keluar) as total'))
+            ->groupBy('id_bahan')
+            ->get()
+            ->keyBy('id_bahan');
+
+        // ============================
+        // GABUNG SEMUA ID BAHAN
+        // ============================
+        $semua_bahan = collect()
+            ->merge($stok_masuk_bulanan->keys())
+            ->merge($stok_keluar_bulanan->keys())
+            ->unique()
+            ->values();
+
+        $data_laporan = [];
+
+        foreach ($semua_bahan as $id_bahan) {
+
+            $total_masuk  = $stok_masuk_bulanan->get($id_bahan)->total ?? 0;
+            $total_keluar = $stok_keluar_bulanan->get($id_bahan)->total ?? 0;
+            $stok_akhir   = $total_masuk - $total_keluar;
+
+            $bahan = DB::table('bahan')->where('id_bahan', $id_bahan)->first();
+            $limit = $bahan->batas_limit ?? 0;
+
+            // ============================
+            // KETERANGAN
+            // ============================
+            if ($stok_akhir < 0) {
+                $keterangan = 'Minus';
+            } elseif ($stok_akhir == 0) {
+                $keterangan = 'Habis';
+            } elseif ($stok_akhir == $limit) {
+                $keterangan = 'Menipis';
+            } else {
+                $keterangan = 'Aman';
+            }
+
+            $data_laporan[] = [
+                'id_bahan'     => $id_bahan,
+                'nama_bahan'   => $bahan->nama_bahan ?? ('ID-'.$id_bahan),
+                'satuan'       => $bahan->satuan_bahan ?? '-',
+                'total_masuk'  => $total_masuk,
+                'total_keluar' => $total_keluar,
+                'stok_akhir'   => $stok_akhir,
+                'keterangan'   => $keterangan,
+            ];
         }
 
-        // --- 1️⃣ Ambil detail stok masuk per bahan berdasarkan bulan ---
-        $stok_masuk = DB::table('stok_masuk')
-            ->leftJoin('bahan', 'stok_masuk.id_bahan', '=', 'bahan.id_bahan')
-            ->leftJoin(DB::raw('(
-                SELECT id_stok_masuk, SUM(jumlah_keluar) as total_keluar
-                FROM stok_keluar
-                GROUP BY id_stok_masuk
-            ) as keluar'), 'stok_masuk.id_stok_masuk', '=', 'keluar.id_stok_masuk')
-            ->where('stok_masuk.nomor_dapur_stok_masuk', $nomor_dapur)
-            ->when($bulan && $tahun, function ($query) use ($bulan, $tahun) {
-                $query->whereMonth('stok_masuk.tanggal_masuk', $bulan)
-                      ->whereYear('stok_masuk.tanggal_masuk', $tahun);
-            })
-            ->select(
-                'stok_masuk.id_stok_masuk',
-                'stok_masuk.tanggal_masuk',
-                'stok_masuk.id_bahan',
-                'bahan.nama_bahan',
-                'bahan.satuan_bahan',
-                'stok_masuk.jumlah_masuk',
-                DB::raw('IFNULL(keluar.total_keluar, 0) as total_keluar'),
-                DB::raw('(stok_masuk.jumlah_masuk - IFNULL(keluar.total_keluar, 0)) as sisa_stok'),
-                'stok_masuk.sumber_stok_masuk',
-                'stok_masuk.keterangan_stok_masuk'
-            )
-            ->orderBy('stok_masuk.tanggal_masuk', 'asc')
-            ->get();
-
-        // --- 2️⃣ Ambil stok keluar berdasarkan bulan ---
-        $stok_keluar = DB::table('stok_keluar as sk')
-            ->leftJoin('stok_masuk as sm', 'sk.id_stok_masuk', '=', 'sm.id_stok_masuk')
-            ->leftJoin('bahan as b', 'sk.id_bahan', '=', 'b.id_bahan')
-            ->where('sk.nomor_dapur_stok_keluar', $nomor_dapur)
-            ->when($bulan && $tahun, function ($query) use ($bulan, $tahun) {
-                $query->whereMonth('sk.tanggal_keluar', $bulan)
-                      ->whereYear('sk.tanggal_keluar', $tahun);
-            })
-            ->select(
-                'sk.id_stok_keluar',
-                'sk.tanggal_keluar',
-                'sk.id_bahan',
-                'b.nama_bahan',
-                'b.satuan_bahan',
-                'sk.jumlah_keluar',
-                'sm.jumlah_masuk',
-                'sm.tanggal_masuk',
-                DB::raw("(
-                    sm.jumlah_masuk - (
-                        SELECT COALESCE(SUM(s3.jumlah_keluar), 0)
-                        FROM stok_keluar s3
-                        WHERE s3.id_stok_masuk = sk.id_stok_masuk
-                    )
-                ) as sisa_perbahan")
-            )
-            ->orderBy('sk.tanggal_keluar', 'asc')
-            ->get();
-
-        // --- 3️⃣ Hitung total masuk & keluar per bahan selama bulan tersebut ---
-        $totalMasukSub = DB::table('stok_masuk')
-            ->select('id_bahan', DB::raw('SUM(jumlah_masuk) as total_masuk'))
-            ->where('nomor_dapur_stok_masuk', $nomor_dapur)
-            ->when($bulan && $tahun, function ($query) use ($bulan, $tahun) {
-                $query->whereMonth('tanggal_masuk', $bulan)
-                      ->whereYear('tanggal_masuk', $tahun);
-            })
-            ->groupBy('id_bahan');
-
-        $totalKeluarSub = DB::table('stok_keluar')
-            ->select('id_bahan', DB::raw('SUM(jumlah_keluar) as total_keluar'))
-            ->where('nomor_dapur_stok_keluar', $nomor_dapur)
-            ->when($bulan && $tahun, function ($query) use ($bulan, $tahun) {
-                $query->whereMonth('tanggal_keluar', $bulan)
-                      ->whereYear('tanggal_keluar', $tahun);
-            })
-            ->groupBy('id_bahan');
-
-        // --- 4️⃣ Hitung sisa stok per bahan ---
-        $sisa_perbahan = DB::table('bahan as b')
-            ->leftJoinSub($totalMasukSub, 'sm', function ($join) {
-                $join->on('b.id_bahan', '=', 'sm.id_bahan');
-            })
-            ->leftJoinSub($totalKeluarSub, 'sk', function ($join) {
-                $join->on('b.id_bahan', '=', 'sk.id_bahan');
-            })
-            ->select(
-                'b.id_bahan',
-                'b.nama_bahan',
-                'b.satuan_bahan',
-                DB::raw('COALESCE(sm.total_masuk, 0) as total_masuk'),
-                DB::raw('COALESCE(sk.total_keluar, 0) as total_keluar'),
-                DB::raw('(COALESCE(sm.total_masuk, 0) - COALESCE(sk.total_keluar, 0)) as sisa_per_bahan')
-            )
-            ->orderBy('b.nama_bahan', 'asc')
-            ->get();
-
-        // --- 5️⃣ Hitung total keseluruhan bulan ini ---
-        $total_masuk_bulan = $sisa_perbahan->sum('total_masuk');
-        $total_keluar_bulan = $sisa_perbahan->sum('total_keluar');
-        $total_sisa_bulan = $sisa_perbahan->sum('sisa_per_bahan');
-
-        // --- 6️⃣ Data tambahan ---
-        $bahan = DB::table('bahan')->select('id_bahan', 'nama_bahan')->orderBy('nama_bahan')->get();
-        $dapurs = DB::table('dapur')->select('nomor_dapur', 'nama_dapur')->groupBy('nama_dapur', 'nomor_dapur')->get();
-
-        $dataKosong = $stok_masuk->isEmpty();
-        $sudahCari = !empty($bulan);
-
-        // Ambil semua data dapur
-        $dapurList = DB::table('dapur')
-            ->select('nomor_dapur', 'nama_dapur')
-            ->groupBy('nomor_dapur', 'nama_dapur')
-            ->get();
-
         return view('admin.laporan.stok_bulanan.index_laporan_stok_bulanan', compact(
-            'stok_masuk',
-            'stok_keluar',
-            'dapurs',
-            'bahan',
-            'dataKosong',
-            'sudahCari',
-            'sisa_perbahan',
-            'total_masuk_bulan',
-            'total_keluar_bulan',
-            'total_sisa_bulan',
-            'nomor_dapur',
-            'dapurList'
+            'data_laporan',
+            'dapur',
+            'filter_bulan'
         ));
     }
 }
