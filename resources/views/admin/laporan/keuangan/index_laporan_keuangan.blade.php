@@ -15,19 +15,6 @@
                                     Laporan Keuangan
                                 </h2>
                             </td>
-                            <td style="text-align:right">
-                                <a href="#" class="btn btn-primary" id="btnTambahLaporanKeuangan">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                         class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M12 5l0 14" />
-                                        <path d="M5 12l14 0" />
-                                    </svg>
-                                    Tambah Data
-                                </a>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -108,7 +95,7 @@
                             <div class="row mt-2">
                                 <div class="col-12">
                                     <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
-                                        <canvas id="koperasiChart" height="340"></canvas>
+                                        <canvas id="koperasiChartAdmin" height="340"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -491,7 +478,7 @@
     const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
     const margin      = koperasiData.map(item => item.margin);
 
-    const ctxBar = document.getElementById('koperasiChart').getContext('2d');
+    const ctxBar = document.getElementById('koperasiChartAdmin').getContext('2d');
     new Chart(ctxBar, {
         type: 'bar',
         data: {
