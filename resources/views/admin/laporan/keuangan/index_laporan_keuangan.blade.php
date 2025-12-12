@@ -95,7 +95,7 @@
                             <div class="row mt-2">
                                 <div class="col-12">
                                     <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
-                                        <canvas id="koperasiChart" height="340"></canvas>
+                                        <canvas id="koperasiChartAdmin" height="340"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -434,7 +434,7 @@
     const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
     const margin      = koperasiData.map(item => item.margin);
 
-    const ctxBar = document.getElementById('koperasiChart').getContext('2d');
+    const ctxBar = document.getElementById('koperasiChartAdmin').getContext('2d');
     new Chart(ctxBar, {
         type: 'bar',
         data: {
