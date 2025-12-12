@@ -71,19 +71,28 @@
             border-radius: 4px;
             font-size: 10pt;
             font-weight: bold;
-            color: #000;
+            border: 1px solid #000;
         }
 
         /* Warna kotak */
-        .bg-warning-box { background: #ffc107; }
-        .bg-success-box { background: #28a745; color: #fff; }
-        .bg-danger-box  { background: #dc3545; color: #fff; }
+        .bg-warning-box { background: #ffc107 !important; color: #000 !important; }
+        .bg-success-box { background: #28a745 !important; color: #fff !important; }
+        .bg-danger-box  { background: #dc3545 !important; color: #fff !important; }
 
         /* Auto print */
         @media print {
             @page {
                 size: F4 portrait;
                 margin: 1.5cm 1cm;
+            }
+        }
+
+        /* Paksa warna background muncul saat print */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
         }
     </style>
