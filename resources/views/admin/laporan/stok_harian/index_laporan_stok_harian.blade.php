@@ -283,14 +283,14 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#dari_tanggal").datepicker({ 
+        $("#pilih_tanggal").datepicker({ 
         autoclose: true, 
         todayHighlight: true,
         format:'yyyy-mm-dd'
         });
 
 
-        flatpickr("#dari_tanggal", {
+        flatpickr("#pilih_tanggal", {
             dateFormat: "d F Y", // format tampilan: 15 September 2025
             altInput: true,
             altFormat: "d F Y",
