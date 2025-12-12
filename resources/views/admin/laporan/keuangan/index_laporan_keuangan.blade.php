@@ -95,6 +95,9 @@
                             <div class="row mt-2">
                                 <div class="col-12">
                                     <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
+                                        <pre id="debug-data" style="background:#f8f9fa;border:1px solid #ddd;padding:10px;white-space:pre-wrap;">
+                                        @json($data)
+                                        </pre>
                                         <canvas id="koperasiChart" height="340"></canvas>
                                     </div>
                                 </div>
