@@ -87,6 +87,12 @@
         <strong>Sisa Seluruh Dana : Rp {{ number_format($sisa_dana, 0, ',', '.') }}</strong>
     </div>
 
+    @php
+        $grouped = $data->groupBy(function ($item) {
+            return \Carbon\Carbon::parse($item->tanggal_data_koperasi)->translatedFormat('d F Y');
+        });
+    @endphp
+
     @foreach ($grouped as $tanggal => $data)
         @php
             $totalMasuk = 0;
