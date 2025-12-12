@@ -208,10 +208,7 @@ class DataKoperasiController extends Controller
     
         return view('owner.data_koperasi.cetak_data_koperasi', compact(
             'data_koperasi',
-            'dataKosong',
-            'sudahCari',
             'grouped',
-            'dapurList'
         ));
     }
 
