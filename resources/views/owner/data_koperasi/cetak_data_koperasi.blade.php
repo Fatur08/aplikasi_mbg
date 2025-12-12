@@ -84,7 +84,7 @@
     </div>
 
     @php
-        $grouped = $data->groupBy(function ($item) {
+        $grouped = $data_koperasi->groupBy(function ($item) {
             return \Carbon\Carbon::parse($item->tanggal_data_koperasi)->translatedFormat('d F Y');
         });
     @endphp
