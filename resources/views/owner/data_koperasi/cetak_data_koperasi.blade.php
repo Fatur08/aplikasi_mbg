@@ -65,6 +65,20 @@
             margin: 5px 0;
         }
 
+        .badge-box {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 10pt;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* Warna kotak */
+        .bg-warning-box { background: #ffc107; }
+        .bg-success-box { background: #28a745; color: #fff; }
+        .bg-danger-box  { background: #dc3545; color: #fff; }
+
         /* Auto print */
         @media print {
             @page {
@@ -152,11 +166,11 @@
                                         <td>Rp {{ number_format($d->harga_data_koperasi, 0, ',', '.') }}</td>
                                         <td class="text-center">
                                             @if($d->status_data_koperasi == 0)
-                                                <span class="badge bg-warning text-dark px-3 py-2">Menunggu</span>
+                                                <span class="badge-box bg-warning-box">Menunggu</span>
                                             @elseif($d->status_data_koperasi == 1)
-                                                <span class="badge bg-success px-3 py-2">Disetujui</span>
+                                                <span class="badge-box bg-success-box">Disetujui</span>
                                             @else
-                                                <span class="badge bg-danger px-3 py-2">Ditolak</span>
+                                                <span class="badge-box bg-danger-box">Ditolak</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -198,11 +212,11 @@
         
                                         <td class="text-center">
                                             @if($d->status_data_koperasi == 0)
-                                                <span class="badge bg-warning text-dark px-3 py-2">Menunggu</span>
+                                                <span class="badge-box bg-warning-box">Menunggu</span>
                                             @elseif($d->status_data_koperasi == 1)
-                                                <span class="badge bg-success px-3 py-2">Disetujui</span>
+                                                <span class="badge-box bg-success-box">Disetujui</span>
                                             @else
-                                                <span class="badge bg-danger px-3 py-2">Ditolak</span>
+                                                <span class="badge-box bg-danger-box">Ditolak</span>
                                             @endif
                                         </td>
                                     </tr>
