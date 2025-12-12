@@ -66,34 +66,26 @@
                                 <div class="col-12">
                                     <form action="/admin/laporan/keuangan" method="GET">
                                         <div class="row g-2 align-items-end">
-                                            <div class="col-md-3">
-                                                <div class="input-icon">
-                                                    <span class="input-icon-addon">
-                                                        <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
-                                                    </span>
-                                                    <input type="text" value="" id="dari_tanggal" name="dari_tanggal" class="form-control" placeholder="Dari Tanggal" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="input-icon">
-                                                    <span class="input-icon-addon">
-                                                        <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
-                                                    </span>
-                                                    <input type="text" value="" id="sampai_tanggal" name="sampai_tanggal" class="form-control" placeholder="Sampai Tanggal" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="input-icon">
-                                                    <select name="cari_jenis_transaksi" id="cari_jenis_transaksi" class="form-select">
-                                                        <option value="">Jenis Transaksi</option>
-                                                        <option value="Pemasukan">Pemasukan</option>
-                                                        <option value="Pengeluaran">Pengeluaran</option>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <select name="pilih_bulan" id="pilih_bulan" class="form-select">
+                                                        <option value="">Pilih Bulan</option>
+                                                        <option value="1">Januari</option>
+                                                        <option value="2">Februari</option>
+                                                        <option value="3">Maret</option>
+                                                        <option value="4">April</option>
+                                                        <option value="5">Mei</option>
+                                                        <option value="6">Juni</option>
+                                                        <option value="7">Juli</option>
+                                                        <option value="8">Agustus</option>
+                                                        <option value="9">September</option>
+                                                        <option value="10">Oktober</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">Desember</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-primary w-100">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
@@ -137,8 +129,8 @@
                                                 <th style="text-align: center; vertical-align: middle;" colspan="2">Sumber</th>
                                                 <th style="text-align: center; vertical-align: middle;" colspan="2">Jumlah</th>
                                                 <th style="text-align: center; vertical-align: middle;" rowspan="2">Selisih</th>
-                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
-                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>
+                                                <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
+                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
                                             </tr>
                                             <tr>
                                                 <th style="text-align: center; vertical-align: middle;">Koperasi</th>
@@ -150,16 +142,36 @@
                                         <tbody>
                                             @forelse ($grouped as $tanggal => $data_per_tanggal)
                                                 @php
+                                                    // Pisahkan data berdasarkan jenis transaksi
                                                     $pemasukan = $data_per_tanggal->where('jenis_transaksi', 'Pemasukan');
                                                     $pengeluaran = $data_per_tanggal->where('jenis_transaksi', 'Pengeluaran');
-                                                    $total_pemasukan = $pemasukan->sum('jumlah_dana');
-                                                    $total_pengeluaran = $pengeluaran->sum('jumlah_dana');
-                                                    $selisih = $total_pemasukan - $total_pengeluaran;
-                                    
-                                                    // ambil id pertama (misalnya untuk tombol edit/hapus)
-                                                    $id_laporan = optional($data_per_tanggal->first())->id_laporan_keuangan;
+                                                                                    
+                                                    // Hitung total pemasukan
+                                                    $total_pemasukan = $data_per_tanggal
+                                                        ->where('jenis_data_koperasi', 'modal_masuk')
+                                                        ->where('status_data_koperasi', 1)
+                                                        ->sum('harga_data_koperasi');
+                                                                                    
+                                                    // Hitung total pengeluaran dari sumber berbeda
+                                                    $total_pengeluaran_supplier = $data_per_tanggal
+                                                        ->whereNotNull('harga_barang_supplier')
+                                                        ->sum('harga_barang_supplier');
 
-                                                    // cek apakah ada data koperasi atau supplier
+                                                    $total_pengeluaran_modal_keluar = $data_per_tanggal
+                                                        ->whereNotNull('harga_barang_modal_keluar')
+                                                        ->sum('harga_barang_modal_keluar');
+
+                                                    $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
+                                                                                    
+                                                    // Selisih total
+                                                    $selisih = $total_pemasukan - $total_pengeluaran;
+                                                                                    
+                                                    // Ambil data pertama untuk id & status validasi
+                                                    $laporan = $data_per_tanggal->first();
+                                                    $id_laporan = optional($laporan)->id_laporan_keuangan;
+                                                    $status_validasi = optional($laporan)->status_validasi;
+                                                                                    
+                                                    // Cek apakah pengeluaran dari data koperasi atau supplier
                                                     $ada_koperasi = $data_per_tanggal->contains('id_data_koperasi', '!=', null);
                                                     $ada_supplier = $data_per_tanggal->contains('id_informasi_supplier', '!=', null);
                                                 @endphp
@@ -169,59 +181,27 @@
                                                     <td>{{ $tanggal }}</td>
                                                     {{-- kolom koperasi --}}
                                                     <td>
-                                                        @if($ada_koperasi)
-                                                            ✅
-                                                        @endif
+                                                        {{ ($ada_koperasi && !$ada_supplier) ? '✅' : '' }}
                                                     </td>
-
-                                                    {{-- kolom supplier --}}
+                                                                                        
                                                     <td>
-                                                        @if($ada_supplier)
-                                                            ✅
-                                                        @endif
+                                                        {{ ($ada_koperasi && $ada_supplier) ? '✅' : '' }}
                                                     </td>
-                                                    <td>
+                                                    <td class="text-success">
                                                         Rp {{ number_format($total_pemasukan, 0, ',', '.') }}
-                                                        <a href="#" class="edit_laporan_keuangan btn btn-info btn-sm" id="" >
-                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                        </a>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-danger">
                                                         Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}
-                                                        <a href="#" class="edit_laporan_keuangan btn btn-info btn-sm" id="" >
-                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                        </a>
                                                     </td>
                                                     <td>
                                                         <strong class="{{ $selisih >= 0 ? 'text-success' : 'text-danger' }}">
                                                             Rp {{ number_format($selisih, 0, ',', '.') }}
                                                         </strong>
                                                     </td>
-                                                    <td style="text-align:center">
-                                                        <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <!--<a href="#" class="btn btn-info btn-sm">Validasi</a>-->
-                                                            <form action="#" method="POST" style="margin-left: 5px;">
-                                                                @csrf
-                                                                <a class="btn btn-danger btn-sm delete-confirm-stokmasuk">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                                        viewBox="0 0 24 24" fill="currentColor"
-                                                                        class="icon icon-tabler icons-tabler-filled icon-tabler-trash">
-                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                                        <path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" />
-                                                                        <path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" />
-                                                                    </svg>
-                                                                    Hapus
-                                                                </a>
-                                                            </form>
-                                                        </div>
-                                                    </td>
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="8" class="text-center text-muted">Tidak ada data</td>
+                                                    <td colspan="7" class="text-center text-muted">Tidak ada data</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>
@@ -233,56 +213,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-
-
-
-                            <!--<div class="row mt-2">
-                                <div class="col-12">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>No.</th>
-                                                <th>Tanggal</th>
-                                                <th>Jenis</th>
-                                                <th>Kategori</th>
-                                                <th>Ket.</th>
-                                                <th>Jumlah</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($laporan_keuangan as $d)
-                                            <tr>
-                                                <td>{{ $loop->iteration + $laporan_keuangan->firstItem()-1 }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($d->tanggal_laporan_keuangan)->translatedFormat('d F Y') }}</td>
-                                                <td>{{ $d->jenis_transaksi }}</td>
-                                                <td>{{ $d->kategori_laporan_keuangan }}</td>
-                                                <td>{{ $d->keterangan_laporan_keuangan }}</td>
-                                                <td>Rp {{ number_format($d->jumlah_dana, 0, ',', '.') }}</td>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <a href="#" class="edit_laporan_keuangan btn btn-info btn-sm" id="{{ $d->id_laporan_keuangan }}" >
-                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                        </a>
-                                                        <form action="/owner/laporan/keuangan/{{ $d->id_laporan_keuangan }}/delete_laporan_keuangan" style="margin-left: 5px;" method="POST">
-                                                            @csrf
-                                                            <a class="btn btn-danger btn-sm delete-confirm-laporan-keuangan" >
-                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
-                                                            </a>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            {{ $laporan_keuangan->links('vendor.pagination.bootstrap-5') }}-->
                         </div>
                     </div>
                 </div>
@@ -307,7 +237,6 @@
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
                                 </span>
                                 <input type="text" value="" id="tanggal_laporan_keuangan" name="tanggal_laporan_keuangan" class="form-control" placeholder="Masukkan Tanggal" autocomplete="off">
