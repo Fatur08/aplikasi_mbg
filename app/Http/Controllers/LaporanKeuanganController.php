@@ -407,7 +407,7 @@ class LaporanKeuanganController extends Controller
                 return $item;
             });
 
-        return view('owner.laporan.keuangan.cetak_laporan_keuangan', compact('grouped', 'sisa_dana', 'data'));
+        return view('owner.laporan.keuangan.cetak_laporan_keuangan', compact('grouped', 'sisa_dana', 'data', 'pilih_bulan'));
     }
 
     public function delete_owner_laporan_keuangan($id)

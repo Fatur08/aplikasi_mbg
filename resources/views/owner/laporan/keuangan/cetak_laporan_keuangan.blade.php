@@ -80,16 +80,7 @@
     <div class="header" style="text-align:center; margin-bottom:20px;">
         <h2 style="margin:0;">LAPORAN KEUANGAN</h2>
         <h4 style="margin:0;">
-            Periode 
-            @if(request('dari_tanggal') && request('sampai_tanggal'))
-                {{ \Carbon\Carbon::parse(request('dari_tanggal'))->translatedFormat('d F Y') }} 
-                s/d 
-                {{ \Carbon\Carbon::parse(request('sampai_tanggal'))->translatedFormat('d F Y') }}
-            @elseif(request('jenis_transaksi'))
-                Total {{ request('jenis_transaksi') }}
-            @else
-                Semua Periode
-            @endif
+            Periode Bulan {{ $pilih_bulan }}
         </h4>
     </div>
 
