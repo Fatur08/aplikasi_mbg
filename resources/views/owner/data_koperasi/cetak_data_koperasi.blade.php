@@ -140,7 +140,6 @@
                                     <th>Sumber</th>
                                     <th>Jumlah</th>
                                     <th>Validasi</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
         
@@ -159,38 +158,6 @@
                                             @else
                                                 <button class="btn btn-danger btn-sm">Ditolak</button>
                                             @endif
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="btn-group-vertical">
-        
-                                                @if($d->status_data_koperasi == 0)
-                                                <a href="#" 
-                                                   class="validasi_data_koperasi btn btn-primary btn-sm mb-1"
-                                                   id="{{ $d->id_data_koperasi }}">
-                                                    <i class="bi bi-pencil-square"></i> Validasi
-                                                </a>
-                                                @else
-                                                <form action="/owner/data_koperasi/{{ $d->id_data_koperasi }}/batalkan_validasi_data_koperasi" method="POST">
-                                                    @csrf
-                                                    <a class="btn btn-danger btn-sm batalkan_validasi_data_koperasi mb-1">
-                                                        Batalkan
-                                                    </a>
-                                                </form>
-                                                @endif
-        
-                                                <a href="#" class="edit_modal_masuk_data_koperasi btn btn-info btn-sm mb-1"
-                                                   id="{{ $d->id_data_koperasi }}">
-                                                    <i class="bi bi-pencil-square"></i> Edit
-                                                </a>
-        
-                                                <form action="/owner/data_koperasi/{{ $d->id_data_koperasi }}/delete_data_koperasi" method="POST">
-                                                    @csrf
-                                                    <a class="btn btn-danger btn-sm delete-confirm-data-koperasi mb-1">
-                                                        <i class="bi bi-trash"></i> Hapus
-                                                    </a>
-                                                </form>
-        
-                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -216,7 +183,6 @@
                                     <th>Tujuan</th>
                                     <th>Jumlah</th>
                                     <th>Validasi</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
         
@@ -238,44 +204,6 @@
                                             @else
                                                 <button class="btn btn-danger btn-sm">Ditolak</button>
                                             @endif
-                                        </td>
-        
-                                        <td class="text-center">
-                                            <div class="btn-group-vertical">
-                                                @if($d->status_data_koperasi == 0)
-                                                <a href="#" class="validasi_data_koperasi btn btn-primary btn-sm mb-1"
-                                                   id="{{ $d->id_data_koperasi }}">
-                                                   Validasi
-                                                </a>
-                                                @else
-                                                <form action="/owner/data_koperasi/{{ $d->id_data_koperasi }}/batalkan_validasi_data_koperasi" method="POST">
-                                                    @csrf
-                                                    <a class="btn btn-danger btn-sm batalkan_validasi_data_koperasi mb-1">Batalkan</a>
-                                                </form>
-                                                @endif
-        
-                                                <a href="#" class="edit_modal_keluar_data_koperasi btn btn-info btn-sm mb-1"
-                                                   id="{{ $d->id_data_koperasi }}">
-                                                    Edit
-                                                </a>
-        
-                                                <form action="/owner/data_koperasi/{{ $d->id_data_koperasi }}/delete_data_koperasi" method="POST">
-                                                    @csrf
-                                                    <a class="btn btn-danger btn-sm delete-confirm-data-koperasi mb-1">
-                                                        Hapus
-                                                    </a>
-                                                </form>
-        
-                                                <a href="#" class="tambah_barang_modal_keluar btn btn-success btn-sm mb-1"
-                                                   data-id="{{ $d->id_data_koperasi }}">
-                                                    Tambah
-                                                </a>
-        
-                                                <a href="#" class="lihat_barang_modal_keluar btn btn-secondary btn-sm"
-                                                   data-id="{{ $d->id_data_koperasi }}">
-                                                    Lihat
-                                                </a>
-                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
