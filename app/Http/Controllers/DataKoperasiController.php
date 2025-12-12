@@ -207,6 +207,7 @@ class DataKoperasiController extends Controller
         }
     
         return view('owner.data_koperasi.cetak_data_koperasi', compact(
+            'bulan',
             'data_koperasi',
             'grouped',
         ));
