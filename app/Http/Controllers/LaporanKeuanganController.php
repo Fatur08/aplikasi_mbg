@@ -450,7 +450,6 @@ class LaporanKeuanganController extends Controller
     public function index_admin_laporan_keuangan(Request $request)
     {
         $admin         = Auth::guard('admin')->user();
-        dd($admin->nomor_dapur_admin);
         $dapur         = $admin->nomor_dapur_admin;
         $pilih_bulan   = $request->pilih_bulan;
         $tahunSekarang = Carbon::now()->year;
@@ -604,6 +603,8 @@ class LaporanKeuanganController extends Controller
                     ->translatedFormat('d F Y');
                 return $item;
             });
+        
+        dd($data); // TAMBAHKAN INI
         
         return view('admin.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
