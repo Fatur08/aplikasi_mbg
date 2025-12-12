@@ -177,15 +177,6 @@ class LaporanKeuanganController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
         
-
-
-        dd([
-          'request_all' => $request->all(),
-          'pilih_bulan' => $pilih_bulan,
-          'pilih_dapur' => $pilih_dapur,
-          'query_data' => $data,
-        ]);
-        
         return view('owner.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
             'grouped',
@@ -613,14 +604,6 @@ class LaporanKeuanganController extends Controller
                 return $item;
             });
         
-
-
-        dd([
-          'request_all' => $request->all(),
-          'pilih_bulan' => $pilih_bulan,
-          'dapur' => $dapur,
-          'query_data' => $data,
-        ]);
         return view('admin.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
             'grouped',
