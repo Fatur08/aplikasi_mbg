@@ -19,7 +19,7 @@
             <div class="col-12">
                 <div class="form-group">
                     <select name="bulan" id="bulan" class="form-control">
-                        <option value="">Bulan</option>
+                        <option value="">Pilih Bulan</option>
                         <option value="01">Januari</option>
                         <option value="02">Februari</option>
                         <option value="03">Maret</option>
@@ -40,7 +40,7 @@
             <div class="col-12">
                 <div class="form-group">
                     <select name="tahun" id="tahun" class="form-control">
-                        <option value="">Tahun</option>
+                        <option value="">Pilih Tahun</option>
                         @php
                             $tahunmulai = 2023;
                             $tahunskrg = date("Y");
