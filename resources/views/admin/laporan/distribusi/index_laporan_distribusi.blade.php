@@ -157,7 +157,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/admin/laporan/distribusi" method="GET" id="FormLaporanDistribusi">
+                                    <form action="/admin/laporan/distribusi" method="GET" id="FormLaporanDistribusiAdmin">
                                         <div class="row">
                                             <div class="col-5">
                                                 <div class="form-group">
@@ -447,7 +447,7 @@
 
 
 
-        $("#FormLaporanDistribusi").submit(function(){
+        $("#FormLaporanDistribusiAdmin").submit(function(){
             var cari_kecamatan = $("#cari_kecamatan").val();
             var cari_bulan     = $("#cari_bulan").val();
             if(cari_kecamatan==""){
