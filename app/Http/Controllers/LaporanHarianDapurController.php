@@ -136,46 +136,52 @@ class LaporanHarianDapurController extends Controller
     // BAGIAN ADMIN
     public function index_admin_harian_dapur(Request $request)
     {
-        $admin = Auth::guard('admin')->user();
+        $admin       = Auth::guard('admin')->user();
         $nomor_dapur = $admin->nomor_dapur_admin;
+        $tanggal     = $request->pilih_tanggal ?? date('Y-m-d');
+        $id_menu     = $request->id_menu_harian;
 
-        $bulan = $request->input('bulan') ?? date('m');
-        $id_menu_harian = $request->input('id_menu_harian');
-
-        // Ambil data berdasarkan dapur login
+        // ✅ Query utama
         $query = DB::table('jadwal_menu_harian')
             ->join('menu_harian', 'jadwal_menu_harian.id_menu_harian', '=', 'menu_harian.id_menu_harian')
-            ->where('jadwal_menu_harian.nomor_dapur_jadwal_menu_harian', $nomor_dapur)
-            ->select(
-                'jadwal_menu_harian.id_jadwal_menu_harian',
-                'jadwal_menu_harian.nomor_dapur_jadwal_menu_harian',
-                'jadwal_menu_harian.id_menu_harian',
-                'menu_harian.nama_menu_harian',
-                'jadwal_menu_harian.tanggal_jadwal_menu_harian',
-                'jadwal_menu_harian.jumlah_porsi_menu_harian',
-                'jadwal_menu_harian.status_jadwal_menu_harian'
-            );
-        
-        // Filter berdasarkan bulan (jika dipilih)
-        $query->whereMonth('jadwal_menu_harian.tanggal_jadwal_menu_harian', $bulan);
+            ->whereDate('jadwal_menu_harian.tanggal_jadwal_menu_harian', $tanggal);
 
-        // Filter berdasarkan id_menu_harian (jika dipilih)
-        if (!empty($id_menu_harian)) {
-            $query->where('jadwal_menu_harian.id_menu_harian', $id_menu_harian);
+        // ✅ Filter dapur jika dipilih
+        if (!empty($nomor_dapur)) {
+            $query->where('jadwal_menu_harian.nomor_dapur_jadwal_menu_harian', $nomor_dapur);
         }
 
-        // Ambil hasil dan kelompokkan berdasarkan id_menu_harian
-        $jadwal_menu_harian = $query
-            ->orderBy('jadwal_menu_harian.tanggal_jadwal_menu_harian', 'desc')
-            ->get()
-            ->groupBy('id_menu_harian');
-        
-        
+        // ✅ Filter menu jika dipilih
+        if (!empty($id_menu)) {
+            $query->where('jadwal_menu_harian.id_menu_harian', $id_menu);
+        }
+
+        // ✅ Ambil data final
+        $jadwal_menu_harian = $query->select(
+            'jadwal_menu_harian.id_jadwal_menu_harian',
+            'jadwal_menu_harian.nomor_dapur_jadwal_menu_harian',
+            'jadwal_menu_harian.id_menu_harian',
+            'menu_harian.nama_menu_harian',
+            'jadwal_menu_harian.tanggal_jadwal_menu_harian',
+            'jadwal_menu_harian.jumlah_porsi_menu_harian',
+            'jadwal_menu_harian.status_jadwal_menu_harian',
+            'jadwal_menu_harian.kendala_jadwal_menu_harian'
+        )
+        ->orderBy('jadwal_menu_harian.tanggal_jadwal_menu_harian', 'asc')
+        ->get();
+
+        // ✅ Ambil master menu
         $menu_harian = DB::table('menu_harian')
             ->select('id_menu_harian', 'nama_menu_harian')
             ->get();
 
-        return view('admin.laporan.harian_dapur.index_harian_dapur', compact('jadwal_menu_harian', 'nomor_dapur', 'menu_harian'));
+        // ✅ Kirim ke view
+        return view('admin.laporan.harian_dapur.index_harian_dapur', compact(
+            'jadwal_menu_harian',
+            'nomor_dapur',
+            'menu_harian',
+            'tanggal'
+        ));
     }
 
 
