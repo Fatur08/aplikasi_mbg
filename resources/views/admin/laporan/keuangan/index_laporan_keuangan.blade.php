@@ -428,7 +428,7 @@
     // === BAGIAN DIAGRAM BATANG (ADMIN) ===
     const canvasAdmin = document.getElementById('koperasiChartAdmin');
 
-    if (canvasAdmin) {
+    if (canvasAdmin && typeof Chart !== 'undefined') {
         let koperasiData = @json($data);
 
         console.log('DATA ADMIN:', koperasiData);
