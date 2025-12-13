@@ -60,21 +60,29 @@ class DashboardController extends Controller
     public function dashboardowner(Request $request)
     {
         $pilih_dapur = $request->input('pilih_dapur');
-        
-        // Query data berdasarkan dapur yang dipilih (kalau ada)
+
+        // Ambil bulan & tahun sekarang
+        $bulanSekarang = Carbon::now()->month;
+        $tahunSekarang = Carbon::now()->year;
+            
+        // Query data berdasarkan dapur yang dipilih
         $dataDapur = \App\Models\Dapur::when($pilih_dapur, function ($query, $pilihDapur) {
             $query->where('nomor_dapur', $pilihDapur);
         })->get();
-
-        // Ambil semua data admin, kepala dapur, dan distributor (optional bisa disesuaikan relasi)
-        $admins = \App\Models\Admin::all();
-        $kepalaDapur = \App\Models\KepalaDapur::all();
+        
+        // Data pendukung
+        $admins       = \App\Models\Admin::all();
+        $kepalaDapur  = \App\Models\KepalaDapur::all();
         $distributors = \App\Models\Distributor::all();
-
-
-        $dataDistribusi = LaporanDistribusi::where('nomor_dapur_distribusi', $pilih_dapur)
-            ->orderBy('status_distribusi', 'asc') // urutkan dari 0 ke 2
-            ->orderBy('tanggal_distribusi', 'desc') // urutkan tanggal terbaru di tiap status
+        
+        // ✅ Data distribusi (filter dapur + bulan berjalan)
+        $dataDistribusi = LaporanDistribusi::when($pilih_dapur, function ($query, $pilih_dapur) {
+                $query->where('nomor_dapur_distribusi', $pilih_dapur);
+            })
+            ->whereMonth('tanggal_distribusi', $bulanSekarang)
+            ->whereYear('tanggal_distribusi', $tahunSekarang)
+            ->orderBy('status_distribusi', 'asc')
+            ->orderBy('tanggal_distribusi', 'desc')
             ->paginate(300);
 
         // Ambil semua data dapur
