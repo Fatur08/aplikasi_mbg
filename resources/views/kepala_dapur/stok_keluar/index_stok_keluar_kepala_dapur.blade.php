@@ -1,5 +1,126 @@
 @extends('layouts.kepala_dapur.tabler')
 @section('content')
+<style>
+/* === Section Info Dapur === */
+.section-info {
+    margin-top: 40px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+.info-card {
+    display: inline-block;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    padding: 25px 40px;
+    border: 1px solid #e5e7eb;
+    transition: 0.2s;
+}
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.info-card h4 {
+    color: #111827;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+.info-card p {
+    color: #6b7280;
+    margin: 0;
+    font-size: 18px;
+}
+
+/* === Table Style === */
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+}
+
+.custom-table thead th {
+    background: linear-gradient(135deg, #007bff, #00bcd4);
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    padding: 12px;
+    border: none;
+}
+
+.custom-table thead tr:first-child th {
+    background: linear-gradient(135deg, #0069d9, #17a2b8);
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.custom-table tbody td, 
+.custom-table tbody th {
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #dee2e6;
+    font-size: 16px;
+    color: #333;
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #e9f5ff;
+    transition: 0.3s;
+}
+
+.table-container {
+    max-width: 1600px;
+}
+
+/* === Buttons === */
+.btn-status {
+    font-size: 13px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    border: none;
+    color: #fff;
+}
+.btn-menunggu {
+    background-color: #facc15;
+    color: #111827;
+}
+.btn-validasi {
+    background-color: #38bdf8;
+}
+.btn-menunggu:hover {
+    background-color: #eab308;
+}
+.btn-validasi:hover {
+    background-color: #0ea5e9;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .info-card {
+        width: 100%;
+        padding: 20px;
+    }
+    .info-card h4 {
+        font-size: 18px;
+    }
+    .table-modern {
+        font-size: 13px;
+    }
+}
+</style>
 <div class="page-header d-print-none">
     <div class="container-xl">
         <div class="row g-2 align-items-center">
@@ -102,7 +223,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row mt-2 table-container">
                             <div class="col-12">
                                 @if(!$sudahCari)
                                     <div class="alert alert-info text-center">
@@ -115,174 +236,186 @@
                                 @else
                                     @if($filter_bulan && !$filter_bahan)
                                         @foreach($stok->groupBy('nama_bahan') as $namaBahan => $items)
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th colspan="4">{{ $loop->iteration }}. Nama Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $namaBahan }}</th>
-                                                        <th colspan="4">
-                                                            Sisa Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                                            {{ $sisa_perbahan[$namaBahan]->sisa_per_bahan ?? 0 }}
-                                                            {{ $sisa_perbahan[$namaBahan]->satuan_bahan ?? '' }}
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>No.</th>
-                                                        <th>Keluar</th>
-                                                        <th>Masuk</th>
-                                                        <th>Jumlah</th>
-                                                        <th>Sisa</th>
-                                                        <th>Tujuan</th>
-                                                        <th>Ket.</th>
-                                                        <th>Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach($items as $key => $data)
-                                                        <tr @if($data->sisa_stok == 0 || $data->sisa_perbahan <= 0) class="table-warning" @endif>
-                                                            <td>{{ $key+1 }}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($data->tanggal_keluar)->translatedFormat('d F Y') }}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($data->tanggal_masuk)->translatedFormat('d F Y') }}</td>
-                                                            <td>{{ $data->jumlah_keluar }} {{ $data->satuan_bahan }}</td>
-                                                            <td>
-                                                                @if($data->sisa_stok == 0)
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <span>{{ $data->sisa_stok }} {{ $data->satuan_bahan }}</span>
-                                                                        <button class="btn btn-warning btn-sm" disabled>Habis</button>
-                                                                    </div>
-                                                                @else
-                                                                    {{ $data->sisa_stok }} {{ $data->satuan_bahan }}
-                                                                @endif
-                                                            </td>
-                                                            <td>{{ $data->tujuan_stok_keluar }}</td>
-                                                            <td>{{ $data->keterangan_stok_keluar }}</td>
-                                                            <td>
-                                                                <div class="btn-group">
-                                                                    <form action="/kepala_dapur/stok_keluar/{{ $data->id_stok_keluar }}/delete_stok_keluar" style="margin-left: 5px;" method="POST">
-                                                                        @csrf
-                                                                        <a class="btn btn-danger btn-sm delete-confirm-stokmasuk" >
-                                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
-                                                                            Hapus
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                            <div class="table-wrapper">
+                                                <div class="table-responsive">
+                                                    <table class="table custom-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th colspan="4">{{ $loop->iteration }}. Nama Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $namaBahan }}</th>
+                                                                <th colspan="4">
+                                                                    Sisa Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                                                    {{ $sisa_perbahan[$namaBahan]->sisa_per_bahan ?? 0 }}
+                                                                    {{ $sisa_perbahan[$namaBahan]->satuan_bahan ?? '' }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>No.</th>
+                                                                <th>Keluar</th>
+                                                                <th>Masuk</th>
+                                                                <th>Jumlah</th>
+                                                                <th>Sisa</th>
+                                                                <th>Tujuan</th>
+                                                                <th>Ket.</th>
+                                                                <th>Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($items as $key => $data)
+                                                                <tr @if($data->sisa_stok == 0 || $data->sisa_perbahan <= 0) class="table-warning" @endif>
+                                                                    <td>{{ $key+1 }}</td>
+                                                                    <td>{{ \Carbon\Carbon::parse($data->tanggal_keluar)->translatedFormat('d F Y') }}</td>
+                                                                    <td>{{ \Carbon\Carbon::parse($data->tanggal_masuk)->translatedFormat('d F Y') }}</td>
+                                                                    <td>{{ $data->jumlah_keluar }} {{ $data->satuan_bahan }}</td>
+                                                                    <td>
+                                                                        @if($data->sisa_stok == 0)
+                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                <span>{{ $data->sisa_stok }} {{ $data->satuan_bahan }}</span>
+                                                                                <button class="btn btn-warning btn-sm" disabled>Habis</button>
+                                                                            </div>
+                                                                        @else
+                                                                            {{ $data->sisa_stok }} {{ $data->satuan_bahan }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>{{ $data->tujuan_stok_keluar }}</td>
+                                                                    <td>{{ $data->keterangan_stok_keluar }}</td>
+                                                                    <td>
+                                                                        <div class="btn-group">
+                                                                            <form action="/kepala_dapur/stok_keluar/{{ $data->id_stok_keluar }}/delete_stok_keluar" style="margin-left: 5px;" method="POST">
+                                                                                @csrf
+                                                                                <a class="btn btn-danger btn-sm delete-confirm-stokmasuk" >
+                                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                                                                    Hapus
+                                                                                </a>
+                                                                            </form>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     @elseif($filter_bulan && $filter_bahan)
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="4">Nama Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nama_bahan_filter }}</th>
-                                                    <th colspan="4">
-                                                        Sisa Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                                        {{ $sisa_perbahan[$namaBahan]->sisa_per_bahan ?? 0 }}
-                                                        {{ $sisa_perbahan[$namaBahan]->satuan_bahan ?? '' }}
-                                                    </th>
-                                                </tr>
-                                                <tr>
-                                                    <th>No.</th>
-                                                    <th>Keluar</th>
-                                                    <th>Masuk</th>
-                                                    <th>Jumlah</th>
-                                                    <th>Sisa</th>
-                                                    <th>Tujuan</th>
-                                                    <th>Ket.</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($stok as $key => $data)
-                                                    <tr @if($data->sisa_stok == 0 || $data->sisa_perbahan <= 0) class="table-warning" @endif>
-                                                        <td>{{ $key+1 }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($data->tanggal_keluar)->translatedFormat('d F Y') }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($data->tanggal_masuk)->translatedFormat('d F Y') }}</td>
-                                                        <td>{{ $data->jumlah_keluar }} {{ $data->satuan_bahan }}</td>
-                                                        <td>
-                                                            @if($data->sisa_stok == 0)
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <span>{{ $data->sisa_stok }} {{ $data->satuan_bahan }}</span>
-                                                                    <button class="btn btn-warning btn-sm" disabled>Habis</button>
-                                                                </div>
-                                                            @else
-                                                                {{ $data->sisa_stok }} {{ $data->satuan_bahan }}
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $data->tujuan_stok_keluar }}</td>
-                                                        <td>{{ $data->keterangan_stok_keluar }}</td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                                <form action="/kepala_dapur/stok_keluar/{{ $data->id_stok_keluar }}/delete_stok_keluar" style="margin-left: 5px;" method="POST">
-                                                                    @csrf
-                                                                    <a class="btn btn-danger btn-sm delete-confirm-stokmasuk" >
-                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
-                                                                        Hapus
-                                                                    </a>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                        <div class="table-wrapper">
+                                            <div class="table-responsive">
+                                                <table class="table custom-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="4">Nama Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nama_bahan_filter }}</th>
+                                                            <th colspan="4">
+                                                                Sisa Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                                                {{ $sisa_perbahan[$namaBahan]->sisa_per_bahan ?? 0 }}
+                                                                {{ $sisa_perbahan[$namaBahan]->satuan_bahan ?? '' }}
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>No.</th>
+                                                            <th>Keluar</th>
+                                                            <th>Masuk</th>
+                                                            <th>Jumlah</th>
+                                                            <th>Sisa</th>
+                                                            <th>Tujuan</th>
+                                                            <th>Ket.</th>
+                                                            <th>Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($stok as $key => $data)
+                                                            <tr @if($data->sisa_stok == 0 || $data->sisa_perbahan <= 0) class="table-warning" @endif>
+                                                                <td>{{ $key+1 }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($data->tanggal_keluar)->translatedFormat('d F Y') }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($data->tanggal_masuk)->translatedFormat('d F Y') }}</td>
+                                                                <td>{{ $data->jumlah_keluar }} {{ $data->satuan_bahan }}</td>
+                                                                <td>
+                                                                    @if($data->sisa_stok == 0)
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <span>{{ $data->sisa_stok }} {{ $data->satuan_bahan }}</span>
+                                                                            <button class="btn btn-warning btn-sm" disabled>Habis</button>
+                                                                        </div>
+                                                                    @else
+                                                                        {{ $data->sisa_stok }} {{ $data->satuan_bahan }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ $data->tujuan_stok_keluar }}</td>
+                                                                <td>{{ $data->keterangan_stok_keluar }}</td>
+                                                                <td>
+                                                                    <div class="btn-group">
+                                                                        <form action="/kepala_dapur/stok_keluar/{{ $data->id_stok_keluar }}/delete_stok_keluar" style="margin-left: 5px;" method="POST">
+                                                                            @csrf
+                                                                            <a class="btn btn-danger btn-sm delete-confirm-stokmasuk" >
+                                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                                                                Hapus
+                                                                            </a>
+                                                                        </form>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     @elseif(!$filter_bulan && $filter_bahan)
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="4">Nama Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nama_bahan_filter }}</th>
-                                                    <th colspan="4">
-                                                        Sisa Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                                        {{ $sisa_perbahan[$namaBahan]->sisa_per_bahan ?? 0 }}
-                                                        {{ $sisa_perbahan[$namaBahan]->satuan_bahan ?? '' }}
-                                                    </th>
-                                                </tr>
-                                                <tr>
-                                                    <th>No.</th>
-                                                    <th>Keluar</th>
-                                                    <th>Masuk</th>
-                                                    <th>Jumlah</th>
-                                                    <th>Sisa</th>
-                                                    <th>Tujuan</th>
-                                                    <th>Ket.</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($stok as $key => $data)
-                                                    <tr @if($data->sisa_stok == 0 || $data->sisa_perbahan <= 0) class="table-warning" @endif>
-                                                        <td>{{ $key+1 }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($data->tanggal_keluar)->translatedFormat('d F Y') }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($data->tanggal_masuk)->translatedFormat('d F Y') }}</td>
-                                                        <td>{{ $data->jumlah_keluar }} {{ $data->satuan_bahan }}</td>
-                                                        <td>
-                                                            @if($data->sisa_stok == 0)
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <span>{{ $data->sisa_stok }} {{ $data->satuan_bahan }}</span>
-                                                                    <button class="btn btn-warning btn-sm" disabled>Habis</button>
-                                                                </div>
-                                                            @else
-                                                                {{ $data->sisa_stok }} {{ $data->satuan_bahan }}
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $data->tujuan_stok_keluar }}</td>
-                                                        <td>{{ $data->keterangan_stok_keluar }}</td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                                <form action="/kepala_dapur/stok_keluar/{{ $data->id_stok_keluar }}/delete_stok_keluar" style="margin-left: 5px;" method="POST">
-                                                                    @csrf
-                                                                    <a class="btn btn-danger btn-sm delete-confirm-stokmasuk" >
-                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
-                                                                        Hapus
-                                                                    </a>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                        <div class="table-wrapper">
+                                            <div class="table-responsive">
+                                                <table class="table custom-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="4">Nama Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nama_bahan_filter }}</th>
+                                                            <th colspan="4">
+                                                                Sisa Bahan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                                                {{ $sisa_perbahan[$namaBahan]->sisa_per_bahan ?? 0 }}
+                                                                {{ $sisa_perbahan[$namaBahan]->satuan_bahan ?? '' }}
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>No.</th>
+                                                            <th>Keluar</th>
+                                                            <th>Masuk</th>
+                                                            <th>Jumlah</th>
+                                                            <th>Sisa</th>
+                                                            <th>Tujuan</th>
+                                                            <th>Ket.</th>
+                                                            <th>Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($stok as $key => $data)
+                                                            <tr @if($data->sisa_stok == 0 || $data->sisa_perbahan <= 0) class="table-warning" @endif>
+                                                                <td>{{ $key+1 }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($data->tanggal_keluar)->translatedFormat('d F Y') }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($data->tanggal_masuk)->translatedFormat('d F Y') }}</td>
+                                                                <td>{{ $data->jumlah_keluar }} {{ $data->satuan_bahan }}</td>
+                                                                <td>
+                                                                    @if($data->sisa_stok == 0)
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <span>{{ $data->sisa_stok }} {{ $data->satuan_bahan }}</span>
+                                                                            <button class="btn btn-warning btn-sm" disabled>Habis</button>
+                                                                        </div>
+                                                                    @else
+                                                                        {{ $data->sisa_stok }} {{ $data->satuan_bahan }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ $data->tujuan_stok_keluar }}</td>
+                                                                <td>{{ $data->keterangan_stok_keluar }}</td>
+                                                                <td>
+                                                                    <div class="btn-group">
+                                                                        <form action="/kepala_dapur/stok_keluar/{{ $data->id_stok_keluar }}/delete_stok_keluar" style="margin-left: 5px;" method="POST">
+                                                                            @csrf
+                                                                            <a class="btn btn-danger btn-sm delete-confirm-stokmasuk" >
+                                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                                                                Hapus
+                                                                            </a>
+                                                                        </form>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     @endif
                                 @endif
                             </div>
