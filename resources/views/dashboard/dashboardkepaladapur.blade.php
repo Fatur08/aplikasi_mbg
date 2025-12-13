@@ -244,7 +244,9 @@
                                                 <table class="table custom-table">
                                                     <thead>
                                                         <tr>
-                                                            <th colspan="7">{{ $loop->iteration }}. Nama Sekolah&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $tujuanDistribusi }}</th>
+                                                            <th colspan="7" style="text-align: left;">
+                                                                {{ $loop->iteration }}. Nama Sekolah : {{ $tujuanDistribusi }}
+                                                            </th>
                                                         </tr>
                                                         <tr>
                                                             <th style="text-align:center">No.</th>
