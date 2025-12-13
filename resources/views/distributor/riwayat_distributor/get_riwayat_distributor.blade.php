@@ -1,3 +1,7 @@
+<?php
+use Carbon\Carbon;
+\Carbon\Carbon::setLocale('id');
+?>
 @if($data->isEmpty())
     <div class="alert alert-warning text-center mt-2">
         Tidak ada data distribusi pada periode ini.
