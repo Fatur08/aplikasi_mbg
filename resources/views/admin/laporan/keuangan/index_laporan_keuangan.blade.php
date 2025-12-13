@@ -427,15 +427,17 @@
 
     // === BAGIAN DIAGRAM BATANG (ADMIN) ===
     const canvasAdmin = document.getElementById('koperasiChartAdmin');
-    
+
     if (canvasAdmin) {
         let koperasiData = @json($data);
-    
+
+        console.log('DATA ADMIN:', koperasiData);
+
         const labels      = koperasiData.map(item => item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal');
         const modalMasuk  = koperasiData.map(item => item.total_pemasukan);
         const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
         const margin      = koperasiData.map(item => item.margin);
-    
+
         new Chart(canvasAdmin.getContext('2d'), {
             type: 'bar',
             data: {
@@ -466,6 +468,5 @@
             }
         });
     }
-    console.log(Chart);
 </script>
 @endpush
