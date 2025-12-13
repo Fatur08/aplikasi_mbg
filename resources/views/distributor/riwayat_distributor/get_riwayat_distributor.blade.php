@@ -1,8 +1,3 @@
-<?php
-require '../vendor/autoload.php';// Autoload semua library composer
-use Carbon\Carbon;
-\Carbon\Carbon::setLocale('id');
-?>
 @if($data->isEmpty())
     <div class="alert alert-warning text-center mt-2">
         Tidak ada data distribusi pada periode ini.
