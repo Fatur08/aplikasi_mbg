@@ -245,7 +245,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th colspan="7" style="text-align: left;">
-                                                                {{ $loop->iteration }}. Nama Sekolah : {{ $tujuanDistribusi }}
+                                                                Nama Sekolah : {{ $tujuanDistribusi }}
                                                             </th>
                                                         </tr>
                                                         <tr>
@@ -392,7 +392,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th colspan="7" style="text-align: left;">
-                                                            {{ $loop->iteration }}. Nama Sekolah : {{ $searchSekolah }}
+                                                            Nama Sekolah : {{ $searchSekolah }}
                                                         </th>
                                                     </tr>
                                                     <tr>
