@@ -157,7 +157,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/owner/laporan/distribusi" method="GET">
+                                    <form action="/owner/laporan/distribusi" method="GET" id="FormLaporanDistribusiOwner">
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="form-group">
@@ -452,6 +452,37 @@
                 }
             });
             $("#modal-kendaladistribusi").modal("show");
+        });
+
+
+
+
+
+
+        $("#FormLaporanDistribusiOwner").submit(function(){
+            var pilih_dapur                          = $("#pilih_dapur").val();
+            var cari_dapur_kecamatan_distributor     = $("#cari_dapur_kecamatan_distributor").val();
+            if(pilih_dapur==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Dapur Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#pilih_dapur").focus();
+                  });
+                return false;
+            } else if (cari_dapur_kecamatan_distributor==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Kecamatan Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#cari_dapur_kecamatan_distributor").focus();
+                  });
+                return false;
+            }
         });
     });
 </script>
