@@ -24,7 +24,13 @@ class AdminController extends Controller
         }
         $admin = $query->get();
         $admin = $query->paginate(10);
-        return view('owner.data_induk.admin.index_admin', compact('admin'));
+
+        // Ambil semua data dapur
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
+        return view('owner.data_induk.admin.index_admin', compact('admin', 'dapurList'));
     }
 
     public function store_owner_admin(Request $request)
