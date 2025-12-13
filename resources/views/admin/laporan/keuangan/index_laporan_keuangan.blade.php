@@ -1,4 +1,4 @@
-@extends('layouts.admin.tabler')
+@extends('layouts.owner.tabler')
 @section('content')
 <div class="page-header d-print-none">
     <div class="container-xl">
@@ -81,15 +81,15 @@
                                                 </div>
                                             </div>
                                     </form>
-                                            <!--<div class="col-md-2">
+                                            <!--<div class="col-md-3">
                                                 <div class="form-group">
                                                     <a href="#" class="btn btn-success w-100" id="cetak_laporan_keuangan" >
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-printer"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" /></svg>
                                                         Cetak
                                                     </a>
                                                 </div>
-                                            </div>-->
-                                        </div>
+                                            </div>
+                                        </div>-->
                                 </div>
                             </div>
                             <div class="row mt-2">
@@ -218,7 +218,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/laporan/keuangan/store_laporan_keuangan" method="POST" id="frmLprnKngn" enctype="multipart/form-data">
+                <form action="/owner/laporan/keuangan/store_laporan_keuangan" method="POST" id="frmLprnKngn" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -234,7 +234,7 @@
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <select name="jenis_laporan_keuangan" id="jenis_laporan_keuangan" class="form-select">
-                                    <option value="">Jenis Transaksi</option>
+                                    <option value="">Pilih Jenis Transaksi</option>
                                     <option value="Pemasukan">Pemasukan</option>
                                     <option value="Pengeluaran">Pengeluaran</option>
                                 </select>
@@ -245,10 +245,9 @@
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                  <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-category"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h6v6h-6z" /><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
                                 </span>
-                                <input type="text" value="" id="kategori_laporan_keuangan" class="form-control" name="kategori_laporan_keuangan" placeholder="Kategori">
+                                <input type="text" value="" id="kategori_laporan_keuangan" class="form-control" name="kategori_laporan_keuangan" placeholder="Masukkan Sumber/Tujuan">
                             </div>
                         </div>
                     </div>
@@ -273,10 +272,9 @@
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                  <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-cashapp"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.1 8.648a.568 .568 0 0 1 -.761 .011a5.682 5.682 0 0 0 -3.659 -1.34c-1.102 0 -2.205 .363 -2.205 1.374c0 1.023 1.182 1.364 2.546 1.875c2.386 .796 4.363 1.796 4.363 4.137c0 2.545 -1.977 4.295 -5.204 4.488l-.295 1.364a.557 .557 0 0 1 -.546 .443h-2.034l-.102 -.011a.568 .568 0 0 1 -.432 -.67l.318 -1.444a7.432 7.432 0 0 1 -3.273 -1.784v-.011a.545 .545 0 0 1 0 -.773l1.137 -1.102c.214 -.2 .547 -.2 .761 0a5.495 5.495 0 0 0 3.852 1.5c1.478 0 2.466 -.625 2.466 -1.614c0 -.989 -1 -1.25 -2.886 -1.954c-2 -.716 -3.898 -1.728 -3.898 -4.091c0 -2.75 2.284 -4.091 4.989 -4.216l.284 -1.398a.545 .545 0 0 1 .545 -.432h2.023l.114 .012a.544 .544 0 0 1 .42 .647l-.307 1.557a8.528 8.528 0 0 1 2.818 1.58l.023 .022c.216 .228 .216 .569 0 .773l-1.057 1.057z" /></svg>
                                 </span>
-                                <input type="number" value="" id="jumlah_dana" class="form-control" name="jumlah_dana" placeholder="Jumlah Dana">
+                                <input type="number" value="" id="jumlah_dana" class="form-control" name="jumlah_dana" placeholder="Masukkan Jumlah Dana">
                             </div>
                         </div>
                     </div>
@@ -342,7 +340,7 @@
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/admin/laporan/keuangan/edit_laporan_keuangan',
+                url:'/owner/laporan/keuangan/edit_laporan_keuangan',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -380,6 +378,7 @@
 
         $("#FormLaporanKeuangan").submit(function(){
             var pilih_bulan = $("#pilih_bulan").val();
+            var pilih_dapur = $("#pilih_dapur").val();
             if(pilih_bulan==""){
                 Swal.fire({
                     title: 'Warning!',
@@ -390,8 +389,55 @@
                       $("#pilih_bulan").focus();
                   });
                 return false;
+            } else if (pilih_dapur==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Dapur Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#pilih_dapur").focus();
+                  });
+                return false;
             }
         });
+
+
+        $("#cetak_laporan_keuangan").click(function(e){
+            e.preventDefault(); // Mencegah langsung pindah halaman
+                
+            var pilih_bulan = $("#pilih_bulan").val();
+            var pilih_dapur = $("#pilih_dapur").val();
+                
+            if(pilih_bulan == ""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Bulan Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then(()=> {
+                    $("#pilih_bulan").focus();
+                });
+                return false;
+            
+            } else if(pilih_dapur == ""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Dapur Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then(()=> {
+                    $("#pilih_dapur").focus();
+                });
+                return false;
+            }
+        
+            // ✅ JIKA SUDAH LENGKAP, BARU BUKA HALAMAN CETAK
+            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?bulan=${pilih_bulan}&dapur=${pilih_dapur}`;
+            window.open(url, '_blank');
+        });
+
+
 
         flatpickr("#dari_tanggal", {
             dateFormat: "d F Y", // format tampilan: 15 September 2025
@@ -408,14 +454,6 @@
         });
     });
 
-    document.getElementById("cetak_laporan_keuangan").addEventListener("click", function() {
-        let dari = document.getElementById("dari_tanggal").value;
-        let sampai = document.getElementById("sampai_tanggal").value;
-        let jenis_transaksi = document.getElementById("cari_jenis_transaksi").value;
-
-        let url = `/admin/laporan/keuangan/cetak_laporan_keuangan?dari_tanggal=${dari}&sampai_tanggal=${sampai}&jenis_transaksi=${jenis_transaksi}`;
-        window.open(url, "_blank");
-    });
 
 
 
@@ -423,50 +461,44 @@
 
 
 
+    // === BAGIAN DIAGRAM BATANG ===
+    let koperasiData = @json($data);
 
+    const labels      = koperasiData.map(item => item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal');
+    const modalMasuk  = koperasiData.map(item => item.total_pemasukan);
+    const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
+    const margin      = koperasiData.map(item => item.margin);
 
-    // === BAGIAN DIAGRAM BATANG (ADMIN) ===
-    const canvasAdmin = document.getElementById('koperasiChartAdmin');
-
-    if (canvasAdmin && typeof Chart !== 'undefined') {
-        let koperasiData = @json($data);
-
-        console.log('DATA ADMIN:', koperasiData);
-
-        const labels      = koperasiData.map(item => item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal');
-        const modalMasuk  = koperasiData.map(item => item.total_pemasukan);
-        const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
-        const margin      = koperasiData.map(item => item.margin);
-
-        new Chart(canvasAdmin.getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Pemasukan',
-                        data: modalMasuk,
-                    },
-                    {
-                        label: 'Pengeluaran',
-                        data: modalKeluar,
-                    },
-                    {
-                        label: 'Margin',
-                        data: margin,
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        labels: { font: { size: 14 } }
-                    }
+    const ctxBar = document.getElementById('koperasiChartAdmin').getContext('2d');
+    new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Pemasukan',
+                    data: modalMasuk,
+                    backgroundColor: 'rgba(0, 76, 255, 1)'
+                },
+                {
+                    label: 'Pengeluaran',
+                    data: modalKeluar,
+                    backgroundColor: 'rgba(255, 0, 0, 0.7)'
+                },
+                {
+                    label: 'Margin',
+                    data: margin,
+                    backgroundColor: 'rgba(47, 255, 0, 0.7)'
                 }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { font: { size: 14 } } }
             }
-        });
-    }
+        }
+    });
 </script>
 @endpush
