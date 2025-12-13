@@ -11,10 +11,13 @@ use Carbon\Carbon;
     @foreach ($data as $index => $d)
         <div class="distribution-card">
             <div class="row">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="mb-1">
-                        <strong>{{ $index + 1 }}.</strong> {{ \Carbon\Carbon::parse($d->tanggal_distribusi)->translatedFormat('l, d F Y') }}
-                    </h6>
+                <div class="col">
+                    <div class="distribution-header d-flex align-items-center">
+                        <h6 class="mb-0 text-white">
+                            <strong>{{ $index + 1 }}.</strong>
+                            {{ \Carbon\Carbon::parse($d->tanggal_distribusi)->translatedFormat('l, d F Y') }}
+                        </h6>
+                    </div>
                 </div>
             </div>
             <hr style="margin: 6px 0;">
