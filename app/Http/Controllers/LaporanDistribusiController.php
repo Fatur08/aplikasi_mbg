@@ -87,7 +87,8 @@ class LaporanDistribusiController extends Controller
             'dataKosong',
             'sudahCari',
             'dapurList',
-            'data_kecamatan'
+            'data_kecamatan',
+            'nama_dapur'
         ));
     }
 
