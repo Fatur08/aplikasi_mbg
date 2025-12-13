@@ -33,6 +33,39 @@ use Carbon\Carbon;
                         <div class="value">{{ $d->jumlah_paket }}</div>
                     </div>
                 </div>
+                <div class="col-auto status-container text-end">
+                    @php
+                        switch ($d->status_distribusi) {
+                            case 1:
+                                $badge = 'bg-success';
+                                $status = 'Terkirim';
+                                break;
+                            case 0:
+                                $badge = 'bg-warning';
+                                $status = 'Dalam Perjalanan';
+                                break;
+                            default:
+                                $badge = 'bg-danger';
+                                $status = 'Belum Diterima';
+                                break;
+                        }
+                    @endphp
+                    
+                    <span class="badge {{ $badge }}">{{ $status }}</span><br>
+                    
+                    @if(!empty($d->bukti_pengiriman))
+                        <a href="#"
+                           class="bukti_pengiriman btn btn-sm btn-outline-primary"
+                           id="{{ $d->id_distribusi }}"
+                           target="_blank">
+                           Lihat Bukti
+                        </a>
+                    @else
+                        <button class="btn btn-sm btn-outline-secondary" disabled>
+                            Belum Ada Bukti
+                        </button>
+                    @endif
+                </div>
             </div>
         </div>
     @endforeach
