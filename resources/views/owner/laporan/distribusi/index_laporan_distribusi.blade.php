@@ -159,7 +159,7 @@
                                 <div class="col-12">
                                     <form action="/owner/laporan/distribusi" method="GET" id="FormLaporanDistribusiOwner">
                                         <div class="row">
-                                            <div class="col-4">
+                                            <div class="col-3">
                                                 <div class="form-group">
                                                     <select name="pilih_dapur" id="pilih_dapur" class="form-select">
                                                         <option value="">Pilih Dapur</option>
@@ -169,10 +169,10 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-3">
                                                 <div class="form-group">
                                                     <select name="cari_dapur_kecamatan_distributor" id="cari_dapur_kecamatan_distributor" class="form-select">
-                                                        <option value="">Kecamatan</option>
+                                                        <option value="">Pilih Kecamatan</option>
                                                         <option value="Bandar Sribhawono">Bandar Sribhawono</option>
                                                         <option value="Batanghari">Batanghari</option>
                                                         <option value="Batanghari Nuban">Batanghari Nuban</option>
@@ -200,7 +200,26 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <select name="cari_bulan" id="cari_bulan" class="form-select">
+                                                        <option value="">Pilih Bulan</option>
+                                                        <option value="01">Januari</option>
+                                                        <option value="02">Februari</option>
+                                                        <option value="03">Maret</option>
+                                                        <option value="04">April</option>
+                                                        <option value="05">Mei</option>
+                                                        <option value="06">Juni</option>
+                                                        <option value="07">Juli</option>
+                                                        <option value="08">Agustus</option>
+                                                        <option value="09">September</option>
+                                                        <option value="10">Oktober</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">Desember</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-primary w-100">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
@@ -462,6 +481,7 @@
         $("#FormLaporanDistribusiOwner").submit(function(){
             var pilih_dapur                          = $("#pilih_dapur").val();
             var cari_dapur_kecamatan_distributor     = $("#cari_dapur_kecamatan_distributor").val();
+            var cari_bulan                           = $("#cari_bulan").val();
             if(pilih_dapur==""){
                 Swal.fire({
                     title: 'Warning!',
@@ -480,6 +500,16 @@
                     confirmButtonText: 'OK'
                   }).then(()=> {
                       $("#cari_dapur_kecamatan_distributor").focus();
+                  });
+                return false;
+            } else if (cari_bulan==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Bulan Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#cari_bulan").focus();
                   });
                 return false;
             }

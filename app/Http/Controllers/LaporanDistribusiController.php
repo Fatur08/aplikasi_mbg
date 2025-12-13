@@ -13,39 +13,44 @@ class LaporanDistribusiController extends Controller
     // BAGIAN OWNER
     public function index_owner_laporan_distribusi(Request $request)
     {
-        $pilih_dapur = $request->pilih_dapur;
-        $kecamatan_sekolah = $request->cari_dapur_kecamatan_distributor;
-
+        $pilih_dapur    = $request->pilih_dapur;
+        $kecamatan      = $request->cari_dapur_kecamatan_distributor;
+        $bulan          = $request->cari_bulan;
+    
         // 🔹 Mulai query dasar
         $query = LaporanDistribusi::query();
 
-        // 🔹 Filter berdasarkan kecamatan (jika diisi)
-        if (!empty($kecamatan_sekolah)) {
-            $query->where('kecamatan_sekolah', 'like', '%' . $kecamatan_sekolah . '%');
+        // 🔹 Filter berdasarkan kecamatan
+        if (!empty($kecamatan)) {
+            $query->where('kecamatan_sekolah', 'like', '%' . $kecamatan . '%');
         }
 
-        // 🔹 Filter berdasarkan dapur (jika diisi)
+        // 🔹 Filter berdasarkan dapur
         if (!empty($pilih_dapur)) {
             $query->where('nomor_dapur_distribusi', $pilih_dapur);
         }
 
-        // 🔹 Jalankan query dengan pagination
-        $distribusi = $query->orderBy('tanggal_distribusi', 'desc')->paginate(300);
+        // ✅ 🔹 Filter berdasarkan bulan saja (TANPA tahun)
+        if (!empty($bulan)) {
+            $query->whereMonth('tanggal_distribusi', $bulan);
+        }
 
-        // 🔹 Cek apakah hasilnya kosong
+        // 🔹 Eksekusi query
+        $distribusi = $query->orderBy('tanggal_distribusi', 'desc')->paginate(300);
+        $dataKosong = $distribusi->isEmpty();// 🔹 Cek apakah hasilnya kosong
         $dataKosong = $distribusi->isEmpty();
 
         // 🔹 Ambil nama distributor (jika ada kecamatan atau dapur dipilih)
         $nama_distributor = '';
-        if (!$dataKosong && (!empty($kecamatan_sekolah) || !empty($pilih_dapur))) {
+        if (!$dataKosong && (!empty($kecamatan) || !empty($pilih_dapur))) {
             $nama_distributor = LaporanDistribusi::query()
-                ->when($kecamatan_sekolah, fn($q) => $q->where('kecamatan_sekolah', 'like', '%' . $kecamatan_sekolah . '%'))
+                ->when($kecamatan, fn($q) => $q->where('kecamatan_sekolah', 'like', '%' . $kecamatan . '%'))
                 ->when($pilih_dapur, fn($q) => $q->where('nomor_dapur_distribusi', $pilih_dapur))
                 ->value('nama_distributor');
         }
 
         // 🔹 Deteksi apakah user sudah melakukan pencarian
-        $sudahCari = !empty($kecamatan_sekolah) || !empty($pilih_dapur);
+        $sudahCari = !empty($kecamatan) || !empty($pilih_dapur);
 
         
         // 🔹 Ambil nama dapur berdasarkan nomor dapur
@@ -55,6 +60,16 @@ class LaporanDistribusiController extends Controller
                     ->where('nomor_dapur', $pilih_dapur)
                     ->value('nama_dapur');
             }
+        
+        
+        $data_kecamatan = [];
+        if ($pilih_dapur) {
+            $data_kecamatan = DB::table('dapur')
+                ->where('nomor_dapur', $pilih_dapur)
+                ->pluck('dapur_kecamatan')
+                ->unique()
+                ->values();
+        }
 
 
         // 🔹 Ambil daftar dapur untuk dropdown filter
@@ -63,16 +78,16 @@ class LaporanDistribusiController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->orderBy('nama_dapur')
             ->get();
-
-        // 🔹 Kirim data ke view
+        
+    
         return view('owner.laporan.distribusi.index_laporan_distribusi', compact(
             'distribusi',
             'nama_distributor',
-            'kecamatan_sekolah',
+            'kecamatan',
             'dataKosong',
             'sudahCari',
             'dapurList',
-            'nama_dapur'
+            'data_kecamatan'
         ));
     }
 
