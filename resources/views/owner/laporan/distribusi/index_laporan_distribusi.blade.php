@@ -247,7 +247,7 @@
                                                 <table class="table custom-table">
                                                     <thead>
                                                         <tr>
-                                                            <th colspan="3">Kecamatan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $kecamatan_sekolah }}</th>
+                                                            <th colspan="3">Kecamatan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $kecamatan }}</th>
                                                             <th colspan="3">Dapur&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nama_dapur }}</th>
                                                             <th colspan="3">Nama Distributor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $nama_distributor }}</th>
                                                         </tr>
