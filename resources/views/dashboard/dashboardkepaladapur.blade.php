@@ -318,7 +318,9 @@
                                                         <th colspan="4">Kecamatan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $searchKecamatan }}</th>
                                                     </tr>
                                                     <tr>
-                                                        <th colspan="7">Nama Sekolah&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $searchSekolah }}</th>
+                                                        <th colspan="7" style="text-align: left;">
+                                                            {{ $loop->iteration }}. Nama Sekolah : {{ $searchSekolah }}
+                                                        </th>
                                                     </tr>
                                                     <tr>
                                                         <th>No.</th>
@@ -389,7 +391,9 @@
                                                         <th colspan="4">Kecamatan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </th>
                                                     </tr>
                                                     <tr>
-                                                        <th colspan="7">Nama Sekolah&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $searchSekolah }}</th>
+                                                        <th colspan="7" style="text-align: left;">
+                                                            {{ $loop->iteration }}. Nama Sekolah : {{ $searchSekolah }}
+                                                        </th>
                                                     </tr>
                                                     <tr>
                                                         <th>No.</th>
