@@ -66,6 +66,25 @@
 <div class="row">
     <div class="col" id="showhistori"></div>
 </div>
+
+
+
+
+{{-- Modal Bukti Terima --}}
+<div class="modal modal-blur fade" id="modal-buktipengiriman" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-2 px-3 align-items-center">
+                <h6 class="modal-title mb-0">Bukti Pengiriman</h6>
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                        data-bs-dismiss="modal">
+                    Tutup
+                </button>
+            </div>
+            <div class="modal-body" id="loadbuktipengiriman"></div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('myscript')
 <script>
@@ -86,6 +105,28 @@
                     $("#showhistori").html(respond);
                 }
             });
+        });
+    });
+
+
+
+
+    $(document).on('click', '.bukti_pengiriman', function(e){
+        e.preventDefault();
+        
+        let id = $(this).attr('id');
+        
+        $.ajax({
+            type: 'POST',
+            url: '/distributor/pengiriman_distributor/lihat_bukti_pengiriman',
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: id
+            },
+            success: function(respond){
+                $('#loadbuktipengiriman').html(respond);
+                $('#modal-buktipengiriman').modal('show');
+            }
         });
     });
 </script>
