@@ -1,4 +1,4 @@
-@extends('layouts.owner.tabler')
+@extends('layouts.admin.tabler')
 @section('content')
 <div class="page-header d-print-none">
     <div class="container-xl">
