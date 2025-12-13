@@ -13,7 +13,9 @@ class AdminController extends Controller
     public function index_owner_admin(Request $request)
     {
         $nama_lengkap_cari = $request->nama_lengkap_cari;
-        $kecamatan_cari = $request->kecamatan_cari;
+        $kecamatan_cari    = $request->kecamatan_cari;
+        $pilih_dapur       = $request->pilih_dapur;
+
         $query = Admin::query();
         $query->select('*');
         if(!empty($nama_lengkap_cari)){
@@ -22,8 +24,11 @@ class AdminController extends Controller
         if(!empty($kecamatan_cari)){
             $query->where('kecamatan_admin','like','%'.$kecamatan_cari.'%');
         }
+        if($pilih_dapur !== null && $pilih_dapur !== ''){
+            $query->where('nomor_dapur_admin', $pilih_dapur);
+        }
         $admin = $query->get();
-        $admin = $query->paginate(10);
+        $admin = $query->paginate(100);
 
         // Ambil semua data dapur
         $dapurList = DB::table('dapur')

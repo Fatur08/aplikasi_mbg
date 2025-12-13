@@ -188,7 +188,7 @@
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <select name="dapur_kecamatan" id="dapur_kecamatan" class="form-select">
+                                                <select name="pilih_dapur" id="pilih_dapur" class="form-select">
                                                     <option value="">Pilih Dapur</option>
                                                     @foreach($dapurList as $dapur)
                                                         <option value="{{ $dapur->nomor_dapur }}">{{ $dapur->nama_dapur }}</option>
