@@ -1,4 +1,4 @@
-@extends('layouts.kepala_dapur.stok_limit.layout_stok_limit')
+@extends('layouts.admin.stok_limit.layout_stok_limit')
 @section('content')
 <form action="/kepala_dapur/stok_limit/{{ $stok->id_stok_masuk }}/store_tambah_tanggal_kadaluarsa" method="POST" id="frmTmbhBhnTpk" enctype="multipart/form-data">
     @csrf

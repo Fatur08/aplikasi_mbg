@@ -1,4 +1,4 @@
-@extends('layouts.kepala_dapur.stok_masuk.layout_stok_masuk')
+@extends('layouts.admin.stok_masuk.layout_stok_masuk')
 @section('content')
 <form action="/kepala_dapur/stok_masuk/{{ $data->id_stok_masuk }}/update_stok_masuk" method="POST" id="frmStkMsk" enctype="multipart/form-data">
     @csrf

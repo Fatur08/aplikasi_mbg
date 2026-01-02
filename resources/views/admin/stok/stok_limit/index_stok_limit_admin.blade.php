@@ -1,4 +1,4 @@
-@extends('layouts.kepala_dapur.tabler')
+@extends('layouts.admin.tabler')
 @section('content')
 <style>
 /* === Section Info Dapur === */
