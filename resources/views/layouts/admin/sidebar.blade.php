@@ -316,6 +316,47 @@
               </a>
             </div>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="false" >
+              <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-license" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path>
+                  <path d="M9 7l4 0"></path>
+                  <path d="M9 11l4 0"></path>
+                </svg>
+              </span>
+              <span class="nav-link-title">
+                Stok
+              </span>
+            </a>
+            <div class="dropdown-menu">
+              <a class="nav-link" href="/admin/stok_masuk" >
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-stack-push"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 10l-2 1l8 4l8 -4l-2 -1" /><path d="M4 15l8 4l8 -4" /><path d="M12 4v7" /><path d="M15 8l-3 3l-3 -3" /></svg>
+                </span>
+                <span class="nav-link-title">
+                  Stok Masuk
+                </span>
+              </a>
+              <a class="nav-link" href="/admin/stok_keluar" >
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-stack-pop"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 9.5l-3 1.5l8 4l8 -4l-3 -1.5" /><path d="M4 15l8 4l8 -4" /><path d="M12 11v-7" /><path d="M9 7l3 -3l3 3" /></svg>
+                </span>
+                <span class="nav-link-title">
+                  Stok Keluar
+                </span>
+              </a>
+              <a class="nav-link" href="/admin/stok_limit" >
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-alert-square-rounded"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>
+                </span>
+                <span class="nav-link-title">
+                  Stok Limit
+                </span>
+              </a>
+            </div>
+          </li>
         </ul>
         <a class = "btn btn-danger"href="/proseslogoutadmin" onclick="showSuccess()" style="margin-left: 10px; margin-bottom: 20px;" >Log out</a>
       </div>

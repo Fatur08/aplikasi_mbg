@@ -318,6 +318,31 @@ Route::middleware(['auth:admin'])->group(function(){
     //Harian Dapur
     Route::get('/admin/laporan/harian_dapur',[LaporanHarianDapurController::class,'index_admin_harian_dapur']);
     Route::post('/admin/laporan/harian_dapur/kendala_harian_dapur',[LaporanHarianDapurController::class,'kendala_admin_harian_dapur']);
+
+
+
+
+
+    //Stok
+    //Stok Masuk
+    Route::get('/admin/stok_masuk',[StokMasukController::class,'index_stok_masuk_admin']);
+    Route::post('/admin/stok_masuk/store_stok_masuk',[StokMasukController::class,'store_stok_masuk_admin']);
+    Route::post('/admin/stok_masuk/edit_stok_masuk',[StokMasukController::class,'edit_stok_masuk_admin']);
+    Route::post('/admin/stok_masuk/{id}/update_stok_masuk',[StokMasukController::class,'update_stok_masuk_admin']);
+    Route::post('/admin/stok_masuk/{id}/delete_stok_masuk',[StokMasukController::class,'delete_stok_masuk_admin']);
+
+    //Stok Keluar
+    Route::get('/admin/stok_keluar',[StokKeluarController::class,'index_stok_keluar_admin']);
+    Route::post('/admin/stok_keluar/store_stok_keluar',[StokKeluarController::class,'store_stok_keluar_admin']);
+    Route::post('/admin/stok_keluar/edit_stok_keluar',[StokKeluarController::class,'edit_stok_keluar_admin']);
+    Route::post('/admin/stok_keluar/{id}/update_stok_keluar',[StokKeluarController::class,'update_stok_keluar_admin']);
+    Route::post('/admin/stok_keluar/{id}/delete_stok_keluar',[StokKeluarController::class,'delete_stok_keluar_admin']);
+
+    //Stok Limit
+    Route::get('/admin/stok_limit',[StokLimitController::class,'index_stok_limit_admin']);
+    Route::post('/admin/stok_limit/store_stok_limit',[StokLimitController::class,'store_stok_limit_admin']);
+    Route::post('/admin/stok_limit/tambah_tanggal_kadaluarsa',[StokLimitController::class,'tambah_tanggal_kadaluarsa_admin']);
+    Route::post('/admin/stok_limit/{id}/store_tambah_tanggal_kadaluarsa',[StokLimitController::class,'store_tambah_tanggal_kadaluarsa_admin']);
 });
 
 
