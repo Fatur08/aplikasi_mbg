@@ -1,6 +1,6 @@
 @extends('layouts.admin.stok_limit.layout_stok_limit')
 @section('content')
-<form action="/kepala_dapur/stok_limit/{{ $stok->id_stok_masuk }}/store_tambah_tanggal_kadaluarsa" method="POST" id="frmTmbhBhnTpk" enctype="multipart/form-data">
+<form action="/admin/stok_limit/{{ $stok->id_stok_masuk }}/store_tambah_tanggal_kadaluarsa" method="POST" id="frmTmbhBhnTpk" enctype="multipart/form-data">
     @csrf
     <input type="text" readonly value="{{ $stok->id_stok_masuk }}" id="id_stok_masuk" class="form-control" name="id_stok_masuk" hidden>
     <div class="row">
