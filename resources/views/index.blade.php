@@ -93,17 +93,17 @@
             <a href="{{ url('/admin') }}" class="btn btn-success">Login Admin</a>
         </div>
 
-        <!-- Kepala Dapur -->
+        <!-- Kepala Dapur
         <div class="role-card">
             <img src="{{ asset('assets/img/login/login_chef.png') }}" alt="Login Kepala Dapur">
             <a href="{{ url('/kepala_dapur') }}" class="btn btn-warning text-white">Login <br> Kp. Dapur</a>
         </div>
 
-        <!-- Distributor -->
+        Distributor
         <div class="role-card">
             <img src="{{ asset('assets/img/login/login_distributor.png') }}" alt="Login Distributor">
             <a href="{{ url('/distributor') }}" class="btn btn-info text-white">Login Distributor</a>
-        </div>
+        </div>-->
 
     </div>
 </div>
