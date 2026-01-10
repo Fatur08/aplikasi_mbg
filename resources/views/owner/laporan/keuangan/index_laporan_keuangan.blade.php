@@ -76,7 +76,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="input-icon">
-                                                    <select name="bulan" id="bulan" class="form-select">
+                                                    <select name="pilih_bulan" id="pilih_bulan" class="form-select">
                                                         <option value="">Pilih Bulan</option>
                                                         <option value="Januari">Januari</option>
                                                         <option value="Februari">Februari</option>
