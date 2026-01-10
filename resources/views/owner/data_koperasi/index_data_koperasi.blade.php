@@ -73,6 +73,13 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="input-icon">
+                                                <select name="pilih_minggu" id="pilih_minggu" class="form-select">
+                                                    <option value="">Minggu Ke-</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="input-icon">
                                                 <select name="bulan" id="bulan" class="form-select">
                                                     <option value="">Bulan</option>
                                                     <option value="Januari">Januari</option>
@@ -87,13 +94,6 @@
                                                     <option value="Oktober">Oktober</option>
                                                     <option value="November">November</option>
                                                     <option value="Desember">Desember</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-icon">
-                                                <select name="pilih_minggu" id="pilih_minggu" class="form-select">
-                                                    <option value="">Minggu Ke-</option>
                                                 </select>
                                             </div>
                                         </div>
