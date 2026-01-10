@@ -74,7 +74,11 @@
                                         <div class="col-md-4">
                                             <div class="input-icon">
                                                 <select name="pilih_minggu" id="pilih_minggu" class="form-select">
-                                                    <option value="">Minggu Ke-</option>
+                                                    <option value="">Minggu Ke -</option>
+                                                    <option value="1">Minggu Ke - 1</option>
+                                                    <option value="2">Minggu Ke - 2</option>
+                                                    <option value="3">Minggu Ke - 3</option>
+                                                    <option value="4">Minggu Ke - 4</option>
                                                 </select>
                                             </div>
                                         </div>
