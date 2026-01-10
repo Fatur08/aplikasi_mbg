@@ -148,16 +148,16 @@
                                                 <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
                                                 <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
                                                 <th style="text-align: center; vertical-align: middle;" colspan="2">Sumber</th>
-                                                <th style="text-align: center; vertical-align: middle;" colspan="2">Jumlah</th>
-                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">Selisih</th>
+                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">Pengeluaran</th>
+                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">Margin</th>
                                                 <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
                                                 <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
                                             </tr>
                                             <tr>
                                                 <th style="text-align: center; vertical-align: middle;">Koperasi</th>
                                                 <th style="text-align: center; vertical-align: middle;">Supplier</th>
-                                                <th style="text-align: center; vertical-align: middle;">Pemasukan</th>
-                                                <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>
+                                                <!--<th style="text-align: center; vertical-align: middle;">Pemasukan</th>
+                                                <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>-->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -208,9 +208,9 @@
                                                     <td>
                                                         {{ ($ada_koperasi && $ada_supplier) ? '✅' : '' }}
                                                     </td>
-                                                    <td class="text-success">
+                                                    <!--<td class="text-success">
                                                         Rp {{ number_format($total_pemasukan, 0, ',', '.') }}
-                                                    </td>
+                                                    </td>-->
                                                     <td class="text-danger">
                                                         Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}
                                                     </td>
@@ -222,7 +222,7 @@
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="7" class="text-center text-muted">Tidak ada data</td>
+                                                    <td colspan="6" class="text-center text-muted">Tidak ada data</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>
