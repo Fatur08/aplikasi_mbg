@@ -48,9 +48,14 @@ class DataKoperasiController extends Controller
     
             /* ================= FILTER MINGGU ================= */
             if (!empty($pilih_minggu)) {
+
+                $yearWeek = Carbon::create($pilih_tahun, $bulan_angka, 1)
+                    ->addWeeks($pilih_minggu - 1)
+                    ->format('oW'); // ISO YEAR + WEEK
+            
                 $query->whereRaw(
-                    'WEEK(tanggal_data_koperasi, 1) = ? AND YEAR(tanggal_data_koperasi) = ?',
-                    [$pilih_minggu, $pilih_tahun]
+                    "YEARWEEK(tanggal_data_koperasi, 1) = ?",
+                    [$yearWeek]
                 );
             }
         }
