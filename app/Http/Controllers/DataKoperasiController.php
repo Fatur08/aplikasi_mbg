@@ -14,8 +14,8 @@ class DataKoperasiController extends Controller
     // BAGIAN OWNER
     public function index_owner_data_koperasi(Request $request)
     {        
-        $pilih_minggu   = $request->pilih_minggu;
-        $pilih_tahun    = $request->pilih_tahun;
+        $dari_tanggal   = $request->dari_tanggal;
+        $sampai_tanggal = $request->sampai_tanggal;
         $pilih_dapur    = $request->pilih_dapur;
         $bulan          = $request->bulan;
 
