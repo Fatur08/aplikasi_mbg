@@ -21,7 +21,8 @@ class DataKoperasiController extends Controller
     
         $query = DataKoperasi::query()
             ->leftJoin('dapur', 'data_koperasi.nomor_dapur_data_koperasi', '=', 'dapur.nomor_dapur')
-            ->select('data_koperasi.*', 'dapur.nama_dapur');
+            ->select('data_koperasi.*', 'dapur.nama_dapur')
+            ->groupBy('data_koperasi.tanggal_data_koperasi');
     
         /* ================= FILTER DAPUR ================= */
         if (!empty($pilih_dapur)) {
