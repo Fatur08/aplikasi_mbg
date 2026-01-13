@@ -50,21 +50,12 @@ class DataKoperasiController extends Controller
             if (!empty($pilih_minggu)) {
     
                 // Tentukan range tanggal minggu dalam bulan
-                $awal_bulan = Carbon::create($pilih_tahun, $bulan_angka, 1);
-                $akhir_bulan = $awal_bulan->copy()->endOfMonth();
-    
-                $start_week = $awal_bulan->copy()->addWeeks($pilih_minggu - 1);
-                $end_week   = $start_week->copy()->addDays(6);
-    
-                // Jangan melewati akhir bulan
-                if ($end_week->gt($akhir_bulan)) {
-                    $end_week = $akhir_bulan;
-                }
-    
-                $query->whereBetween(
-                    'tanggal_data_koperasi',
-                    [$start_week->format('Y-m-d'), $end_week->format('Y-m-d')]
-                );
+                $query->whereMonth('tanggal_data_koperasi', $bulan_angka)
+                    ->whereYear('tanggal_data_koperasi', $pilih_tahun)
+                    ->whereRaw(
+                        'WEEK(tanggal_data_koperasi, 1) - WEEK(DATE_SUB(tanggal_data_koperasi, INTERVAL DAY(tanggal_data_koperasi)-1 DAY), 1) + 1 = ?',
+                        [$pilih_minggu]
+                    );
             }
         }
     
@@ -94,7 +85,7 @@ class DataKoperasiController extends Controller
                 $item->total_harga_supplier = $item->harga_data_koperasi;
                 continue;
             }
-        
+
             // MODAL KELUAR - SUPPLIER
             if (!empty($item->id_informasi_supplier)) {
                 $item->total_harga_supplier = DB::table('barang_supplier')
