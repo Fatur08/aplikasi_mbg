@@ -13,97 +13,105 @@ class DataKoperasiController extends Controller
 {
     // BAGIAN OWNER
     public function index_owner_data_koperasi(Request $request)
-    {
-        $pilih_minggu = $request->pilih_minggu;
-        $pilih_tahun  = $request->pilih_tahun ?? date('Y');
-        $pilih_dapur  = $request->pilih_dapur;
-        $bulan        = $request->bulan;
-    
+    {        
+        $pilih_minggu   = $request->pilih_minggu;
+        $pilih_tahun    = $request->pilih_tahun;
+        $pilih_dapur    = $request->pilih_dapur;
+        $bulan          = $request->bulan;
+
         $query = DataKoperasi::query()
             ->leftJoin('dapur', 'data_koperasi.nomor_dapur_data_koperasi', '=', 'dapur.nomor_dapur')
             ->select('data_koperasi.*', 'dapur.nama_dapur')
             ->distinct();
-    
-        /* ================= FILTER DAPUR ================= */
-        if (!empty($pilih_dapur)) {
+        if ($pilih_dapur !== null && $pilih_dapur !== '') {
             $query->where('data_koperasi.nomor_dapur_data_koperasi', $pilih_dapur);
         }
-    
-        /* ================= FILTER BULAN ================= */
-        $bulan_map = [
-            'Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4,
-            'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8,
-            'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12
-        ];
-    
-        if (!empty($bulan) && isset($bulan_map[$bulan])) {
-            $bulan_angka = $bulan_map[$bulan];
-    
-            $query->whereMonth('tanggal_data_koperasi', $bulan_angka)
-                  ->whereYear('tanggal_data_koperasi', $pilih_tahun);
-    
-            /* ================= FILTER MINGGU ================= */
-            if (!empty($pilih_minggu)) {
-    
-                // Tentukan range tanggal minggu dalam bulan
-                $awal_bulan = Carbon::create($pilih_tahun, $bulan_angka, 1);
-                $akhir_bulan = $awal_bulan->copy()->endOfMonth();
-    
-                $start_week = $awal_bulan->copy()->addWeeks($pilih_minggu - 1);
-                $end_week   = $start_week->copy()->addDays(6);
-    
-                // Jangan melewati akhir bulan
-                if ($end_week->gt($akhir_bulan)) {
-                    $end_week = $akhir_bulan;
-                }
-    
-                $query->whereBetween(
-                    'tanggal_data_koperasi',
-                    [$start_week->format('Y-m-d'), $end_week->format('Y-m-d')]
-                );
+
+        // Konversi format tanggal user ke format database (Y-m-d)
+        if (!empty($dari_tanggal)) {
+            try {
+                $dari_tanggal = Carbon::parse($dari_tanggal)->format('Y-m-d');
+            } catch (\Exception $e) {
+                $dari_tanggal = null;
             }
         }
-    
+
+        if (!empty($sampai_tanggal)) {
+            try {
+                $sampai_tanggal = Carbon::parse($sampai_tanggal)->format('Y-m-d');
+            } catch (\Exception $e) {
+                $sampai_tanggal = null;
+            }
+        }
+
+        // Filter berdasarkan rentang tanggal
+        if (!empty($dari_tanggal) && !empty($sampai_tanggal)) {
+            $query->whereBetween('tanggal_data_koperasi', [$dari_tanggal, $sampai_tanggal]);
+        } elseif (!empty($dari_tanggal)) {
+            $query->whereDate('tanggal_data_koperasi', '>=', $dari_tanggal);
+        } elseif (!empty($sampai_tanggal)) {
+            $query->whereDate('tanggal_data_koperasi', '<=', $sampai_tanggal);
+        }
+
+        // Filter berdasarkan bulan (jika dipilih)
+        if (!empty($bulan)) {
+            // Mapping nama bulan ke angka
+            $bulan_map = [
+                'Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4,
+                'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8,
+                'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12
+            ];
+
+            if (isset($bulan_map[$bulan])) {
+                $bulan_angka = $bulan_map[$bulan];
+                $query->whereMonth('tanggal_data_koperasi', $bulan_angka);
+
+                // Opsional: filter per tahun saat ini
+                $query->whereYear('tanggal_data_koperasi', date('Y'));
+            }
+        }
+
         $query->orderBy('tanggal_data_koperasi', 'asc');
-    
+
         $data_koperasi = $query->paginate(1000);
-    
-        /* ================= FLAG STATUS ================= */
+        
+        // 👉 Cek apakah hasil pencarian kosong
         $dataKosong = $data_koperasi->isEmpty();
-    
-        $sudahCari =
-            !empty($bulan) ||
-            !empty($pilih_minggu) ||
-            !empty($pilih_tahun) ||
-            !empty($pilih_dapur);
-    
-        /* ================= GROUPING ================= */
+
+        // 👉 Deteksi apakah user sudah melakukan pencarian
+        $sudahCari = !empty($request->dari_tanggal) ||
+                     !empty($request->sampai_tanggal) ||
+                     !empty($request->bulan) ||
+                     !empty($request->pilih_dapur);
+
+        // ✅ Tambahkan grouping per tanggal
         $grouped = $data_koperasi->getCollection()->groupBy(function ($item) {
-            return Carbon::parse($item->tanggal_data_koperasi)
-                ->translatedFormat('d F Y');
+            return Carbon::parse($item->tanggal_data_koperasi)->translatedFormat('d F Y');
         });
-    
-        /* ================= HITUNG TOTAL ================= */
+
+        // ✅ Perhitungan total harga (supplier dan non-supplier)
         foreach ($data_koperasi as $item) {
             if ($item->id_informasi_supplier > 0) {
+                // Barang dari supplier
                 $item->total_harga_supplier = DB::table('barang_supplier')
                     ->where('id_informasi_supplier', $item->id_informasi_supplier)
                     ->where('nomor_dapur_barang_supplier', $item->nomor_dapur_data_koperasi)
-                    ->sum('harga_barang_supplier');
+                    ->sum(DB::raw('harga_barang_supplier'));
             } else {
+                // Barang non-supplier, ambil dari harga_data_koperasi
                 $item->total_harga_supplier = DB::table('barang_modal_keluar')
                     ->where('id_data_koperasi', $item->id_data_koperasi)
                     ->where('nomor_dapur_barang_modal_keluar', $item->nomor_dapur_data_koperasi)
-                    ->sum('harga_barang_modal_keluar');
+                    ->sum(DB::raw('harga_barang_modal_keluar'));
             }
         }
-    
-        /* ================= LIST DAPUR ================= */
+
+        // Ambil semua data dapur
         $dapurList = DB::table('dapur')
             ->select('nomor_dapur', 'nama_dapur')
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
-    
+
         return view('owner.data_koperasi.index_data_koperasi', compact(
             'data_koperasi',
             'dataKosong',
