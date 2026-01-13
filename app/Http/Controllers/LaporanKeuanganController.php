@@ -16,8 +16,8 @@ class LaporanKeuanganController extends Controller
     public function index_owner_laporan_keuangan(Request $request)
     {
         $pilih_minggu  = $request->pilih_minggu;
-        $pilih_bulan   = $request->pilih_bulan;
         $pilih_tahun   = $request->pilih_tahun;
+        $pilih_bulan   = $request->pilih_bulan;
         $pilih_dapur   = $request->pilih_dapur;
         $tahunSekarang = Carbon::now()->year;
     
