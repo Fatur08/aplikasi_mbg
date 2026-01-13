@@ -48,21 +48,10 @@ class DataKoperasiController extends Controller
     
             /* ================= FILTER MINGGU ================= */
             if (!empty($pilih_minggu)) {
-
-                $awalBulan = Carbon::create($pilih_tahun, $bulan_angka, 1);
-            
-                $startDate = $awalBulan->copy()->addWeeks($pilih_minggu - 1)->startOfDay();
-                $endDate   = $startDate->copy()->addDays(6)->endOfDay();
-            
-                // Jangan lewat akhir bulan
-                if ($endDate->month != $bulan_angka) {
-                    $endDate = $awalBulan->copy()->endOfMonth()->endOfDay();
-                }
-            
-                $query->whereBetween('tanggal_data_koperasi', [
-                    $startDate->toDateString(),
-                    $endDate->toDateString()
-                ]);
+                $query->whereRaw(
+                    'WEEK(tanggal_data_koperasi, 1) = ? AND YEAR(tanggal_data_koperasi) = ?',
+                    [$pilih_minggu, $pilih_tahun]
+                );
             }
         }
     
