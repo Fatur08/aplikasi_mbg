@@ -131,12 +131,12 @@
                                 @else
                                     @foreach ($grouped as $tanggal => $data)
                                         @php
-                                            $totalMasuk = $data->where('jenis_data_koperasi', 'modal_masuk')
-                                                               ->sum('harga_data_koperasi');
-                                        
-                                            $totalKeluar = $data->where('jenis_data_koperasi', 'modal_keluar')
-                                                                ->sum('total_harga_supplier');
-                                        
+                                            $dataMasuk  = $data->filter(fn($d) => $d->jenis_data_koperasi === 'modal_masuk');
+                                            $dataKeluar = $data->filter(fn($d) => $d->jenis_data_koperasi === 'modal_keluar');
+
+                                            $totalMasuk  = $dataMasuk->sum('harga_data_koperasi');
+                                            $totalKeluar = $dataKeluar->sum(fn($d) => (int) $d->total_harga_supplier);
+
                                             $selisih = $totalMasuk - $totalKeluar;
                                         @endphp
 
@@ -162,7 +162,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 @php $noMasuk = 1; @endphp
-                                                                @foreach ($data->where('jenis_data_koperasi', 'modal_masuk') as $d)
+                                                                @foreach ($dataMasuk as $d)
                                                                     <tr>
                                                                         <td class="text-center">{{ $noMasuk++ }}</td>
                                                                         <td>{{ $d->kategori_data_koperasi ?? '-' }}</td>
@@ -228,7 +228,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 @php $noKeluar = 1; @endphp
-                                                                @foreach ($data->where('jenis_data_koperasi', 'modal_keluar') as $d)
+                                                                @foreach ($dataKeluar as $d)
                                                                     <tr>
                                                                         <td class="text-center">{{ $noKeluar++ }}</td>
                                                                         <td>{{ $d->kategori_data_koperasi ?? '-' }}</td>
