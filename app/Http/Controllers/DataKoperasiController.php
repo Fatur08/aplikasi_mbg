@@ -20,9 +20,13 @@ class DataKoperasiController extends Controller
         $bulan        = $request->bulan;
     
         $query = DataKoperasi::query()
-            ->leftJoin('dapur', 'data_koperasi.nomor_dapur_data_koperasi', '=', 'dapur.nomor_dapur')
-            ->select('data_koperasi.*', 'dapur.nama_dapur')
-            ->groupBy('data_koperasi.tanggal_data_koperasi');
+            ->leftJoin(
+                DB::raw('(SELECT nomor_dapur, MAX(nama_dapur) AS nama_dapur FROM dapur GROUP BY nomor_dapur) AS dapur'),
+                'data_koperasi.nomor_dapur_data_koperasi',
+                '=',
+                'dapur.nomor_dapur'
+            )
+            ->select('data_koperasi.*', 'dapur.nama_dapur');
     
         /* ================= FILTER DAPUR ================= */
         if (!empty($pilih_dapur)) {
