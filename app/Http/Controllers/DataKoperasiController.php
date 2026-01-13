@@ -89,12 +89,21 @@ class DataKoperasiController extends Controller
     
         /* ================= HITUNG TOTAL ================= */
         foreach ($data_koperasi as $item) {
-            if ($item->id_informasi_supplier > 0) {
+
+            if ($item->jenis_data_koperasi !== 'modal_keluar') {
+                $item->total_harga_supplier = $item->harga_data_koperasi;
+                continue;
+            }
+        
+            // MODAL KELUAR - SUPPLIER
+            if (!empty($item->id_informasi_supplier)) {
                 $item->total_harga_supplier = DB::table('barang_supplier')
                     ->where('id_informasi_supplier', $item->id_informasi_supplier)
                     ->where('nomor_dapur_barang_supplier', $item->nomor_dapur_data_koperasi)
                     ->sum('harga_barang_supplier');
-            } else {
+            }
+            // MODAL KELUAR - NON SUPPLIER
+            else {
                 $item->total_harga_supplier = DB::table('barang_modal_keluar')
                     ->where('id_data_koperasi', $item->id_data_koperasi)
                     ->where('nomor_dapur_barang_modal_keluar', $item->nomor_dapur_data_koperasi)
