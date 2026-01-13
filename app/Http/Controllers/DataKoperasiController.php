@@ -52,7 +52,7 @@ class DataKoperasiController extends Controller
                 $yearWeek = Carbon::create($pilih_tahun, $bulan_angka, 1)
                     ->addWeeks($pilih_minggu - 1)
                     ->format('oW'); // ISO YEAR + WEEK
-            
+
                 $query->whereRaw(
                     "YEARWEEK(tanggal_data_koperasi, 1) = ?",
                     [$yearWeek]
@@ -61,6 +61,7 @@ class DataKoperasiController extends Controller
         }
     
         $query->orderBy('tanggal_data_koperasi', 'asc');
+        dd($query->toSql(), $query->getBindings());
     
         $data_koperasi = $query->paginate(1000);
     
