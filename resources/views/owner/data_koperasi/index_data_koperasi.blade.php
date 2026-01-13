@@ -64,7 +64,7 @@
                                         <div class="col-md-4">
                                             <div class="input-icon">
                                                 <select name="pilih_dapur" id="pilih_dapur" class="form-select">
-                                                    <option value="">Pilih Dapur</option>
+                                                    <option value="">Dapur</option>
                                                     @foreach($dapurList as $dapur)
                                                         <option value="{{ $dapur->nomor_dapur }}">{{ $dapur->nama_dapur }}</option>
                                                     @endforeach
