@@ -145,9 +145,9 @@ class DataKoperasiController extends Controller
 
         /* ================= GROUPING PER TANGGAL ================= */
         $data_koperasi = $query->get()
-            ->unique('id') // 🔥 PENTING: HILANGKAN DUPLIKAT
+            ->unique('id_data_koperasi') // 🔥 PENTING: HILANGKAN DUPLIKAT
             ->values();
-            
+
         $grouped = $data_koperasi->groupBy(function ($item) {
             return Carbon::parse($item->tanggal_data_koperasi)
                 ->translatedFormat('d F Y');
