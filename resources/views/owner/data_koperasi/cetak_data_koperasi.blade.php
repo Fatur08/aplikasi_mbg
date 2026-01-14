@@ -108,12 +108,6 @@
         </h4>
     </div>
 
-    @php
-        $grouped = $data_koperasi->groupBy(function ($item) {
-            return \Carbon\Carbon::parse($item->tanggal_data_koperasi)->translatedFormat('d F Y');
-        });
-    @endphp
-
     @foreach ($grouped as $tanggal => $data)
         @php
             $totalMasuk  = $data->where('jenis_data_koperasi', 'modal_masuk')

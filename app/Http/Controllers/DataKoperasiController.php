@@ -106,22 +106,22 @@ class DataKoperasiController extends Controller
         $pilih_dapur    = $request->pilih_dapur;
         $dari_tanggal   = $request->dari_tanggal;
         $sampai_tanggal = $request->sampai_tanggal;
-    
+
         $query = DataKoperasi::query()
             ->leftJoin('dapur', 'data_koperasi.nomor_dapur_data_koperasi', '=', 'dapur.nomor_dapur')
             ->select('data_koperasi.*', 'dapur.nama_dapur');
-    
+
         /* ================= FILTER DAPUR ================= */
         if (!empty($pilih_dapur)) {
             $query->where('data_koperasi.nomor_dapur_data_koperasi', $pilih_dapur);
         }
-    
+
         /* ================= KONVERSI TANGGAL ================= */
         try {
             $dari_tanggal = $dari_tanggal
                 ? Carbon::parse($dari_tanggal)->startOfDay()->toDateString()
                 : null;
-    
+
             $sampai_tanggal = $sampai_tanggal
                 ? Carbon::parse($sampai_tanggal)->endOfDay()->toDateString()
                 : null;
@@ -129,7 +129,7 @@ class DataKoperasiController extends Controller
             $dari_tanggal = null;
             $sampai_tanggal = null;
         }
-    
+
         /* ================= FILTER RENTANG TANGGAL ================= */
         if ($dari_tanggal && $sampai_tanggal) {
             $query->whereBetween('tanggal_data_koperasi', [$dari_tanggal, $sampai_tanggal]);
@@ -138,26 +138,30 @@ class DataKoperasiController extends Controller
         } elseif ($sampai_tanggal) {
             $query->whereDate('tanggal_data_koperasi', '<=', $sampai_tanggal);
         }
-    
+
         $query->orderBy('tanggal_data_koperasi', 'asc');
-    
+
         $data_koperasi = $query->get();
-    
+
         /* ================= GROUPING PER TANGGAL ================= */
+        $data_koperasi = $query->get()
+            ->unique('id') // 🔥 PENTING: HILANGKAN DUPLIKAT
+            ->values();
+            
         $grouped = $data_koperasi->groupBy(function ($item) {
             return Carbon::parse($item->tanggal_data_koperasi)
                 ->translatedFormat('d F Y');
         });
-    
+
         /* ================= HITUNG TOTAL HARGA ================= */
         foreach ($data_koperasi as $item) {
-    
+
             // MODAL MASUK
             if ($item->jenis_data_koperasi !== 'modal_keluar') {
                 $item->total_harga_supplier = $item->harga_data_koperasi;
                 continue;
             }
-    
+
             // MODAL KELUAR - SUPPLIER
             if (!empty($item->id_informasi_supplier)) {
                 $item->total_harga_supplier = DB::table('barang_supplier')
@@ -173,7 +177,7 @@ class DataKoperasiController extends Controller
                     ->sum('harga_barang_modal_keluar');
             }
         }
-    
+
         return view('owner.data_koperasi.cetak_data_koperasi', compact(
             'data_koperasi',
             'grouped',
