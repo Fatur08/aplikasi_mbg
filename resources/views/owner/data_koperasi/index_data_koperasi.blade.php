@@ -356,27 +356,6 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#tanggal_data_koperasi").datepicker({ 
-        autoclose: true, 
-        todayHighlight: true,
-        format:'yyyy-mm-dd'
-        });
-
-
-        $("#dari_tanggal").datepicker({ 
-        autoclose: true, 
-        todayHighlight: true,
-        format:'yyyy-mm-dd'
-        });
-
-
-        $("#sampai_tanggal").datepicker({ 
-        autoclose: true, 
-        todayHighlight: true,
-        format:'yyyy-mm-dd'
-        });
-
-
         $("#btnTambahDataKoperasi").click(function(){
             $("#modal-inputdatakoperasi").modal("show");
         });
@@ -570,17 +549,19 @@
 
 
         flatpickr("#dari_tanggal", {
-            dateFormat: "d F Y", // format tampilan: 15 September 2025
             altInput: true,
-            altFormat: "d F Y",
-            locale: "id" // biar bulan pakai bahasa Indonesia
+            altFormat: "d F Y",      // 15 September 2025
+            dateFormat: "Y-m-d",     // dikirim ke backend
+            locale: "id",
+            allowInput: true
         });
-
+        
         flatpickr("#sampai_tanggal", {
-            dateFormat: "d F Y", // format tampilan: 15 September 2025
             altInput: true,
             altFormat: "d F Y",
-            locale: "id" // biar bulan pakai bahasa Indonesia
+            dateFormat: "Y-m-d",
+            locale: "id",
+            allowInput: true
         });
     });
 
