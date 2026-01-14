@@ -101,45 +101,21 @@
     <div class="header">
         <h2>LAPORAN DATA KOPERASI</h2>
         <h4 style="margin:0;">
-            Periode Bulan 
-            {{ $bulan }}
+            Periode:
+            {{ \Carbon\Carbon::parse($dari_tanggal)->translatedFormat('d F Y') }}
+            s/d
+            {{ \Carbon\Carbon::parse($sampai_tanggal)->translatedFormat('d F Y') }}
         </h4>
     </div>
 
-    @php
-        $grouped = $data_koperasi->groupBy(function ($item) {
-            return \Carbon\Carbon::parse($item->tanggal_data_koperasi)->translatedFormat('d F Y');
-        });
-    @endphp
-
     @foreach ($grouped as $tanggal => $data)
         @php
-            $totalMasuk = 0;
-            $totalKeluar = 0;
-        
-            foreach ($data as $item) {
-                if ($item->jenis_data_koperasi == 'modal_masuk') {
-                    $totalMasuk += $item->harga_data_koperasi;
-                
-                } elseif ($item->jenis_data_koperasi == 'modal_keluar') {
-                
-                    // Jika berasal dari supplier
-                    if (!empty($item->id_informasi_supplier) && $item->id_informasi_supplier > 0) {
-                        $totalKeluar += DB::table('barang_supplier')
-                            ->where('id_informasi_supplier', $item->id_informasi_supplier)
-                            ->where('nomor_dapur_barang_supplier', $item->nomor_dapur_data_koperasi)
-                            ->sum(DB::raw('harga_barang_supplier'));
-                    } 
-                    else {
-                        // Non-supplier
-                        $totalKeluar += DB::table('barang_modal_keluar')
-                            ->where('id_data_koperasi', $item->id_data_koperasi)
-                            ->where('nomor_dapur_barang_modal_keluar', $item->nomor_dapur_data_koperasi)
-                            ->sum(DB::raw('harga_barang_modal_keluar'));
-                    }
-                }
-            }
-        
+            $totalMasuk  = $data->where('jenis_data_koperasi', 'modal_masuk')
+                                ->sum('harga_data_koperasi');
+
+            $totalKeluar = $data->where('jenis_data_koperasi', 'modal_keluar')
+                                ->sum('total_harga_supplier');
+
             $selisih = $totalMasuk - $totalKeluar;
         @endphp
         
