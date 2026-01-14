@@ -566,8 +566,9 @@
     });
 
     document.getElementById("cetak_data_koperasi").addEventListener("click", function() {
-        let dapur = document.getElementById("pilih_dapur").value;
-        let bulan = document.getElementById("bulan").value;
+        let dapur           = document.getElementById("pilih_dapur").value;
+        let dari_tanggal    = document.getElementById("dari_tanggal").value;
+        let sampai_tanggal  = document.getElementById("sampai_tanggal").value;
 
         let url = `/owner/data_koperasi/cetak_data_koperasi?dapur=${dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
         window.open(url, "_blank");
