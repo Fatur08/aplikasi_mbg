@@ -10,7 +10,7 @@ return [
     'asset_url' => env('ASSET_URL', null),
     'timezone' => 'Asia/Jakarta',
     'locale' => 'id',
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'id',
     'faker_locale' => 'id_ID',
     'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
