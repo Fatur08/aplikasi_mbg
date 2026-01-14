@@ -103,7 +103,7 @@ class DataKoperasiController extends Controller
 
     public function cetak_owner_data_koperasi(Request $request)
     {
-        $pilih_dapur    = $request->pilih_dapur;
+        $pilih_dapur    = $request->dapur;
         $dari_tanggal   = $request->dari_tanggal;
         $sampai_tanggal = $request->sampai_tanggal;
 
