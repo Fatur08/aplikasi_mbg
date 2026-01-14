@@ -101,155 +101,110 @@
     <div class="header">
         <h2>LAPORAN DATA KOPERASI</h2>
         <h4 style="margin:0;">
-            Periode Bulan 
-            {{ $bulan }}
+            Periode:
+            {{ \Carbon\Carbon::parse($dari_tanggal)->translatedFormat('d F Y') }}
+            s/d
+            {{ \Carbon\Carbon::parse($sampai_tanggal)->translatedFormat('d F Y') }}
         </h4>
     </div>
 
-    @php
-        $grouped = $data_koperasi->groupBy(function ($item) {
-            return \Carbon\Carbon::parse($item->tanggal_data_koperasi)->translatedFormat('d F Y');
-        });
-    @endphp
-
     @foreach ($grouped as $tanggal => $data)
         @php
-            $totalMasuk = 0;
-            $totalKeluar = 0;
-        
-            foreach ($data as $item) {
-                if ($item->jenis_data_koperasi == 'modal_masuk') {
-                    $totalMasuk += $item->harga_data_koperasi;
-                
-                } elseif ($item->jenis_data_koperasi == 'modal_keluar') {
-                
-                    // Jika berasal dari supplier
-                    if (!empty($item->id_informasi_supplier) && $item->id_informasi_supplier > 0) {
-                        $totalKeluar += DB::table('barang_supplier')
-                            ->where('id_informasi_supplier', $item->id_informasi_supplier)
-                            ->where('nomor_dapur_barang_supplier', $item->nomor_dapur_data_koperasi)
-                            ->sum(DB::raw('harga_barang_supplier'));
-                    } 
-                    else {
-                        // Non-supplier
-                        $totalKeluar += DB::table('barang_modal_keluar')
-                            ->where('id_data_koperasi', $item->id_data_koperasi)
-                            ->where('nomor_dapur_barang_modal_keluar', $item->nomor_dapur_data_koperasi)
-                            ->sum(DB::raw('harga_barang_modal_keluar'));
-                    }
-                }
-            }
-        
+            $totalMasuk  = $data->where('jenis_data_koperasi','modal_masuk')
+                                ->sum('harga_data_koperasi');
+
+            $totalKeluar = $data->where('jenis_data_koperasi','modal_keluar')
+                                ->sum('total_harga_supplier');
+
             $selisih = $totalMasuk - $totalKeluar;
         @endphp
-        
+
         <div class="card mb-4 shadow-sm">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                 <h2><b>{{ $tanggal }}</b></h2>
-                <h2>Selisih: <b>Rp {{ number_format($selisih, 0, ',', '.') }}</b></h2>
+                <h2>Selisih: <b>Rp {{ number_format($selisih,0,',','.') }}</b></h2>
             </div>
-        
+
             <div class="card-body">
                 <div class="row">
-        
-                    {{-- ===================== MODAL MASUK ===================== --}}
+
+                    {{-- MODAL MASUK --}}
                     <div class="col-md-6">
                         <h3 class="text-success"><b>Modal Masuk</b></h3>
-        
+
                         <table class="table table-bordered table-sm">
-                            <thead class="table-success">
-                                <tr class="text-center">
+                            <thead class="table-success text-center">
+                                <tr>
                                     <th>No</th>
                                     <th>Sumber</th>
                                     <th>Jumlah</th>
                                     <th>Validasi</th>
                                 </tr>
                             </thead>
-        
                             <tbody>
-                                @php $noMasuk = 1; @endphp
-                                @foreach ($data->where('jenis_data_koperasi', 'modal_masuk') as $d)
-                                    <tr>
-                                        <td class="text-center">{{ $noMasuk++ }}</td>
-                                        <td>{{ $d->kategori_data_koperasi ?? '-' }}</td>
-                                        <td>Rp {{ number_format($d->harga_data_koperasi, 0, ',', '.') }}</td>
-                                        <td class="text-center">
-                                            @if($d->status_data_koperasi == 0)
-                                                <span class="badge-box bg-warning-box">Menunggu</span>
-                                            @elseif($d->status_data_koperasi == 1)
-                                                <span class="badge-box bg-success-box">Disetujui</span>
-                                            @else
-                                                <span class="badge-box bg-danger-box">Ditolak</span>
-                                            @endif
-                                        </td>
-                                    </tr>
+                                @foreach ($data->where('jenis_data_koperasi','modal_masuk') as $i => $d)
+                                <tr>
+                                    <td class="text-center">{{ $i + 1 }}</td>
+                                    <td>{{ $d->kategori_data_koperasi }}</td>
+                                    <td>Rp {{ number_format($d->harga_data_koperasi,0,',','.') }}</td>
+                                    <td class="text-center">
+                                        @include('partials.status',['status'=>$d->status_data_koperasi])
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
-        
-                            <tfoot class="table-light">
+                            <tfoot>
                                 <tr>
                                     <th colspan="2" class="text-end">Total</th>
-                                    <th colspan="3">Rp {{ number_format($totalMasuk, 0, ',', '.') }}</th>
+                                    <th colspan="2">Rp {{ number_format($totalMasuk,0,',','.') }}</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
-        
-                    {{-- ===================== MODAL KELUAR ===================== --}}
+
+                    {{-- MODAL KELUAR --}}
                     <div class="col-md-6">
                         <h3 class="text-danger"><b>Modal Keluar</b></h3>
-        
+
                         <table class="table table-bordered table-sm">
-                            <thead class="table-danger">
-                                <tr class="text-center">
+                            <thead class="table-danger text-center">
+                                <tr>
                                     <th>No</th>
                                     <th>Tujuan</th>
                                     <th>Jumlah</th>
                                     <th>Validasi</th>
                                 </tr>
                             </thead>
-        
                             <tbody>
-                                @php $noKeluar = 1; @endphp
-                                @foreach ($data->where('jenis_data_koperasi', 'modal_keluar') as $d)
-                                    <tr>
-                                        <td class="text-center">{{ $noKeluar++ }}</td>
-                                        <td>{{ $d->kategori_data_koperasi ?? '-' }}</td>
-        
-                                        {{-- total_harga_supplier sudah dihitung dari query join --}}
-                                        <td>Rp {{ number_format($d->total_harga_supplier, 0, ',', '.') }}</td>
-        
-                                        <td class="text-center">
-                                            @if($d->status_data_koperasi == 0)
-                                                <span class="badge-box bg-warning-box">Menunggu</span>
-                                            @elseif($d->status_data_koperasi == 1)
-                                                <span class="badge-box bg-success-box">Disetujui</span>
-                                            @else
-                                                <span class="badge-box bg-danger-box">Ditolak</span>
-                                            @endif
-                                        </td>
-                                    </tr>
+                                @foreach ($data->where('jenis_data_koperasi','modal_keluar') as $i => $d)
+                                <tr>
+                                    <td class="text-center">{{ $i + 1 }}</td>
+                                    <td>{{ $d->kategori_data_koperasi }}</td>
+                                    <td>Rp {{ number_format($d->total_harga_supplier,0,',','.') }}</td>
+                                    <td class="text-center">
+                                        @include('partials.status',['status'=>$d->status_data_koperasi])
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
-        
-                            <tfoot class="table-light">
+                            <tfoot>
                                 <tr>
                                     <th colspan="2" class="text-end">Total</th>
-                                    <th colspan="3">Rp {{ number_format($totalKeluar, 0, ',', '.') }}</th>
+                                    <th colspan="2">Rp {{ number_format($totalKeluar,0,',','.') }}</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
-        
-                </div> {{-- row --}}
-            </div> {{-- card-body --}}
-        </div> {{-- card --}}
+
+                </div>
+            </div>
+        </div>
     @endforeach
 
     <div class="footer">
         <p>Kalianda, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
         <p>Admin Koperasi</p>
-        <br><br><br>
+        <br><br>
         <p>______________________</p>
     </div>
 </body>
