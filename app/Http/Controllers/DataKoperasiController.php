@@ -14,10 +14,9 @@ class DataKoperasiController extends Controller
     // BAGIAN OWNER
     public function index_owner_data_koperasi(Request $request)
     {
-        $pilih_minggu = $request->pilih_minggu;
-        $pilih_tahun  = $request->pilih_tahun ?? date('Y');
-        $pilih_dapur  = $request->pilih_dapur;
-        $bulan        = $request->bulan;
+        $dari_tanggal = $request->dari_tanggal;
+        $sampai_tanggal = $request->sampai_tanggal;
+        $pilih_dapur = $request->pilih_dapur;
     
         $query = DataKoperasi::query()
             ->leftJoin(
@@ -33,45 +32,16 @@ class DataKoperasiController extends Controller
             $query->where('data_koperasi.nomor_dapur_data_koperasi', $pilih_dapur);
         }
     
-        /* ================= FILTER BULAN ================= */
-        $bulan_map = [
-            'Januari' => 1, 'Februari' => 2, 'Maret' => 3, 'April' => 4,
-            'Mei' => 5, 'Juni' => 6, 'Juli' => 7, 'Agustus' => 8,
-            'September' => 9, 'Oktober' => 10, 'November' => 11, 'Desember' => 12
-        ];
-    
-        if (!empty($bulan) && isset($bulan_map[$bulan])) {
-            $bulan_angka = $bulan_map[$bulan];
-    
-            $query->whereMonth('tanggal_data_koperasi', $bulan_angka)
-                  ->whereYear('tanggal_data_koperasi', $pilih_tahun);
-    
-            /* ================= FILTER MINGGU ================= */
-            if (!empty($pilih_minggu)) {
-
-                $awalBulan = Carbon::create($pilih_tahun, $bulan_angka, 1);
-            
-                $startDate = $awalBulan->copy()
-                    ->addWeeks($pilih_minggu - 1)
-                    ->startOfWeek(Carbon::MONDAY);
-            
-                $endDate = $startDate->copy()
-                    ->endOfWeek(Carbon::SUNDAY);
-            
-                // Pastikan tidak keluar dari bulan
-                if ($startDate->month != $bulan_angka) {
-                    $startDate = $awalBulan->copy()->startOfMonth();
-                }
-            
-                if ($endDate->month != $bulan_angka) {
-                    $endDate = $awalBulan->copy()->endOfMonth();
-                }
-            
-                $query->whereBetween('tanggal_data_koperasi', [
-                    $startDate->toDateString(),
-                    $endDate->toDateString()
-                ]);
-            }
+        /* ================= FILTER RANGE TANGGAL ================= */
+        if (!empty($dari_tanggal) && !empty($sampai_tanggal)) {
+            $query->whereBetween('tanggal_data_koperasi', [
+                $dari_tanggal,
+                $sampai_tanggal
+            ]);
+        } elseif (!empty($dari_tanggal)) {
+            $query->whereDate('tanggal_data_koperasi', '>=', $dari_tanggal);
+        } elseif (!empty($sampai_tanggal)) {
+            $query->whereDate('tanggal_data_koperasi', '<=', $sampai_tanggal);
         }
     
         $query->orderBy('tanggal_data_koperasi', 'asc');
@@ -82,9 +52,8 @@ class DataKoperasiController extends Controller
         $dataKosong = $data_koperasi->isEmpty();
     
         $sudahCari =
-            !empty($bulan) ||
-            !empty($pilih_minggu) ||
-            !empty($pilih_tahun) ||
+            !empty($dari_tanggal) ||
+            !empty($sampai_tanggal) ||
             !empty($pilih_dapur);
     
         /* ================= GROUPING ================= */
@@ -95,12 +64,12 @@ class DataKoperasiController extends Controller
     
         /* ================= HITUNG TOTAL ================= */
         foreach ($data_koperasi as $item) {
-
+    
             if ($item->jenis_data_koperasi !== 'modal_keluar') {
                 $item->total_harga_supplier = $item->harga_data_koperasi;
                 continue;
             }
-
+    
             // MODAL KELUAR - SUPPLIER
             if (!empty($item->id_informasi_supplier)) {
                 $item->total_harga_supplier = DB::table('barang_supplier')
