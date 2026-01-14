@@ -741,8 +741,7 @@ class DataKoperasiController extends Controller
 
         $sudahCari =
             !empty($dari_tanggal) ||
-            !empty($sampai_tanggal) ||
-            !empty($dapur);
+            !empty($sampai_tanggal);
 
         /* ================= GROUPING ================= */
         $grouped = $data_koperasi->getCollection()->groupBy(function ($item) {
