@@ -780,7 +780,7 @@ class DataKoperasiController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
 
-        return view('owner.data_koperasi.index_data_koperasi', compact(
+        return view('admin.data_koperasi.index_data_koperasi', compact(
             'data_koperasi',
             'dataKosong',
             'sudahCari',
@@ -869,7 +869,7 @@ class DataKoperasiController extends Controller
             }
         }
 
-        return view('owner.data_koperasi.cetak_data_koperasi', compact(
+        return view('admin.data_koperasi.cetak_data_koperasi', compact(
             'data_koperasi',
             'grouped',
             'dari_tanggal',
