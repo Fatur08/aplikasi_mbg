@@ -569,7 +569,7 @@
         let dapur = document.getElementById("pilih_dapur").value;
         let bulan = document.getElementById("bulan").value;
 
-        let url = `/owner/data_koperasi/cetak_data_koperasi?dapur=${dapur}&bulan=${bulan}`;
+        let url = `/owner/data_koperasi/cetak_data_koperasi?dapur=${dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
         window.open(url, "_blank");
     });
 </script>
