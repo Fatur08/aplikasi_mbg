@@ -595,7 +595,7 @@
         }
     
         // ✅ JIKA SUDAH LENGKAP, BARU BUKA HALAMAN CETAK
-        let url = `/owner/data_koperasi/cetak_data_koperasi?dapur=${dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
+        let url = `/owner/data_koperasi/cetak_data_koperasi?dapur=${pilih_dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
         window.open(url, '_blank');
     });
 </script>
