@@ -500,11 +500,20 @@
         });
 
         $("#FormDataKoperasiOwner").submit(function(){
+            var pilih_dapur         = $("#pilih_dapur").val();
             var dari_tanggal        = $("#dari_tanggal").val();
             var sampai_tanggal      = $("#sampai_tanggal").val();
-            var bulan               = $("#bulan").val();
-            var pilih_dapur         = $("#pilih_dapur").val();
-            if(dari_tanggal==""){
+            if(pilih_dapur==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Dapur Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#pilih_dapur").focus();
+                  });
+                return false;
+            } else if (dari_tanggal==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Dari Tanggal Harus Diisi',
@@ -522,26 +531,6 @@
                     confirmButtonText: 'OK'
                   }).then(()=> {
                       $("#sampai_tanggal").focus();
-                  });
-                return false;
-            } else if (bulan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Bulan Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#bulan").focus();
-                  });
-                return false;
-            } else if (pilih_dapur==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Dapur Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#pilih_dapur").focus();
                   });
                 return false;
             }
@@ -565,13 +554,49 @@
         });
     });
 
-    document.getElementById("cetak_data_koperasi").addEventListener("click", function() {
-        let dapur           = document.getElementById("pilih_dapur").value;
-        let dari_tanggal    = document.getElementById("dari_tanggal").value;
-        let sampai_tanggal  = document.getElementById("sampai_tanggal").value;
-
+    $("#cetak_data_koperasi").click(function(e){
+        e.preventDefault(); // Mencegah langsung pindah halaman
+            
+        var pilih_dapur    = $("#pilih_dapur").val();
+        var dari_tanggal   = $("#dari_tanggal").val();
+        var sampai_tanggal = $("#sampai_tanggal").val();
+            
+        if(pilih_dapur == ""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Dapur Harus Diisi',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            }).then(()=> {
+                $("#pilih_dapur").focus();
+            });
+            return false;
+        
+        } else if(dari_tanggal == ""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Dari Tanggal Harus Diisi',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            }).then(()=> {
+                $("#dari_tanggal").focus();
+            });
+            return false;
+        } else if(sampai_tanggal == ""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Sampai Tanggal Harus Diisi',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            }).then(()=> {
+                $("#sampai_tanggal").focus();
+            });
+            return false;
+        }
+    
+        // ✅ JIKA SUDAH LENGKAP, BARU BUKA HALAMAN CETAK
         let url = `/owner/data_koperasi/cetak_data_koperasi?dapur=${dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
-        window.open(url, "_blank");
+        window.open(url, '_blank');
     });
 </script>
 @endpush
