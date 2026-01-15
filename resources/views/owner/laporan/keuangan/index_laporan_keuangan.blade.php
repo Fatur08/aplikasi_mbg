@@ -521,21 +521,11 @@
         $("#cetak_laporan_keuangan").click(function(e){
             e.preventDefault(); // Mencegah langsung pindah halaman
                 
-            var pilih_bulan = $("#pilih_bulan").val();
-            var pilih_dapur = $("#pilih_dapur").val();
+            var pilih_dapur    = $("#pilih_dapur").val();
+            var dari_tanggal   = $("#dari_tanggal").val();
+            var sampai_tanggal = $("#sampai_tanggal").val();
                 
-            if(pilih_bulan == ""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Bulan Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                }).then(()=> {
-                    $("#pilih_bulan").focus();
-                });
-                return false;
-            
-            } else if(pilih_dapur == ""){
+            if(pilih_dapur == ""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Dapur Harus Diisi',
@@ -545,10 +535,31 @@
                     $("#pilih_dapur").focus();
                 });
                 return false;
+            
+            } else if(dari_tanggal == ""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Dari Tanggal Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then(()=> {
+                    $("#dari_tanggal").focus();
+                });
+                return false;
+            } else if(sampai_tanggal == ""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Sampai Tanggal Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then(()=> {
+                    $("#sampai_tanggal").focus();
+                });
+                return false;
             }
         
             // ✅ JIKA SUDAH LENGKAP, BARU BUKA HALAMAN CETAK
-            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?bulan=${pilih_bulan}&dapur=${pilih_dapur}`;
+            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?dapur=${pilih_dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
             window.open(url, '_blank');
         });
 

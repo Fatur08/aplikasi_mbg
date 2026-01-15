@@ -80,8 +80,18 @@
     <div class="header" style="text-align:center; margin-bottom:20px;">
         <h2 style="margin:0;">LAPORAN KEUANGAN</h2>
         <h4 style="margin:0;">
-            Periode Bulan 
-            {{ \Carbon\Carbon::createFromFormat('m', $pilih_bulan)->translatedFormat('F') }}
+            Periode :
+            @if($dari_tanggal && $sampai_tanggal)
+                {{ \Carbon\Carbon::parse($dari_tanggal)->translatedFormat('d F Y') }}
+                s/d
+                {{ \Carbon\Carbon::parse($sampai_tanggal)->translatedFormat('d F Y') }}
+            @elseif($dari_tanggal)
+                Mulai {{ \Carbon\Carbon::parse($dari_tanggal)->translatedFormat('d F Y') }}
+            @elseif($sampai_tanggal)
+                Sampai {{ \Carbon\Carbon::parse($sampai_tanggal)->translatedFormat('d F Y') }}
+            @else
+                Semua Periode
+            @endif
         </h4>
     </div>
 
