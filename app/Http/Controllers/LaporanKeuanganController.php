@@ -46,6 +46,15 @@ class LaporanKeuanganController extends Controller
         $laporan_keuangan = $query
             ->orderBy('keuangan.tanggal_laporan_keuangan', 'asc')
             ->paginate(300);
+        
+        /* ================= FLAG STATUS ================= */
+        $dataKosong = $laporan_keuangan->isEmpty();
+
+        $sudahCari =
+            !empty($dari_tanggal) ||
+            !empty($sampai_tanggal) ||
+            !empty($pilih_dapur);
+        
 
         $grouped = $laporan_keuangan->getCollection()
             ->groupBy('tanggal_laporan_keuangan');
@@ -162,6 +171,7 @@ class LaporanKeuanganController extends Controller
 
         return view('owner.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
+            'sudahCari',
             'grouped',
             'total_pemasukan',
             'total_pengeluaran',
