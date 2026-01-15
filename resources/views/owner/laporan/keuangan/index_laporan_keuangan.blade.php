@@ -518,49 +518,13 @@
         });
 
 
-        $("#cetak_laporan_keuangan").click(function(e){
-            e.preventDefault(); // Mencegah langsung pindah halaman
-                
-            var pilih_dapur    = $("#pilih_dapur").val();
-            var dari_tanggal   = $("#dari_tanggal").val();
-            var sampai_tanggal = $("#sampai_tanggal").val();
-                
-            if(pilih_dapur == ""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Dapur Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                }).then(()=> {
-                    $("#pilih_dapur").focus();
-                });
-                return false;
-            
-            } else if(dari_tanggal == ""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Dari Tanggal Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                }).then(()=> {
-                    $("#dari_tanggal").focus();
-                });
-                return false;
-            } else if(sampai_tanggal == ""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Sampai Tanggal Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                }).then(()=> {
-                    $("#sampai_tanggal").focus();
-                });
-                return false;
-            }
-        
-            // ✅ JIKA SUDAH LENGKAP, BARU BUKA HALAMAN CETAK
+        document.getElementById("cetak_laporan_keuangan").addEventListener("click", function() {
+            let dapur           = document.getElementById("pilih_dapur").value;
+            let dari_tanggal    = document.getElementById("dari_tanggal").value;
+            let sampai_tanggal  = document.getElementById("sampai_tanggal").value;
+    
             let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?dapur=${pilih_dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
-            window.open(url, '_blank');
+            window.open(url, "_blank");
         });
 
 
