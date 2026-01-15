@@ -238,7 +238,7 @@
                                     
                                     <div class="table-wrapper">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered align-middle">
+                                            <table class="table custom-table">
                                                 <thead class="table-primary text-center">
                                                     <tr>
                                                         <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
