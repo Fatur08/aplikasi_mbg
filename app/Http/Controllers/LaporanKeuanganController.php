@@ -171,6 +171,7 @@ class LaporanKeuanganController extends Controller
 
         return view('owner.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
+            'dataKosong',
             'sudahCari',
             'grouped',
             'total_pemasukan',
