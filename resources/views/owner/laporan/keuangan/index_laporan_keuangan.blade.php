@@ -220,13 +220,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
-                                        <canvas id="koperasiChartOwner" height="340"></canvas>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row mt-2 table-container">
                                 <div class="col-12">
                                     @if(!$sudahCari)
