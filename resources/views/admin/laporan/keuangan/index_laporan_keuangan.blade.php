@@ -210,112 +210,118 @@
                                         </div>-->
                                 </div>
                             </div>
-                            <div class="row mt-2">
+                            <div class="row mt-2 table-container">
                                 <div class="col-12">
-                                    <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
-                                        <canvas id="koperasiChartAdmin" height="340"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    @php
-                                        // Grup data berdasarkan tanggal laporan keuangan
-                                        $grouped = $laporan_keuangan->groupBy(function ($item) {
-                                            return \Carbon\Carbon::parse($item->tanggal_laporan_keuangan)->translatedFormat('d F Y');
-                                        });
-                                    @endphp
-                                    
-                                    <table class="table table-bordered align-middle">
-                                        <thead class="table-primary text-center">
-                                            <tr>
-                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
-                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
-                                                <th style="text-align: center; vertical-align: middle;" colspan="2">Sumber</th>
-                                                <th style="text-align: center; vertical-align: middle;" colspan="2">Jumlah</th>
-                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">Selisih</th>
-                                                <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
-                                                <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
-                                            </tr>
-                                            <tr>
-                                                <th style="text-align: center; vertical-align: middle;">Koperasi</th>
-                                                <th style="text-align: center; vertical-align: middle;">Supplier</th>
-                                                <th style="text-align: center; vertical-align: middle;">Pemasukan</th>
-                                                <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @forelse ($grouped as $tanggal => $data_per_tanggal)
-                                                @php
-                                                    // Pisahkan data berdasarkan jenis transaksi
-                                                    $pemasukan = $data_per_tanggal->where('jenis_transaksi', 'Pemasukan');
-                                                    $pengeluaran = $data_per_tanggal->where('jenis_transaksi', 'Pengeluaran');
-                                                                                    
-                                                    // Hitung total pemasukan
-                                                    $total_pemasukan = $data_per_tanggal
-                                                        ->where('jenis_data_koperasi', 'modal_masuk')
-                                                        ->where('status_data_koperasi', 1)
-                                                        ->sum('harga_data_koperasi');
-                                                                                    
-                                                    // Hitung total pengeluaran dari sumber berbeda
-                                                    $total_pengeluaran_supplier = $data_per_tanggal
-                                                        ->whereNotNull('harga_barang_supplier')
-                                                        ->sum('harga_barang_supplier');
+                                    @if(!$sudahCari)
+                                        <div class="alert alert-info text-center">
+                                            Silakan lakukan pencarian terlebih dahulu
+                                        </div>
+                                    @elseif($dataKosong)
+                                        <div class="alert alert-warning text-center">
+                                            Data tidak ditemukan
+                                        </div>
+                                    @else
+                                        @php
+                                            // Grup data berdasarkan tanggal laporan keuangan
+                                            $grouped = $laporan_keuangan->groupBy(function ($item) {
+                                                return \Carbon\Carbon::parse($item->tanggal_laporan_keuangan)->translatedFormat('d F Y');
+                                            });
+                                        @endphp
 
-                                                    $total_pengeluaran_modal_keluar = $data_per_tanggal
-                                                        ->whereNotNull('harga_barang_modal_keluar')
-                                                        ->sum('harga_barang_modal_keluar');
+                                        <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
+                                            <canvas id="koperasiChartOwner" height="340"></canvas>
+                                        </div>
+                                        
+                                        <div class="table-wrapper">
+                                            <div class="table-responsive">
+                                                <table class="table custom-table">
+                                                    <thead class="table-primary text-center">
+                                                        <tr>
+                                                            <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
+                                                            <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
+                                                            <th style="text-align: center; vertical-align: middle;" colspan="2">Sumber</th>
+                                                            <th style="text-align: center; vertical-align: middle;" rowspan="2">Pengeluaran</th>
+                                                            <th style="text-align: center; vertical-align: middle;" rowspan="2">Margin</th>
+                                                            <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
+                                                            <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="text-align: center; vertical-align: middle;">Koperasi</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Supplier</th>
+                                                            <!--<th style="text-align: center; vertical-align: middle;">Pemasukan</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>-->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @forelse ($grouped as $tanggal => $data_per_tanggal)
+                                                            @php
+                                                                // Pisahkan data berdasarkan jenis transaksi
+                                                                $pemasukan = $data_per_tanggal->where('jenis_transaksi', 'Pemasukan');
+                                                                $pengeluaran = $data_per_tanggal->where('jenis_transaksi', 'Pengeluaran');
 
-                                                    $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
-                                                                                    
-                                                    // Selisih total
-                                                    $selisih = $total_pemasukan - $total_pengeluaran;
-                                                                                    
-                                                    // Ambil data pertama untuk id & status validasi
-                                                    $laporan = $data_per_tanggal->first();
-                                                    $id_laporan = optional($laporan)->id_laporan_keuangan;
-                                                    $status_validasi = optional($laporan)->status_validasi;
-                                                                                    
-                                                    // Cek apakah pengeluaran dari data koperasi atau supplier
-                                                    $ada_koperasi = $data_per_tanggal->contains('id_data_koperasi', '!=', null);
-                                                    $ada_supplier = $data_per_tanggal->contains('id_informasi_supplier', '!=', null);
-                                                @endphp
-                                    
-                                                <tr style="text-align: center; vertical-align: middle;">
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $tanggal }}</td>
-                                                    {{-- kolom koperasi --}}
-                                                    <td>
-                                                        {{ ($ada_koperasi && !$ada_supplier) ? '✅' : '' }}
-                                                    </td>
-                                                                                        
-                                                    <td>
-                                                        {{ ($ada_koperasi && $ada_supplier) ? '✅' : '' }}
-                                                    </td>
-                                                    <td class="text-success">
-                                                        Rp {{ number_format($total_pemasukan, 0, ',', '.') }}
-                                                    </td>
-                                                    <td class="text-danger">
-                                                        Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}
-                                                    </td>
-                                                    <td>
-                                                        <strong class="{{ $selisih >= 0 ? 'text-success' : 'text-danger' }}">
-                                                            Rp {{ number_format($selisih, 0, ',', '.') }}
-                                                        </strong>
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="7" class="text-center text-muted">Tidak ada data</td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
-                                    
-                                    {{-- Pagination --}}
-                                    <div class="mt-3">
-                                        {{ $laporan_keuangan->links('vendor.pagination.bootstrap-5') }}
-                                    </div>
+                                                                // Hitung total pemasukan
+                                                                $total_pemasukan = $data_per_tanggal
+                                                                    ->where('jenis_data_koperasi', 'modal_masuk')
+                                                                    ->where('status_data_koperasi', 1)
+                                                                    ->sum('harga_data_koperasi');
+
+                                                                // Hitung total pengeluaran dari sumber berbeda
+                                                                $total_pengeluaran_supplier = $data_per_tanggal
+                                                                    ->whereNotNull('harga_barang_supplier')
+                                                                    ->sum('harga_barang_supplier');
+
+                                                                $total_pengeluaran_modal_keluar = $data_per_tanggal
+                                                                    ->whereNotNull('harga_barang_modal_keluar')
+                                                                    ->sum('harga_barang_modal_keluar');
+
+                                                                $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
+
+                                                                // Selisih total
+                                                                $selisih = $total_pemasukan - $total_pengeluaran;
+
+                                                                // Ambil data pertama untuk id & status validasi
+                                                                $laporan = $data_per_tanggal->first();
+                                                                $id_laporan = optional($laporan)->id_laporan_keuangan;
+                                                                $status_validasi = optional($laporan)->status_validasi;
+
+                                                                // Cek apakah pengeluaran dari data koperasi atau supplier
+                                                                $ada_koperasi = $data_per_tanggal->contains('id_data_koperasi', '!=', null);
+                                                                $ada_supplier = $data_per_tanggal->contains('id_informasi_supplier', '!=', null);
+                                                            @endphp
+
+                                                            <tr style="text-align: center; vertical-align: middle;">
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $tanggal }}</td>
+                                                                {{-- kolom koperasi --}}
+                                                                <td>
+                                                                    {{ ($ada_koperasi && !$ada_supplier) ? '✅' : '' }}
+                                                                </td>
+
+                                                                <td>
+                                                                    {{ ($ada_koperasi && $ada_supplier) ? '✅' : '' }}
+                                                                </td>
+                                                                <!--<td class="text-success">
+                                                                    Rp {{ number_format($total_pemasukan, 0, ',', '.') }}
+                                                                </td>-->
+                                                                <td class="text-danger">
+                                                                    Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}
+                                                                </td>
+                                                                <td>
+                                                                    <strong class="{{ $selisih >= 0 ? 'text-success' : 'text-danger' }}">
+                                                                        Rp {{ number_format($selisih, 0, ',', '.') }}
+                                                                    </strong>
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="6" class="text-center text-muted">Tidak ada data</td>
+                                                            </tr>
+                                                        @endforelse
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
