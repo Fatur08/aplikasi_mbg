@@ -483,8 +483,7 @@ class LaporanKeuanganController extends Controller
 
         $sudahCari =
             !empty($dari_tanggal) ||
-            !empty($sampai_tanggal) ||
-            !empty($dapur);
+            !empty($sampai_tanggal);
         
 
         $grouped = $laporan_keuangan->getCollection()
