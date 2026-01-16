@@ -218,7 +218,7 @@ class LaporanKeuanganController extends Controller
         }
     
         $laporan_keuangan = $query
-            ->orderBy('keuangan.tanggal_laporan_keuangan', 'desc')
+            ->orderBy('keuangan.tanggal_laporan_keuangan', 'asc')
             ->paginate(300);
     
         // ===================== GROUPING =====================

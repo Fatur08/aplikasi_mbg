@@ -172,9 +172,9 @@
                     <td style="text-align: center; vertical-align: middle;">
                         {{ ($ada_koperasi && $ada_supplier) ? '✅' : '' }}
                     </td>
-                    <td class="text-success">
+                    <!--<td class="text-success">
                         Rp {{ number_format($total_pemasukan, 0, ',', '.') }}
-                    </td>
+                    </td>-->
                     <td class="text-danger">
                         Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}
                     </td>
