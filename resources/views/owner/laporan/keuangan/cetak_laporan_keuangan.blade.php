@@ -116,7 +116,7 @@
                 <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
                 <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
                 <th style="text-align: center; vertical-align: middle;" colspan="2">Sumber</th>
-                <th style="text-align: center; vertical-align: middle;" colspan="2">Jumlah</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="2">Pengeluaran</th>
                 <th style="text-align: center; vertical-align: middle;" rowspan="2">Margin</th>
                 <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
                 <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
@@ -124,8 +124,8 @@
             <tr>
                 <th style="text-align: center; vertical-align: middle;">Koperasi</th>
                 <th style="text-align: center; vertical-align: middle;">Supplier</th>
-                <th style="text-align: center; vertical-align: middle;">Pemasukan</th>
-                <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>
+                <!--<th style="text-align: center; vertical-align: middle;">Pemasukan</th>
+                <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>-->
             </tr>
         </thead>
         <tbody>
