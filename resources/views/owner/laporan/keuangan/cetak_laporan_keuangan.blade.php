@@ -117,7 +117,7 @@
                 <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
                 <th style="text-align: center; vertical-align: middle;" colspan="2">Sumber</th>
                 <th style="text-align: center; vertical-align: middle;" colspan="2">Jumlah</th>
-                <th style="text-align: center; vertical-align: middle;" rowspan="2">Selisih</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="2">Margin</th>
                 <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
                 <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
             </tr>
