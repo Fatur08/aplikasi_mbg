@@ -609,7 +609,6 @@ class LaporanKeuanganController extends Controller
             'total_pengeluaran',
             'sisa_dana',
             'data',
-            'pilih_dapur',
             'dari_tanggal',
             'sampai_tanggal',
             'dapurList'
