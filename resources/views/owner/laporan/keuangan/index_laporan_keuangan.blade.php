@@ -245,6 +245,10 @@
                                             });
                                         @endphp
 
+                                        <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
+                                            <canvas id="koperasiChartOwner" height="340"></canvas>
+                                        </div>
+                                        
                                         <div class="table-wrapper">
                                             <div class="table-responsive">
                                                 <table class="table custom-table">
