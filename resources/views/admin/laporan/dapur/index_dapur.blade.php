@@ -133,7 +133,7 @@
                                     Halaman
                                 </div>
                                 <h2 class="page-title">
-                                    Harian Dapur
+                                    Laporan Dapur
                                 </h2>
                             </td>
                             <!--<td style="text-align:right">
