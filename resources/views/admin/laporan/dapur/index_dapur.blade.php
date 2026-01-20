@@ -187,21 +187,15 @@
                                                 <span class="input-icon-addon">
                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
                                                 </span>
-                                                <!-- Yang tampil -->
-                                                <input type="text" id="tampilan_tanggal" class="form-control" placeholder="Pilih Tanggal" autocomplete="off">
-                                                
-                                                <!-- Yang dikirim ke server -->
-                                                 <input type="hidden" id="pilih_tanggal" name="pilih_tanggal">
+                                                <input type="text" value="" id="dari_tanggal" name="dari_tanggal" class="form-control" placeholder="Dari Tanggal" autocomplete="off">
                                             </div>
                                         </div>
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <select name="id_menu_harian" id="id_menu_harian" class="form-select">
-                                                    <option value="">Pilih Menu</option>
-                                                    @foreach($menu_harian as $menu)
-                                                        <option value="{{ $menu->id_menu_harian }}">{{ $menu->nama_menu_harian }}</option>
-                                                    @endforeach
-                                                </select>
+                                        <div class="col-md-4">
+                                            <div class="input-icon">
+                                                <span class="input-icon-addon">
+                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
+                                                </span>
+                                                <input type="text" value="" id="sampai_tanggal" name="sampai_tanggal" class="form-control" placeholder="Sampai Tanggal" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-4">
@@ -470,29 +464,6 @@
 @endsection
 @push('myscript')
 <script>
-    flatpickr("#tampilan_tanggal", {
-        dateFormat: "d F Y", // format tampilan: 15 September 2025
-        altInput: true,
-        altFormat: "d F Y",
-        locale: "id", // biar bulan pakai bahasa Indonesia
-
-        onChange: function(selectedDates) {
-            if (selectedDates.length > 0) {
-                let date = selectedDates[0];
-
-                let yyyy = date.getFullYear();
-                let mm = String(date.getMonth() + 1).padStart(2, '0');
-                let dd = String(date.getDate()).padStart(2, '0');
-
-                // ini yang DIKIRIM ke controller
-                document.getElementById('pilih_tanggal').value = `${yyyy}-${mm}-${dd}`;
-            }
-        }
-    });
-
-
-
-
     $(function(){
         $(".lihat_bahan_terpakai").click(function(){
             var id = $(this).attr('data-id');
@@ -575,6 +546,24 @@
                   });
                 return false;
             }
+        });
+
+
+
+        flatpickr("#dari_tanggal", {
+            altInput: true,
+            altFormat: "d F Y",      // 15 September 2025
+            dateFormat: "Y-m-d",     // dikirim ke backend
+            locale: "id",
+            allowInput: true
+        });
+        
+        flatpickr("#sampai_tanggal", {
+            altInput: true,
+            altFormat: "d F Y",
+            dateFormat: "Y-m-d",
+            locale: "id",
+            allowInput: true
         });
     });
 </script>
