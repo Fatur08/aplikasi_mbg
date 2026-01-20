@@ -176,7 +176,8 @@ class DashboardController extends Controller
             'dataKosong',
             'sudahCari',
             'dapurList',
-            'data_kecamatan'
+            'data_kecamatan',
+            'nomor_dapur'
         ));
     }
 
