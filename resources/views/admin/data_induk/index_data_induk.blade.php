@@ -780,7 +780,7 @@
 
 
 
-
+<!-- ASLAP (ASISTEN LAPANGAN) -->
 <div class="page-body">
     <div class="container-xl">
         <div class="row">
@@ -791,11 +791,11 @@
                             <div class="col-12">
                                 <div class="section-info">
                                     <div class="info-card">
-                                        <h2><span style="color:#2563eb;">DATA PEKERJA</span></h2>
+                                        <h2><span style="color:#2563eb;">ASLAP</span></h2>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center mb-3">
-                                    <a href="#" class="btn btn-primary" id="btnTambahDataPekerja">
+                                    <a href="#" class="btn btn-primary" id="btnTambahAslap">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
@@ -804,7 +804,7 @@
                                             <path d="M12 5l0 14" />
                                             <path d="M5 12l14 0" />
                                         </svg>
-                                        Tambah Data Pekerja
+                                        Tambah Data Aslap
                                     </a>
                                 </div>
                                 <div class="table-wrapper">
@@ -904,9 +904,8 @@
 
 
 
-<!-- BAGIAN DATA PEKERJA -->
-{{-- Modal Input Data Pekerja --}}
-<div class="modal modal-blur fade" id="modal-inputdatapekerja" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- BAGIAN ASLAP -->
+<div class="modal modal-blur fade" id="modal-inputdataaslap" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -914,7 +913,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/data_induk/data_pekerja/store_data_pekerja" method="POST" id="frmDtPkrj" enctype="multipart/form-data">
+                <form action="/admin/data_induk/aslap/store_aslap" method="POST" id="FormDataAslap" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -923,7 +922,7 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
                                 </span>
-                                <input type="text" value="" id="nama_data_pekerja" class="form-control" name="nama_data_pekerja" placeholder="Masukkan Nama Data Pekerja">
+                                <input type="text" value="" id="nama_aslap" class="form-control" name="nama_aslap" placeholder="Masukkan Nama Data Pekerja">
                             </div>
                         </div>
                     </div>
@@ -933,17 +932,17 @@
                                 <span class="input-icon-addon">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" /><path d="M12 12l0 .01" /><path d="M3 13a20 20 0 0 0 18 0" /></svg>
                                 </span>
-                                <input type="text" value="" id="peran_data_pekerja" class="form-control" name="peran_data_pekerja" placeholder="Masukkan Peran Data Pekerja">
+                                <input type="text" value="" id="peran_aslap" class="form-control" name="peran_aslap" placeholder="Masukkan Peran Data Pekerja">
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select name="old_peran_data_pekerja" id="old_peran_data_pekerja" class="form-select">
+                            <select name="old_peran_aslap" id="old_peran_aslap" class="form-select">
                                 <option value="">Pilih Peran (Jika Sebelumnya Ada)</option>
                                 @foreach($peranList as $peran)
-                                    <option value="{{ $peran->peran_data_pekerja }}">
-                                        {{ $peran->peran_data_pekerja }}
+                                    <option value="{{ $peran->peran_aslap }}">
+                                        {{ $peran->peran_aslap }}
                                     </option>
                                 @endforeach
                             </select>
@@ -956,13 +955,13 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
                                 </span>
-                                <input type="text" value="" id="no_hp_data_pekerja" class="form-control" name="no_hp_data_pekerja" placeholder="Masukkan No. HP Data Pekerja">
+                                <input type="text" value="" id="no_hp_aslap" class="form-control" name="no_hp_aslap" placeholder="Masukkan No. HP Data Pekerja">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select name="nomor_dapur_data_pekerja" id="nomor_dapur_data_pekerja" class="form-select">
+                            <select name="nomor_dapur_aslap" id="nomor_dapur_aslap" class="form-select">
                                 <option value="">Pilih Dapur</option>
                                 @foreach($dapurList as $dapur)
                                     <option value="{{ $dapur->nomor_dapur }}">{{ $dapur->nama_dapur }}</option>
@@ -972,7 +971,7 @@
                     </div>
                     <div class="row mt-3 mb-3">
                         <div class="col-6">
-                            <input type="file" id="foto_data_pekerja" name="foto_data_pekerja" class="form-control">
+                            <input type="file" id="foto_aslap" name="foto_aslap" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label>Masukkan Foto Pengenal</label>
@@ -980,7 +979,7 @@
                     </div>
                     <div class="row mt-3 mb-3">
                         <div class="col-6">
-                            <input type="file" id="ktp_data_pekerja" name="ktp_data_pekerja" class="form-control">
+                            <input type="file" id="ktp_aslap" name="ktp_aslap" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label>Foto KTP Data Pekerja</label>
@@ -1037,8 +1036,8 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#btnTambahDataPekerja").click(function(){
-            $("#modal-inputdatapekerja").modal("show");
+        $("#btnTambahAslap").click(function(){
+            $("#modal-inputdataaslap").modal("show");
         });
 
         $(".edit_data_pekerja").click(function(){
@@ -1100,12 +1099,12 @@
             });
         });
 
-        $("#frmDtPkrj").submit(function(){
+        $("#FormDataAslap").submit(function(){
             var nama_lengkap = $("#nama_lengkap").val();
             var email = $("#email").val();
             var alamat = $("#alamat").val();
             var no_hp = $("#no_hp").val();
-            var foto = $("#frmDtPkrj").find("#foto").val();
+            var foto = $("#FormDataAslap").find("#foto").val();
             var kecamatan = $("#kecamatan").val();
             if(nama_lengkap==""){
                 Swal.fire({

@@ -7,7 +7,7 @@ use App\Http\Controllers\DataKoperasiController;
 use App\Http\Controllers\DataSupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataIndukController;
-use App\Http\Controllers\DataPekerjaController;
+use App\Http\Controllers\DataAslapController;
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\InformasiMenuHarianController;
 use App\Http\Controllers\InformasiPengirimanController;
@@ -105,15 +105,15 @@ Route::middleware(['auth:owner'])->group(function(){
 
 
     //Data Pekerja
-    Route::get('/owner/data_induk/data_pekerja',[DataPekerjaController::class,'index_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/store_data_pekerja',[DataPekerjaController::class,'store_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/edit_data_pekerja',[DataPekerjaController::class,'edit_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/ktp_data_pekerja',[DataPekerjaController::class,'ktp_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/{id}/update_data_pekerja',[DataPekerjaController::class,'update_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/{id}/delete_data_pekerja',[DataPekerjaController::class,'delete_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/status_validasi_data_pekerja',[DataPekerjaController::class,'status_validasi_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/{id}/update_status_validasi_data_pekerja',[DataPekerjaController::class,'update_status_validasi_owner_data_pekerja']);
-    Route::get('/owner/data_induk/data_pekerja/{id}/batalkan_status_validasi_data_pekerja',[DataPekerjaController::class,'batalkan_status_validasi_owner_data_pekerja']);
+    Route::get('/owner/data_induk/data_pekerja',[DataAslapController::class,'index_owner_data_pekerja']);
+    Route::post('/owner/data_induk/data_pekerja/store_data_pekerja',[DataAslapController::class,'store_owner_data_pekerja']);
+    Route::post('/owner/data_induk/data_pekerja/edit_data_pekerja',[DataAslapController::class,'edit_owner_data_pekerja']);
+    Route::post('/owner/data_induk/data_pekerja/ktp_data_pekerja',[DataAslapController::class,'ktp_owner_data_pekerja']);
+    Route::post('/owner/data_induk/data_pekerja/{id}/update_data_pekerja',[DataAslapController::class,'update_owner_data_pekerja']);
+    Route::post('/owner/data_induk/data_pekerja/{id}/delete_data_pekerja',[DataAslapController::class,'delete_owner_data_pekerja']);
+    Route::post('/owner/data_induk/data_pekerja/status_validasi_data_pekerja',[DataAslapController::class,'status_validasi_owner_data_pekerja']);
+    Route::post('/owner/data_induk/data_pekerja/{id}/update_status_validasi_data_pekerja',[DataAslapController::class,'update_status_validasi_owner_data_pekerja']);
+    Route::get('/owner/data_induk/data_pekerja/{id}/batalkan_status_validasi_data_pekerja',[DataAslapController::class,'batalkan_status_validasi_owner_data_pekerja']);
 
 
     //Dapur
@@ -217,11 +217,11 @@ Route::middleware(['auth:admin'])->group(function(){
 
     //Data Induk
     Route::get('/admin/data_induk',[DataIndukController::class,'index_admin_data_induk']);
-    Route::post('/admin/data_induk/data_pekerja/store_data_pekerja',[DataPekerjaController::class,'store_admin_data_pekerja']);
-    Route::post('/admin/data_induk/data_pekerja/edit_data_pekerja',[DataPekerjaController::class,'edit_admin_data_pekerja']);
-    Route::post('/admin/data_induk/data_pekerja/ktp_data_pekerja',[DataPekerjaController::class,'ktp_admin_data_pekerja']);
-    Route::post('/admin/data_induk/data_pekerja/{id}/update_data_pekerja',[DataPekerjaController::class,'update_admin_data_pekerja']);
-    Route::post('/admin/data_induk/data_pekerja/{id}/delete_data_pekerja',[DataPekerjaController::class,'delete_admin_data_pekerja']);
+    Route::post('/admin/data_induk/aslap/store_aslap',[DataAslapController::class,'store_admin_aslap']);
+    Route::post('/admin/data_induk/aslap/edit_aslap',[DataAslapController::class,'edit_admin_aslap']);
+    Route::post('/admin/data_induk/aslap/ktp_aslap',[DataAslapController::class,'ktp_admin_aslap']);
+    Route::post('/admin/data_induk/aslap/{id}/update_aslap',[DataAslapController::class,'update_admin_aslap']);
+    Route::post('/admin/data_induk/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_admin_aslap']);
     
     //Kepala Dapur
     Route::get('/admin/data_induk/kepala_dapur',[KepalaDapurController::class,'index_admin_kepala_dapur']);
