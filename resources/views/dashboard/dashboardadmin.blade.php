@@ -333,7 +333,7 @@
                                             <div class="row">
                                                 <!-- ===== Sekolah ===== -->
                                                 <div class="col-md-6">
-                                                    <h3 class="text-success"><b>Sekolah</b></h3>
+                                                    <h3 class="text-success text-center"><b>Sekolah</b></h3>
                                                     <table class="table table-bordered table-sm">
                                                         <thead class="table-success">
                                                             <tr class="text-center">
@@ -349,7 +349,7 @@
                                                 </div>
                                                 <!-- ===== B3 ===== -->
                                                 <div class="col-md-6">
-                                                    <h3 class="text-danger"><b>B3</b></h3>
+                                                    <h3 class="text-warning text-center"><b>B3</b></h3>
                                                     <table class="table table-bordered table-sm">
                                                         <thead class="table-danger">
                                                             <tr class="text-center">
