@@ -331,7 +331,6 @@
                                     <div class="row">
                                         <!-- ===== Sekolah ===== -->
                                         <div class="col-6">
-                                            <h3 class="text-success text-center"><b>Sekolah</b></h3>
                                             <div class="table-wrapper">
                                                 <div class="table-responsive">
                                                     <table class="table custom-table">
@@ -353,7 +352,6 @@
                                         </div>
                                         <!-- ===== B3 ===== -->
                                         <div class="col-6">
-                                            <h3 class="text-warning text-center"><b>B3</b></h3>
                                             <div class="table-wrapper">
                                                 <div class="table-responsive">
                                                     <table class="table custom-table">
