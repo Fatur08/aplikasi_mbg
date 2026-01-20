@@ -23,7 +23,7 @@ $nama_dapur = DB::table('dapur')
                     <span class="avatar avatar-sm" style="background-image: url('{{ $path }}')"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ $admin->nama_admin }}</div>
-                        <div class="mt-1 small text-secondary">Admin ({{ $nama_dapur ?? 'Tidak Ada Dapur' }})</div>
+                        <div class="mt-1 small text-secondary">Maker ({{ $nama_dapur ?? 'Tidak Ada Dapur' }})</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
