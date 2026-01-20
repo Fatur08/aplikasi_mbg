@@ -337,8 +337,11 @@
                                                     <table class="table custom-table">
                                                         <thead class="table-success">
                                                             <tr class="text-center">
+                                                                <th colspan="3">Sekolah</th>
+                                                            </tr>
+                                                            <tr class="text-center">
                                                                 <th>No</th>
-                                                                <th>Sekolah</th>
+                                                                <th>Nama Sekolah</th>
                                                                 <th>Jumlah</th>
                                                             </tr>
                                                         </thead>
@@ -356,8 +359,11 @@
                                                     <table class="table custom-table">
                                                         <thead class="table-success">
                                                             <tr class="text-center">
+                                                                <th colspan="3">B3</th>
+                                                            </tr>
+                                                            <tr class="text-center">
                                                                 <th>No</th>
-                                                                <th>B3</th>
+                                                                <th>Nama B3</th>
                                                                 <th>Jumlah</th>
                                                             </tr>
                                                         </thead>
