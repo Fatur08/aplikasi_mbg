@@ -825,22 +825,22 @@
                                             <tbody>
                                                 @foreach ($aslap as $d)
                                                 @php
-                                                    $path = Storage::url('uploads/data_induk/data_pekerja/foto/'.$d->foto_data_pekerja);
+                                                    $path = Storage::url('uploads/data_induk/data_pekerja/foto/'.$d->foto_aslap);
                                                 @endphp
                                                 <tr>
                                                     <td style="text-align:center">{{ $loop->iteration + $aslap->firstItem()-1 }}</td>
-                                                    <td>{{ $d->nama_data_pekerja }}</td>
-                                                    <td>{{ $d->peran_data_pekerja }}</td>
-                                                    <td>{{ $d->no_hp_data_pekerja }}</td>
+                                                    <td>{{ $d->nama_aslap }}</td>
+                                                    <td>{{ $d->peran_aslap }}</td>
+                                                    <td>{{ $d->no_hp_aslap }}</td>
                                                     <td style="text-align:center">
-                                                        @if (empty($d->foto_data_pekerja))
+                                                        @if (empty($d->foto_aslap))
                                                         <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
                                                         @else
                                                         <img src="{{ url($path) }}" class="avatar" alt="">
                                                         @endif
                                                     </td>
                                                     <td style="text-align:center"> 
-                                                        <a href="#" class="ktp_data_pekerja btn btn-info btn-sm" id="{{ $d->id_data_pekerja }}">
+                                                        <a href="#" class="ktp_aslap btn btn-info btn-sm" id="{{ $d->id_aslap }}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round"
@@ -854,23 +854,23 @@
                                                         </a>
                                                     </td>
                                                     <td style="text-align:center">
-                                                        @if($d->status_validasi_data_pekerja == 0)
+                                                        @if($d->status_validasi_aslap == 0)
                                                             <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                        @elseif($d->status_validasi_data_pekerja == 1)
+                                                        @elseif($d->status_validasi_aslap == 1)
                                                             <button class="btn btn-success btn-sm">Disetujui</button>
-                                                        @elseif($d->status_validasi_data_pekerja == 2)
+                                                        @elseif($d->status_validasi_aslap == 2)
                                                             <button class="btn btn-danger btn-sm">Ditolak</button>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         <div class="btn-group">
-                                                            <a href="#" class="edit_data_pekerja btn btn-info btn-sm" id="{{ $d->id_data_pekerja }}" >
+                                                            <a href="#" class="edit_aslap btn btn-info btn-sm" id="{{ $d->id_aslap }}" >
                                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                                 Edit
                                                             </a>
-                                                            <form action="/owner/data_induk/data_pekerja/{{ $d->id_data_pekerja }}/delete_data_pekerja" style="margin-left: 5px;" method="POST">
+                                                            <form action="/owner/data_induk/aslap/{{ $d->id_aslap }}/delete_aslap" style="margin-left: 5px;" method="POST">
                                                                 @csrf
-                                                                <a class="btn btn-danger btn-sm delete-confirm-data_pekerja" >
+                                                                <a class="btn btn-danger btn-sm delete-confirm-aslap" >
                                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
                                                                     Hapus
                                                                 </a>
