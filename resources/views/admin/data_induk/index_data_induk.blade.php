@@ -825,7 +825,7 @@
                                             <tbody>
                                                 @foreach ($aslap as $d)
                                                 @php
-                                                    $path = Storage::url('uploads/data_induk/data_pekerja/foto/'.$d->foto_aslap);
+                                                    $path = Storage::url('uploads/data_induk/aslap/foto/'.$d->foto_aslap);
                                                 @endphp
                                                 <tr>
                                                     <td style="text-align:center">{{ $loop->iteration + $aslap->firstItem()-1 }}</td>
