@@ -338,7 +338,7 @@
                                                             <tr class="text-center">
                                                                 <th colspan="3">Sekolah</th>
                                                             </tr>
-                                                            <tr class="text-center">
+                                                            <tr>
                                                                 <th colspan="3">Menu : </th>
                                                             </tr>
                                                             <tr class="text-center">
@@ -362,7 +362,7 @@
                                                             <tr class="text-center">
                                                                 <th colspan="3">B3</th>
                                                             </tr>
-                                                            <tr class="text-center">
+                                                            <tr>
                                                                 <th colspan="3">Menu : </th>
                                                             </tr>
                                                             <tr class="text-center">
