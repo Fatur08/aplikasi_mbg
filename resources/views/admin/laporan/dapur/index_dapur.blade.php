@@ -215,7 +215,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <a href="#" class="btn btn-success" id="btnTambahPM">
+                                            <a href="#" class="btn btn-success w-100" id="btnTambahPM">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                                      viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
@@ -230,7 +230,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <a href="#" class="btn btn-success" id="btnTambahOPDapur">
+                                            <a href="#" class="btn btn-success w-100" id="btnTambahOPDapur">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                                      viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
