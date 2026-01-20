@@ -1040,11 +1040,11 @@
             $("#modal-inputdataaslap").modal("show");
         });
 
-        $(".edit_data_pekerja").click(function(){
+        $(".edit_aslap").click(function(){
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/admin/data_induk/data_pekerja/edit_data_pekerja',
+                url:'/admin/data_induk/aslap/edit_aslap',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -1058,11 +1058,11 @@
         });
 
 
-        $(".ktp_data_pekerja").click(function(){
+        $(".ktp_aslap").click(function(){
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/admin/data_induk/data_pekerja/ktp_data_pekerja',
+                url:'/admin/data_induk/aslap/ktp_aslap',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -1076,7 +1076,7 @@
         });
 
 
-        $(".delete-confirm-data_pekerja").click(function(e){
+        $(".delete-confirm-aslap").click(function(e){
             var form = $(this).closest('form');
             e.preventDefault();
             Swal.fire({
