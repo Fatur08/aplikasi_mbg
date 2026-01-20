@@ -155,16 +155,7 @@
                                     </div>
                                 @endif
 
-                                @php
-                                    use Illuminate\Support\Facades\DB;
-                                    use Carbon\Carbon;
-                                    // ✅ Ambil nama dapur
-                                    $namaDapur = $nomor_dapur
-                                        ? DB::table('dapur')
-                                            ->where('nomor_dapur', $nomor_dapur)
-                                            ->value('nama_dapur')
-                                        : '-';
-                                @endphp
+                                
                                 <!-- === Section Info Dapur === -->
                                 <div class="section-info">
                                     <div class="info-card">

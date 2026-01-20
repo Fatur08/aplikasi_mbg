@@ -167,6 +167,12 @@ class DashboardController extends Controller
                 ->unique()
                 ->values();
         }
+
+        $namaDapur = $nomor_dapur
+        ? DB::table('dapur')
+            ->where('nomor_dapur', $nomor_dapur)
+            ->value('nama_dapur')
+        : '-';
         
     
         return view('dashboard.dashboardadmin', compact(
@@ -177,7 +183,8 @@ class DashboardController extends Controller
             'sudahCari',
             'dapurList',
             'data_kecamatan',
-            'nomor_dapur'
+            'nomor_dapur',
+            'namaDapur'
         ));
     }
 
