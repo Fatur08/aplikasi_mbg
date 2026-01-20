@@ -83,10 +83,10 @@ class DataIndukController extends Controller
         $queryDataAslap = DataAslap::query();
         $queryDataAslap->select('*');
         if(!empty($cari_nama)){
-            $queryDataAslap->where('nama_data_pekerja','like','%'.$cari_nama.'%');
+            $queryDataAslap->where('nama_aslap','like','%'.$cari_nama.'%');
         }
-        $data_pekerja = $queryDataAslap->get();
-        $data_pekerja = $queryDataAslap->paginate(50);
+        $aslap = $queryDataAslap->get();
+        $aslap = $queryDataAslap->paginate(50);
 
         // Ambil semua data dapur
         $dapurList = DB::table('dapur')
@@ -94,13 +94,13 @@ class DataIndukController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
 
-        $peranList = DB::table('data_pekerja')
-            ->select('peran_data_pekerja')
-            ->whereNotNull('peran_data_pekerja')
-            ->where('peran_data_pekerja', '!=', '')
+        $peranList = DB::table('aslap')
+            ->select('peran_aslap')
+            ->whereNotNull('peran_aslap')
+            ->where('peran_aslap', '!=', '')
             ->distinct()
             ->get();
 
-        return view('admin.data_induk.index_data_induk', compact('kepala_dapur', 'distributor', 'data_pekerja', 'dapurList', 'peranList'));
+        return view('admin.data_induk.index_data_induk', compact('kepala_dapur', 'distributor', 'aslap', 'dapurList', 'peranList'));
     }
 }
