@@ -823,12 +823,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($data_pekerja as $d)
+                                                @foreach ($aslap as $d)
                                                 @php
                                                     $path = Storage::url('uploads/data_induk/data_pekerja/foto/'.$d->foto_data_pekerja);
                                                 @endphp
                                                 <tr>
-                                                    <td style="text-align:center">{{ $loop->iteration + $data_pekerja->firstItem()-1 }}</td>
+                                                    <td style="text-align:center">{{ $loop->iteration + $aslap->firstItem()-1 }}</td>
                                                     <td>{{ $d->nama_data_pekerja }}</td>
                                                     <td>{{ $d->peran_data_pekerja }}</td>
                                                     <td>{{ $d->no_hp_data_pekerja }}</td>
@@ -885,7 +885,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{ $data_pekerja->links('vendor.pagination.bootstrap-5') }}
+                        {{ $aslap->links('vendor.pagination.bootstrap-5') }}
                     </div>
                 </div>
             </div>
