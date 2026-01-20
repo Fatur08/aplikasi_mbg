@@ -252,6 +252,7 @@
 
 
 
+<!-- DATA MAKER (ADMIN) -->
 <div class="page-body">
     <div class="container-xl">
         <div class="row">
@@ -263,7 +264,7 @@
                                 <div class="section-info">
                                     <div class="info-card">
                                         <h2><span style="color:#2563eb;">MAKER</span></h2>
-                                        <a href="#" class="btn btn-primary" id="btnTambahDapur">
+                                        <a href="#" class="btn btn-primary" id="btnTambahMaker">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
@@ -338,6 +339,324 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DATA SPPI (SARJANA PENGGERAK PEMBANGUNAN INDONESIA) -->
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row table-container">
+                            <div class="col-12">
+                                <div class="section-info">
+                                    <div class="info-card">
+                                        <h2><span style="color:#2563eb;">SPPI</span></h2>
+                                        <a href="#" class="btn btn-primary" id="btnTambahSPPI">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                 class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M12 5l0 14" />
+                                                <path d="M5 12l14 0" />
+                                            </svg>
+                                            Tambah Data SPPI
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Nama</th>
+                                                    <th>E-Mail</th>
+                                                    <th>Alamat</th>
+                                                    <th>No. HP</th>
+                                                    <th>Foto</th>
+                                                    <th>Password</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($kepala_dapur as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_induk/kepala_dapur/'.$d->foto);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $d->nama_lengkap }}</td>
+                                                    <td>{{ $d->email }}</td>
+                                                    <td>{{ $d->alamat }}</td>
+                                                    <td>{{ $d->no_hp }}</td>
+                                                    <td>
+                                                        @if (empty($d->foto))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $d->password }}</td>
+                                                    <td></td>
+                                                    <!--<td>
+                                                        <div class="btn-group">
+                                                            <a href="#" class="edit_kepala_dapur btn btn-info btn-sm" id="{{ $d->id }}" >
+                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                            </a>
+                                                            <form action="/admin/data_induk/kepala_dapur/{{ $d->id }}/delete_kepala_dapur" style="margin-left: 5px;" method="POST">
+                                                                @csrf
+                                                                <a class="btn btn-danger btn-sm delete-confirm-kepaladapur" >
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                                                </a>
+                                                            </form>
+                                                        </div>
+                                                    </td>-->
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DATA AHLI GIZI -->
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row table-container">
+                            <div class="col-12">
+                                <div class="section-info">
+                                    <div class="info-card">
+                                        <h2><span style="color:#2563eb;">AHLI GIZI</span></h2>
+                                        <a href="#" class="btn btn-primary" id="btnTambahAhliGizi">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                 class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M12 5l0 14" />
+                                                <path d="M5 12l14 0" />
+                                            </svg>
+                                            Tambah Data Ahli Gizi
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Nama</th>
+                                                    <th>E-Mail</th>
+                                                    <th>Alamat</th>
+                                                    <th>No. HP</th>
+                                                    <th>Foto</th>
+                                                    <th>Password</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($kepala_dapur as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_induk/kepala_dapur/'.$d->foto);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $d->nama_lengkap }}</td>
+                                                    <td>{{ $d->email }}</td>
+                                                    <td>{{ $d->alamat }}</td>
+                                                    <td>{{ $d->no_hp }}</td>
+                                                    <td>
+                                                        @if (empty($d->foto))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $d->password }}</td>
+                                                    <td></td>
+                                                    <!--<td>
+                                                        <div class="btn-group">
+                                                            <a href="#" class="edit_kepala_dapur btn btn-info btn-sm" id="{{ $d->id }}" >
+                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                            </a>
+                                                            <form action="/admin/data_induk/kepala_dapur/{{ $d->id }}/delete_kepala_dapur" style="margin-left: 5px;" method="POST">
+                                                                @csrf
+                                                                <a class="btn btn-danger btn-sm delete-confirm-kepaladapur" >
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                                                </a>
+                                                            </form>
+                                                        </div>
+                                                    </td>-->
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DATA AKUNTAN -->
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row table-container">
+                            <div class="col-12">
+                                <div class="section-info">
+                                    <div class="info-card">
+                                        <h2><span style="color:#2563eb;">AKUNTAN</span></h2>
+                                        <a href="#" class="btn btn-primary" id="btnTambahAkuntan">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                 class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M12 5l0 14" />
+                                                <path d="M5 12l14 0" />
+                                            </svg>
+                                            Tambah Data Akuntan
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Nama</th>
+                                                    <th>E-Mail</th>
+                                                    <th>Alamat</th>
+                                                    <th>No. HP</th>
+                                                    <th>Foto</th>
+                                                    <th>Password</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($kepala_dapur as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_induk/kepala_dapur/'.$d->foto);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $d->nama_lengkap }}</td>
+                                                    <td>{{ $d->email }}</td>
+                                                    <td>{{ $d->alamat }}</td>
+                                                    <td>{{ $d->no_hp }}</td>
+                                                    <td>
+                                                        @if (empty($d->foto))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $d->password }}</td>
+                                                    <td></td>
+                                                    <!--<td>
+                                                        <div class="btn-group">
+                                                            <a href="#" class="edit_kepala_dapur btn btn-info btn-sm" id="{{ $d->id }}" >
+                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                            </a>
+                                                            <form action="/admin/data_induk/kepala_dapur/{{ $d->id }}/delete_kepala_dapur" style="margin-left: 5px;" method="POST">
+                                                                @csrf
+                                                                <a class="btn btn-danger btn-sm delete-confirm-kepaladapur" >
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                                                </a>
+                                                            </form>
+                                                        </div>
+                                                    </td>-->
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
