@@ -675,7 +675,7 @@
 
 
 
-<div class="page-body">
+<!--<div class="page-body">
     <div class="container-xl">
         <div class="row">
             <div class="col-12">
@@ -687,19 +687,6 @@
                                     <div class="info-card">
                                         <h2><span style="color:#2563eb;">DISTRIBUTOR</span></h2>
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <!--<a href="#" class="btn btn-primary" id="btnTambahDapur">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                             class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <path d="M12 5l0 14" />
-                                            <path d="M5 12l14 0" />
-                                        </svg>
-                                        Tambah Distributor
-                                    </a>-->
                                 </div>
                                 <div class="table-wrapper">
                                     <div class="table-responsive">
@@ -713,7 +700,7 @@
                                                     <th>No. HP</th>
                                                     <th>Foto</th>
                                                     <th>Password</th>
-                                                    <!--<th>Aksi</th>-->
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -735,7 +722,7 @@
                                                         @endif
                                                     </td>
                                                     <td>{{ $d->password_distributor }}</td>
-                                                    <!--<td>
+                                                    <td>
                                                         <div class="btn-group">
                                                             <a href="#" class="edit_distributor btn btn-info btn-sm" id="{{ $d->id_distributor }}" >
                                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
@@ -747,7 +734,7 @@
                                                                 </a>
                                                             </form>
                                                         </div>
-                                                    </td>-->
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -761,7 +748,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 
 
@@ -792,20 +779,18 @@
                                 <div class="section-info">
                                     <div class="info-card">
                                         <h2><span style="color:#2563eb;">ASLAP</span></h2>
+                                        <a href="#" class="btn btn-primary" id="btnTambahAslap">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                 class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M12 5l0 14" />
+                                                <path d="M5 12l14 0" />
+                                            </svg>
+                                            Tambah Data Aslap
+                                        </a>
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-center mb-3">
-                                    <a href="#" class="btn btn-primary" id="btnTambahAslap">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                             class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <path d="M12 5l0 14" />
-                                            <path d="M5 12l14 0" />
-                                        </svg>
-                                        Tambah Data Aslap
-                                    </a>
                                 </div>
                                 <div class="table-wrapper">
                                     <div class="table-responsive">
@@ -904,12 +889,138 @@
 
 
 
+
+
+<!-- DRIVER -->
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row table-container">
+                            <div class="col-12">
+                                <div class="section-info">
+                                    <div class="info-card">
+                                        <h2><span style="color:#2563eb;">DRIVER</span></h2>
+                                        <a href="#" class="btn btn-primary" id="btnTambahDriver">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                 class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                <path d="M12 5l0 14" />
+                                                <path d="M5 12l14 0" />
+                                            </svg>
+                                            Tambah Data Driver
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:center">No.</th>
+                                                    <th style="text-align:center">Nama</th>
+                                                    <th style="text-align:center">Peran</th>
+                                                    <th style="text-align:center">No. HP</th>
+                                                    <th style="text-align:center">Foto</th>
+                                                    <th style="text-align:center">KTP</th>
+                                                    <th style="text-align:center">Validasi</th>
+                                                    <th style="text-align:center">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($aslap as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_induk/aslap/foto/'.$d->foto_aslap);
+                                                @endphp
+                                                <tr>
+                                                    <td style="text-align:center">{{ $loop->iteration + $aslap->firstItem()-1 }}</td>
+                                                    <td>{{ $d->nama_aslap }}</td>
+                                                    <td>{{ $d->peran_aslap }}</td>
+                                                    <td>{{ $d->no_hp_aslap }}</td>
+                                                    <td style="text-align:center">
+                                                        @if (empty($d->foto_aslap))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center"> 
+                                                        <a href="#" class="ktp_aslap btn btn-info btn-sm" id="{{ $d->id_aslap }}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
+                                                                         c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                            </svg>
+                                                            <span>Lihat</span>
+                                                        </a>
+                                                    </td>
+                                                    <td style="text-align:center">
+                                                        @if($d->status_validasi_aslap == 0)
+                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                        @elseif($d->status_validasi_aslap == 1)
+                                                            <button class="btn btn-success btn-sm">Disetujui</button>
+                                                        @elseif($d->status_validasi_aslap == 2)
+                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="#" class="edit_aslap btn btn-info btn-sm" id="{{ $d->id_aslap }}" >
+                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                Edit
+                                                            </a>
+                                                            <form action="/owner/data_induk/aslap/{{ $d->id_aslap }}/delete_aslap" style="margin-left: 5px;" method="POST">
+                                                                @csrf
+                                                                <a class="btn btn-danger btn-sm delete-confirm-aslap" >
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                                                    Hapus
+                                                                </a>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{ $aslap->links('vendor.pagination.bootstrap-5') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- BAGIAN ASLAP -->
 <div class="modal modal-blur fade" id="modal-inputdataaslap" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Data Pekerja</h5>
+                <h5 class="modal-title">Tambah Data Aslap</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
