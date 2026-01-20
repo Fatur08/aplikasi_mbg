@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataPekerja;
+use App\Models\DataAslap;
 use App\Models\KepalaDapur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,13 +80,13 @@ class DataIndukController extends Controller
 
 
         // BAGIAN DATA PEKERJA
-        $querydatapekerja = DataPekerja::query();
-        $querydatapekerja->select('*');
+        $queryDataAslap = DataAslap::query();
+        $queryDataAslap->select('*');
         if(!empty($cari_nama)){
-            $querydatapekerja->where('nama_data_pekerja','like','%'.$cari_nama.'%');
+            $queryDataAslap->where('nama_data_pekerja','like','%'.$cari_nama.'%');
         }
-        $data_pekerja = $querydatapekerja->get();
-        $data_pekerja = $querydatapekerja->paginate(50);
+        $data_pekerja = $queryDataAslap->get();
+        $data_pekerja = $queryDataAslap->paginate(50);
 
         // Ambil semua data dapur
         $dapurList = DB::table('dapur')
