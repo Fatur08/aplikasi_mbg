@@ -212,8 +212,8 @@ Route::middleware(['auth:owner'])->group(function(){
 
 Route::middleware(['auth:admin'])->group(function(){
     Route::get('/proseslogoutadmin', [AuthController::class,'proseslogoutadmin']);
-    //Route::get('/admin/dashboardadmin',[DashboardController::class,'dashboardadmin']);
-    Route::get('/admin/dashboardadmin',[LaporanDistribusiController::class,'index_admin_laporan_distribusi']);
+    Route::get('/admin/dashboardadmin',[DashboardController::class,'dashboardadmin']);
+    //Route::get('/admin/dashboardadmin',[LaporanDistribusiController::class,'index_admin_laporan_distribusi']);
 
     //Data Induk
     Route::get('/admin/data_induk',[DataIndukController::class,'index_admin_data_induk']);

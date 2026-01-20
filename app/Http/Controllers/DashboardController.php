@@ -103,7 +103,83 @@ class DashboardController extends Controller
 
     public function dashboardadmin(Request $request)
     {
-        return view('dashboard.dashboardadmin');
+        $pilih_dapur    = $request->pilih_dapur;
+        $kecamatan      = $request->cari_dapur_kecamatan_distributor;
+        $bulan          = $request->cari_bulan;
+    
+        // 🔹 Mulai query dasar
+        $query = LaporanDistribusi::query();
+
+        // 🔹 Filter berdasarkan kecamatan
+        if (!empty($kecamatan)) {
+            $query->where('kecamatan_sekolah', 'like', '%' . $kecamatan . '%');
+        }
+
+        // 🔹 Filter berdasarkan dapur
+        if (!empty($pilih_dapur)) {
+            $query->where('nomor_dapur_distribusi', $pilih_dapur);
+        }
+
+        // ✅ 🔹 Filter berdasarkan bulan saja (TANPA tahun)
+        if (!empty($bulan)) {
+            $query->whereMonth('tanggal_distribusi', $bulan);
+        }
+
+        // 🔹 Eksekusi query
+        $distribusi = $query->orderBy('tanggal_distribusi', 'desc')->paginate(300);
+        $dataKosong = $distribusi->isEmpty();// 🔹 Cek apakah hasilnya kosong
+        $dataKosong = $distribusi->isEmpty();
+
+        // 🔹 Ambil nama distributor (jika ada kecamatan atau dapur dipilih)
+        $nama_distributor = '';
+        if (!$dataKosong && (!empty($kecamatan) || !empty($pilih_dapur))) {
+            $nama_distributor = LaporanDistribusi::query()
+                ->when($kecamatan, fn($q) => $q->where('kecamatan_sekolah', 'like', '%' . $kecamatan . '%'))
+                ->when($pilih_dapur, fn($q) => $q->where('nomor_dapur_distribusi', $pilih_dapur))
+                ->value('nama_distributor');
+        }
+
+        // 🔹 Deteksi apakah user sudah melakukan pencarian
+        $sudahCari = !empty($kecamatan) || !empty($pilih_dapur);
+
+        
+        // 🔹 Ambil nama dapur berdasarkan nomor dapur
+            $nama_dapur = '';
+            if (!empty($pilih_dapur)) {
+                $nama_dapur = DB::table('dapur')
+                    ->where('nomor_dapur', $pilih_dapur)
+                    ->value('nama_dapur');
+            }
+        
+        
+        $data_kecamatan = [];
+        if ($pilih_dapur) {
+            $data_kecamatan = DB::table('dapur')
+                ->where('nomor_dapur', $pilih_dapur)
+                ->pluck('dapur_kecamatan')
+                ->unique()
+                ->values();
+        }
+
+
+        // 🔹 Ambil daftar dapur untuk dropdown filter
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->orderBy('nama_dapur')
+            ->get();
+        
+    
+        return view('dashboard.dashboardadmin', compact(
+            'distribusi',
+            'nama_distributor',
+            'kecamatan',
+            'dataKosong',
+            'sudahCari',
+            'dapurList',
+            'data_kecamatan',
+            'nama_dapur'
+        ));
     }
 
     public function dashboardkepaladapur(Request $request)
