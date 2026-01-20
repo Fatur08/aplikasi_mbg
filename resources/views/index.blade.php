@@ -90,7 +90,7 @@
         <!-- Admin -->
         <div class="role-card">
             <img src="{{ asset('assets/img/owner/login/loginadmin.png') }}" alt="Login Admin">
-            <a href="{{ url('/admin') }}" class="btn btn-success">Login Admin</a>
+            <a href="{{ url('/admin') }}" class="btn btn-success">Login Maker</a>
         </div>
 
         <!-- Kepala Dapur

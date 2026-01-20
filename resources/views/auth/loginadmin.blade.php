@@ -13,7 +13,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Log In Admin - Program MBG Lampung Timur</title>
+    <title>Log In Maker - Program MBG Lampung Timur</title>
     <script defer data-api="/stats/api/event" data-domain="preview.tabler.io" src="/stats/js/script.js"></script>
     <meta name="msapplication-TileColor" content=""/>
     <meta name="theme-color" content=""/>
@@ -68,7 +68,7 @@
                                 <div class="section">
                                     <img src="{{ asset('assets/img/owner/login/loginadmin.jpg') }}" alt="Sistem Admin Program MBG" class="form-image">
                                 </div>
-                                <h2 class="fs-1 fw-bolder text-center mb-0">Login Admin</h2>
+                                <h2 class="fs-1 fw-bolder text-center mb-0">Login Maker</h2>
                                 <p class="fs-4 text-secondary text-center">Sistem Program MBG <br> Kabupaten Lampung Timur</p>
                                 @if (Session::get('warning'))
                                 <div class="alert alert-warning">
