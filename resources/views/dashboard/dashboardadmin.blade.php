@@ -168,7 +168,7 @@
                                 <!-- === Section Info Dapur === -->
                                 <div class="section-info">
                                     <div class="info-card">
-                                        <h4>Nama Dapur : <span style="color:#2563eb;">{{ $namaDapur }}</span></h4>
+                                        <h4><span style="color:#2563eb;">{{ $namaDapur }}</span></h4>
                                     </div>
                                 </div>
                             </div>
@@ -323,12 +323,51 @@
                                                         @endforeach
                                                     </tbody>
                                                 </table>
-                                            @endif
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-12">
+                                    <div class="card mb-4 shadow-sm">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <!-- ===== Sekolah ===== -->
+                                                <div class="col-md-6">
+                                                    <h3 class="text-success"><b>Sekolah</b></h3>
+                                                    <table class="table table-bordered table-sm">
+                                                        <thead class="table-success">
+                                                            <tr class="text-center">
+                                                                <th>No</th>
+                                                                <th>Sekolah</th>
+                                                                <th>Jumlah</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- ===== B3 ===== -->
+                                                <div class="col-md-6">
+                                                    <h3 class="text-danger"><b>B3</b></h3>
+                                                    <table class="table table-bordered table-sm">
+                                                        <thead class="table-danger">
+                                                            <tr class="text-center">
+                                                                <th>No</th>
+                                                                <th>Sekolah</th>
+                                                                <th>Jumlah</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {{ $distribusi->links('vendor.pagination.bootstrap-5') }}
                         </div>
                     </div>
                 </div>
