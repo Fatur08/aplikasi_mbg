@@ -224,7 +224,7 @@
                                                     <path d="M12 5l0 14" />
                                                     <path d="M5 12l14 0" />
                                                 </svg>
-                                                Tambah P.Manfaat
+                                                Tambah Penerima Manfaat
                                             </a>
                                         </div>
                                     </div>
@@ -239,7 +239,7 @@
                                                     <path d="M12 5l0 14" />
                                                     <path d="M5 12l14 0" />
                                                 </svg>
-                                                Tambah Op Dapur
+                                                Tambah Operasional Dapur
                                             </a>
                                         </div>
                                     </div>
