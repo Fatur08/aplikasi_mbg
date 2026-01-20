@@ -131,7 +131,7 @@
                                     Halaman
                                 </div>
                                 <h2 class="page-title">
-                                    Data Staff
+                                    Data Induk
                                 </h2>
                             </td>
                             <!--<td style="text-align:right">
@@ -262,11 +262,11 @@
                             <div class="col-12">
                                 <div class="section-info">
                                     <div class="info-card">
-                                        <h2><span style="color:#2563eb;">MAKER</span></h2>
+                                        <h2><span style="color:#2563eb;">KEPALA DAPUR</span></h2>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <a href="#" class="btn btn-primary" id="btnTambahDapur">
+                                    <!--<a href="#" class="btn btn-primary" id="btnTambahDapur">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
@@ -275,8 +275,8 @@
                                             <path d="M12 5l0 14" />
                                             <path d="M5 12l14 0" />
                                         </svg>
-                                        Tambah Data Maker
-                                    </a>
+                                        Tambah Kepala Dapur
+                                    </a>-->
                                 </div>
                                 <div class="table-wrapper">
                                     <div class="table-responsive">
@@ -290,7 +290,7 @@
                                                     <th>No. HP</th>
                                                     <th>Foto</th>
                                                     <th>Password</th>
-                                                    <th>Status</th>
+                                                    <!--<th>Aksi</th>-->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -312,7 +312,6 @@
                                                         @endif
                                                     </td>
                                                     <td>{{ $d->password }}</td>
-                                                    <td></td>
                                                     <!--<td>
                                                         <div class="btn-group">
                                                             <a href="#" class="edit_kepala_dapur btn btn-info btn-sm" id="{{ $d->id }}" >
