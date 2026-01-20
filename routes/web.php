@@ -15,7 +15,7 @@ use App\Http\Controllers\InformasiStokLimitController;
 use App\Http\Controllers\KepalaDapurController;
 use App\Http\Controllers\LaporanDistribusiController;
 use App\Http\Controllers\LaporanKeuanganController;
-use App\Http\Controllers\LaporanHarianDapurController;
+use App\Http\Controllers\LaporanDapurController;
 use App\Http\Controllers\LaporanStokController;
 use App\Http\Controllers\MenuHarianController;
 use App\Http\Controllers\PengirimanDistributorController;
@@ -203,10 +203,10 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::post('/owner/laporan/keuangan/{id}/delete_laporan_keuangan',[LaporanKeuanganController::class,'delete_owner_laporan_keuangan']);
 
     //Harian Dapur
-    Route::get('/owner/laporan/harian_dapur',[LaporanHarianDapurController::class,'index_owner_harian_dapur']);
-    Route::post('/owner/laporan/harian_dapur/lihat_bahan_terpakai',[LaporanHarianDapurController::class,'lihat_bahan_terpakai']);
-    Route::post('/owner/laporan/harian_dapur/lihat_kendala',[LaporanHarianDapurController::class,'lihat_kendala']);
-    Route::post('/owner/laporan/harian_dapur/kendala_harian_dapur',[LaporanHarianDapurController::class,'kendala_owner_harian_dapur']);
+    Route::get('/owner/laporan/dapur',[LaporanDapurController::class,'index_owner_dapur']);
+    Route::post('/owner/laporan/dapur/lihat_bahan_terpakai',[LaporanDapurController::class,'lihat_bahan_terpakai']);
+    Route::post('/owner/laporan/dapur/lihat_kendala',[LaporanDapurController::class,'lihat_kendala']);
+    Route::post('/owner/laporan/dapur/kendala_dapur',[LaporanDapurController::class,'kendala_owner_dapur']);
 });
 
 
@@ -316,8 +316,8 @@ Route::middleware(['auth:admin'])->group(function(){
     Route::post('/admin/laporan/keuangan/{id}/delete_laporan_keuangan',[LaporanKeuanganController::class,'delete_admin_laporan_keuangan']);
 
     //Harian Dapur
-    Route::get('/admin/laporan/harian_dapur',[LaporanHarianDapurController::class,'index_admin_harian_dapur']);
-    Route::post('/admin/laporan/harian_dapur/kendala_harian_dapur',[LaporanHarianDapurController::class,'kendala_admin_harian_dapur']);
+    Route::get('/admin/laporan/dapur',[LaporanDapurController::class,'index_admin_dapur']);
+    Route::post('/admin/laporan/dapur/kendala_dapur',[LaporanDapurController::class,'kendala_admin_dapur']);
 
 
 
@@ -349,8 +349,8 @@ Route::middleware(['auth:admin'])->group(function(){
 Route::middleware(['auth:kepala_dapur'])->group(function(){
     Route::get('/proseslogoutkepaladapur', [AuthController::class,'proseslogoutkepaladapur']);
     Route::get('/kepala_dapur/dashboardkepaladapur',[DashboardController::class,'dashboardkepaladapur']);
-    Route::post('/kepala_dapur/dashboardkepaladapur/store_harian_dapur_kepala_dapur',[LaporanHarianDapurController::class,'store_harian_dapur_kepala_dapur']);
-    Route::post('/kepala_dapur/dashboardkepaladapur/{id}/delete_laporan_distribusi_kepala_dapur',[LaporanHarianDapurController::class,'delete_laporan_distribusi_kepala_dapur']);
+    Route::post('/kepala_dapur/dashboardkepaladapur/store_dapur_kepala_dapur',[LaporanDapurController::class,'store_dapur_kepala_dapur']);
+    Route::post('/kepala_dapur/dashboardkepaladapur/{id}/delete_laporan_distribusi_kepala_dapur',[LaporanDapurController::class,'delete_laporan_distribusi_kepala_dapur']);
 
     //Stok Masuk
     Route::get('/kepala_dapur/stok_masuk',[StokMasukController::class,'index_stok_masuk_kepala_dapur']);

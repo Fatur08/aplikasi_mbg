@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class LaporanHarianDapurController extends Controller
+class LaporanDapurController extends Controller
 {
     // BAGIAN OWNER
-    public function index_owner_harian_dapur(Request $request)
+    public function index_owner_dapur(Request $request)
     {
         // ✅ Ambil filter dari form
         $nomor_dapur = $request->pilih_dapur;
@@ -58,7 +58,7 @@ class LaporanHarianDapurController extends Controller
             ->get();
 
         // ✅ Kirim ke view
-        return view('owner.laporan.harian_dapur.index_harian_dapur', compact(
+        return view('owner.laporan.dapur.index_dapur', compact(
             'jadwal_menu_harian',
             'nomor_dapur',
             'menu_harian',
@@ -88,7 +88,7 @@ class LaporanHarianDapurController extends Controller
             )
             ->get();
 
-        return view('owner.laporan.harian_dapur.lihat_bahan_terpakai', compact('bahan_terpakai'));
+        return view('owner.laporan.dapur.lihat_bahan_terpakai', compact('bahan_terpakai'));
     }
 
 
@@ -110,7 +110,7 @@ class LaporanHarianDapurController extends Controller
         return Redirect::back()->with(['warning' => 'Data kendala tidak ditemukan atau tidak sesuai dengan dapur Anda']);
     }
 
-        return view('owner.laporan.harian_dapur.kendala_harian_dapur', compact('kendala'));
+        return view('owner.laporan.dapur.kendala_dapur', compact('kendala'));
     }
 
 
@@ -134,7 +134,7 @@ class LaporanHarianDapurController extends Controller
 
 
     // BAGIAN ADMIN
-    public function index_admin_harian_dapur(Request $request)
+    public function index_admin_dapur(Request $request)
     {
         $admin       = Auth::guard('admin')->user();
         $nomor_dapur = $admin->nomor_dapur_admin;
@@ -176,7 +176,7 @@ class LaporanHarianDapurController extends Controller
             ->get();
 
         // ✅ Kirim ke view
-        return view('admin.laporan.harian_dapur.index_harian_dapur', compact(
+        return view('admin.laporan.dapur.index_dapur', compact(
             'jadwal_menu_harian',
             'nomor_dapur',
             'menu_harian',
@@ -185,7 +185,7 @@ class LaporanHarianDapurController extends Controller
     }
 
 
-    public function kendala_admin_harian_dapur(Request $request)
+    public function kendala_admin_dapur(Request $request)
     {
         $tanggal = $request->tanggal;
 
@@ -208,10 +208,10 @@ class LaporanHarianDapurController extends Controller
             ->where('distribusi.tanggal_distribusi', $tanggal)
             ->first();
 
-        return view('admin.laporan.harian_dapur.kendala_harian_dapur', compact('kendala', 'tanggal'));
+        return view('admin.laporan.dapur.kendala_dapur', compact('kendala', 'tanggal'));
     }
 
-    public function store_admin_harian_dapur(Request $request)
+    public function store_admin_dapur(Request $request)
     {
         $kepalaDapur = Auth::guard('kepala_dapur')->user();
 
@@ -277,7 +277,7 @@ class LaporanHarianDapurController extends Controller
 
 
     // BAGIAN KEPALA DAPUR
-    public function store_harian_dapur_kepala_dapur(Request $request)
+    public function store_dapur_kepala_dapur(Request $request)
     {
         $kepalaDapur = Auth::guard('kepala_dapur')->user();
         $nomor_dapur = $kepalaDapur->nomor_dapur_kepala_dapur;
