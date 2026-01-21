@@ -182,7 +182,14 @@
                             <div class="col-12">
                                 <form action="/admin/laporan/harian_dapur" method="GET" id="FormLaporanHarianDapur">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
+                                            <div class="input-icon">
+                                                <select name="pilih_instansi" id="pilih_instansi" class="form-select">
+                                                    <option value="">Pilih Instansi</option>
+                                                </select>
+                                              </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="input-icon">
                                                 <span class="input-icon-addon">
                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
@@ -190,7 +197,7 @@
                                                 <input type="text" value="" id="dari_tanggal" name="dari_tanggal" class="form-control" placeholder="Dari Tanggal" autocomplete="off">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="input-icon">
                                                 <span class="input-icon-addon">
                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
@@ -198,7 +205,7 @@
                                                 <input type="text" value="" id="sampai_tanggal" name="sampai_tanggal" class="form-control" placeholder="Sampai Tanggal" autocomplete="off">
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-primary w-100">
                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
@@ -230,7 +237,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <a href="#" class="btn btn-secondary w-100" id="btnTambahOPDapur">
+                                            <a href="#" class="tambah_operasional_dapur btn btn-secondary w-100" id="tambah_operasional_dapur">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                                      viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
@@ -354,6 +361,40 @@
 
 
 
+
+
+
+
+<!-- Modal Tambah Operasional Dapur -->
+<div class="modal modal-blur fade" id="modal-tambahoperasionaldapur" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Operasional Dapur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loadformtambahoperasionaldapur">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {{-- Modal Tambah Bahan Terpakai --}}
 <div class="modal modal-blur fade" id="modal-tambahbahanterpakai" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -424,21 +465,19 @@
 
 
 
-        $(".lihat_bahan_terpakai").click(function(){
-            var id = $(this).attr('data-id');
+        $(".tambah_operasional_dapur").click(function(){
             $.ajax({
                 type:'POST',
-                url:'/owner/laporan/harian_dapur/lihat_bahan_terpakai',
+                url:'/admin/laporan/dapur/tambah_operasional_dapur',
                 cache:false,
                 data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
+                    _token : "{{ csrf_token() }}"
                 },
                 success:function(respond){
-                    $("#loadformlihatbahanterpakai").html(respond);
+                    $("#loadformtambahoperasionaldapur").html(respond);
                 }
             });
-            $("#modal-lihatbahanterpakai").modal("show");
+            $("#modal-tambahoperasionaldapur").modal("show");
         });
 
         $(".lihat_kendala").click(function(){

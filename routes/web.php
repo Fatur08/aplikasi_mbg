@@ -315,9 +315,10 @@ Route::middleware(['auth:admin'])->group(function(){
     Route::post('/admin/laporan/keuangan/{id}/update_laporan_keuangan',[LaporanKeuanganController::class,'update_admin_laporan_keuangan']);
     Route::post('/admin/laporan/keuangan/{id}/delete_laporan_keuangan',[LaporanKeuanganController::class,'delete_admin_laporan_keuangan']);
 
-    //Harian Dapur
+    //Dapur
     Route::get('/admin/laporan/dapur',[LaporanDapurController::class,'index_admin_dapur']);
     Route::post('/admin/laporan/dapur/kendala_dapur',[LaporanDapurController::class,'kendala_admin_dapur']);
+    Route::post('/admin/laporan/dapur/tambah_operasional_dapur',[LaporanDapurController::class,'tambah_operasional_dapur']);
 
 
 

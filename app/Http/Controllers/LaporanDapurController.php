@@ -211,6 +211,13 @@ class LaporanDapurController extends Controller
         return view('admin.laporan.dapur.kendala_dapur', compact('kendala', 'tanggal'));
     }
 
+
+    public function tambah_operasional_dapur(Request $request)
+    {
+        return view('admin.laporan.dapur.tambah_operasional_dapur');
+    }
+
+
     public function store_admin_dapur(Request $request)
     {
         $kepalaDapur = Auth::guard('kepala_dapur')->user();
