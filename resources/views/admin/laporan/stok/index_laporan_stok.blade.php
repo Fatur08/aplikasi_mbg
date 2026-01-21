@@ -178,25 +178,18 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/admin/laporan/stok_bulanan" method="GET" id="FormLaporanStokBulanan">
+                                    <form action="/admin/laporan/stok_harian" method="GET" id="FormLaporanStokHarian">
                                         <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group">
-                                                    <select name="bulan" id="bulan" class="form-select">
-                                                        <option value="">Pilih Bulan</option>
-                                                        <option value="Januari">Januari</option>
-                                                        <option value="Februari">Februari</option>
-                                                        <option value="Maret">Maret</option>
-                                                        <option value="April">April</option>
-                                                        <option value="Mei">Mei</option>
-                                                        <option value="Juni">Juni</option>
-                                                        <option value="Juli">Juli</option>
-                                                        <option value="Agustus">Agustus</option>
-                                                        <option value="September">September</option>
-                                                        <option value="Oktober">Oktober</option>
-                                                        <option value="November">November</option>
-                                                        <option value="Desember">Desember</option>
-                                                    </select>
+                                            <div class="col-md-6">
+                                                <div class="input-icon">
+                                                    <span class="input-icon-addon">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
+                                                    </span>
+                                                    <!-- Yang tampil -->
+                                                    <input type="text" id="tampilan_tanggal" class="form-control" placeholder="Pilih Tanggal" autocomplete="off">
+                                                    
+                                                    <!-- Yang dikirim ke server -->
+                                                     <input type="hidden" id="pilih_tanggal" name="pilih_tanggal">
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -217,32 +210,26 @@
                                         use Illuminate\Support\Facades\DB;
                                         use Carbon\Carbon;
 
-                                        // Cari nama dapur jika nomor ada
+                                        // ✅ Ambil nama dapur
                                         $namaDapur = $dapur
                                             ? DB::table('dapur')
                                                 ->where('nomor_dapur', $dapur)
-                                                ->pluck('nama_dapur')
-                                                ->unique()
-                                                ->join(', ')
+                                                ->value('nama_dapur')
                                             : '-';
-
-                                        // --- Tentukan nama bulan & tahun dari filter ---
-                                        if (!empty($filter_bulan)) {
-                                            $tanggalObj = Carbon::parse($filter_bulan . '-01');
-                                            $tanggalDisplay = $tanggalObj->translatedFormat('F Y'); // Contoh: Oktober 2025
-                                        } else {
-                                            $tanggalDisplay = '-';
-                                        }
                                     @endphp
-                                    
                                     <!-- === Section Info Dapur === -->
                                     <div class="section-info">
                                         <div class="info-card">
                                             <h4>Nama Dapur : <span style="color:#2563eb;">{{ $namaDapur }}</span></h4>
-                                            <p>Bulan : <strong>{{ $tanggalDisplay }}</strong></p>
+                                            <p>
+                                                Tanggal :
+                                                <strong>
+                                                    {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
+                                                </strong>
+                                            </p>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- === Table Section === -->
                                     <div class="table-wrapper">
                                         <div class="table-responsive">
@@ -252,9 +239,10 @@
                                                         <th rowspan="2">No.</th>
                                                         <th rowspan="2">Bahan</th>
                                                         <th rowspan="2">Satuan</th>
-                                                        <th colspan="2">Stok Bulan Ini</th>
-                                                        <th rowspan="2">Sisa</th>
-                                                        <th rowspan="2">Ket</th>
+                                                        <th rowspan="2">Awal</th>
+                                                        <th colspan="2">Stok</th>
+                                                        <th rowspan="2">Akhir</th>
+                                                        <th rowspan="2">Aksi</th>
                                                     </tr>
                                                     <tr>
                                                         <th>Masuk</th>
@@ -262,39 +250,26 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if(empty($data_laporan) || count($data_laporan) == 0)
+                                                    @forelse($data_laporan as $no => $row)
+                                                        <tr>
+                                                            <td style="text-align:center;">{{ $loop->iteration }}</td>
+                                                            <td>{{ $row['nama_bahan'] }}</td>
+                                                            <td style="text-align:center;">{{ $row['satuan'] }}</td>
+                                                            <td style="text-align:left;">{{ number_format($row['stok_awal'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:left;">{{ number_format($row['masuk'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:left;">{{ number_format($row['keluar'], 0, ',', '.') }}</td>
+                                                            <td style="text-align:left; font-weight:bold;">
+                                                                {{ number_format($row['stok_akhir'], 0, ',', '.') }}
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    @empty
                                                         <tr>
                                                             <td colspan="8" style="text-align:center; color:red;">
-                                                                Tidak ada data stok pada bulan ini
+                                                                Tidak ada data stok pada tanggal ini
                                                             </td>
                                                         </tr>
-                                                    @else
-                                                        @php $no = 1; @endphp
-                                                        @foreach($data_laporan as $item)
-
-                                                            @php
-                                                                switch($item['keterangan']){
-                                                                    case 'Aman': $badge = 'bg-success'; break;
-                                                                    case 'Menipis': $badge = 'bg-warning'; break;
-                                                                    case 'Habis': $badge = 'bg-danger'; break;
-                                                                    default: $badge = 'bg-dark';
-                                                                }
-                                                            @endphp
-                                                            
-                                                            <tr>
-                                                                <td class="text-center">{{ $no++ }}</td>
-                                                                <td>{{ $item['nama_bahan'] }}</td>
-                                                                <td>{{ $item['satuan'] }}</td>
-                                                                <td class="text-center">{{ $item['total_masuk'] }}</td>
-                                                                <td class="text-center">{{ $item['total_keluar'] }}</td>
-                                                                <td class="text-center">{{ $item['stok_akhir'] }}</td>
-                                                                <td class="text-center">
-                                                                    <span class="badge {{ $badge }}">{{ $item['keterangan'] }}</span>
-                                                                </td>
-                                                            </tr>
-                                                            
-                                                        @endforeach
-                                                    @endif             
+                                                    @endforelse
                                                 </tbody>
                                             </table>
                                         </div>
@@ -311,19 +286,41 @@
 @endsection
 @push('myscript')
 <script>
-$("#FormLaporanStokBulanan").submit(function(){
-    var bulan = $("#bulan").val();
-    if(bulan==""){
-        Swal.fire({
-            title: 'Warning!',
-            text: 'Bulan Harus Diisi',
-            icon: 'warning',
-            confirmButtonText: 'OK'
-          }).then(()=> {
-              $("#bulan").focus();
-          });
-        return false;
-    }
-});
+    flatpickr("#tampilan_tanggal", {
+        dateFormat: "d F Y", // format tampilan: 15 September 2025
+        altInput: true,
+        altFormat: "d F Y",
+        locale: "id", // biar bulan pakai bahasa Indonesia
+
+        onChange: function(selectedDates) {
+            if (selectedDates.length > 0) {
+                let date = selectedDates[0];
+
+                let yyyy = date.getFullYear();
+                let mm = String(date.getMonth() + 1).padStart(2, '0');
+                let dd = String(date.getDate()).padStart(2, '0');
+
+                // ini yang DIKIRIM ke controller
+                document.getElementById('pilih_tanggal').value = `${yyyy}-${mm}-${dd}`;
+            }
+        }
+    });
+
+
+
+    $("#FormLaporanStokHarian").submit(function(){
+        var tampilan_tanggal = $("#tampilan_tanggal").val();
+        if(tampilan_tanggal==""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Tanggal Harus Diisi',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+              }).then(()=> {
+                  $("#tampilan_tanggal").focus();
+              });
+            return false;
+        }
+    });
 </script>
 @endpush
