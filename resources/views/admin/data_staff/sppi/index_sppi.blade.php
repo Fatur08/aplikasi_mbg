@@ -133,7 +133,7 @@
                                     Halaman
                                 </div>
                                 <h2 class="page-title">
-                                    Data Maker
+                                    Data SPPI
                                 </h2>
                             </td>
                             <td style="text-align:right">

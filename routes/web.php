@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataStaffController;
 use App\Http\Controllers\DataAslapController;
 use App\Http\Controllers\DataMakerController;
+use App\Http\Controllers\DataSPPIController;
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\InformasiMenuHarianController;
 use App\Http\Controllers\InformasiPengirimanController;
@@ -227,6 +228,14 @@ Route::middleware(['auth:admin'])->group(function(){
     
     // Data Maker
     Route::get('/admin/data_staff/maker',[DataMakerController::class,'index_admin_data_staff_maker']);
+
+
+
+
+
+
+    // SPPI
+    Route::get('/admin/data_staff/sppi',[DataSPPIController::class,'index_admin_data_staff_sppi']);
     
     
     
