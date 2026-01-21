@@ -6,7 +6,7 @@ use App\Http\Controllers\DapurController;
 use App\Http\Controllers\DataKoperasiController;
 use App\Http\Controllers\DataSupplierController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DataIndukController;
+use App\Http\Controllers\DataStaffController;
 use App\Http\Controllers\DataAslapController;
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\InformasiMenuHarianController;
@@ -216,7 +216,7 @@ Route::middleware(['auth:admin'])->group(function(){
     //Route::get('/admin/dashboardadmin',[LaporanDistribusiController::class,'index_admin_laporan_distribusi']);
 
     //Data Induk
-    Route::get('/admin/data_staff',[DataIndukController::class,'index_admin_data_staff']);
+    Route::get('/admin/data_staff',[DataStaffController::class,'index_admin_data_staff']);
     Route::post('/admin/data_staff/aslap/store_aslap',[DataAslapController::class,'store_admin_aslap']);
     Route::post('/admin/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_admin_aslap']);
     Route::post('/admin/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_admin_aslap']);
