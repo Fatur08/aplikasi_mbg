@@ -248,6 +248,28 @@
                         </div>
                         <div class="row mt-2 table-container">
                             <div class="col-12">
+                                @php
+                                    use Illuminate\Support\Facades\DB;
+                                    use Carbon\Carbon;
+                                    // ✅ Ambil nama dapur
+                                    $namaDapur = $nomor_dapur
+                                        ? DB::table('dapur')
+                                            ->where('nomor_dapur', $nomor_dapur)
+                                            ->value('nama_dapur')
+                                        : '-';
+                                @endphp
+                                <!-- === Section Info Dapur === -->
+                                <div class="section-info">
+                                    <div class="info-card">
+                                        <h4>Nama Dapur : <span style="color:#2563eb;">{{ $namaDapur }}</span></h4>
+                                        <p>
+                                            Tanggal :
+                                            <strong>
+                                                {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
+                                            </strong>
+                                        </p>
+                                    </div>
+                                </div>
                                 <!-- === Table Section === -->
                                 <div class="table-wrapper">
                                     <div class="table-responsive">
@@ -255,15 +277,82 @@
                                             <thead style="text-align: center; vertical-align: middle;">
                                                 <tr>
                                                     <th>No.</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Nama Instansi</th>
                                                     <th>Menu</th>
                                                     <th>Porsi</th>
+                                                    <th>Bahan</th>
                                                     <th>Kendala</th>
+                                                    <th>Status</th>
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
+                                                @forelse($jadwal_menu_harian as $item)
+                                                    <tr class="text-center">
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $item->nama_menu_harian }}</td>
+                                                        <td>{{ $item->jumlah_porsi_menu_harian }}</td>
+                                                        <td style="text-align: center; width:25%"> 
+                                                            <div class="align-items-center">
+                                                                <a href="#" class="lihat_bahan_terpakai btn btn-info btn-sm" data-id="{{ $item->id_jadwal_menu_harian }}">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
+                                                                                 c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                                    </svg>
+                                                                    <span>Lihat</span>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td style="text-align: center; width:25%"> 
+                                                            <div class="align-items-center">
+                                                                <a href="#" class="lihat_kendala btn btn-info btn-sm" data-id="{{ $item->id_jadwal_menu_harian }}">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
+                                                                                 c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                                    </svg>
+                                                                    <span>Lihat</span>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td style="text-align: center; width:10%">
+                                                            @if ($item->status_jadwal_menu_harian == 2)
+                                                                <span class="badge bg-success">Diterima</span>
+                                                            @elseif ($item->status_jadwal_menu_harian == 1)
+                                                                <span class="badge bg-warning text-dark">Sekarang</span>
+                                                            @elseif ($item->status_jadwal_menu_harian == 3)
+                                                                <span class="badge bg-danger text-dark">Tersisa</span>
+                                                            @else
+                                                                <span class="badge bg-secondary">Besok</span>
+                                                            @endif
+                                                        </td>
+                                                        <td style="text-align: center; width:10%">
+                                                            <div class="btn-group">
+                                                                <form action="/kepala_dapur/menu_harian/{{ $item->id_jadwal_menu_harian }}/delete_jadwal_menu_harian" style="margin-left: 5px;" method="POST">
+                                                                    @csrf
+                                                                    <a class="btn btn-danger btn-sm delete-confirm-menuharian" >
+                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
+                                                                        Hapus
+                                                                    </a>
+                                                                </form>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="7" class="text-center text-danger">
+                                                            Tidak ada data laporan pada tanggal ini
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
