@@ -83,43 +83,43 @@ Route::middleware(['auth:owner'])->group(function(){
 
     //Data Induk
     //Admin
-    Route::get('/owner/data_induk/admin',[AdminController::class,'index_owner_admin']);
-    Route::post('/owner/data_induk/admin/store_admin',[AdminController::class,'store_owner_admin']);
-    Route::post('/owner/data_induk/admin/edit_admin',[AdminController::class,'edit_owner_admin']);
-    Route::post('/owner/data_induk/admin/{id}/update_admin',[AdminController::class,'update_owner_admin']);
-    Route::post('/owner/data_induk/admin/{id}/delete_admin',[AdminController::class,'delete_owner_admin']);
+    Route::get('/owner/data_staff/admin',[AdminController::class,'index_owner_admin']);
+    Route::post('/owner/data_staff/admin/store_admin',[AdminController::class,'store_owner_admin']);
+    Route::post('/owner/data_staff/admin/edit_admin',[AdminController::class,'edit_owner_admin']);
+    Route::post('/owner/data_staff/admin/{id}/update_admin',[AdminController::class,'update_owner_admin']);
+    Route::post('/owner/data_staff/admin/{id}/delete_admin',[AdminController::class,'delete_owner_admin']);
 
     //Kepala Dapur
-    Route::get('/owner/data_induk/kepala_dapur',[KepalaDapurController::class,'index_owner_kepala_dapur']);
-    Route::post('/owner/data_induk/kepala_dapur/store_kepala_dapur',[KepalaDapurController::class,'store_owner_kepala_dapur']);
-    Route::post('/owner/data_induk/kepala_dapur/edit_kepala_dapur',[KepalaDapurController::class,'edit_owner_kepala_dapur']);
-    Route::post('/owner/data_induk/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_owner_kepala_dapur']);
-    Route::post('/owner/data_induk/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_owner_kepala_dapur']);
+    Route::get('/owner/data_staff/kepala_dapur',[KepalaDapurController::class,'index_owner_kepala_dapur']);
+    Route::post('/owner/data_staff/kepala_dapur/store_kepala_dapur',[KepalaDapurController::class,'store_owner_kepala_dapur']);
+    Route::post('/owner/data_staff/kepala_dapur/edit_kepala_dapur',[KepalaDapurController::class,'edit_owner_kepala_dapur']);
+    Route::post('/owner/data_staff/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_owner_kepala_dapur']);
+    Route::post('/owner/data_staff/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_owner_kepala_dapur']);
 
     //Distributor
-    Route::get('/owner/data_induk/distributor',[DistributorController::class,'index_owner_distributor']);
-    Route::post('/owner/data_induk/distributor/store_distributor',[DistributorController::class,'store_owner_distributor']);
-    Route::post('/owner/data_induk/distributor/edit_distributor',[DistributorController::class,'edit_owner_distributor']);
-    Route::post('/owner/data_induk/distributor/{id}/update_distributor',[DistributorController::class,'update_owner_distributor']);
-    Route::post('/owner/data_induk/distributor/{id}/delete_distributor',[DistributorController::class,'delete_owner_distributor']);
+    Route::get('/owner/data_staff/distributor',[DistributorController::class,'index_owner_distributor']);
+    Route::post('/owner/data_staff/distributor/store_distributor',[DistributorController::class,'store_owner_distributor']);
+    Route::post('/owner/data_staff/distributor/edit_distributor',[DistributorController::class,'edit_owner_distributor']);
+    Route::post('/owner/data_staff/distributor/{id}/update_distributor',[DistributorController::class,'update_owner_distributor']);
+    Route::post('/owner/data_staff/distributor/{id}/delete_distributor',[DistributorController::class,'delete_owner_distributor']);
 
 
     //Data Pekerja
-    Route::get('/owner/data_induk/data_pekerja',[DataAslapController::class,'index_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/store_data_pekerja',[DataAslapController::class,'store_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/edit_data_pekerja',[DataAslapController::class,'edit_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/ktp_data_pekerja',[DataAslapController::class,'ktp_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/{id}/update_data_pekerja',[DataAslapController::class,'update_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/{id}/delete_data_pekerja',[DataAslapController::class,'delete_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/status_validasi_data_pekerja',[DataAslapController::class,'status_validasi_owner_data_pekerja']);
-    Route::post('/owner/data_induk/data_pekerja/{id}/update_status_validasi_data_pekerja',[DataAslapController::class,'update_status_validasi_owner_data_pekerja']);
-    Route::get('/owner/data_induk/data_pekerja/{id}/batalkan_status_validasi_data_pekerja',[DataAslapController::class,'batalkan_status_validasi_owner_data_pekerja']);
+    Route::get('/owner/data_staff/data_pekerja',[DataAslapController::class,'index_owner_data_pekerja']);
+    Route::post('/owner/data_staff/data_pekerja/store_data_pekerja',[DataAslapController::class,'store_owner_data_pekerja']);
+    Route::post('/owner/data_staff/data_pekerja/edit_data_pekerja',[DataAslapController::class,'edit_owner_data_pekerja']);
+    Route::post('/owner/data_staff/data_pekerja/ktp_data_pekerja',[DataAslapController::class,'ktp_owner_data_pekerja']);
+    Route::post('/owner/data_staff/data_pekerja/{id}/update_data_pekerja',[DataAslapController::class,'update_owner_data_pekerja']);
+    Route::post('/owner/data_staff/data_pekerja/{id}/delete_data_pekerja',[DataAslapController::class,'delete_owner_data_pekerja']);
+    Route::post('/owner/data_staff/data_pekerja/status_validasi_data_pekerja',[DataAslapController::class,'status_validasi_owner_data_pekerja']);
+    Route::post('/owner/data_staff/data_pekerja/{id}/update_status_validasi_data_pekerja',[DataAslapController::class,'update_status_validasi_owner_data_pekerja']);
+    Route::get('/owner/data_staff/data_pekerja/{id}/batalkan_status_validasi_data_pekerja',[DataAslapController::class,'batalkan_status_validasi_owner_data_pekerja']);
 
 
     //Dapur
-    Route::get('/owner/data_induk/dapur',[DapurController::class,'index_owner_dapur']);
-    Route::post('/owner/data_induk/dapur/store_dapur',[DapurController::class,'store_owner_dapur']);
-    Route::post('/owner/data_induk/dapur/{id}/delete_dapur',[DapurController::class,'delete_owner_dapur']);
+    Route::get('/owner/data_staff/dapur',[DapurController::class,'index_owner_dapur']);
+    Route::post('/owner/data_staff/dapur/store_dapur',[DapurController::class,'store_owner_dapur']);
+    Route::post('/owner/data_staff/dapur/{id}/delete_dapur',[DapurController::class,'delete_owner_dapur']);
 
     //Data Supplier
     //Supplier
@@ -216,31 +216,31 @@ Route::middleware(['auth:admin'])->group(function(){
     //Route::get('/admin/dashboardadmin',[LaporanDistribusiController::class,'index_admin_laporan_distribusi']);
 
     //Data Induk
-    Route::get('/admin/data_induk',[DataIndukController::class,'index_admin_data_induk']);
-    Route::post('/admin/data_induk/aslap/store_aslap',[DataAslapController::class,'store_admin_aslap']);
-    Route::post('/admin/data_induk/aslap/edit_aslap',[DataAslapController::class,'edit_admin_aslap']);
-    Route::post('/admin/data_induk/aslap/ktp_aslap',[DataAslapController::class,'ktp_admin_aslap']);
-    Route::post('/admin/data_induk/aslap/{id}/update_aslap',[DataAslapController::class,'update_admin_aslap']);
-    Route::post('/admin/data_induk/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_admin_aslap']);
+    Route::get('/admin/data_staff',[DataIndukController::class,'index_admin_data_staff']);
+    Route::post('/admin/data_staff/aslap/store_aslap',[DataAslapController::class,'store_admin_aslap']);
+    Route::post('/admin/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_admin_aslap']);
+    Route::post('/admin/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_admin_aslap']);
+    Route::post('/admin/data_staff/aslap/{id}/update_aslap',[DataAslapController::class,'update_admin_aslap']);
+    Route::post('/admin/data_staff/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_admin_aslap']);
     
     //Kepala Dapur
-    Route::get('/admin/data_induk/kepala_dapur',[KepalaDapurController::class,'index_admin_kepala_dapur']);
-    Route::post('/admin/data_induk/kepala_dapur/store_kepala_dapur',[KepalaDapurController::class,'store_admin_kepala_dapur']);
-    Route::post('/admin/data_induk/kepala_dapur/edit_kepala_dapur',[KepalaDapurController::class,'edit_admin_kepala_dapur']);
-    Route::post('/admin/data_induk/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_admin_kepala_dapur']);
-    Route::post('/admin/data_induk/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_admin_kepala_dapur']);
+    Route::get('/admin/data_staff/kepala_dapur',[KepalaDapurController::class,'index_admin_kepala_dapur']);
+    Route::post('/admin/data_staff/kepala_dapur/store_kepala_dapur',[KepalaDapurController::class,'store_admin_kepala_dapur']);
+    Route::post('/admin/data_staff/kepala_dapur/edit_kepala_dapur',[KepalaDapurController::class,'edit_admin_kepala_dapur']);
+    Route::post('/admin/data_staff/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_admin_kepala_dapur']);
+    Route::post('/admin/data_staff/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_admin_kepala_dapur']);
 
     //Distributor
-    Route::get('/admin/data_induk/distributor',[DistributorController::class,'index_admin_distributor']);
-    Route::post('/admin/data_induk/distributor/store_distributor',[DistributorController::class,'store_admin_distributor']);
-    Route::post('/admin/data_induk/distributor/edit_distributor',[DistributorController::class,'edit_admin_distributor']);
-    Route::post('/admin/data_induk/distributor/{id}/update_distributor',[DistributorController::class,'update_admin_distributor']);
-    Route::post('/admin/data_induk/distributor/{id}/delete_distributor',[DistributorController::class,'delete_admin_distributor']);
+    Route::get('/admin/data_staff/distributor',[DistributorController::class,'index_admin_distributor']);
+    Route::post('/admin/data_staff/distributor/store_distributor',[DistributorController::class,'store_admin_distributor']);
+    Route::post('/admin/data_staff/distributor/edit_distributor',[DistributorController::class,'edit_admin_distributor']);
+    Route::post('/admin/data_staff/distributor/{id}/update_distributor',[DistributorController::class,'update_admin_distributor']);
+    Route::post('/admin/data_staff/distributor/{id}/delete_distributor',[DistributorController::class,'delete_admin_distributor']);
 
     //Dapur
-    Route::get('/admin/data_induk/dapur',[DapurController::class,'index_admin_dapur']);
-    Route::post('/admin/data_induk/dapur/store_dapur',[DapurController::class,'store_admin_dapur']);
-    Route::post('/admin/data_induk/dapur/{id}/delete_dapur',[DapurController::class,'delete_admin_dapur']);
+    Route::get('/admin/data_staff/dapur',[DapurController::class,'index_admin_dapur']);
+    Route::post('/admin/data_staff/dapur/store_dapur',[DapurController::class,'store_admin_dapur']);
+    Route::post('/admin/data_staff/dapur/{id}/delete_dapur',[DapurController::class,'delete_admin_dapur']);
 
     //Data Supplier
     //Supplier

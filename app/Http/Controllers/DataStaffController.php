@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class DataIndukController extends Controller
+class DataStaffController extends Controller
 {
-    public function index_admin_data_induk(Request $request)
+    public function index_admin_data_staff(Request $request)
     {
         $admin = Auth::guard('admin')->user();
         $nomor_dapur_admin = $admin->nomor_dapur_admin;
@@ -101,6 +101,6 @@ class DataIndukController extends Controller
             ->distinct()
             ->get();
 
-        return view('admin.data_induk.index_data_induk', compact('kepala_dapur', 'distributor', 'aslap', 'dapurList', 'peranList'));
+        return view('admin.data_staff.index_data_staff', compact('kepala_dapur', 'distributor', 'aslap', 'dapurList', 'peranList'));
     }
 }

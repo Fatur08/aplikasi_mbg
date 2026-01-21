@@ -132,7 +132,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin/data_induk" >
+            <a class="nav-link" href="/admin/data_staff" >
               <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-analytics"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 17l0 -5" /><path d="M12 17l0 -1" /><path d="M15 17l0 -3" /></svg>
               </span>
@@ -151,7 +151,7 @@
               </span>
             </a>
             <div class="dropdown-menu">
-              <a class="nav-link" href="/admin/data_induk/kepala_dapur" style="margin-left: 26px;">
+              <a class="nav-link" href="/admin/data_staff/kepala_dapur" style="margin-left: 26px;">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-git-branch"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M7 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M7 8l0 8" /><path d="M9 18h6a2 2 0 0 0 2 -2v-5" /><path d="M14 14l3 -3l3 3" /></svg>
                 </span>
@@ -159,7 +159,7 @@
                   Kepala Dapur
                 </span>
               </a>
-              <a class="nav-link" href="/admin/data_induk/distributor" style="margin-left: 26px;">
+              <a class="nav-link" href="/admin/data_staff/distributor" style="margin-left: 26px;">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-users-group"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /><path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M17 10h2a2 2 0 0 1 2 2v1" /><path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></svg>
                 </span>
@@ -167,7 +167,7 @@
                   Distributor
                 </span>
               </a>
-              <a class="nav-link" href="/admin/data_induk/dapur" style="margin-left: 26px;">
+              <a class="nav-link" href="/admin/data_staff/dapur" style="margin-left: 26px;">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-tools-kitchen-3"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v17m-3 -17v3a3 3 0 1 0 6 0v-3" /><path d="M17 8m-3 0a3 4 0 1 0 6 0a3 4 0 1 0 -6 0" /><path d="M17 12v9" /></svg>
                 </span>
