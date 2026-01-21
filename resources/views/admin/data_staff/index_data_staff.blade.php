@@ -186,7 +186,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="card text-center">
-                                            <div class="card-body bg-success text-white">
+                                            <div class="btn card-body bg-success text-white">
                                                 <a href="#" id="btnTambahDapur">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                                          viewBox="0 0 24 24" fill="none" stroke="currentColor" 
