@@ -7,9 +7,11 @@ use App\Http\Controllers\DataKoperasiController;
 use App\Http\Controllers\DataSupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataAhliGiziController;
+use App\Http\Controllers\DataAkuntanController;
 use App\Http\Controllers\DataStaffController;
 use App\Http\Controllers\DataAslapController;
 use App\Http\Controllers\DataMakerController;
+use App\Http\Controllers\DataRelawanController;
 use App\Http\Controllers\DataSPPIController;
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\InformasiMenuHarianController;
@@ -220,6 +222,7 @@ Route::middleware(['auth:admin'])->group(function(){
 
     //Data Staff
     Route::get('/admin/data_staff',[DataStaffController::class,'index_admin_data_staff']);
+    Route::get('/admin/data_staff/aslap',[DataAslapController::class,'index_admin_data_staff_aslap']);
     Route::post('/admin/data_staff/aslap/store_aslap',[DataAslapController::class,'store_admin_aslap']);
     Route::post('/admin/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_admin_aslap']);
     Route::post('/admin/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_admin_aslap']);
@@ -248,6 +251,20 @@ Route::middleware(['auth:admin'])->group(function(){
     // Ahli Gizi
     Route::get('/admin/data_staff/ahli_gizi',[DataAhliGiziController::class,'index_admin_data_staff_ahli_gizi']);
     
+
+
+
+    // Akuntan
+    Route::get('/admin/data_staff/akuntan',[DataAkuntanController::class,'index_admin_data_staff_akuntan']);
+
+
+
+
+
+    // Relawan
+    Route::get('/admin/data_staff/relawan',[DataRelawanController::class,'relawan']);
+
+
     
     
     

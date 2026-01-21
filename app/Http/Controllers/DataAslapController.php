@@ -395,6 +395,15 @@ class DataAslapController extends Controller
 
 
     // BAGIAN ADMIN
+    public function index_admin_data_staff_aslap(Request $request)
+    {
+        return view('admin.data_staff.aslap.index_aslap');
+    }
+    
+    
+    
+    
+    
     public function store_admin_aslap(Request $request)
     {
         $nama_aslap = $request->nama_aslap;
