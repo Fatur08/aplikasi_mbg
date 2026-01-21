@@ -239,7 +239,7 @@
                                                         <th rowspan="2">No.</th>
                                                         <th rowspan="2">Bahan</th>
                                                         <th rowspan="2">Satuan</th>
-                                                        <th rowspan="2">Stok Terakhir</th>
+                                                        <th rowspan="2">Stok <br>Terakhir</th>
                                                         <th colspan="2">Stok</th>
                                                         <th rowspan="2">Sisa</th>
                                                         <th rowspan="2">Aksi</th>
