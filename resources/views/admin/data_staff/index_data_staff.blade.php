@@ -175,84 +175,78 @@
                         <!-- ===== MAKER ===== -->
                         <div class="row mb-3">
                             <div class="col-12">
-                                <button type="button" class="btn btn-primary w-100 text-center py-4">
-                                    
-                                    <!-- Kode Program Untuk Memasukkan Gambar -->
+                                <a href="{{ url('/maker') }}" class="btn btn-primary w-100 text-center py-4 text-decoration-none">
+
                                     <!-- <img src="{{ asset('images/maker.png') }}" class="img-fluid mb-2" width="80"> -->
 
-                                    <div class="fw-bold fs-5">MAKER</div>
-                                </button>
+                                    <div class="fw-bold fs-2 text-white">MAKER</div>
+                                </a>
                             </div>
                         </div>
 
                         <!-- ===== SPPI & AHLI GIZI ===== -->
                         <div class="row g-3 mb-3">
                             <div class="col-6">
-                                <button type="button" class="btn btn-success w-100 text-center py-4">
+                                <a href="{{ url('/sppi') }}" class="btn btn-success w-100 text-center py-4 text-decoration-none">
 
-                                    <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/sppi.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold fs-2">SPPI</div>
-                                </button>
+                                    <div class="fw-bold fs-2 text-white">SPPI</div>
+                                </a>
                             </div>
 
                             <div class="col-6">
-                                <button type="button" class="btn btn-warning w-100 text-center py-4">
+                                <a href="{{ url('/ahli-gizi') }}" class="btn btn-warning w-100 text-center py-4 text-decoration-none">
 
-                                    <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/ahli-gizi.png') }}" class="img-fluid mb-2" width="70"> -->
 
                                     <div class="fw-bold fs-2 text-dark">Ahli Gizi</div>
-                                </button>
+                                </a>
                             </div>
                         </div>
 
                         <!-- ===== AKUNTAN & ASLAP ===== -->
                         <div class="row g-3 mb-3">
                             <div class="col-6">
-                                <button type="button" class="btn btn-info w-100 text-center py-4">
+                                <a href="{{ url('/akuntan') }}" class="btn btn-info w-100 text-center py-4 text-decoration-none">
 
-                                    <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/akuntan.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold fs-2">Akuntan</div>
-                                </button>
+                                    <div class="fw-bold fs-2 text-white">Akuntan</div>
+                                </a>
                             </div>
 
                             <div class="col-6">
-                                <button type="button" class="btn btn-secondary w-100 text-center py-4">
+                                <a href="{{ url('/aslap') }}" class="btn btn-secondary w-100 text-center py-4 text-decoration-none">
 
-                                    <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/aslap.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold fs-2">Aslap</div>
-                                </button>
+                                    <div class="fw-bold fs-2 text-white">Aslap</div>
+                                </a>
                             </div>
                         </div>
 
                         <!-- ===== DRIVER & RELAWAN ===== -->
                         <div class="row g-3">
                             <div class="col-6">
-                                <button type="button" class="btn btn-dark w-100 text-center py-4">
+                                <a href="{{ url('/driver') }}" class="btn btn-dark w-100 text-center py-4 text-decoration-none">
 
-                                    <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/driver.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold fs-2">Driver</div>
-                                </button>
+                                    <div class="fw-bold fs-2 text-white">Driver</div>
+                                </a>
                             </div>
 
                             <div class="col-6">
-                                <button type="button" class="btn btn-danger w-100 text-center py-4">
+                                <a href="{{ url('/relawan') }}" class="btn btn-danger w-100 text-center py-4 text-decoration-none">
 
-                                    <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/relawan.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold fs-2">Relawan</div>
-                                </button>
+                                    <div class="fw-bold fs-2 text-white">Relawan</div>
+                                </a>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
