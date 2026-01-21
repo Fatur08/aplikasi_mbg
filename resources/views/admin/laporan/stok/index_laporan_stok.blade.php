@@ -178,7 +178,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/admin/laporan/stok_harian" method="GET" id="FormLaporanStokHarian">
+                                    <form action="/admin/laporan/stok" method="GET" id="FormLaporanStokHarian">
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="input-icon">
