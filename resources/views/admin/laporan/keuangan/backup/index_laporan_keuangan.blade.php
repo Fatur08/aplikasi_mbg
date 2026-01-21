@@ -170,11 +170,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="/admin/laporan/keuangan" method="GET" id="FormLaporanKeuangan">
-                                <div class="row mt-2">
-                                    <div class="col-12">
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <form action="/admin/laporan/keuangan" method="GET" id="FormLaporanKeuangan">
                                         <div class="row g-2 align-items-end">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="input-icon">
                                                     <span class="input-icon-addon">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
@@ -182,7 +182,7 @@
                                                     <input type="text" value="" id="dari_tanggal" name="dari_tanggal" class="form-control" placeholder="Dari Tanggal" autocomplete="off">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="input-icon">
                                                     <span class="input-icon-addon">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
@@ -190,22 +190,7 @@
                                                     <input type="text" value="" id="sampai_tanggal" name="sampai_tanggal" class="form-control" placeholder="Sampai Tanggal" autocomplete="off">
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <div class="row g-2 align-items-end">
-                                            <div class="col-md-6">
-                                                <div class="input-icon">
-                                                    <select name="pilih_instansi" id="pilih_instansi" class="form-select">
-                                                        <option value="">Pilih Supplier / Koperasi</option>
-                                                        <option value="Supplier">Supplier</option>
-                                                        <option value="Koperasi">Koperasi</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-primary w-100">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
@@ -213,6 +198,7 @@
                                                     </button>
                                                 </div>
                                             </div>
+                                    </form>
                                             <!--<div class="col-md-3">
                                                 <div class="form-group">
                                                     <a href="#" class="btn btn-success w-100" id="cetak_laporan_keuangan" >
@@ -220,11 +206,10 @@
                                                         Cetak
                                                     </a>
                                                 </div>
-                                            </div>-->
-                                        </div>
-                                    </div>
+                                            </div>
+                                        </div>-->
                                 </div>
-                            </form>
+                            </div>
                             <div class="row mt-2 table-container">
                                 <div class="col-12">
                                     @if(!$sudahCari)
