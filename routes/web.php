@@ -262,7 +262,7 @@ Route::middleware(['auth:admin'])->group(function(){
 
 
     // Relawan
-    Route::get('/admin/data_staff/relawan',[DataRelawanController::class,'relawan']);
+    Route::get('/admin/data_staff/relawan',[DataRelawanController::class,'index_admin_data_staff_relawan']);
 
 
     
