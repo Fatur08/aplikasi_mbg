@@ -196,7 +196,7 @@
                             </div>
 
                             <div class="col-6">
-                                <a href="{{ url('/admin/data_staff/ahli-gizi') }}" class="btn btn-warning w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/admin/data_staff/ahli_gizi') }}" class="btn btn-warning w-100 text-center py-4 text-decoration-none">
 
                                     <!-- <img src="{{ asset('images/ahli-gizi.png') }}" class="img-fluid mb-2" width="70"> -->
 

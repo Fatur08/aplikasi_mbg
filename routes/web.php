@@ -6,6 +6,7 @@ use App\Http\Controllers\DapurController;
 use App\Http\Controllers\DataKoperasiController;
 use App\Http\Controllers\DataSupplierController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataAhliGiziController;
 use App\Http\Controllers\DataStaffController;
 use App\Http\Controllers\DataAslapController;
 use App\Http\Controllers\DataMakerController;
@@ -236,6 +237,16 @@ Route::middleware(['auth:admin'])->group(function(){
 
     // SPPI
     Route::get('/admin/data_staff/sppi',[DataSPPIController::class,'index_admin_data_staff_sppi']);
+
+
+
+
+
+
+
+
+    // Ahli Gizi
+    Route::get('/admin/data_staff/ahli_gizi',[DataAhliGiziController::class,'index_admin_data_staff_ahli_gizi']);
     
     
     
