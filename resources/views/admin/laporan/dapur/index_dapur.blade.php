@@ -230,7 +230,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <a href="#" class="btn btn-success w-100" id="btnTambahOPDapur">
+                                            <a href="#" class="btn btn-secondary w-100" id="btnTambahOPDapur">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                                      viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
@@ -367,26 +367,33 @@
 </div>
 
 
-{{-- Modal Input Menu Harian --}}
-<div class="modal modal-blur fade" id="modal-inputmenuharian" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+
+
+
+
+
+<!-- Modal Tambah Penerima Manfaat -->
+<div class="modal modal-blur fade" id="modal-inputpenerima-manfaat" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Menu Harian</h5>
+                <h5 class="modal-title">Tambah Penerima Manfaat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/kepala_dapur/menu_harian/store_menu_harian" method="POST" id="frmMnHrn" enctype="multipart/form-data">
+                <form action="/murid/store" method="POST" id="FormInputPenerimaManfaat" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
                             <div class="input-icon mb-3">
-                                <span class="input-icon-addon">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
-                                </span>
-                                <input type="text" value="" id="tanggal_jadwal_menu_harian" name="tanggal_jadwal_menu_harian" class="form-control" placeholder="Masukkan Tanggal (Hari ini / Besok)" autocomplete="off">
-                            </div>
+                                <select name="pilih_sekolah_atau_b3" id="pilih_sekolah_atau_b3" class="form-select">
+                                    <option value="">Pilih Sekolah/B3</option>
+                                    <option value="Sekolah">Sekolah</option>
+                                    <option value="B3">B3</option>
+                                </select>
+                              </div>
                         </div>
                     </div>
                     <div class="row">
@@ -394,30 +401,21 @@
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-bowl-chopsticks"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z" /><path d="M19 7l-14 1" /><path d="M19 2l-14 3" /></svg>                                </span>
-                                <input type="text" value="" id="nama_menu_harian" class="form-control" name="nama_menu_harian" placeholder="Masukkan Nama Menu (Jika Belum Ada)">
-                            </div>
+                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
+                                </span>
+                                <input type="text" value="" id="nama_sekolah_atau_b3" class="form-control" name="nama_sekolah_atau_b3" placeholder="Masukkan Nama Sekolah / B3">
+                              </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 mb-3">
-                            <select name="id_menu_harian" id="id_menu_harian" class="form-select">
-                                <option value="">Pilih Menu (Yang Sudah Pernah Dibuat)</option>
-                                @foreach($menu_harian as $menu)
-                                    <option value="{{ $menu->id_menu_harian }}">{{ $menu->nama_menu_harian }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calculator"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 3m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M8 7m0 1a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1z" /><path d="M8 14l0 .01" /><path d="M12 14l0 .01" /><path d="M16 14l0 .01" /><path d="M8 17l0 .01" /><path d="M12 17l0 .01" /><path d="M16 17l0 .01" /></svg>
+                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
                                 </span>
-                                <input type="number" value="" id="jumlah_porsi_menu_harian" class="form-control" name="jumlah_porsi_menu_harian" placeholder="Masukkan Jumlah Porsi">
-                            </div>
+                                <input type="number" value="" id="jumlah_pm" class="form-control" name="jumlah_pm" placeholder="Masukkan Jumlah Penerima Manfaat">
+                              </div>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -435,6 +433,14 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
 
 
 {{-- Modal Tambah Bahan Terpakai --}}
@@ -501,6 +507,12 @@
 @push('myscript')
 <script>
     $(function(){
+        $("#btnTambahPM").click(function(){
+            $("#modal-inputpenerima-manfaat").modal("show");
+        });
+
+
+
         $(".lihat_bahan_terpakai").click(function(){
             var id = $(this).attr('data-id');
             $.ajax({
