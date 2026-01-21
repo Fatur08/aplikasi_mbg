@@ -226,9 +226,11 @@
                                         <div class="info-card">
                                             <h4>Nama Dapur : <span style="color:#2563eb;">{{ $namaDapur }}</span></h4>
                                             <p>
-                                                Tanggal :
+                                                Periode Tanggal :
                                                 <strong>
-                                                    {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}
+                                                    {{ \Carbon\Carbon::parse($dari_tanggal)->translatedFormat('d F Y') }}
+                                                    s/d
+                                                    {{ \Carbon\Carbon::parse($sampai_tanggal)->translatedFormat('d F Y') }}
                                                 </strong>
                                             </p>
                                         </div>
