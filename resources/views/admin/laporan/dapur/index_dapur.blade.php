@@ -272,6 +272,12 @@
                                             <tbody>
                                                 
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th rowspan="4">Total</th>
+                                                    <th rowspan="2">Porsi</th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
