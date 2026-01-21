@@ -292,24 +292,20 @@
 @endsection
 @push('myscript')
 <script>
-    flatpickr("#tampilan_tanggal", {
-        dateFormat: "d F Y", // format tampilan: 15 September 2025
+    flatpickr("#dari_tanggal", {
+        altInput: true,
+        altFormat: "d F Y",      // 15 September 2025
+        dateFormat: "Y-m-d",     // dikirim ke backend
+        locale: "id",
+        allowInput: true
+    });
+    
+    flatpickr("#sampai_tanggal", {
         altInput: true,
         altFormat: "d F Y",
-        locale: "id", // biar bulan pakai bahasa Indonesia
-
-        onChange: function(selectedDates) {
-            if (selectedDates.length > 0) {
-                let date = selectedDates[0];
-
-                let yyyy = date.getFullYear();
-                let mm = String(date.getMonth() + 1).padStart(2, '0');
-                let dd = String(date.getDate()).padStart(2, '0');
-
-                // ini yang DIKIRIM ke controller
-                document.getElementById('pilih_tanggal').value = `${yyyy}-${mm}-${dd}`;
-            }
-        }
+        dateFormat: "Y-m-d",
+        locale: "id",
+        allowInput: true
     });
 
 
