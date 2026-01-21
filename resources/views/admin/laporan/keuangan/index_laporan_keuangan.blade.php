@@ -324,6 +324,37 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="row mt-2 table-container">
+                                <div class="col-12">
+                                    <div class="table-wrapper">
+                                        <div class="table-responsive">
+                                            <table class="table custom-table">
+                                                <thead class="table-primary text-center">
+                                                    <tr>
+                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
+                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
+                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Barang</th>
+                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Jumlah</th>
+                                                        <th style="text-align: center; vertical-align: middle;" colspan="2">Keterangan</th>
+                                                        <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Pengeluaran</th>
+                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Margin</th>
+                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
+                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="text-align: center; vertical-align: middle;">Koperasi</th>
+                                                        <th style="text-align: center; vertical-align: middle;">Supplier</th>
+                                                        <!--<th style="text-align: center; vertical-align: middle;">Pemasukan</th>
+                                                        <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>-->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
