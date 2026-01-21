@@ -171,91 +171,89 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
+
+                        <!-- ===== MAKER ===== -->
+                        <div class="row mb-3">
                             <div class="col-12">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary w-100">
-                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="72"  height="72"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-                                        MAKER 
-                                    </button>
-                                </div>
+                                <button type="button" class="btn btn-primary w-100 text-center py-4">
+                                    
+                                    <!-- Kode Program Untuk Memasukkan Gambar -->
+                                    <!-- <img src="{{ asset('images/maker.png') }}" class="img-fluid mb-2" width="80"> -->
+
+                                    <div class="fw-bold fs-5">MAKER</div>
+                                </button>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="card text-center">
-                                            <div class="btn card-body bg-success text-white">
-                                                <a href="#" id="btnTambahDapur">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                                         class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                        <path d="M12 5l0 14" />
-                                                        <path d="M5 12l14 0" />
-                                                    </svg>
-                                                    SPPI
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary w-100">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="72"  height="72"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-                                                Ahli Gizi
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+
+                        <!-- ===== SPPI & AHLI GIZI ===== -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-success w-100 text-center py-4">
+
+                                    <!-- Kode Program Untuk Memasukkan Gambar -->
+                                    <!-- <img src="{{ asset('images/sppi.png') }}" class="img-fluid mb-2" width="70"> -->
+
+                                    <div class="fw-bold">SPPI</div>
+                                </button>
+                            </div>
+
+                            <div class="col-6">
+                                <button type="button" class="btn btn-warning w-100 text-center py-4">
+
+                                    <!-- Kode Program Untuk Memasukkan Gambar -->
+                                    <!-- <img src="{{ asset('images/ahli-gizi.png') }}" class="img-fluid mb-2" width="70"> -->
+
+                                    <div class="fw-bold text-dark">Ahli Gizi</div>
+                                </button>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary w-100">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="72"  height="72"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-                                                Akuntan
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary w-100">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="72"  height="72"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-                                                Aslap
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+
+                        <!-- ===== AKUNTAN & ASLAP ===== -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-info w-100 text-center py-4">
+
+                                    <!-- Kode Program Untuk Memasukkan Gambar -->
+                                    <!-- <img src="{{ asset('images/akuntan.png') }}" class="img-fluid mb-2" width="70"> -->
+
+                                    <div class="fw-bold">Akuntan</div>
+                                </button>
+                            </div>
+
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary w-100 text-center py-4">
+
+                                    <!-- Kode Program Untuk Memasukkan Gambar -->
+                                    <!-- <img src="{{ asset('images/aslap.png') }}" class="img-fluid mb-2" width="70"> -->
+
+                                    <div class="fw-bold">Aslap</div>
+                                </button>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary w-100">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="72"  height="72"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-                                                Driver
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary w-100">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="72"  height="72"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-                                                Relawan
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+
+                        <!-- ===== DRIVER & RELAWAN ===== -->
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-dark w-100 text-center py-4">
+
+                                    <!-- Kode Program Untuk Memasukkan Gambar -->
+                                    <!-- <img src="{{ asset('images/driver.png') }}" class="img-fluid mb-2" width="70"> -->
+
+                                    <div class="fw-bold">Driver</div>
+                                </button>
+                            </div>
+
+                            <div class="col-6">
+                                <button type="button" class="btn btn-danger w-100 text-center py-4">
+
+                                    <!-- Kode Program Untuk Memasukkan Gambar -->
+                                    <!-- <img src="{{ asset('images/relawan.png') }}" class="img-fluid mb-2" width="70"> -->
+
+                                    <div class="fw-bold">Relawan</div>
+                                </button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
