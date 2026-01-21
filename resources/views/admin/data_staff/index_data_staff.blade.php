@@ -193,7 +193,7 @@
                                     <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/sppi.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold">SPPI</div>
+                                    <div class="fw-bold fs-2">SPPI</div>
                                 </button>
                             </div>
 
@@ -203,7 +203,7 @@
                                     <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/ahli-gizi.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold text-dark">Ahli Gizi</div>
+                                    <div class="fw-bold fs-2 text-dark">Ahli Gizi</div>
                                 </button>
                             </div>
                         </div>
@@ -216,7 +216,7 @@
                                     <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/akuntan.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold">Akuntan</div>
+                                    <div class="fw-bold fs-2">Akuntan</div>
                                 </button>
                             </div>
 
@@ -226,7 +226,7 @@
                                     <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/aslap.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold">Aslap</div>
+                                    <div class="fw-bold fs-2">Aslap</div>
                                 </button>
                             </div>
                         </div>
@@ -239,7 +239,7 @@
                                     <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/driver.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold">Driver</div>
+                                    <div class="fw-bold fs-2">Driver</div>
                                 </button>
                             </div>
 
@@ -249,11 +249,10 @@
                                     <!-- Kode Program Untuk Memasukkan Gambar -->
                                     <!-- <img src="{{ asset('images/relawan.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold">Relawan</div>
+                                    <div class="fw-bold fs-2">Relawan</div>
                                 </button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
