@@ -215,13 +215,20 @@ Route::middleware(['auth:admin'])->group(function(){
     Route::get('/admin/dashboardadmin',[DashboardController::class,'dashboardadmin']);
     //Route::get('/admin/dashboardadmin',[LaporanDistribusiController::class,'index_admin_laporan_distribusi']);
 
-    //Data Induk
+    //Data Staff
     Route::get('/admin/data_staff',[DataStaffController::class,'index_admin_data_staff']);
     Route::post('/admin/data_staff/aslap/store_aslap',[DataAslapController::class,'store_admin_aslap']);
     Route::post('/admin/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_admin_aslap']);
     Route::post('/admin/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_admin_aslap']);
     Route::post('/admin/data_staff/aslap/{id}/update_aslap',[DataAslapController::class,'update_admin_aslap']);
     Route::post('/admin/data_staff/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_admin_aslap']);
+    
+    
+    // Data Maker
+    Route::get('/admin/data_staff/maker',[DataStaffController::class,'index_admin_data_staff_maker']);
+    
+    
+    
     
     //Kepala Dapur
     Route::get('/admin/data_staff/kepala_dapur',[KepalaDapurController::class,'index_admin_kepala_dapur']);

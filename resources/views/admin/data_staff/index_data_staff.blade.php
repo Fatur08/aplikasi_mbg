@@ -175,7 +175,7 @@
                         <!-- ===== MAKER ===== -->
                         <div class="row mb-3">
                             <div class="col-12">
-                                <a href="{{ url('/maker') }}" class="btn btn-primary w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/admin/data_staff/maker') }}" class="btn btn-primary w-100 text-center py-4 text-decoration-none">
 
                                     <!-- <img src="{{ asset('images/maker.png') }}" class="img-fluid mb-2" width="80"> -->
 
@@ -187,7 +187,7 @@
                         <!-- ===== SPPI & AHLI GIZI ===== -->
                         <div class="row g-3 mb-3">
                             <div class="col-6">
-                                <a href="{{ url('/sppi') }}" class="btn btn-success w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/admin/data_staff/sppi') }}" class="btn btn-success w-100 text-center py-4 text-decoration-none">
 
                                     <!-- <img src="{{ asset('images/sppi.png') }}" class="img-fluid mb-2" width="70"> -->
 
@@ -196,7 +196,7 @@
                             </div>
 
                             <div class="col-6">
-                                <a href="{{ url('/ahli-gizi') }}" class="btn btn-warning w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/admin/data_staff/ahli-gizi') }}" class="btn btn-warning w-100 text-center py-4 text-decoration-none">
 
                                     <!-- <img src="{{ asset('images/ahli-gizi.png') }}" class="img-fluid mb-2" width="70"> -->
 
@@ -208,7 +208,7 @@
                         <!-- ===== AKUNTAN & ASLAP ===== -->
                         <div class="row g-3 mb-3">
                             <div class="col-6">
-                                <a href="{{ url('/akuntan') }}" class="btn btn-info w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/admin/data_staff/akuntan') }}" class="btn btn-info w-100 text-center py-4 text-decoration-none">
 
                                     <!-- <img src="{{ asset('images/akuntan.png') }}" class="img-fluid mb-2" width="70"> -->
 
@@ -217,7 +217,7 @@
                             </div>
 
                             <div class="col-6">
-                                <a href="{{ url('/aslap') }}" class="btn btn-secondary w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/admin/data_staff/aslap') }}" class="btn btn-secondary w-100 text-center py-4 text-decoration-none">
 
                                     <!-- <img src="{{ asset('images/aslap.png') }}" class="img-fluid mb-2" width="70"> -->
 
@@ -229,7 +229,7 @@
                         <!-- ===== DRIVER & RELAWAN ===== -->
                         <div class="row g-3">
                             <div class="col-6">
-                                <a href="{{ url('/driver') }}" class="btn btn-dark w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/admin/data_staff/driver') }}" class="btn btn-dark w-100 text-center py-4 text-decoration-none">
 
                                     <!-- <img src="{{ asset('images/driver.png') }}" class="img-fluid mb-2" width="70"> -->
 
@@ -238,7 +238,7 @@
                             </div>
 
                             <div class="col-6">
-                                <a href="{{ url('/relawan') }}" class="btn btn-danger w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/admin/data_staff/relawan') }}" class="btn btn-danger w-100 text-center py-4 text-decoration-none">
 
                                     <!-- <img src="{{ asset('images/relawan.png') }}" class="img-fluid mb-2" width="70"> -->
 
