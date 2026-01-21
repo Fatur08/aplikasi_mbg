@@ -274,8 +274,8 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th colspan="4">Total</th>
-                                                    <th colspan="2">Porsi</th>
+                                                    <th colspan="4" style="text-align: center; vertical-align: middle;">Total</th>
+                                                    <th colspan="2" style="vertical-align: middle;">Porsi</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
