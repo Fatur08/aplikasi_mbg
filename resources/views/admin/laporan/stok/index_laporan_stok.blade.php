@@ -248,7 +248,7 @@
                                                         <th rowspan="2">Stok <br>Terakhir</th>
                                                         <th colspan="2">Stok</th>
                                                         <th rowspan="2">Sisa</th>
-                                                        <th rowspan="2">Aksi</th>
+                                                        <!--<th rowspan="2">Aksi</th>-->
                                                     </tr>
                                                     <tr>
                                                         <th>Masuk</th>
@@ -267,7 +267,7 @@
                                                             <td style="text-align:left; font-weight:bold;">
                                                                 {{ number_format($row['stok_akhir'], 0, ',', '.') }}
                                                             </td>
-                                                            <td></td>
+                                                            <!--<td></td>-->
                                                         </tr>
                                                     @empty
                                                         <tr>
