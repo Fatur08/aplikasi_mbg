@@ -41,7 +41,7 @@ return [
         
         'makers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\maker::class,
+            'model' => App\Models\Maker::class,
         ],
 
         'kepala_dapurs' => [
