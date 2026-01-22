@@ -61,7 +61,7 @@ class DataMakerController extends Controller
             ->first();
 
         $kecamatan_maker = $dapur->nama_dapur ?? null;
-        $password = 12345;
+        $password_maker = 12345;
 
         if($request->hasFile('foto_maker')){
             $foto_maker = $nama_maker.".".$request
@@ -78,7 +78,7 @@ class DataMakerController extends Controller
             'no_hp_maker' => $no_hp_maker,
             'foto_maker'=>$foto_maker,
             'kecamatan_maker' => $kecamatan_maker,
-            'password' => $password
+            'password_maker' => $password_maker
         ];
 
         $simpan = DB::table('maker')->insert($data);
