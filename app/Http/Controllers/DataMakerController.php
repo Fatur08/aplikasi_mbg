@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class DataMakerController extends Controller
 {
-    public function index_admin_data_staff_maker(Request $request)
+    public function index_maker_data_staff_maker(Request $request)
     {
-        return view('admin.data_staff.maker.index_maker');
+        return view('maker.data_staff.maker.index_maker');
     }
 }

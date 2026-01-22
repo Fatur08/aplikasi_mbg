@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class DataRelawanController extends Controller
 {
-    public function index_admin_data_staff_relawan(Request $request)
+    public function index_maker_data_staff_relawan(Request $request)
     {
-        return view('admin.data_staff.relawan.index_relawan');
+        return view('maker.data_staff.relawan.index_relawan');
     }
 }

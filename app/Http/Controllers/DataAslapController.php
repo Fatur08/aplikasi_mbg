@@ -394,17 +394,17 @@ class DataAslapController extends Controller
 
 
 
-    // BAGIAN ADMIN
-    public function index_admin_data_staff_aslap(Request $request)
+    // BAGIAN maker
+    public function index_maker_data_staff_aslap(Request $request)
     {
-        return view('admin.data_staff.aslap.index_aslap');
+        return view('maker.data_staff.aslap.index_aslap');
     }
     
     
     
     
     
-    public function store_admin_aslap(Request $request)
+    public function store_maker_aslap(Request $request)
     {
         $nama_aslap = $request->nama_aslap;
         $peran_aslap = $request->peran_aslap;
@@ -477,16 +477,16 @@ class DataAslapController extends Controller
 
 
 
-    public function ktp_admin_aslap(Request $request)
+    public function ktp_maker_aslap(Request $request)
     {        
         $id = $request->id;
         $aslap = DB::table('aslap')->get();
         $data = DB::table('aslap')->where('id_aslap', $id)->first();
-        return view('admin.data_induk.aslap.ktp_aslap',compact('aslap','data'));
+        return view('maker.data_induk.aslap.ktp_aslap',compact('aslap','data'));
     }
 
 
-    public function edit_admin_aslap(Request $request)
+    public function edit_maker_aslap(Request $request)
     {
         $id = $request->id;
         // Ambil semua data dapur
@@ -502,10 +502,10 @@ class DataAslapController extends Controller
             ->get();
         $aslap = DB::table('aslap')->get();
         $data = DB::table('aslap')->where('id_aslap', $id)->first();
-        return view('admin.data_induk.aslap.edit_aslap',compact('aslap','data','dapurList','peranList'));
+        return view('maker.data_induk.aslap.edit_aslap',compact('aslap','data','dapurList','peranList'));
     }
 
-    public function update_admin_aslap($id_aslap, Request $request)
+    public function update_maker_aslap($id_aslap, Request $request)
     {
         try {
             $nama_aslap = $request->nama_aslap;
@@ -625,7 +625,7 @@ class DataAslapController extends Controller
         }
     }
 
-    public function delete_admin_aslap($id_aslap)
+    public function delete_maker_aslap($id_aslap)
     {
         // Ambil data dulu sebelum dihapus
         $aslap = DB::table('aslap')->where('id_aslap', $id_aslap)->first();
