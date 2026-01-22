@@ -288,11 +288,37 @@
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                  <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-barcode"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7v-1a2 2 0 0 1 2 -2h2" /><path d="M4 17v1a2 2 0 0 0 2 2h2" /><path d="M16 4h2a2 2 0 0 1 2 2v1" /><path d="M16 20h2a2 2 0 0 0 2 -2v-1" /><path d="M5 11h1v2h-1z" /><path d="M10 11l0 2" /><path d="M14 11h1v2h-1z" /><path d="M19 11l0 2" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         class="icon icon-tabler icons-tabler-outline icon-tabler-barcode">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M4 7v-1a2 2 0 0 1 2 -2h2" />
+                                        <path d="M4 17v1a2 2 0 0 0 2 2h2" />
+                                        <path d="M16 4h2a2 2 0 0 1 2 2v1" />
+                                        <path d="M16 20h2a2 2 0 0 0 2 -2v-1" />
+                                        <path d="M5 11h1v2h-1z" />
+                                        <path d="M10 11l0 2" />
+                                        <path d="M14 11h1v2h-1z" />
+                                        <path d="M19 11l0 2" />
+                                    </svg>
                                 </span>
-                                <input type="text" value="" id="email_maker" class="form-control" name="email_maker" placeholder="Masukkan E-Mail">
+
+                                <input
+                                    type="email"
+                                    id="email_maker"
+                                    name="email_maker"
+                                    class="form-control"
+                                    placeholder="Masukkan E-Mail (gmail)"
+                                    pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+                                    title="Email harus menggunakan domain @gmail.com"
+                                    oninput="this.value = this.value.toLowerCase()"
+                                >
                             </div>
+
+                            <small class="text-muted">
+                                Email harus menggunakan domain <strong>@gmail.com</strong>
+                            </small>
                         </div>
                     </div>
                     <div class="row">
