@@ -14,9 +14,9 @@ return [
             'provider' => 'owners',
         ],
 
-        'admin' => [
+        'maker' => [
             'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'makers',
         ],
 
         'kepala_dapur' => [
@@ -39,9 +39,9 @@ return [
         ],
 
         
-        'admins' => [
+        'makers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\Models\maker::class,
         ],
 
         'kepala_dapurs' => [
