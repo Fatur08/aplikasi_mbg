@@ -71,7 +71,7 @@ class DashboardController extends Controller
         })->get();
         
         // Data pendukung
-        $makers       = \App\Models\maker::all();
+        $makers       = \App\Models\Maker::all();
         $kepalaDapur  = \App\Models\KepalaDapur::all();
         $distributors = \App\Models\Distributor::all();
         
