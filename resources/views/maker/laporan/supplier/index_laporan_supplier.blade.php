@@ -458,52 +458,5 @@
             allowInput: true
         });
     });
-
-
-
-
-
-
-
-
-    // === BAGIAN DIAGRAM BATANG ===
-    let koperasiData = @json($data);
-
-    const labels      = koperasiData.map(item => item.tanggal_laporan_supplier ?? 'Tidak Ada Tanggal');
-    const modalMasuk  = koperasiData.map(item => item.total_pemasukan);
-    const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
-    const margin      = koperasiData.map(item => item.margin);
-
-    const ctxBar = document.getElementById('koperasiChartmaker').getContext('2d');
-    new Chart(ctxBar, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Pemasukan',
-                    data: modalMasuk,
-                    backgroundColor: 'rgba(0, 76, 255, 1)'
-                },
-                {
-                    label: 'Pengeluaran',
-                    data: modalKeluar,
-                    backgroundColor: 'rgba(255, 0, 0, 0.7)'
-                },
-                {
-                    label: 'Margin',
-                    data: margin,
-                    backgroundColor: 'rgba(47, 255, 0, 0.7)'
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { labels: { font: { size: 14 } } }
-            }
-        }
-    });
 </script>
 @endpush
