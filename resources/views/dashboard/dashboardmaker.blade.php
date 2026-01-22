@@ -144,25 +144,18 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                @if (Session::get('success'))
-                                    <div class="alert alert-success">
-                                        {{ Session::get('success') }}
-                                    </div>
-                                @endif
-                                @if (Session::get('warning'))
-                                    <div class="alert alert-warning">
-                                        {{ Session::get('warning') }}
-                                    </div>
-                                @endif
-
-
-                                <!-- === Section Info Dapur === -->
-                                <div class="section-info">
-                                    <div class="info-card">
-                                        <h4><span style="color:#2563eb;">{{ $namaDapur }}</span></h4>
-                                    </div>
+                            <!-- === Section Info Dapur === -->
+                            <div class="section-info">
+                                <div class="info-card">
+                                    <h4>
+                                        <span style="color:#2563eb;">{{ $namaDapur }}</span><br>
+                                        <small class="text-muted">
+                                            {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
+                                        </small>
+                                    </h4>
                                 </div>
                             </div>
+                        </div>
                             <div class="row mt-2 table-container">
                                 <div class="col-12">
                                     <div class="row">
