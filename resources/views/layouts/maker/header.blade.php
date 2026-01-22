@@ -6,7 +6,7 @@ $maker = Auth::guard('maker')->user();
 
 // Cek foto, tampilkan default jika kosong
 $path = $maker->foto_maker
-    ? asset('storage/uploads/data_induk/maker/' . $maker->foto_maker)
+    ? asset('storage/uploads/data_staff/maker/' . $maker->foto_maker)
     : asset('assets/img/nophoto.jpg');
 
 // Cocokkan nomor_dapur_maker dengan nomor_dapur di tabel dapur
