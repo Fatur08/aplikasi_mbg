@@ -166,7 +166,7 @@
                                                 <table class="table custom-table">
                                                     <thead class="table-success">
                                                         <tr class="text-center">
-                                                            <th colspan="3">Sekolah</th>
+                                                            <th colspan="4">Sekolah</th>
                                                         </tr>
                                                         <tr class="text-center">
                                                             <th>No</th>
@@ -185,7 +185,7 @@
                                                             </tr>
                                                         @empty
                                                             <tr>
-                                                                <td colspan="3" class="text-center text-muted">
+                                                                <td colspan="4" class="text-center text-muted">
                                                                     Data Sekolah belum tersedia
                                                                 </td>
                                                             </tr>
@@ -202,7 +202,7 @@
                                                 <table class="table custom-table">
                                                     <thead class="table-success">
                                                         <tr class="text-center">
-                                                            <th colspan="3">B3</th>
+                                                            <th colspan="4">B3</th>
                                                         </tr>
                                                         <tr class="text-center">
                                                             <th>No</th>
@@ -221,7 +221,7 @@
                                                             </tr>
                                                         @empty
                                                             <tr>
-                                                                <td colspan="3" class="text-center text-muted">
+                                                                <td colspan="4" class="text-center text-muted">
                                                                     Data B3 belum tersedia
                                                                 </td>
                                                             </tr>
