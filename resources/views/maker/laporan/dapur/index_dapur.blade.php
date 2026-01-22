@@ -1,4 +1,4 @@
-@extends('layouts.admin.tabler')
+@extends('layouts.maker.tabler')
 @section('content')
 <style>
 /* === Section Info Dapur === */
@@ -180,7 +180,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <form action="/admin/laporan/harian_dapur" method="GET" id="FormLaporanHarianDapur">
+                                <form action="/maker/laporan/harian_dapur" method="GET" id="FormLaporanHarianDapur">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="input-icon">
@@ -474,7 +474,7 @@
         $(".tambah_operasional_dapur").click(function(){
             $.ajax({
                 type:'POST',
-                url:'/admin/laporan/dapur/tambah_operasional_dapur',
+                url:'/maker/laporan/dapur/tambah_operasional_dapur',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}"

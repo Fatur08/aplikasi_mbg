@@ -1,6 +1,6 @@
-@extends('layouts.admin.laporan.dapur.layout_dapur')
+@extends('layouts.maker.laporan.dapur.layout_dapur')
 @section('content')
-<form action="/admin/laporan/dapur/store_operasional_dapur" method="POST" id="FormTambahOperasionalDapur" enctype="multipart/form-data">
+<form action="/maker/laporan/dapur/store_operasional_dapur" method="POST" id="FormTambahOperasionalDapur" enctype="multipart/form-data">
     @csrf
     <div class="row">
         <div class="col-12">

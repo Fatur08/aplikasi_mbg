@@ -1,4 +1,4 @@
-@extends('layouts.admin.tabler')
+@extends('layouts.maker.tabler')
 @section('content')
 <style>
 /* === Section Info Dapur === */
@@ -180,7 +180,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <form action="/admin/stok_limit" method="GET">
+                                <form action="/maker/stok_limit" method="GET">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="input-icon">
@@ -454,7 +454,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/stok_limit/store_stok_limit" method="POST" id="frmStkLmt" enctype="multipart/form-data">
+                <form action="/maker/stok_limit/store_stok_limit" method="POST" id="frmStkLmt" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12 mb-3">
@@ -521,7 +521,7 @@
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/admin/stok_limit/tambah_tanggal_kadaluarsa',
+                url:'/maker/stok_limit/tambah_tanggal_kadaluarsa',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",

@@ -1,6 +1,6 @@
-@extends('layouts.admin.stok_masuk.layout_stok_masuk')
+@extends('layouts.maker.stok_masuk.layout_stok_masuk')
 @section('content')
-<form action="/admin/stok_masuk/{{ $data->id_stok_masuk }}/update_stok_masuk" method="POST" id="frmStkMsk" enctype="multipart/form-data">
+<form action="/maker/stok_masuk/{{ $data->id_stok_masuk }}/update_stok_masuk" method="POST" id="frmStkMsk" enctype="multipart/form-data">
     @csrf
     <input type="text" readonly value="{{ $data->id_stok_masuk }}" id="id_stok_masuk" class="form-control" name="id_stok_masuk" placeholder="id" hidden>
     <div class="row">

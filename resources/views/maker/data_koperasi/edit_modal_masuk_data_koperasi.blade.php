@@ -1,6 +1,6 @@
-@extends('layouts.admin.data_koperasi.layout_data_koperasi')
+@extends('layouts.maker.data_koperasi.layout_data_koperasi')
 @section('content')
-<form action="/admin/data_koperasi/{{ $data->id_data_koperasi }}/update_modal_masuk_data_koperasi" method="POST" id="frmmodalmasukdatakoperasi" enctype="multipart/form-data">
+<form action="/maker/data_koperasi/{{ $data->id_data_koperasi }}/update_modal_masuk_data_koperasi" method="POST" id="frmmodalmasukdatakoperasi" enctype="multipart/form-data">
     @csrf
     <input type="text" readonly value="{{ $data->id_data_koperasi }}" id="id" class="form-control" name="id" placeholder="id" hidden>
     <div class="row">

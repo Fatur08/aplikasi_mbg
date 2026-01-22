@@ -1,4 +1,4 @@
-<form action="/admin/data_supplier/supplier/{{ $data->id_supplier }}/update_supplier" method="POST" id="frmdata" enctype="multipart/form-data">
+<form action="/maker/data_supplier/supplier/{{ $data->id_supplier }}/update_supplier" method="POST" id="frmdata" enctype="multipart/form-data">
     @csrf
     <input type="text" readonly value="{{ $data->id_supplier }}" id="id" class="form-control" name="id" placeholder="id" hidden>
     <div class="row">

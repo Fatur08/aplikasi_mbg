@@ -1,4 +1,4 @@
-@extends('layouts.admin.tabler')
+@extends('layouts.maker.tabler')
 @section('content')
 <div class="page-header d-print-none">
     <div class="container-xl">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <form action="/admin/data_induk/dapur" method="GET">
+                                <form action="/maker/data_induk/dapur" method="GET">
                                     <div class="row">
                                         <div class="col-10">
                                             <div class="form-group">
@@ -90,7 +90,7 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Admin</th>
+                                            <th>maker</th>
                                             <th>Kepala Dapur</th>
                                             <th>Distributor</th>
                                             <th>Nama Dapur</th>
@@ -102,14 +102,14 @@
                                         @foreach ($data_dapur as $d)
                                         <tr>
                                             <td>{{ $loop->iteration + $data_dapur->firstItem()-1 }}</td>
-                                            <td>{{ $d->nama_admin }}</td>
+                                            <td>{{ $d->nama_maker }}</td>
                                             <td>{{ $d->nama_kepala_dapur }}</td>
                                             <td>{{ $d->nama_distributor }}</td>
                                             <td>{{ $d->nama_dapur }}</td>
                                             <td>{{ $d->dapur_kecamatan }}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <form action="/admin/data_induk/dapur/{{ $d->id_dapur }}/delete_dapur" style="margin-left: 5px;" method="POST">
+                                                    <form action="/maker/data_induk/dapur/{{ $d->id_dapur }}/delete_dapur" style="margin-left: 5px;" method="POST">
                                                         @csrf
                                                         <a class="btn btn-danger btn-sm delete-confirm-kepaladapur" >
                                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
@@ -142,7 +142,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/data_induk/dapur/store_dapur" method="POST" id="frmDpr" enctype="multipart/form-data">
+                <form action="/maker/data_induk/dapur/store_dapur" method="POST" id="frmDpr" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -168,10 +168,10 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select name="id_admin" id="id_admin" class="form-select">
-                                <option value="">Pilih Nama Admin</option>
-                                @foreach($admin as $d)
-                                    <option value="{{ $d->id_admin }}">{{ $d->nama_admin }}</option>
+                            <select name="id_maker" id="id_maker" class="form-select">
+                                <option value="">Pilih Nama maker</option>
+                                @foreach($maker as $d)
+                                    <option value="{{ $d->id_maker }}">{{ $d->nama_maker }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -223,15 +223,15 @@
 </div>
 
 
-{{-- Modal Edit Data Admin --}}
-<div class="modal modal-blur fade" id="modal-editadmin" tabindex="-1" role="dialog" aria-hidden="true">
+{{-- Modal Edit Data maker --}}
+<div class="modal modal-blur fade" id="modal-editmaker" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Data Admin</h5>
+                <h5 class="modal-title">Edit Data maker</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="loadeditformadmin">
+            <div class="modal-body" id="loadeditformmaker">
                 
             </div>
         </div>
@@ -245,21 +245,21 @@
             $("#modal-inputdapur").modal("show");
         });
 
-        $(".edit_admin").click(function(){
+        $(".edit_maker").click(function(){
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/admin/data_induk/admin/edit_admin',
+                url:'/maker/data_induk/maker/edit_maker',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
                     id : id
                 },
                 success:function(respond){
-                    $("#loadeditformadmin").html(respond);
+                    $("#loadeditformmaker").html(respond);
                 }
             });
-            $("#modal-editadmin").modal("show");
+            $("#modal-editmaker").modal("show");
         });
 
         $(".delete-confirm-kepaladapur").click(function(e){

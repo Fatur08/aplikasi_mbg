@@ -154,7 +154,7 @@
 
     <div class="footer" style="text-align:right; margin-top:40px;">
         <p>Kalianda, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
-        <p>Admin Koperasi</p>
+        <p>maker Koperasi</p>
         <br><br><br>
         <p>______________________</p>
     </div>

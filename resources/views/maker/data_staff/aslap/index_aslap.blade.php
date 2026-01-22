@@ -1,4 +1,4 @@
-@extends('layouts.admin.tabler')
+@extends('layouts.maker.tabler')
 @section('content')
 <style>
 /* === Section Info Dapur === */
@@ -137,7 +137,7 @@
                                 </h2>
                             </td>
                             <td style="text-align:right">
-                                <a href="{{ url('/admin/data_staff') }}" class="btn btn-primary">
+                                <a href="{{ url('/maker/data_staff') }}" class="btn btn-primary">
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
                                     Kembali
                                 </a>
@@ -153,25 +153,25 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#btnTambahAdmin").click(function(){
-            $("#modal-inputadmin").modal("show");
+        $("#btnTambahmaker").click(function(){
+            $("#modal-inputmaker").modal("show");
         });
 
-        $(".edit_admin").click(function(){
+        $(".edit_maker").click(function(){
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/owner/data_induk/admin/edit_admin',
+                url:'/owner/data_induk/maker/edit_maker',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
                     id : id
                 },
                 success:function(respond){
-                    $("#loadeditformadmin").html(respond);
+                    $("#loadeditformmaker").html(respond);
                 }
             });
-            $("#modal-editadmin").modal("show");
+            $("#modal-editmaker").modal("show");
         });
 
         $(".delete-confirm-kepaladapur").click(function(e){

@@ -1,4 +1,4 @@
-<form action="/admin/data_induk/kepala_dapur/{{ $data->id }}/update_kepala_dapur" method="POST" id="frmdata" enctype="multipart/form-data">
+<form action="/maker/data_induk/kepala_dapur/{{ $data->id }}/update_kepala_dapur" method="POST" id="frmdata" enctype="multipart/form-data">
     @csrf
     <input type="text" readonly value="{{ $data->id }}" id="id" class="form-control" name="id" placeholder="id" hidden>
     <div class="row">

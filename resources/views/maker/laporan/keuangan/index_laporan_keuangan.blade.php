@@ -1,4 +1,4 @@
-@extends('layouts.admin.tabler')
+@extends('layouts.maker.tabler')
 @section('content')
 <style>
 /* === Section Info Dapur === */
@@ -183,7 +183,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="/admin/laporan/keuangan" method="GET" id="FormLaporanKeuangan">
+                            <form action="/maker/laporan/keuangan" method="GET" id="FormLaporanKeuangan">
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <div class="row g-2 align-items-end">
@@ -287,7 +287,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/laporan/keuangan/store_laporan_keuangan" method="POST" id="FormLaporanKeuangan" enctype="multipart/form-data">
+                <form action="/maker/laporan/keuangan/store_laporan_keuangan" method="POST" id="FormLaporanKeuangan" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -512,7 +512,7 @@
     const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
     const margin      = koperasiData.map(item => item.margin);
 
-    const ctxBar = document.getElementById('koperasiChartAdmin').getContext('2d');
+    const ctxBar = document.getElementById('koperasiChartmaker').getContext('2d');
     new Chart(ctxBar, {
         type: 'bar',
         data: {
