@@ -120,7 +120,7 @@ class DashboardController extends Controller
         // DATA DISTRIBUSI KATEGORI SEKOLAH
         // ===============================
         $distribusiSekolah = DB::table('distribusi')
-            ->select('tujuan_distribusi', 'jumlah_paket')
+            ->select('tujuan_distribusi', 'jumlah_paket', 'menu_makanan')
             ->where('kategori_distribusi', 'Sekolah')
             ->where('nomor_dapur_distribusi', $nomor_dapur)
             ->get();
@@ -129,7 +129,7 @@ class DashboardController extends Controller
         // DATA DISTRIBUSI KATEGORI B3
         // ===============================
         $distribusiB3 = DB::table('distribusi')
-            ->select('tujuan_distribusi', 'jumlah_paket')
+            ->select('tujuan_distribusi', 'jumlah_paket' , 'menu_makanan')
             ->where('kategori_distribusi', 'B3')
             ->where('nomor_dapur_distribusi', $nomor_dapur)
             ->get();
