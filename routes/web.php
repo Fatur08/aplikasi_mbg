@@ -233,6 +233,7 @@ Route::middleware(['auth:maker'])->group(function(){
     
     // Data Maker
     Route::get('/maker/data_staff/maker',[DataMakerController::class,'index_maker_data_staff_maker']);
+    Route::post('/maker/data_staff/maker/store_maker',[DataMakerController::class,'store_maker_data_staff_maker']);
 
 
 
