@@ -502,11 +502,11 @@ class LaporanStokController extends Controller
 
 
 
-    // BAGIAN ADMIN 
-    public function index_admin_laporan_stok(Request $request)
+    // BAGIAN MAKER
+    public function index_maker_laporan_stok(Request $request)
     {
-        $admin         = Auth::guard('admin')->user();
-        $dapur         = $admin->nomor_dapur_admin;
+        $maker         = Auth::guard('maker')->user();
+        $dapur         = $maker->nomor_dapur_maker;
     
         // =======================
         // TANGGAL PERIODE
@@ -593,7 +593,7 @@ class LaporanStokController extends Controller
             ];
         }
     
-        return view('admin.laporan.stok.index_laporan_stok', compact(
+        return view('maker.laporan.stok.index_laporan_stok', compact(
             'data_laporan',
             'dapur',
             'dari_tanggal',
@@ -603,10 +603,10 @@ class LaporanStokController extends Controller
 
 
 
-    public function index_admin_laporan_stok_harian(Request $request)
+    public function index_maker_laporan_stok_harian(Request $request)
     {
-        $admin              = Auth::guard('admin')->user();
-        $dapur              = $admin->nomor_dapur_admin;
+        $maker              = Auth::guard('maker')->user();
+        $dapur              = $maker->nomor_dapur_maker;
         $tanggal            = $request->pilih_tanggal ?? date('Y-m-d');
         $tanggal_kemarin    = date('Y-m-d', strtotime($tanggal . ' -1 day'));
 
@@ -698,7 +698,7 @@ class LaporanStokController extends Controller
             ];
         }
     
-        return view('admin.laporan.stok_harian.index_laporan_stok_harian', compact(
+        return view('maker.laporan.stok_harian.index_laporan_stok_harian', compact(
             'data_laporan',
             'dapur',
             'tanggal'
@@ -706,10 +706,10 @@ class LaporanStokController extends Controller
     }
 
 
-    public function index_admin_laporan_stok_bulanan(Request $request)
+    public function index_maker_laporan_stok_bulanan(Request $request)
     {
-        $admin  = Auth::guard('admin')->user();
-        $dapur  = $admin->nomor_dapur_admin;
+        $maker  = Auth::guard('maker')->user();
+        $dapur  = $maker->nomor_dapur_maker;
 
         // ============================
         // PROSES BULAN & TAHUN
@@ -794,7 +794,7 @@ class LaporanStokController extends Controller
             ];
         }
 
-        return view('admin.laporan.stok_bulanan.index_laporan_stok_bulanan', compact(
+        return view('maker.laporan.stok_bulanan.index_laporan_stok_bulanan', compact(
             'data_laporan',
             'dapur',
             'filter_bulan'

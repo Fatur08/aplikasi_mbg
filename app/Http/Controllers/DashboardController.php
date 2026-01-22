@@ -71,7 +71,7 @@ class DashboardController extends Controller
         })->get();
         
         // Data pendukung
-        $admins       = \App\Models\Admin::all();
+        $makers       = \App\Models\maker::all();
         $kepalaDapur  = \App\Models\KepalaDapur::all();
         $distributors = \App\Models\Distributor::all();
         
@@ -98,13 +98,13 @@ class DashboardController extends Controller
         $dataKosong = $sudahCari && $dataDapur->isEmpty();
         
         // Kirim ke view
-        return view('dashboard.dashboardowner', compact('dapurList', 'dataDapur', 'admins', 'kepalaDapur', 'distributors', 'dataKosong', 'sudahCari', 'dataDistribusi'));
+        return view('dashboard.dashboardowner', compact('dapurList', 'dataDapur', 'makers', 'kepalaDapur', 'distributors', 'dataKosong', 'sudahCari', 'dataDistribusi'));
     }
 
-    public function dashboardadmin(Request $request)
+    public function dashboardmaker(Request $request)
     {
-        $admin               = DB::table('admin')->where('id_admin', auth()->id())->first();
-        $nomor_dapur         = $admin->nomor_dapur_admin ?? null;
+        $maker               = DB::table('maker')->where('id_maker', auth()->id())->first();
+        $nomor_dapur         = $maker->nomor_dapur_maker ?? null;
         $kecamatan           = $request->cari_kecamatan;
         $bulan               = $request->cari_bulan;
     
@@ -175,7 +175,7 @@ class DashboardController extends Controller
         : '-';
         
     
-        return view('dashboard.dashboardadmin', compact(
+        return view('dashboard.dashboardmaker', compact(
             'distribusi',
             'nama_distributor',
             'kecamatan',

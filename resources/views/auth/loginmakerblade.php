@@ -75,7 +75,7 @@
                                     <p>{{ Session::get('warning') }}</p>
                                 </div>                                    
                                 @endif
-                                <form action="/prosesloginadmin" method="post" autocomplete="off" novalidate>
+                                <form action="/prosesloginmaker" method="post" autocomplete="off" novalidate>
                                     @csrf
                                     <div class="mb-3">
                                     <input type="email"  name='email' class="form-control" placeholder="Email" autocomplete="off">

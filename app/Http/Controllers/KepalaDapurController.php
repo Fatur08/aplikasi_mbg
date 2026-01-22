@@ -155,8 +155,38 @@ class KepalaDapurController extends Controller
 
 
 
-    //Bagian Admin
-    public function index_admin_kepala_dapur(Request $request)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //Bagian Maker
+    public function index_maker_kepala_dapur(Request $request)
     {
         $nama_lengkap_cari = $request->nama_lengkap_cari;
         $kecamatan_cari = $request->kecamatan_cari;
@@ -170,10 +200,10 @@ class KepalaDapurController extends Controller
         }
         $kepala_dapur = $query->get();
         $kepala_dapur = $query->paginate(10);
-        return view('admin.data_induk.kepala_dapur.index_kepala_dapur', compact('kepala_dapur'));
+        return view('maker.data_induk.kepala_dapur.index_kepala_dapur', compact('kepala_dapur'));
     }
 
-    public function store_admin_kepala_dapur(Request $request)
+    public function store_maker_kepala_dapur(Request $request)
     {
         $nama_lengkap = $request->nama_lengkap;
         $email = $request->email;
@@ -222,15 +252,15 @@ class KepalaDapurController extends Controller
         }
     }
 
-    public function edit_admin_kepala_dapur(Request $request)
+    public function edit_maker_kepala_dapur(Request $request)
     {
         $id = $request->id;
         $kepala_dapur = DB::table('kepala_dapur')->get();
         $data = DB::table('kepala_dapur')->where('id', $id)->first();
-        return view('admin.data_induk.kepala_dapur.edit_kepala_dapur',compact('kepala_dapur','data'));
+        return view('maker.data_induk.kepala_dapur.edit_kepala_dapur',compact('kepala_dapur','data'));
     }
 
-    public function update_admin_kepala_dapur($id, Request $request)
+    public function update_maker_kepala_dapur($id, Request $request)
     {
         $id = $request->id;
         $nama_lengkap = $request->nama_lengkap;
@@ -287,7 +317,7 @@ class KepalaDapurController extends Controller
         }
     }
 
-    public function delete_admin_kepala_dapur($id)
+    public function delete_maker_kepala_dapur($id)
     {
         $delete = DB::table('kepala_dapur')->where('id', $id)->delete();
         if($delete){

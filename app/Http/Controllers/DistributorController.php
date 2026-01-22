@@ -155,8 +155,38 @@ class DistributorController extends Controller
 
 
 
-    //Bagian Admin
-    public function index_admin_distributor(Request $request)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //Bagian Maker
+    public function index_maker_distributor(Request $request)
     {
         $nama_lengkap_cari = $request->nama_lengkap_cari;
         $kecamatan_cari = $request->kecamatan_cari;
@@ -170,10 +200,10 @@ class DistributorController extends Controller
         }
         $distributor = $query->get();
         $distributor = $query->paginate(10);
-        return view('admin.data_induk.distributor.index_distributor', compact('distributor'));
+        return view('maker.data_induk.distributor.index_distributor', compact('distributor'));
     }
 
-    public function store_admin_distributor(Request $request)
+    public function store_maker_distributor(Request $request)
     {
         $nama_distributor = $request->nama_distributor;
         $email_distributor = $request->email_distributor;
@@ -222,15 +252,15 @@ class DistributorController extends Controller
         }
     }
 
-    public function edit_admin_distributor(Request $request)
+    public function edit_maker_distributor(Request $request)
     {
         $id = $request->id;
         $distributor = DB::table('distributor')->get();
         $data = DB::table('distributor')->where('id_distributor', $id)->first();
-        return view('admin.data_induk.distributor.edit_distributor',compact('distributor','data'));
+        return view('maker.data_induk.distributor.edit_distributor',compact('distributor','data'));
     }
 
-    public function update_admin_distributor($id_distributor, Request $request)
+    public function update_maker_distributor($id_distributor, Request $request)
     {
         $id_distributor = $request->id_distributor;
         $nama_distributor = $request->nama_distributor;
@@ -287,7 +317,7 @@ class DistributorController extends Controller
         }
     }
 
-    public function delete_admin_distributor($id_distributor)
+    public function delete_maker_distributor($id_distributor)
     {
         $delete = DB::table('distributor')->where('id_distributor', $id_distributor)->delete();
         if($delete){

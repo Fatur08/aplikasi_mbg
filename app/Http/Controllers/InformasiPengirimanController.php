@@ -52,8 +52,37 @@ class InformasiPengirimanController extends Controller
 
 
 
-    // BAGIAN ADMIN
-    public function index_admin_pengiriman(Request $request)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // BAGIAN MAKER
+    public function index_maker_pengiriman(Request $request)
     {        
         $nama_distributor = $request->cari_nama_distributor;
         $kecamatan_sekolah   = $request->cari_kecamatan_sekolah;

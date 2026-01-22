@@ -1,4 +1,4 @@
-@extends('layouts.admin.tabler')
+@extends('layouts.maker.tabler')
 @section('content')
 <style>
 .section-info {
@@ -175,7 +175,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <form action="/admin/data_koperasi" method="GET">
+                                <form action="/maker/data_koperasi" method="GET">
                                     <div class="row g-2 align-items-end">
                                         <div class="col-md-4">
                                             <div class="input-icon">
@@ -309,7 +309,7 @@
                                                                                 <a href="#" class="edit_modal_masuk_data_koperasi btn btn-info btn-sm mb-1" id="{{ $d->id_data_koperasi }}">
                                                                                     <i class="bi bi-pencil-square"></i> Edit
                                                                                 </a>
-                                                                                <form action="/admin/data_koperasi/{{ $d->id_data_koperasi }}/delete_data_koperasi" method="POST">
+                                                                                <form action="/maker/data_koperasi/{{ $d->id_data_koperasi }}/delete_data_koperasi" method="POST">
                                                                                     @csrf
                                                                                     <a class="btn btn-danger btn-sm delete-confirm-data-koperasi mb-1">
                                                                                         <i class="bi bi-trash"></i> Hapus
@@ -415,7 +415,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/data_koperasi/store_data_koperasi" method="POST" id="frmDtKprs" enctype="multipart/form-data">
+                <form action="/maker/data_koperasi/store_data_koperasi" method="POST" id="frmDtKprs" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -577,7 +577,7 @@
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/admin/data_koperasi/edit_modal_masuk_data_koperasi',
+                url:'/maker/data_koperasi/edit_modal_masuk_data_koperasi',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -595,7 +595,7 @@
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/admin/data_koperasi/tambah_barang_modal_keluar',
+                url:'/maker/data_koperasi/tambah_barang_modal_keluar',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -614,7 +614,7 @@
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/admin/data_koperasi/edit_modal_keluar_data_koperasi',
+                url:'/maker/data_koperasi/edit_modal_keluar_data_koperasi',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -632,7 +632,7 @@
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/admin/data_koperasi/tambah_barang_modal_keluar',
+                url:'/maker/data_koperasi/tambah_barang_modal_keluar',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -649,7 +649,7 @@
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/admin/data_koperasi/lihat_barang_modal_keluar',
+                url:'/maker/data_koperasi/lihat_barang_modal_keluar',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -685,7 +685,7 @@
             });
         });
 
-        $("#FormDataKoperasiAdmin").submit(function(){
+        $("#FormDataKoperasimaker").submit(function(){
             var dari_tanggal = $("#dari_tanggal").val();
             var sampai_tanggal = $("#sampai_tanggal").val();
             var bulan = $("#bulan").val();
@@ -775,7 +775,7 @@
         let dari_tanggal    = document.getElementById("dari_tanggal").value;
         let sampai_tanggal  = document.getElementById("sampai_tanggal").value;
 
-        let url = `/admin/data_koperasi/cetak_data_koperasi?dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
+        let url = `/maker/data_koperasi/cetak_data_koperasi?dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
         window.open(url, "_blank");
     });
 </script>

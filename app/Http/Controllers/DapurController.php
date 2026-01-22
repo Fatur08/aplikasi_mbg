@@ -14,12 +14,12 @@ class DapurController extends Controller
         $cari_kecamatan = $request->cari_kecamatan;
 
         $query = DB::table('dapur')
-            ->leftJoin('admin', 'dapur.nomor_dapur', '=', 'admin.nomor_dapur_admin')
+            ->leftJoin('maker', 'dapur.nomor_dapur', '=', 'maker.nomor_dapur_maker')
             ->leftJoin('kepala_dapur', 'dapur.nomor_dapur', '=', 'kepala_dapur.nomor_dapur_kepala_dapur')
             ->leftJoin('distributor', 'dapur.nomor_dapur', '=', 'distributor.nomor_dapur_distributor')
             ->select(
                 'dapur.*',
-                'admin.nama_admin',
+                'maker.nama_maker',
                 'kepala_dapur.nama_lengkap as nama_kepala_dapur',
                 'distributor.nama_distributor'
             );
@@ -30,18 +30,18 @@ class DapurController extends Controller
 
         $data_dapur = $query->orderBy('dapur.nomor_dapur','asc')->paginate(8);
 
-        $admin = DB::table('admin')->select('id_admin', 'nama_admin')->get();
+        $maker = DB::table('maker')->select('id_maker', 'nama_maker')->get();
         $kepala_dapur = DB::table('kepala_dapur')->select('id', 'nama_lengkap')->get();
         $distributor = DB::table('distributor')->select('id_distributor', 'nama_distributor')->get();
 
-        return view('owner.data_induk.dapur.index_dapur', compact('admin', 'kepala_dapur', 'distributor', 'data_dapur'));
+        return view('owner.data_induk.dapur.index_dapur', compact('maker', 'kepala_dapur', 'distributor', 'data_dapur'));
     }
 
     public function store_owner_dapur(Request $request)
     {
         $nama_dapur = $request->nama_dapur;
         $nomor_dapur = (int)$request->nomor_dapur;
-        $id_admin = $request->id_admin;
+        $id_maker = $request->id_maker;
         $id_kepala_dapur = $request->id_kepala_dapur;
         $id_distributor = $request->id_distributor;
         $dapur_kecamatan = $request->dapur_kecamatan;
@@ -54,10 +54,10 @@ class DapurController extends Controller
 
         $simpan = DB::table('dapur')->insert($data);
 
-        $updateadmin = DB::table('admin')
-            ->where('id_admin', $id_admin)
+        $updatemaker = DB::table('maker')
+            ->where('id_maker', $id_maker)
             ->update([
-                'nomor_dapur_admin' => $nomor_dapur
+                'nomor_dapur_maker' => $nomor_dapur
             ]);
         
         $updatekepaladapur = DB::table('kepala_dapur')
@@ -93,8 +93,8 @@ class DapurController extends Controller
 
 
 
-    //Bagian Admin
-    public function index_admin_dapur(Request $request)
+    //Bagian Maker
+    public function index_maker_dapur(Request $request)
     {
         $cari_kecamatan = $request->cari_kecamatan;
         $semuaKecamatan = [
@@ -128,12 +128,12 @@ class DapurController extends Controller
         $availableKecamatan = array_diff($semuaKecamatan, $usedKecamatan);
 
         $query = DB::table('dapur')
-            ->leftJoin('admin', 'dapur.nomor_dapur', '=', 'admin.nomor_dapur_admin')
+            ->leftJoin('maker', 'dapur.nomor_dapur', '=', 'maker.nomor_dapur_maker')
             ->leftJoin('kepala_dapur', 'dapur.nomor_dapur', '=', 'kepala_dapur.nomor_dapur_kepala_dapur')
             ->leftJoin('distributor', 'dapur.nomor_dapur', '=', 'distributor.nomor_dapur_distributor')
             ->select(
                 'dapur.*',
-                'admin.nama_admin',
+                'maker.nama_maker',
                 'kepala_dapur.nama_lengkap as nama_kepala_dapur',
                 'distributor.nama_distributor'
             );
@@ -144,20 +144,20 @@ class DapurController extends Controller
 
         $data_dapur = $query->orderBy('dapur.nomor_dapur','asc')->paginate(8);
 
-        $admin = DB::table('admin')->select('id_admin', 'nama_admin')->get();
+        $maker = DB::table('maker')->select('id_maker', 'nama_maker')->get();
         $kepala_dapur = DB::table('kepala_dapur')->select('id', 'nama_lengkap')->get();
         $distributor = DB::table('distributor')->select('id_distributor', 'nama_distributor')->get();
 
         $select_dapur = DB::table('dapur')->select('dapur_kecamatan')->get();
 
-        return view('admin.data_induk.dapur.index_dapur', compact('admin', 'kepala_dapur', 'distributor', 'data_dapur','availableKecamatan', 'select_dapur'));
+        return view('maker.data_induk.dapur.index_dapur', compact('maker', 'kepala_dapur', 'distributor', 'data_dapur','availableKecamatan', 'select_dapur'));
     }
 
-    public function store_admin_dapur(Request $request)
+    public function store_maker_dapur(Request $request)
     {
         $nama_dapur = $request->nama_dapur;
         $nomor_dapur = (int)$request->nomor_dapur;
-        $id_admin = $request->id_admin;
+        $id_maker = $request->id_maker;
         $id_kepala_dapur = $request->id_kepala_dapur;
         $id_distributor = $request->id_distributor;
         $dapur_kecamatan = $request->dapur_kecamatan;
@@ -170,10 +170,10 @@ class DapurController extends Controller
 
         $simpan = DB::table('dapur')->insert($data);
 
-        $updateadmin = DB::table('admin')
-            ->where('id_admin', $id_admin)
+        $updatemaker = DB::table('maker')
+            ->where('id_maker', $id_maker)
             ->update([
-                'nomor_dapur_admin' => $nomor_dapur
+                'nomor_dapur_maker' => $nomor_dapur
             ]);
         
         $updatekepaladapur = DB::table('kepala_dapur')
@@ -195,7 +195,7 @@ class DapurController extends Controller
         }
     }
 
-    public function delete_admin_dapur($id_dapur)
+    public function delete_maker_dapur($id_dapur)
     {
         $delete = DB::table('dapur')->where('id_dapur', $id_dapur)->delete();
         if($delete){

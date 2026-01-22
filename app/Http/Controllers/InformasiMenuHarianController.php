@@ -76,8 +76,8 @@ class InformasiMenuHarianController extends Controller
     }
 
 
-    // BAGIAN ADMIN
-    public function index_admin_menu_harian(Request $request)
+    // BAGIAN MAKER
+    public function index_maker_menu_harian(Request $request)
     {
         $searchKecamatan = $request->input('cari_kecamatan_harian_dapur');
         $searchSekolah   = $request->input('cari_sekolah_harian_dapur');
@@ -134,7 +134,7 @@ class InformasiMenuHarianController extends Controller
         $sudahCari = !empty($searchKecamatan) ||
                      !empty($searchSekolah);
 
-        return view('admin.informasi.menu_harian.index_menu_harian', compact(
+        return view('maker.informasi.menu_harian.index_menu_harian', compact(
             'laporan',
             'sekolahList',
             'searchKecamatan',

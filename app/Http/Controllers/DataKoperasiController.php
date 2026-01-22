@@ -405,7 +405,7 @@ class DataKoperasiController extends Controller
         }
 
         // Kirim ke view sebagai barang_list (lebih jelas)
-        return view('admin.data_koperasi.lihat_barang_modal_keluar', compact('barang_list'));
+        return view('maker.data_koperasi.lihat_barang_modal_keluar', compact('barang_list'));
     }
 
 
@@ -696,12 +696,12 @@ class DataKoperasiController extends Controller
 
 
     
-    // BAGIAN ADMIN
-    public function index_admin_data_koperasi(Request $request)
+    // BAGIAN MAKER
+    public function index_maker_data_koperasi(Request $request)
     {
-        // Ambil data admin yang sedang login
-        $admin          = Auth::guard('admin')->user();
-        $dapur          = $admin->nomor_dapur_admin;
+        // Ambil data maker yang sedang login
+        $maker          = Auth::guard('maker')->user();
+        $dapur          = $maker->nomor_dapur_maker;
 
         $dari_tanggal   = $request->dari_tanggal;
         $sampai_tanggal = $request->sampai_tanggal;
@@ -779,7 +779,7 @@ class DataKoperasiController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
 
-        return view('admin.data_koperasi.index_data_koperasi', compact(
+        return view('maker.data_koperasi.index_data_koperasi', compact(
             'data_koperasi',
             'dataKosong',
             'sudahCari',
@@ -788,11 +788,11 @@ class DataKoperasiController extends Controller
         ));
     }
 
-    public function cetak_admin_data_koperasi(Request $request)
+    public function cetak_maker_data_koperasi(Request $request)
     {
-        // Ambil data admin yang sedang login
-        $admin          = Auth::guard('admin')->user();
-        $dapur          = $admin->nomor_dapur_admin;
+        // Ambil data maker yang sedang login
+        $maker          = Auth::guard('maker')->user();
+        $dapur          = $maker->nomor_dapur_maker;
 
         $dari_tanggal   = $request->dari_tanggal;
         $sampai_tanggal = $request->sampai_tanggal;
@@ -868,7 +868,7 @@ class DataKoperasiController extends Controller
             }
         }
 
-        return view('admin.data_koperasi.cetak_data_koperasi', compact(
+        return view('maker.data_koperasi.cetak_data_koperasi', compact(
             'data_koperasi',
             'grouped',
             'dari_tanggal',
@@ -876,11 +876,11 @@ class DataKoperasiController extends Controller
         ));
     }
 
-    public function store_admin_data_koperasi(Request $request)
+    public function store_maker_data_koperasi(Request $request)
     {
-        // Ambil data admin yang sedang login
-        $admin = Auth::guard('admin')->user();
-        $nomor_dapur_admin = $admin->nomor_dapur_admin;
+        // Ambil data maker yang sedang login
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur_maker = $maker->nomor_dapur_maker;
 
         $jenis_data_koperasi    = $request->jenis_data_koperasi;
         $kategori_data_koperasi = $request->kategori_data_koperasi;
@@ -893,7 +893,7 @@ class DataKoperasiController extends Controller
         try {
             // 1️⃣ Simpan data ke tabel data_koperasi
             $id_data_koperasi = DB::table('data_koperasi')->insertGetId([
-                'nomor_dapur_data_koperasi' => $nomor_dapur_admin,
+                'nomor_dapur_data_koperasi' => $nomor_dapur_maker,
                 'jenis_data_koperasi'       => $jenis_data_koperasi,
                 'kategori_data_koperasi'    => $kategori_data_koperasi,
                 'tanggal_data_koperasi'     => $tanggal_data_koperasi,
@@ -905,7 +905,7 @@ class DataKoperasiController extends Controller
             if ($jenis_data_koperasi === 'modal_masuk') {
                 DB::table('keuangan')->insert([
                     'id_data_koperasi'           => $id_data_koperasi,
-                    'nomor_dapur_keuangan'       => $nomor_dapur_admin,
+                    'nomor_dapur_keuangan'       => $nomor_dapur_maker,
                     'tanggal_laporan_keuangan'   => $tanggal_data_koperasi,
                     'kategori_laporan_keuangan'  => $kategori_data_koperasi,
                     'jenis_transaksi'            => 'Pemasukan',
@@ -914,7 +914,7 @@ class DataKoperasiController extends Controller
             } elseif ($jenis_data_koperasi === 'modal_keluar') {
                 DB::table('keuangan')->insert([
                     'id_data_koperasi'           => $id_data_koperasi,
-                    'nomor_dapur_keuangan'       => $nomor_dapur_admin,
+                    'nomor_dapur_keuangan'       => $nomor_dapur_maker,
                     'tanggal_laporan_keuangan'   => $tanggal_data_koperasi,
                     'kategori_laporan_keuangan'  => $kategori_data_koperasi,
                     'jenis_transaksi'            => 'Pengeluaran',
@@ -934,16 +934,16 @@ class DataKoperasiController extends Controller
         }
     }
 
-    public function edit_modal_masuk_admin_data_koperasi(Request $request)
+    public function edit_modal_masuk_maker_data_koperasi(Request $request)
     {
         $id = $request->id;
         $data_koperasi = DB::table('data_koperasi')->get();
         $data = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
-        return view('admin.data_koperasi.edit_modal_masuk_data_koperasi',compact('data_koperasi','data'));
+        return view('maker.data_koperasi.edit_modal_masuk_data_koperasi',compact('data_koperasi','data'));
     }
 
 
-    public function update_modal_masuk_admin_data_koperasi($id, Request $request)
+    public function update_modal_masuk_maker_data_koperasi($id, Request $request)
     {
         $kategori_data_koperasi = $request->kategori_data_koperasi;
         $harga_data_koperasi = $request->harga_data_koperasi;
@@ -968,7 +968,7 @@ class DataKoperasiController extends Controller
 
 
 
-    public function tambah_admin_barang_modal_keluar(Request $request)
+    public function tambah_maker_barang_modal_keluar(Request $request)
     {
         $id                 = $request->id;
         $data_koperasi      = DB::table('data_koperasi')->get();
@@ -979,10 +979,10 @@ class DataKoperasiController extends Controller
             ->select('nomor_dapur', 'nama_dapur')
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
-        return view('admin.data_koperasi.tambah_barang_modal_keluar',compact('data_koperasi','data','dapurList'));
+        return view('maker.data_koperasi.tambah_barang_modal_keluar',compact('data_koperasi','data','dapurList'));
     }
 
-    public function store_admin_barang_modal_keluar(Request $request)
+    public function store_maker_barang_modal_keluar(Request $request)
     {
         DB::beginTransaction();
 
@@ -1099,7 +1099,7 @@ class DataKoperasiController extends Controller
 
 
 
-    public function edit_modal_keluar_admin_data_koperasi(Request $request)
+    public function edit_modal_keluar_maker_data_koperasi(Request $request)
     {
         $id = $request->id;
 
@@ -1186,7 +1186,7 @@ class DataKoperasiController extends Controller
                 ->get();
         }
 
-        return view('admin.data_koperasi.edit_modal_keluar_data_koperasi', compact(
+        return view('maker.data_koperasi.edit_modal_keluar_data_koperasi', compact(
             'data_koperasi',
             'data',
             'barang_list'
@@ -1195,7 +1195,7 @@ class DataKoperasiController extends Controller
 
 
 
-    public function update_modal_keluar_admin_data_koperasi($id, Request $request)
+    public function update_modal_keluar_maker_data_koperasi($id, Request $request)
     {
         DB::beginTransaction();
 
@@ -1257,10 +1257,10 @@ class DataKoperasiController extends Controller
         }
     }
 
-    public function lihat_admin_barang_modal_keluar(Request $request)
+    public function lihat_maker_barang_modal_keluar(Request $request)
     {
-        $admin = Auth::guard('admin')->user();
-        $nomor_dapur_admin = $admin->nomor_dapur_admin;
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur_maker = $maker->nomor_dapur_maker;
 
         // id_data_koperasi dikirim dari request
         $id_data_koperasi = $request->id;
@@ -1279,7 +1279,7 @@ class DataKoperasiController extends Controller
         $barang_list = DB::table('barang_supplier')
             ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
             ->where('barang_supplier.id_informasi_supplier', $id_informasi_supplier)
-            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur_admin)
+            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur_maker)
             ->select(
                 'barang_supplier.id_barang_supplier as id_barang',
                 'barang_supplier.nama_barang_supplier as nama_barang',
@@ -1294,7 +1294,7 @@ class DataKoperasiController extends Controller
         if ($barang_list->isEmpty()) {
             $barang_list = DB::table('barang_modal_keluar')
                 ->where('barang_modal_keluar.id_data_koperasi', $id_data_koperasi)
-                ->where('barang_modal_keluar.nomor_dapur_barang_modal_keluar', $nomor_dapur_admin)
+                ->where('barang_modal_keluar.nomor_dapur_barang_modal_keluar', $nomor_dapur_maker)
                 ->select(
                     'barang_modal_keluar.id_barang_modal_keluar as id_barang',
                     'barang_modal_keluar.nama_barang_modal_keluar as nama_barang',
@@ -1307,10 +1307,10 @@ class DataKoperasiController extends Controller
         }
 
         // Kirim ke view sebagai barang_list (lebih jelas)
-        return view('admin.data_koperasi.lihat_barang_modal_keluar', compact('barang_list'));
+        return view('maker.data_koperasi.lihat_barang_modal_keluar', compact('barang_list'));
     }
 
-    public function delete_admin_data_koperasi($id)
+    public function delete_maker_data_koperasi($id)
     {
         $delete = DB::table('data_koperasi')->where('id_data_koperasi', $id)->delete();
         if($delete){

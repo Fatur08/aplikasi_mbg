@@ -133,11 +133,11 @@ class LaporanDapurController extends Controller
 
 
 
-    // BAGIAN ADMIN
-    public function index_admin_dapur(Request $request)
+    // BAGIAN MAKER
+    public function index_maker_dapur(Request $request)
     {
-        $admin       = Auth::guard('admin')->user();
-        $nomor_dapur = $admin->nomor_dapur_admin;
+        $maker       = Auth::guard('maker')->user();
+        $nomor_dapur = $maker->nomor_dapur_maker;
         $tanggal     = $request->pilih_tanggal ?? date('Y-m-d');
         $id_menu     = $request->id_menu_harian;
 
@@ -176,7 +176,7 @@ class LaporanDapurController extends Controller
             ->get();
 
         // ✅ Kirim ke view
-        return view('admin.laporan.dapur.index_dapur', compact(
+        return view('maker.laporan.dapur.index_dapur', compact(
             'jadwal_menu_harian',
             'nomor_dapur',
             'menu_harian',
@@ -185,7 +185,7 @@ class LaporanDapurController extends Controller
     }
 
 
-    public function kendala_admin_dapur(Request $request)
+    public function kendala_maker_dapur(Request $request)
     {
         $tanggal = $request->tanggal;
 
@@ -208,17 +208,17 @@ class LaporanDapurController extends Controller
             ->where('distribusi.tanggal_distribusi', $tanggal)
             ->first();
 
-        return view('admin.laporan.dapur.kendala_dapur', compact('kendala', 'tanggal'));
+        return view('maker.laporan.dapur.kendala_dapur', compact('kendala', 'tanggal'));
     }
 
 
     public function tambah_operasional_dapur(Request $request)
     {
-        return view('admin.laporan.dapur.tambah_operasional_dapur');
+        return view('maker.laporan.dapur.tambah_operasional_dapur');
     }
 
 
-    public function store_admin_dapur(Request $request)
+    public function store_maker_dapur(Request $request)
     {
         $kepalaDapur = Auth::guard('kepala_dapur')->user();
 

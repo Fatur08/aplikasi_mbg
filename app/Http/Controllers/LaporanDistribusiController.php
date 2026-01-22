@@ -205,11 +205,11 @@ class LaporanDistribusiController extends Controller
 
 
 
-    // BAGIAN ADMIN
-    public function index_admin_laporan_distribusi(Request $request)
+    // BAGIAN MAKER
+    public function index_maker_laporan_distribusi(Request $request)
     {
-        $admin               = DB::table('admin')->where('id_admin', auth()->id())->first();
-        $nomor_dapur         = $admin->nomor_dapur_admin ?? null;
+        $maker               = DB::table('maker')->where('id_maker', auth()->id())->first();
+        $nomor_dapur         = $maker->nomor_dapur_maker ?? null;
         $kecamatan           = $request->cari_kecamatan;
         $bulan               = $request->cari_bulan;
     
@@ -274,7 +274,7 @@ class LaporanDistribusiController extends Controller
         }
         
     
-        return view('admin.laporan.distribusi.index_laporan_distribusi', compact(
+        return view('maker.laporan.distribusi.index_laporan_distribusi', compact(
             'distribusi',
             'nama_distributor',
             'kecamatan',
@@ -285,15 +285,15 @@ class LaporanDistribusiController extends Controller
         ));
     }
 
-    public function edit_admin_laporan_distribusi(Request $request)
+    public function edit_maker_laporan_distribusi(Request $request)
     {
         $id = $request->id;
         $distribusi = DB::table('distribusi')->get();
         $data = DB::table('distribusi')->where('id_distribusi', $id)->first();
-        return view('admin.laporan.distribusi.edit_laporan_distribusi',compact('distribusi','data'));
+        return view('maker.laporan.distribusi.edit_laporan_distribusi',compact('distribusi','data'));
     }
 
-    public function update_admin_laporan_distribusi($id, Request $request)
+    public function update_maker_laporan_distribusi($id, Request $request)
     {
         try {
             $status_distribusi = $request->status_distribusi;
@@ -315,7 +315,7 @@ class LaporanDistribusiController extends Controller
         }
     }
 
-    public function delete_admin_laporan_distribusi($id)
+    public function delete_maker_laporan_distribusi($id)
     {
         $delete = DB::table('distribusi')->where('id_distribusi', $id)->delete();
         if($delete){
@@ -325,23 +325,23 @@ class LaporanDistribusiController extends Controller
         }
     }
 
-    public function bukti_admin_pengiriman(Request $request)
+    public function bukti_maker_pengiriman(Request $request)
     {        
         $id = $request->id;
         $distribusi = DB::table('distribusi')->get();
         $data = DB::table('distribusi')->where('id_distribusi', $id)->first();
-        return view('admin.laporan.distribusi.bukti_pengiriman_laporan_distribusi',compact('distribusi','data'));
+        return view('maker.laporan.distribusi.bukti_pengiriman_laporan_distribusi',compact('distribusi','data'));
     }
 
-    public function kendala_admin_distribusi(Request $request)
+    public function kendala_maker_distribusi(Request $request)
     {        
         $id = $request->id;
         $distribusi = DB::table('distribusi')->get();
         $data = DB::table('distribusi')->where('id_distribusi', $id)->first();
-        return view('admin.laporan.distribusi.kendala_distribusi',compact('distribusi','data'));
+        return view('maker.laporan.distribusi.kendala_distribusi',compact('distribusi','data'));
     }
 
-    public function batalkan_admin_distribusi($id, Request $request)
+    public function batalkan_maker_distribusi($id, Request $request)
     {
         $update = DB::table('distribusi')
             ->where('id_distribusi',$id)

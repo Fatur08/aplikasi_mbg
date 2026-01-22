@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Admin;
 use App\Models\Owner;
 use App\Models\KepalaDapur;
 use App\Models\Distributor;
+use App\Models\Maker;
 
 class AuthController extends Controller
 {
@@ -24,19 +24,19 @@ class AuthController extends Controller
         return redirect('/owner')->with(['warning' => 'Email atau Password Salah!']);
     }
 
-    // ========== ADMIN ==========
-    public function prosesloginadmin(Request $request)
+    // ========== MAKER ==========
+    public function prosesloginmaker(Request $request)
     {
-        $admin = Admin::where('email_admin', $request->email)
-            ->where('password_admin', $request->password) // tanpa hash
+        $maker = Maker::where('email_maker', $request->email)
+            ->where('password_maker', $request->password) // tanpa hash
             ->first();
 
-        if ($admin) {
-            Auth::guard('admin')->login($admin);
-            return redirect()->intended('/admin/dashboardadmin');
+        if ($maker) {
+            Auth::guard('maker')->login($maker);
+            return redirect()->intended('/maker/dashboardmaker');
         }
 
-        return redirect('/admin')->with(['warning' => 'Email atau Password Salah!']);
+        return redirect('/maker')->with(['warning' => 'Email atau Password Salah!']);
     }
 
     // ========== KEPALA DAPUR ==========
@@ -76,10 +76,10 @@ class AuthController extends Controller
         return redirect('/owner');
     }
 
-    public function proseslogoutadmin()
+    public function proseslogoutmaker()
     {
-        Auth::guard('admin')->logout();
-        return redirect('/admin');
+        Auth::guard('maker')->logout();
+        return redirect('/maker');
     }
 
     public function proseslogoutkepaladapur()

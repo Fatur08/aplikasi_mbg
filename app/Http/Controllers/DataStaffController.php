@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class DataStaffController extends Controller
 {
-    public function index_admin_data_staff(Request $request)
+    public function index_maker_data_staff(Request $request)
     {
-        $admin = Auth::guard('admin')->user();
-        $nomor_dapur_admin = $admin->nomor_dapur_admin;
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur_maker = $maker->nomor_dapur_maker;
         $cari_nama = $request->cari_nama;
 
         // 🔹 Subquery dapur unik berdasarkan nomor_dapur
@@ -38,7 +38,7 @@ class DataStaffController extends Controller
                 'dapur.nama_dapur',
                 'dapur.dapur_kecamatan'
             )
-            ->where('kepala_dapur.nomor_dapur_kepala_dapur', $nomor_dapur_admin);
+            ->where('kepala_dapur.nomor_dapur_kepala_dapur', $nomor_dapur_maker);
 
         if (!empty($cari_nama)) {
             $querykepaladapur->where('kepala_dapur.nama_lengkap', 'like', '%' . $cari_nama . '%');
@@ -65,7 +65,7 @@ class DataStaffController extends Controller
                 'dapur.nama_dapur',
                 'dapur.dapur_kecamatan'
             )
-            ->where('distributor.nomor_dapur_distributor', $nomor_dapur_admin);
+            ->where('distributor.nomor_dapur_distributor', $nomor_dapur_maker);
 
         // 🔍 Filter pencarian nama distributor (jika diinput)
         if (!empty($cari_nama)) {
@@ -101,6 +101,6 @@ class DataStaffController extends Controller
             ->distinct()
             ->get();
 
-        return view('admin.data_staff.index_data_staff', compact('kepala_dapur', 'distributor', 'aslap', 'dapurList', 'peranList'));
+        return view('maker.data_staff.index_data_staff', compact('kepala_dapur', 'distributor', 'aslap', 'dapurList', 'peranList'));
     }
 }

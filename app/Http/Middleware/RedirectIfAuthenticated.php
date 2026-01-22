@@ -27,8 +27,8 @@ class RedirectIfAuthenticated
                 switch ($guard) {
                     case 'owner':
                         return redirect('/owner/dashboardowner');
-                    case 'admin':
-                        return redirect('/admin/dashboardadmin');
+                    case 'maker':
+                        return redirect('/maker/dashboardmaker');
                     case 'kepala_dapur':
                         return redirect('/kepala_dapur/dashboardkepaladapur');
                     case 'distributor':

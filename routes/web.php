@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MakerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DapurController;
 use App\Http\Controllers\DataKoperasiController;
@@ -57,11 +57,11 @@ Route::middleware(['guest:owner'])->group(function() {
 
 
 
-Route::middleware(['guest:admin'])->group(function() {
-    Route::get('/admin', function () {
-        return view('auth.loginadmin');
-    })->name('loginadmin');
-    Route::post('/prosesloginadmin', [AuthController::class,'prosesloginadmin']);
+Route::middleware(['guest:maker'])->group(function() {
+    Route::get('/maker', function () {
+        return view('auth.loginmaker');
+    })->name('loginmaker');
+    Route::post('/prosesloginmaker', [AuthController::class,'prosesloginmaker']);
 });
 
 
@@ -87,12 +87,12 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::get('/owner/dashboardowner',[DashboardController::class,'dashboardowner']);
 
     //Data Induk
-    //Admin
-    Route::get('/owner/data_staff/admin',[AdminController::class,'index_owner_admin']);
-    Route::post('/owner/data_staff/admin/store_admin',[AdminController::class,'store_owner_admin']);
-    Route::post('/owner/data_staff/admin/edit_admin',[AdminController::class,'edit_owner_admin']);
-    Route::post('/owner/data_staff/admin/{id}/update_admin',[AdminController::class,'update_owner_admin']);
-    Route::post('/owner/data_staff/admin/{id}/delete_admin',[AdminController::class,'delete_owner_admin']);
+    //maker
+    Route::get('/owner/data_staff/maker',[MakerController::class,'index_owner_maker']);
+    Route::post('/owner/data_staff/maker/store_maker',[MakerController::class,'store_owner_maker']);
+    Route::post('/owner/data_staff/maker/edit_maker',[MakerController::class,'edit_owner_maker']);
+    Route::post('/owner/data_staff/maker/{id}/update_maker',[MakerController::class,'update_owner_maker']);
+    Route::post('/owner/data_staff/maker/{id}/delete_maker',[MakerController::class,'delete_owner_maker']);
 
     //Kepala Dapur
     Route::get('/owner/data_staff/kepala_dapur',[KepalaDapurController::class,'index_owner_kepala_dapur']);
@@ -215,23 +215,23 @@ Route::middleware(['auth:owner'])->group(function(){
 });
 
 
-Route::middleware(['auth:admin'])->group(function(){
-    Route::get('/proseslogoutadmin', [AuthController::class,'proseslogoutadmin']);
-    Route::get('/admin/dashboardadmin',[DashboardController::class,'dashboardadmin']);
-    //Route::get('/admin/dashboardadmin',[LaporanDistribusiController::class,'index_admin_laporan_distribusi']);
+Route::middleware(['auth:maker'])->group(function(){
+    Route::get('/proseslogoutmaker', [AuthController::class,'proseslogoutmaker']);
+    Route::get('/maker/dashboardmaker',[DashboardController::class,'dashboardmaker']);
+    //Route::get('/maker/dashboardmaker',[LaporanDistribusiController::class,'index_maker_laporan_distribusi']);
 
     //Data Staff
-    Route::get('/admin/data_staff',[DataStaffController::class,'index_admin_data_staff']);
-    Route::get('/admin/data_staff/aslap',[DataAslapController::class,'index_admin_data_staff_aslap']);
-    Route::post('/admin/data_staff/aslap/store_aslap',[DataAslapController::class,'store_admin_aslap']);
-    Route::post('/admin/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_admin_aslap']);
-    Route::post('/admin/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_admin_aslap']);
-    Route::post('/admin/data_staff/aslap/{id}/update_aslap',[DataAslapController::class,'update_admin_aslap']);
-    Route::post('/admin/data_staff/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_admin_aslap']);
+    Route::get('/maker/data_staff',[DataStaffController::class,'index_maker_data_staff']);
+    Route::get('/maker/data_staff/aslap',[DataAslapController::class,'index_maker_data_staff_aslap']);
+    Route::post('/maker/data_staff/aslap/store_aslap',[DataAslapController::class,'store_maker_aslap']);
+    Route::post('/maker/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_maker_aslap']);
+    Route::post('/maker/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_maker_aslap']);
+    Route::post('/maker/data_staff/aslap/{id}/update_aslap',[DataAslapController::class,'update_maker_aslap']);
+    Route::post('/maker/data_staff/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_maker_aslap']);
     
     
     // Data Maker
-    Route::get('/admin/data_staff/maker',[DataMakerController::class,'index_admin_data_staff_maker']);
+    Route::get('/maker/data_staff/maker',[DataMakerController::class,'index_maker_data_staff_maker']);
 
 
 
@@ -239,7 +239,7 @@ Route::middleware(['auth:admin'])->group(function(){
 
 
     // SPPI
-    Route::get('/admin/data_staff/sppi',[DataSPPIController::class,'index_admin_data_staff_sppi']);
+    Route::get('/maker/data_staff/sppi',[DataSPPIController::class,'index_maker_data_staff_sppi']);
 
 
 
@@ -249,121 +249,121 @@ Route::middleware(['auth:admin'])->group(function(){
 
 
     // Ahli Gizi
-    Route::get('/admin/data_staff/ahli_gizi',[DataAhliGiziController::class,'index_admin_data_staff_ahli_gizi']);
+    Route::get('/maker/data_staff/ahli_gizi',[DataAhliGiziController::class,'index_maker_data_staff_ahli_gizi']);
     
 
 
 
     // Akuntan
-    Route::get('/admin/data_staff/akuntan',[DataAkuntanController::class,'index_admin_data_staff_akuntan']);
+    Route::get('/maker/data_staff/akuntan',[DataAkuntanController::class,'index_maker_data_staff_akuntan']);
 
 
 
 
 
     // Relawan
-    Route::get('/admin/data_staff/relawan',[DataRelawanController::class,'index_admin_data_staff_relawan']);
+    Route::get('/maker/data_staff/relawan',[DataRelawanController::class,'index_maker_data_staff_relawan']);
 
 
     
     
     
     //Kepala Dapur
-    Route::get('/admin/data_staff/kepala_dapur',[KepalaDapurController::class,'index_admin_kepala_dapur']);
-    Route::post('/admin/data_staff/kepala_dapur/store_kepala_dapur',[KepalaDapurController::class,'store_admin_kepala_dapur']);
-    Route::post('/admin/data_staff/kepala_dapur/edit_kepala_dapur',[KepalaDapurController::class,'edit_admin_kepala_dapur']);
-    Route::post('/admin/data_staff/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_admin_kepala_dapur']);
-    Route::post('/admin/data_staff/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_admin_kepala_dapur']);
+    Route::get('/maker/data_staff/kepala_dapur',[KepalaDapurController::class,'index_maker_kepala_dapur']);
+    Route::post('/maker/data_staff/kepala_dapur/store_kepala_dapur',[KepalaDapurController::class,'store_maker_kepala_dapur']);
+    Route::post('/maker/data_staff/kepala_dapur/edit_kepala_dapur',[KepalaDapurController::class,'edit_maker_kepala_dapur']);
+    Route::post('/maker/data_staff/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_maker_kepala_dapur']);
+    Route::post('/maker/data_staff/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_maker_kepala_dapur']);
 
     //Distributor
-    Route::get('/admin/data_staff/distributor',[DistributorController::class,'index_admin_distributor']);
-    Route::post('/admin/data_staff/distributor/store_distributor',[DistributorController::class,'store_admin_distributor']);
-    Route::post('/admin/data_staff/distributor/edit_distributor',[DistributorController::class,'edit_admin_distributor']);
-    Route::post('/admin/data_staff/distributor/{id}/update_distributor',[DistributorController::class,'update_admin_distributor']);
-    Route::post('/admin/data_staff/distributor/{id}/delete_distributor',[DistributorController::class,'delete_admin_distributor']);
+    Route::get('/maker/data_staff/distributor',[DistributorController::class,'index_maker_distributor']);
+    Route::post('/maker/data_staff/distributor/store_distributor',[DistributorController::class,'store_maker_distributor']);
+    Route::post('/maker/data_staff/distributor/edit_distributor',[DistributorController::class,'edit_maker_distributor']);
+    Route::post('/maker/data_staff/distributor/{id}/update_distributor',[DistributorController::class,'update_maker_distributor']);
+    Route::post('/maker/data_staff/distributor/{id}/delete_distributor',[DistributorController::class,'delete_maker_distributor']);
 
     //Dapur
-    Route::get('/admin/data_staff/dapur',[DapurController::class,'index_admin_dapur']);
-    Route::post('/admin/data_staff/dapur/store_dapur',[DapurController::class,'store_admin_dapur']);
-    Route::post('/admin/data_staff/dapur/{id}/delete_dapur',[DapurController::class,'delete_admin_dapur']);
+    Route::get('/maker/data_staff/dapur',[DapurController::class,'index_maker_dapur']);
+    Route::post('/maker/data_staff/dapur/store_dapur',[DapurController::class,'store_maker_dapur']);
+    Route::post('/maker/data_staff/dapur/{id}/delete_dapur',[DapurController::class,'delete_maker_dapur']);
 
     //Data Supplier
     //Supplier
-    Route::get('/admin/data_supplier/supplier',[DataSupplierController::class,'index_admin_supplier']);
-    Route::post('/admin/data_supplier/supplier/store_supplier',[DataSupplierController::class,'store_admin_supplier']);
-    Route::post('/admin/data_supplier/supplier/edit_supplier',[DataSupplierController::class,'edit_admin_supplier']);
-    Route::post('/admin/data_supplier/supplier/{id}/update_supplier',[DataSupplierController::class,'update_admin_supplier']);
-    Route::post('/admin/data_supplier/supplier/{id}/delete_supplier',[DataSupplierController::class,'delete_admin_supplier']);
+    Route::get('/maker/data_supplier/supplier',[DataSupplierController::class,'index_maker_supplier']);
+    Route::post('/maker/data_supplier/supplier/store_supplier',[DataSupplierController::class,'store_maker_supplier']);
+    Route::post('/maker/data_supplier/supplier/edit_supplier',[DataSupplierController::class,'edit_maker_supplier']);
+    Route::post('/maker/data_supplier/supplier/{id}/update_supplier',[DataSupplierController::class,'update_maker_supplier']);
+    Route::post('/maker/data_supplier/supplier/{id}/delete_supplier',[DataSupplierController::class,'delete_maker_supplier']);
 
     //Informasi Supplier
-    Route::get('/admin/data_supplier/informasi_supplier',[DataSupplierController::class,'index_admin_informasi_supplier']);
-    Route::post('/admin/data_supplier/informasi_supplier/store_informasi_supplier',[DataSupplierController::class,'store_admin_informasi_supplier']);
-    Route::post('/admin/data_supplier/informasi_supplier/tambah_barang_supplier',[DataSupplierController::class,'tambah_admin_barang_supplier']);
-    Route::post('/admin/data_supplier/informasi_supplier/{id}/store_barang_supplier',[DataSupplierController::class,'store_admin_barang_supplier']);
-    Route::post('/admin/data_supplier/informasi_supplier/lihat_barang_supplier',[DataSupplierController::class,'lihat_admin_barang_supplier']);
-    Route::post('/admin/data_supplier/informasi_supplier/nota_informasi_supplier',[DataSupplierController::class,'nota_admin_informasi_supplier']);
-    Route::post('/admin/data_supplier/informasi_supplier/bukti_terima_informasi_supplier',[DataSupplierController::class,'bukti_terima_admin_informasi_supplier']);
-    Route::post('/admin/data_supplier/informasi_supplier/edit_informasi_supplier',[DataSupplierController::class,'edit_admin_informasi_supplier']);
-    Route::post('/admin/data_supplier/informasi_supplier/{id}/update_informasi_supplier',[DataSupplierController::class,'update_admin_informasi_supplier']);
-    Route::post('/admin/data_supplier/informasi_supplier/{id}/delete_informasi_supplier',[DataSupplierController::class,'delete_admin_informasi_supplier']);
+    Route::get('/maker/data_supplier/informasi_supplier',[DataSupplierController::class,'index_maker_informasi_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/store_informasi_supplier',[DataSupplierController::class,'store_maker_informasi_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/tambah_barang_supplier',[DataSupplierController::class,'tambah_maker_barang_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/{id}/store_barang_supplier',[DataSupplierController::class,'store_maker_barang_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/lihat_barang_supplier',[DataSupplierController::class,'lihat_maker_barang_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/nota_informasi_supplier',[DataSupplierController::class,'nota_maker_informasi_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/bukti_terima_informasi_supplier',[DataSupplierController::class,'bukti_terima_maker_informasi_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/edit_informasi_supplier',[DataSupplierController::class,'edit_maker_informasi_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/{id}/update_informasi_supplier',[DataSupplierController::class,'update_maker_informasi_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/{id}/delete_informasi_supplier',[DataSupplierController::class,'delete_maker_informasi_supplier']);
     
 
     //Data Koperasi
-    Route::get('/admin/data_koperasi',[DataKoperasiController::class,'index_admin_data_koperasi']);
-    Route::post('/admin/data_koperasi/store_data_koperasi',[DataKoperasiController::class,'store_admin_data_koperasi']);
-    Route::post('/admin/data_koperasi/edit_modal_masuk_data_koperasi',[DataKoperasiController::class,'edit_modal_masuk_admin_data_koperasi']);
-    Route::post('/admin/data_koperasi/{id}/update_modal_masuk_data_koperasi',[DataKoperasiController::class,'update_modal_masuk_admin_data_koperasi']);
-    Route::post('/admin/data_koperasi/tambah_barang_modal_keluar',[DataKoperasiController::class,'tambah_admin_barang_modal_keluar']);
-    Route::post('/admin/data_koperasi/{id}/store_barang_modal_keluar',[DataKoperasiController::class,'store_admin_barang_modal_keluar']);
-    Route::post('/admin/data_koperasi/edit_modal_keluar_data_koperasi',[DataKoperasiController::class,'edit_modal_keluar_admin_data_koperasi']);
-    Route::post('/admin/data_koperasi/{id}/update_modal_keluar_data_koperasi',[DataKoperasiController::class,'update_modal_keluar_admin_data_koperasi']);
-    Route::post('/admin/data_koperasi/lihat_barang_modal_keluar',[DataKoperasiController::class,'lihat_admin_barang_modal_keluar']);
-    Route::get('/admin/data_koperasi/cetak_data_koperasi',[DataKoperasiController::class,'cetak_admin_data_koperasi']);
-    Route::post('/admin/data_koperasi/{id}/update_data_koperasi',[DataKoperasiController::class,'update_admin_data_koperasi']);
-    Route::post('/admin/data_koperasi/{id}/delete_data_koperasi',[DataKoperasiController::class,'delete_admin_data_koperasi']);
+    Route::get('/maker/data_koperasi',[DataKoperasiController::class,'index_maker_data_koperasi']);
+    Route::post('/maker/data_koperasi/store_data_koperasi',[DataKoperasiController::class,'store_maker_data_koperasi']);
+    Route::post('/maker/data_koperasi/edit_modal_masuk_data_koperasi',[DataKoperasiController::class,'edit_modal_masuk_maker_data_koperasi']);
+    Route::post('/maker/data_koperasi/{id}/update_modal_masuk_data_koperasi',[DataKoperasiController::class,'update_modal_masuk_maker_data_koperasi']);
+    Route::post('/maker/data_koperasi/tambah_barang_modal_keluar',[DataKoperasiController::class,'tambah_maker_barang_modal_keluar']);
+    Route::post('/maker/data_koperasi/{id}/store_barang_modal_keluar',[DataKoperasiController::class,'store_maker_barang_modal_keluar']);
+    Route::post('/maker/data_koperasi/edit_modal_keluar_data_koperasi',[DataKoperasiController::class,'edit_modal_keluar_maker_data_koperasi']);
+    Route::post('/maker/data_koperasi/{id}/update_modal_keluar_data_koperasi',[DataKoperasiController::class,'update_modal_keluar_maker_data_koperasi']);
+    Route::post('/maker/data_koperasi/lihat_barang_modal_keluar',[DataKoperasiController::class,'lihat_maker_barang_modal_keluar']);
+    Route::get('/maker/data_koperasi/cetak_data_koperasi',[DataKoperasiController::class,'cetak_maker_data_koperasi']);
+    Route::post('/maker/data_koperasi/{id}/update_data_koperasi',[DataKoperasiController::class,'update_maker_data_koperasi']);
+    Route::post('/maker/data_koperasi/{id}/delete_data_koperasi',[DataKoperasiController::class,'delete_maker_data_koperasi']);
 
     //Informasi
     //Menu Harian
-    Route::get('/admin/informasi/menu_harian',[InformasiMenuHarianController::class,'index_admin_menu_harian']);
+    Route::get('/maker/informasi/menu_harian',[InformasiMenuHarianController::class,'index_maker_menu_harian']);
 
     //Stok Limit
-    Route::get('/admin/informasi/stok_limit',[InformasiStokLimitController::class,'index_admin_stok_limit']);
+    Route::get('/maker/informasi/stok_limit',[InformasiStokLimitController::class,'index_maker_stok_limit']);
 
     //Pengiriman
-    Route::get('/admin/informasi/pengiriman',[InformasiPengirimanController::class,'index_admin_pengiriman']);
+    Route::get('/maker/informasi/pengiriman',[InformasiPengirimanController::class,'index_maker_pengiriman']);
 
 
     //Laporan
     //Stok
-    Route::get('/admin/laporan/stok',[LaporanStokController::class,'index_admin_laporan_stok']);
+    Route::get('/maker/laporan/stok',[LaporanStokController::class,'index_maker_laporan_stok']);
 
     //Stok Harian
-    Route::get('/admin/laporan/stok_harian',[LaporanStokController::class,'index_admin_laporan_stok_harian']);
+    Route::get('/maker/laporan/stok_harian',[LaporanStokController::class,'index_maker_laporan_stok_harian']);
 
     //Stok Bulanan
-    Route::get('/admin/laporan/stok_bulanan',[LaporanStokController::class,'index_admin_laporan_stok_bulanan']);
+    Route::get('/maker/laporan/stok_bulanan',[LaporanStokController::class,'index_maker_laporan_stok_bulanan']);
 
     //Distribusi
-    Route::get('/admin/laporan/distribusi',[LaporanDistribusiController::class,'index_admin_laporan_distribusi']);
-    Route::post('/admin/laporan/distribusi/edit_laporan_distribusi',[LaporanDistribusiController::class,'edit_admin_laporan_distribusi']);
-    Route::post('/admin/laporan/distribusi/bukti_pengiriman',[LaporanDistribusiController::class,'bukti_admin_pengiriman']);
-    Route::post('/admin/laporan/distribusi/kendala_distribusi',[LaporanDistribusiController::class,'kendala_admin_distribusi']);
-    Route::post('/admin/laporan/distribusi/{id}/update_laporan_distribusi',[LaporanDistribusiController::class,'update_admin_laporan_distribusi']);
-    Route::get('/admin/laporan/distribusi/{id}/batalkan_distribusi',[LaporanDistribusiController::class,'batalkan_admin_distribusi']);
-    Route::post('/admin/laporan/distribusi/{id}/delete_laporan_distribusi',[LaporanDistribusiController::class,'delete_admin_laporan_distribusi']);
+    Route::get('/maker/laporan/distribusi',[LaporanDistribusiController::class,'index_maker_laporan_distribusi']);
+    Route::post('/maker/laporan/distribusi/edit_laporan_distribusi',[LaporanDistribusiController::class,'edit_maker_laporan_distribusi']);
+    Route::post('/maker/laporan/distribusi/bukti_pengiriman',[LaporanDistribusiController::class,'bukti_maker_pengiriman']);
+    Route::post('/maker/laporan/distribusi/kendala_distribusi',[LaporanDistribusiController::class,'kendala_maker_distribusi']);
+    Route::post('/maker/laporan/distribusi/{id}/update_laporan_distribusi',[LaporanDistribusiController::class,'update_maker_laporan_distribusi']);
+    Route::get('/maker/laporan/distribusi/{id}/batalkan_distribusi',[LaporanDistribusiController::class,'batalkan_maker_distribusi']);
+    Route::post('/maker/laporan/distribusi/{id}/delete_laporan_distribusi',[LaporanDistribusiController::class,'delete_maker_laporan_distribusi']);
 
     //Keuangan
-    Route::get('/admin/laporan/keuangan',[LaporanKeuanganController::class,'index_admin_laporan_keuangan']);
-    Route::post('/admin/laporan/keuangan/store_laporan_keuangan',[LaporanKeuanganController::class,'store_admin_laporan_keuangan']);
-    Route::post('/admin/laporan/keuangan/edit_laporan_keuangan',[LaporanKeuanganController::class,'edit_admin_laporan_keuangan']);
-    Route::get('/admin/laporan/keuangan/cetak_laporan_keuangan',[LaporanKeuanganController::class,'cetak_admin_laporan_keuangan']);
-    Route::post('/admin/laporan/keuangan/{id}/update_laporan_keuangan',[LaporanKeuanganController::class,'update_admin_laporan_keuangan']);
-    Route::post('/admin/laporan/keuangan/{id}/delete_laporan_keuangan',[LaporanKeuanganController::class,'delete_admin_laporan_keuangan']);
+    Route::get('/maker/laporan/keuangan',[LaporanKeuanganController::class,'index_maker_laporan_keuangan']);
+    Route::post('/maker/laporan/keuangan/store_laporan_keuangan',[LaporanKeuanganController::class,'store_maker_laporan_keuangan']);
+    Route::post('/maker/laporan/keuangan/edit_laporan_keuangan',[LaporanKeuanganController::class,'edit_maker_laporan_keuangan']);
+    Route::get('/maker/laporan/keuangan/cetak_laporan_keuangan',[LaporanKeuanganController::class,'cetak_maker_laporan_keuangan']);
+    Route::post('/maker/laporan/keuangan/{id}/update_laporan_keuangan',[LaporanKeuanganController::class,'update_maker_laporan_keuangan']);
+    Route::post('/maker/laporan/keuangan/{id}/delete_laporan_keuangan',[LaporanKeuanganController::class,'delete_maker_laporan_keuangan']);
 
     //Dapur
-    Route::get('/admin/laporan/dapur',[LaporanDapurController::class,'index_admin_dapur']);
-    Route::post('/admin/laporan/dapur/kendala_dapur',[LaporanDapurController::class,'kendala_admin_dapur']);
-    Route::post('/admin/laporan/dapur/tambah_operasional_dapur',[LaporanDapurController::class,'tambah_operasional_dapur']);
+    Route::get('/maker/laporan/dapur',[LaporanDapurController::class,'index_maker_dapur']);
+    Route::post('/maker/laporan/dapur/kendala_dapur',[LaporanDapurController::class,'kendala_maker_dapur']);
+    Route::post('/maker/laporan/dapur/tambah_operasional_dapur',[LaporanDapurController::class,'tambah_operasional_dapur']);
 
 
 
@@ -371,24 +371,24 @@ Route::middleware(['auth:admin'])->group(function(){
 
     //Stok
     //Stok Masuk
-    Route::get('/admin/stok_masuk',[StokMasukController::class,'index_stok_masuk_admin']);
-    Route::post('/admin/stok_masuk/store_stok_masuk',[StokMasukController::class,'store_stok_masuk_admin']);
-    Route::post('/admin/stok_masuk/edit_stok_masuk',[StokMasukController::class,'edit_stok_masuk_admin']);
-    Route::post('/admin/stok_masuk/{id}/update_stok_masuk',[StokMasukController::class,'update_stok_masuk_admin']);
-    Route::post('/admin/stok_masuk/{id}/delete_stok_masuk',[StokMasukController::class,'delete_stok_masuk_admin']);
+    Route::get('/maker/stok_masuk',[StokMasukController::class,'index_stok_masuk_maker']);
+    Route::post('/maker/stok_masuk/store_stok_masuk',[StokMasukController::class,'store_stok_masuk_maker']);
+    Route::post('/maker/stok_masuk/edit_stok_masuk',[StokMasukController::class,'edit_stok_masuk_maker']);
+    Route::post('/maker/stok_masuk/{id}/update_stok_masuk',[StokMasukController::class,'update_stok_masuk_maker']);
+    Route::post('/maker/stok_masuk/{id}/delete_stok_masuk',[StokMasukController::class,'delete_stok_masuk_maker']);
 
     //Stok Keluar
-    Route::get('/admin/stok_keluar',[StokKeluarController::class,'index_stok_keluar_admin']);
-    Route::post('/admin/stok_keluar/store_stok_keluar',[StokKeluarController::class,'store_stok_keluar_admin']);
-    Route::post('/admin/stok_keluar/edit_stok_keluar',[StokKeluarController::class,'edit_stok_keluar_admin']);
-    Route::post('/admin/stok_keluar/{id}/update_stok_keluar',[StokKeluarController::class,'update_stok_keluar_admin']);
-    Route::post('/admin/stok_keluar/{id}/delete_stok_keluar',[StokKeluarController::class,'delete_stok_keluar_admin']);
+    Route::get('/maker/stok_keluar',[StokKeluarController::class,'index_stok_keluar_maker']);
+    Route::post('/maker/stok_keluar/store_stok_keluar',[StokKeluarController::class,'store_stok_keluar_maker']);
+    Route::post('/maker/stok_keluar/edit_stok_keluar',[StokKeluarController::class,'edit_stok_keluar_maker']);
+    Route::post('/maker/stok_keluar/{id}/update_stok_keluar',[StokKeluarController::class,'update_stok_keluar_maker']);
+    Route::post('/maker/stok_keluar/{id}/delete_stok_keluar',[StokKeluarController::class,'delete_stok_keluar_maker']);
 
     //Stok Limit
-    Route::get('/admin/stok_limit',[StokLimitController::class,'index_stok_limit_admin']);
-    Route::post('/admin/stok_limit/store_stok_limit',[StokLimitController::class,'store_stok_limit_admin']);
-    Route::post('/admin/stok_limit/tambah_tanggal_kadaluarsa',[StokLimitController::class,'tambah_tanggal_kadaluarsa_admin']);
-    Route::post('/admin/stok_limit/{id}/store_tambah_tanggal_kadaluarsa',[StokLimitController::class,'store_tambah_tanggal_kadaluarsa_admin']);
+    Route::get('/maker/stok_limit',[StokLimitController::class,'index_stok_limit_maker']);
+    Route::post('/maker/stok_limit/store_stok_limit',[StokLimitController::class,'store_stok_limit_maker']);
+    Route::post('/maker/stok_limit/tambah_tanggal_kadaluarsa',[StokLimitController::class,'tambah_tanggal_kadaluarsa_maker']);
+    Route::post('/maker/stok_limit/{id}/store_tambah_tanggal_kadaluarsa',[StokLimitController::class,'store_tambah_tanggal_kadaluarsa_maker']);
 });
 
 

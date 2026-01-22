@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class StokLimitController extends Controller
 {
-    // -- ADMIN
-    public function index_stok_limit_admin(Request $request)
+    // -- MAKER
+    public function index_stok_limit_maker(Request $request)
     {
-        $admin = Auth::guard('admin')->user();
-        $nomor_dapur = $admin->nomor_dapur_admin;
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur = $maker->nomor_dapur_maker;
     
         $filter_bulan = $request->input('bulan');
         $filter_bahan = $request->input('id_bahan');
@@ -75,9 +75,9 @@ class StokLimitController extends Controller
                 ->value('nama_bahan');
         }
     
-        return view('admin.stok.stok_limit.index_stok_limit_admin', compact(
+        return view('maker.stok.stok_limit.index_stok_limit_maker', compact(
             'stok',
-            'admin',
+            'maker',
             'bahan',
             'filter_bulan',
             'filter_bahan',
@@ -87,11 +87,11 @@ class StokLimitController extends Controller
     }
 
 
-    public function store_stok_limit_admin(Request $request)
+    public function store_stok_limit_maker(Request $request)
     {
-        $Admin = Auth::guard('admin')->user();
+        $maker = Auth::guard('maker')->user();
 
-        $nomor_dapur_admin = $Admin->nomor_dapur_admin;
+        $nomor_dapur_maker = $maker->nomor_dapur_maker;
 
         $simpan_limit = DB::table('bahan')
             ->where('id_bahan', $request->id_bahan)
@@ -108,7 +108,7 @@ class StokLimitController extends Controller
 
 
 
-    public function tambah_tanggal_kadaluarsa_admin(Request $request)
+    public function tambah_tanggal_kadaluarsa_maker(Request $request)
     {
         $id_stok_masuk = $request->id;
     
@@ -121,11 +121,11 @@ class StokLimitController extends Controller
         }
     
         // Kirim data stok ke view
-        return view('admin.stok.stok_limit.tambah_tanggal_kadaluarsa', compact('stok'));
+        return view('maker.stok.stok_limit.tambah_tanggal_kadaluarsa', compact('stok'));
     }
 
 
-    public function store_tambah_tanggal_kadaluarsa_admin(Request $request)
+    public function store_tambah_tanggal_kadaluarsa_maker(Request $request)
     {
         $id_stok_masuk = $request->id;
         $tanggal_kadaluarsa = $request->tanggal_kadaluarsa;

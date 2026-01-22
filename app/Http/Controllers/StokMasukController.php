@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class StokMasukController extends Controller
 {
-    // -- ADMIN --
-    public function index_stok_masuk_admin(Request $request)
+    // -- MAKER --
+    public function index_stok_masuk_maker(Request $request)
     {
-        $admin = Auth::guard('admin')->user();
-        $nomor_dapur = $admin->nomor_dapur_admin;
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur = $maker->nomor_dapur_maker;
     
         $filter_bulan = $request->input('bulan');
         $filter_bahan = $request->input('id_bahan');
@@ -74,9 +74,9 @@ class StokMasukController extends Controller
         $dataKosong = $stok->isEmpty();
         $sudahCari = !empty($filter_bahan) || !empty($filter_bulan);
     
-        return view('admin.stok.stok_masuk.index_stok_masuk_admin', compact(
+        return view('maker.stok.stok_masuk.index_stok_masuk_maker', compact(
             'stok',
-            'admin',
+            'maker',
             'bahan',
             'dataKosong',
             'sudahCari',
@@ -87,11 +87,11 @@ class StokMasukController extends Controller
         ));
     }
 
-    public function store_stok_masuk_admin(Request $request)
+    public function store_stok_masuk_maker(Request $request)
     {
-        $Admin              = Auth::guard('admin')->user();
-        $nomor_dapur_admin  = $Admin->nomor_dapur_admin;
-        $nama_lengkap       = $Admin->nama_lengkap;
+        $maker              = Auth::guard('maker')->user();
+        $nomor_dapur_maker  = $maker->nomor_dapur_maker;
+        $nama_lengkap       = $maker->nama_lengkap;
     
         if (!empty($request->nama_bahan)) {
             $id_bahan = DB::table('bahan')->insertGetId([
@@ -104,7 +104,7 @@ class StokMasukController extends Controller
 
         $data_stok_masuk = [
             'id_bahan' => $id_bahan,
-            'nomor_dapur_stok_masuk' => $nomor_dapur_admin,
+            'nomor_dapur_stok_masuk' => $nomor_dapur_maker,
             'tanggal_masuk'   => $request->tanggal_masuk,
             'jumlah_masuk' => $request->jumlah_masuk,
             'sumber_stok_masuk' => $request->sumber_stok_masuk,
@@ -120,15 +120,15 @@ class StokMasukController extends Controller
         }
     }
 
-    public function edit_stok_masuk_admin(Request $request)
+    public function edit_stok_masuk_maker(Request $request)
     {
         $id = $request->id;
         $stok = DB::table('stok')->get();
         $data = DB::table('stok')->where('id_stok', $id)->first();
-        return view('admin.stok.stok_masuk.edit_stok_masuk_admin',compact('stok','data'));
+        return view('maker.stok.stok_masuk.edit_stok_masuk_maker',compact('stok','data'));
     }
 
-    public function update_stok_masuk_admin($id, Request $request)
+    public function update_stok_masuk_maker($id, Request $request)
     {
         try {
             $data = [
@@ -148,7 +148,7 @@ class StokMasukController extends Controller
         }
     }
 
-    public function delete_stok_masuk_admin($id)
+    public function delete_stok_masuk_maker($id)
     {
         // Ambil data stok dulu untuk mengetahui id_bahan-nya
         $stok = DB::table('stok_masuk')->where('id_stok_masuk', $id)->first();

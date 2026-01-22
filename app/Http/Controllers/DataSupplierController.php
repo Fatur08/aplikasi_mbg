@@ -779,12 +779,12 @@ class DataSupplierController extends Controller
 
 
 
-    // BAGIAAN ADMIN
+    // BAGIAN MAKER
     // BAGIAN SUPPLIER
-    public function index_admin_supplier(Request $request)
+    public function index_maker_supplier(Request $request)
     {        
-        $admin              = Auth::guard('admin')->user();
-        $nomor_dapur        = $admin->nomor_dapur_admin;
+        $maker              = Auth::guard('maker')->user();
+        $nomor_dapur        = $maker->nomor_dapur_maker;
         $nama_supplier_cari = $request->nama_supplier_cari;
         $validasi           = $request->pilih_validasi;
         $query = Supplier::query();
@@ -801,13 +801,13 @@ class DataSupplierController extends Controller
         $supplier = $query->get();
         $supplier = $query->paginate(1000);
         $nama_supplier = DB::table('supplier')->select('id_supplier', 'nama_supplier')->get();
-        return view('admin.data_supplier.supplier.index_supplier' ,compact('supplier'));
+        return view('maker.data_supplier.supplier.index_supplier' ,compact('supplier'));
     }
 
-    public function store_admin_supplier(Request $request)
+    public function store_maker_supplier(Request $request)
     {
-        $admin              = Auth::guard('admin')->user();
-        $nomor_dapur        = $admin->nomor_dapur_admin;
+        $maker              = Auth::guard('maker')->user();
+        $nomor_dapur        = $maker->nomor_dapur_maker;
         $nama_supplier      = $request->nama_supplier;
         $alamat_supplier    = $request->alamat_supplier;
         $no_hp              = $request->no_hp;
@@ -828,15 +828,15 @@ class DataSupplierController extends Controller
         }
     }
 
-    public function edit_admin_supplier(Request $request)
+    public function edit_maker_supplier(Request $request)
     {
         $id         = $request->id;
         $supplier   = DB::table('supplier')->get();
         $data       = DB::table('supplier')->where('id_supplier', $id)->first();
-        return view('admin.data_supplier.supplier.edit_supplier',compact('supplier','data'));
+        return view('maker.data_supplier.supplier.edit_supplier',compact('supplier','data'));
     }
 
-    public function update_admin_supplier($id, Request $request)
+    public function update_maker_supplier($id, Request $request)
     {
         $nama_supplier      = $request->nama_supplier;
         $alamat_supplier    = $request->alamat_supplier;
@@ -930,7 +930,7 @@ class DataSupplierController extends Controller
         }
     }
 
-    public function delete_admin_supplier($id)
+    public function delete_maker_supplier($id)
     {
         $delete = DB::table('supplier')->where('id_supplier', $id)->delete();
         if($delete){
@@ -953,12 +953,12 @@ class DataSupplierController extends Controller
 
 
 
-    // BAGIAN ADMIN
+    // BAGIAN MAKER
     // BAGIAN INFORMASI SUPPLIER
-    public function index_admin_informasi_supplier(Request $request)
+    public function index_maker_informasi_supplier(Request $request)
     {
-        $admin              = Auth::guard('admin')->user();
-        $nomor_dapur        = $admin->nomor_dapur_admin;
+        $maker              = Auth::guard('maker')->user();
+        $nomor_dapur        = $maker->nomor_dapur_maker;
         $nama_supplier_cari = $request->nama_supplier_cari;
         $validasi           = $request->pilih_validasi;
 
@@ -990,7 +990,7 @@ class DataSupplierController extends Controller
 
         $nama_supplier = DB::table('supplier')
             ->select('supplier.id_supplier', 'supplier.nama_supplier')
-            ->where('supplier.nomor_dapur_supplier', $nomor_dapur) // ✅ filter dapur admin
+            ->where('supplier.nomor_dapur_supplier', $nomor_dapur) // ✅ filter dapur maker
             ->where('supplier.status_supplier', 1)                 // ✅ hanya supplier yang DISUTUJUI
             ->whereNotExists(function ($query) {
                 $query->select(DB::raw(1))
@@ -1002,10 +1002,10 @@ class DataSupplierController extends Controller
             })
             ->get();
 
-        return view('admin.data_supplier.informasi_supplier.index_informasi_supplier', compact('nama_supplier', 'informasi_supplier'));
+        return view('maker.data_supplier.informasi_supplier.index_informasi_supplier', compact('nama_supplier', 'informasi_supplier'));
     }
 
-    public function store_admin_informasi_supplier(Request $request)
+    public function store_maker_informasi_supplier(Request $request)
     {
         $id_supplier                = $request->id_supplier;
         $nama_informasi_supplier    = DB::table('supplier')->where('id_supplier', $id_supplier)->value('nama_supplier');
@@ -1069,15 +1069,15 @@ class DataSupplierController extends Controller
         }
     }
 
-    public function edit_admin_informasi_supplier(Request $request)
+    public function edit_maker_informasi_supplier(Request $request)
     {
         $id = $request->id;
         $informasi_supplier = DB::table('informasi_supplier')->get();
         $data = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
-        return view('admin.data_supplier.informasi_supplier.edit_informasi_supplier',compact('informasi_supplier','data'));
+        return view('maker.data_supplier.informasi_supplier.edit_informasi_supplier',compact('informasi_supplier','data'));
     }
 
-    public function update_admin_informasi_supplier($id, Request $request)
+    public function update_maker_informasi_supplier($id, Request $request)
     {
         $informasi_supplier = DB::table('informasi_supplier')
             ->where('id_informasi_supplier', $id)
@@ -1200,7 +1200,7 @@ class DataSupplierController extends Controller
         }
     }
 
-    public function delete_admin_informasi_supplier($id)
+    public function delete_maker_informasi_supplier($id)
     {
         $informasi = DB::table('informasi_supplier')
             ->where('id_informasi_supplier', $id)
@@ -1232,18 +1232,18 @@ class DataSupplierController extends Controller
         return Redirect::back()->with(['warning' => 'Data tidak ditemukan']);
     }
 
-    public function tambah_admin_barang_supplier(Request $request)
+    public function tambah_maker_barang_supplier(Request $request)
     {
         $id                 = $request->id;
         $informasi_supplier = DB::table('informasi_supplier')->get();
         $data               = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
-        return view('admin.data_supplier.informasi_supplier.tambah_barang_supplier',compact('informasi_supplier','data'));
+        return view('maker.data_supplier.informasi_supplier.tambah_barang_supplier',compact('informasi_supplier','data'));
     }
 
-    public function store_admin_barang_supplier(Request $request)
+    public function store_maker_barang_supplier(Request $request)
     {
-        $admin                  = Auth::guard('admin')->user();
-        $nomor_dapur_admin      = $admin->nomor_dapur_admin;
+        $maker                  = Auth::guard('maker')->user();
+        $nomor_dapur_maker      = $maker->nomor_dapur_maker;
         $id_informasi_supplier  = $request->id;
         $tanggal_hari_ini       = date('Y-m-d');
 
@@ -1276,7 +1276,7 @@ class DataSupplierController extends Controller
             if (!empty($barang['nama_barang_supplier'])) {
                 $dataInsert[] = [
                     'id_informasi_supplier'       => $id_informasi_supplier,
-                    'nomor_dapur_barang_supplier' => $nomor_dapur_admin,
+                    'nomor_dapur_barang_supplier' => $nomor_dapur_maker,
                     'nama_barang_supplier'        => $barang['nama_barang_supplier'],
                     'jumlah_barang_supplier'      => $barang['jumlah_barang_supplier'] ?? 0,
                     'satuan_barang_supplier'      => $barang['satuan_barang_supplier'] ?? '-',
@@ -1303,7 +1303,7 @@ class DataSupplierController extends Controller
 
             // Cek apakah sudah ada data koperasi untuk supplier ini (bukan berdasarkan tanggal)
             $dataKoperasi = DB::table('data_koperasi')
-                ->where('nomor_dapur_data_koperasi', $nomor_dapur_admin)
+                ->where('nomor_dapur_data_koperasi', $nomor_dapur_maker)
                 ->where('id_informasi_supplier', $id_informasi_supplier)
                 ->first();
                     
@@ -1311,7 +1311,7 @@ class DataSupplierController extends Controller
                 // Jika belum ada → buat data koperasi baru
                 DB::table('data_koperasi')->insert([
                     'id_informasi_supplier'     => $id_informasi_supplier,
-                    'nomor_dapur_data_koperasi' => $nomor_dapur_admin,
+                    'nomor_dapur_data_koperasi' => $nomor_dapur_maker,
                     'tanggal_data_koperasi'     => $tanggal_hari_ini,
                     'jenis_data_koperasi'       => 'modal_keluar',
                     'kategori_data_koperasi'    => 'Pembelian bahan dari supplier',
@@ -1347,10 +1347,10 @@ class DataSupplierController extends Controller
         }
     }
 
-    public function lihat_admin_barang_supplier(Request $request)
+    public function lihat_maker_barang_supplier(Request $request)
     {
-        $admin = Auth::guard('admin')->user();
-        $nomor_dapur_admin = $admin->nomor_dapur_admin;
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur_maker = $maker->nomor_dapur_maker;
 
         // Ambil ID jadwal menu harian dari parameter URL atau request
         $id_informasi_supplier = $request->id;
@@ -1359,7 +1359,7 @@ class DataSupplierController extends Controller
         $barang_supplier = DB::table('barang_supplier')
             ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
             ->where('barang_supplier.id_informasi_supplier', $id_informasi_supplier)
-            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur_admin)
+            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur_maker)
             ->select(
                 'barang_supplier.*',
                 'barang_supplier.nama_barang_supplier',
@@ -1369,22 +1369,22 @@ class DataSupplierController extends Controller
             )
             ->get();
 
-        return view('admin.data_supplier.informasi_supplier.lihat_barang_supplier', compact('barang_supplier'));
+        return view('maker.data_supplier.informasi_supplier.lihat_barang_supplier', compact('barang_supplier'));
     }
 
-    public function nota_admin_informasi_supplier(Request $request)
+    public function nota_maker_informasi_supplier(Request $request)
     {        
         $id = $request->id;
         $informasi_supplier = DB::table('informasi_supplier')->get();
         $data = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
-        return view('admin.data_supplier.informasi_supplier.nota_informasi_supplier',compact('informasi_supplier','data'));
+        return view('maker.data_supplier.informasi_supplier.nota_informasi_supplier',compact('informasi_supplier','data'));
     }
 
-    public function bukti_terima_admin_informasi_supplier(Request $request)
+    public function bukti_terima_maker_informasi_supplier(Request $request)
     {        
         $id = $request->id;
         $informasi_supplier = DB::table('informasi_supplier')->get();
         $data = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
-        return view('admin.data_supplier.informasi_supplier.bukti_terima_informasi_supplier',compact('informasi_supplier','data'));
+        return view('maker.data_supplier.informasi_supplier.bukti_terima_informasi_supplier',compact('informasi_supplier','data'));
     }
 }

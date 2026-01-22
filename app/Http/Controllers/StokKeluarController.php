@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class StokKeluarController extends Controller
 {
-    // -- ADMIN
-    public function index_stok_keluar_admin(Request $request)
+    // -- MAKER
+    public function index_stok_keluar_maker(Request $request)
     {
-        $admin = Auth::guard('admin')->user();
-        $nomor_dapur = $admin->nomor_dapur_admin;
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur = $maker->nomor_dapur_maker;
     
         $filter_bulan = $request->input('bulan');
         $filter_bahan = $request->input('id_bahan');
@@ -136,9 +136,9 @@ class StokKeluarController extends Controller
         $dataKosong = $stok->isEmpty();
         $sudahCari = !empty($filter_bahan) || !empty($filter_bulan);
     
-        return view('admin.stok.stok_keluar.index_stok_keluar_admin', compact(
+        return view('maker.stok.stok_keluar.index_stok_keluar_maker', compact(
             'stok',
-            'admin',
+            'maker',
             'bahan',
             'dataKosong',
             'sudahCari',
@@ -150,10 +150,10 @@ class StokKeluarController extends Controller
         ));
     }
 
-    public function store_stok_keluar_admin(Request $request)
+    public function store_stok_keluar_maker(Request $request)
     {
-        $Admin = Auth::guard('admin')->user();
-        $nomor_dapur_admin = $Admin->nomor_dapur_admin;
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur_maker = $maker->nomor_dapur_maker;
         $tanggal_keluar          = $request->tanggal_keluar;
         $id_bahan                = $request->id_bahan;
         $jumlah_keluar_total     = $request->jumlah_keluar;
@@ -163,7 +163,7 @@ class StokKeluarController extends Controller
         // Ambil semua stok masuk bahan ini (urutan lama dulu) di dapur ini
         $stokMasukList = DB::table('stok_masuk')
             ->where('id_bahan', $id_bahan)
-            ->where('nomor_dapur_stok_masuk', $nomor_dapur_admin)
+            ->where('nomor_dapur_stok_masuk', $nomor_dapur_maker)
             ->orderBy('tanggal_masuk', 'asc')
             ->get();
 
@@ -189,7 +189,7 @@ class StokKeluarController extends Controller
                     DB::table('stok_keluar')->insert([
                         'id_bahan' => $id_bahan,
                         'id_stok_masuk' => $stokMasuk->id_stok_masuk,
-                        'nomor_dapur_stok_keluar' => $nomor_dapur_admin,
+                        'nomor_dapur_stok_keluar' => $nomor_dapur_maker,
                         'tanggal_keluar' => $tanggal_keluar,
                         'jumlah_keluar' => $sisa_keluar,
                         'tujuan_stok_keluar' => $tujuan_stok_keluar,
@@ -203,7 +203,7 @@ class StokKeluarController extends Controller
                     DB::table('stok_keluar')->insert([
                         'id_bahan' => $id_bahan,
                         'id_stok_masuk' => $stokMasuk->id_stok_masuk,
-                        'nomor_dapur_stok_keluar' => $nomor_dapur_admin,
+                        'nomor_dapur_stok_keluar' => $nomor_dapur_maker,
                         'tanggal_keluar' => $tanggal_keluar,
                         'jumlah_keluar' => $sisa_stok,
                         'tujuan_stok_keluar' => $tujuan_stok_keluar,
@@ -228,15 +228,15 @@ class StokKeluarController extends Controller
         }
     }
 
-    public function edit_stok_keluar_admin(Request $request)
+    public function edit_stok_keluar_maker(Request $request)
     {
         $id = $request->id;
         $stok = DB::table('stok')->get();
         $data = DB::table('stok')->where('id_stok', $id)->first();
-        return view('admin.stok.stok_keluar.edit_stok_keluar_admin',compact('stok','data'));
+        return view('maker.stok.stok_keluar.edit_stok_keluar_maker',compact('stok','data'));
     }
 
-    public function update_stok_keluar_admin($id, Request $request)
+    public function update_stok_keluar_maker($id, Request $request)
     {
         try {
             $data = [
@@ -256,7 +256,7 @@ class StokKeluarController extends Controller
         }
     }
 
-    public function delete_stok_keluar_admin($id)
+    public function delete_stok_keluar_maker($id)
     {
         // Ambil data stok dulu untuk mengetahui id_bahan-nya
         $stok = DB::table('stok_keluar')->where('id_stok_keluar', $id)->first();

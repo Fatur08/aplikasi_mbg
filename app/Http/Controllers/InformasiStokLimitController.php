@@ -26,8 +26,27 @@ class InformasiStokLimitController extends Controller
     }
 
 
-    // BAGIAN ADMIN
-    public function index_admin_stok_limit(Request $request)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // BAGIAN MAKER
+    public function index_maker_stok_limit(Request $request)
     {
         $stokLimit = DB::table('stok')
             ->select(
@@ -41,6 +60,6 @@ class InformasiStokLimitController extends Controller
             ->orderBy('status_stok')
             ->get();
 
-        return view('admin.informasi.stok_limit.index_stok_limit', compact('stokLimit'));
+        return view('maker.informasi.stok_limit.index_stok_limit', compact('stokLimit'));
     }
 }

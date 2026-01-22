@@ -442,11 +442,11 @@ class LaporanKeuanganController extends Controller
 
 
 
-    // BAGIAN ADMIN
-    public function index_admin_laporan_keuangan(Request $request)
+    // BAGIAN MAKER
+    public function index_maker_laporan_keuangan(Request $request)
     {
-        $admin         = Auth::guard('admin')->user();
-        $dapur         = $admin->nomor_dapur_admin;
+        $maker         = Auth::guard('maker')->user();
+        $dapur         = $maker->nomor_dapur_maker;
         $dari_tanggal  = $request->dari_tanggal;
         $sampai_tanggal= $request->sampai_tanggal;
 
@@ -599,7 +599,7 @@ class LaporanKeuanganController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
 
-        return view('admin.laporan.keuangan.index_laporan_keuangan', compact(
+        return view('maker.laporan.keuangan.index_laporan_keuangan', compact(
             'laporan_keuangan',
             'dataKosong',
             'sudahCari',
@@ -614,7 +614,7 @@ class LaporanKeuanganController extends Controller
         ));
     }
 
-    public function store_admin_laporan_keuangan(Request $request)
+    public function store_maker_laporan_keuangan(Request $request)
     {
         $tanggal_laporan_keuangan = $request->tanggal_laporan_keuangan;
         $jenis_laporan_keuangan = $request->jenis_laporan_keuangan;
@@ -639,15 +639,15 @@ class LaporanKeuanganController extends Controller
         }
     }
 
-    public function edit_admin_laporan_keuangan(Request $request)
+    public function edit_maker_laporan_keuangan(Request $request)
     {
         $id = $request->id;
         $keuangan = DB::table('keuangan')->get();
         $data = DB::table('keuangan')->where('id_laporan_keuangan', $id)->first();
-        return view('admin.laporan.keuangan.edit_laporan_keuangan',compact('keuangan','data'));
+        return view('maker.laporan.keuangan.edit_laporan_keuangan',compact('keuangan','data'));
     }
 
-    public function update_admin_laporan_keuangan($id, Request $request)
+    public function update_maker_laporan_keuangan($id, Request $request)
     {
         try {
             $tanggal_laporan_keuangan = $request->edit_tanggal_laporan_keuangan;
@@ -677,7 +677,7 @@ class LaporanKeuanganController extends Controller
         }
     }
 
-    public function cetak_admin_laporan_keuangan(Request $request)
+    public function cetak_maker_laporan_keuangan(Request $request)
     {
         $dari_tanggal     = $request->dari_tanggal ? date('Y-m-d', strtotime($request->dari_tanggal)) : null;
         $sampai_tanggal   = $request->sampai_tanggal ? date('Y-m-d', strtotime($request->sampai_tanggal)) : null;
@@ -708,10 +708,10 @@ class LaporanKeuanganController extends Controller
     
         $sisa_dana = $total_pemasukan - $total_pengeluaran;
 
-        return view('admin.laporan.keuangan.cetak_laporan_keuangan', compact('data','sisa_dana'));
+        return view('maker.laporan.keuangan.cetak_laporan_keuangan', compact('data','sisa_dana'));
     }
 
-    public function delete_admin_laporan_keuangan($id)
+    public function delete_maker_laporan_keuangan($id)
     {
         $delete = DB::table('keuangan')->where('id_laporan_keuangan', $id)->delete();
         if($delete){

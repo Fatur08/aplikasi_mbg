@@ -1,4 +1,4 @@
-@extends('layouts.admin.tabler')
+@extends('layouts.maker.tabler')
 @section('content')
 <style>
 /* === Section Info Dapur === */
@@ -129,7 +129,7 @@
                     Halaman
                 </div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2 class="page-title mb-0">Dashboard Admin</h2>
+                    <h2 class="page-title mb-0">Dashboard maker</h2>
                 </div>
             </div>
         </div>
@@ -165,7 +165,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/admin/laporan/distribusi" method="GET" id="FormLaporanDistribusiAdmin">
+                                    <form action="/maker/laporan/distribusi" method="GET" id="FormLaporanDistribusimaker">
                                         <div class="row">
                                             <div class="col-5">
                                                 <div class="form-group">
@@ -296,7 +296,7 @@
                                                                         Edit
                                                                     </a>
                                                                     @else
-                                                                    <a href="/admin/laporan/distribusi/{{ $d->id_distribusi }}/batalkan_distribusi" class="btn btn-sm bg-danger">
+                                                                    <a href="/maker/laporan/distribusi/{{ $d->id_distribusi }}/batalkan_distribusi" class="btn btn-sm bg-danger">
                                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10l4 4m0 -4l-4 4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
                                                                         Batalkan
                                                                     </a>
@@ -427,7 +427,7 @@
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/admin/laporan/distribusi/edit_laporan_distribusi',
+                url:'/maker/laporan/distribusi/edit_laporan_distribusi',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -467,7 +467,7 @@
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/admin/laporan/distribusi/bukti_pengiriman',
+                url:'/maker/laporan/distribusi/bukti_pengiriman',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -484,7 +484,7 @@
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/admin/laporan/distribusi/kendala_distribusi',
+                url:'/maker/laporan/distribusi/kendala_distribusi',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -499,7 +499,7 @@
 
 
 
-        $("#FormLaporanDistribusiAdmin").submit(function(){
+        $("#FormLaporanDistribusimaker").submit(function(){
             var cari_kecamatan = $("#cari_kecamatan").val();
             var cari_bulan     = $("#cari_bulan").val();
             if(cari_kecamatan==""){
