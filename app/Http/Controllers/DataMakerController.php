@@ -78,6 +78,7 @@ class DataMakerController extends Controller
             'no_hp_maker' => $no_hp_maker,
             'foto_maker'=>$foto_maker,
             'kecamatan_maker' => $kecamatan_maker,
+            'nomor_dapur_maker' => $nomor_dapur,
             'password_maker' => $password_maker
         ];
 
