@@ -372,7 +372,7 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#btnTambahmaker").click(function(){
+        $("#TambahMaker").click(function(){
             $("#modal-inputmaker").modal("show");
         });
 
@@ -416,71 +416,61 @@
             });
         });
 
-        $("#frmAdmn").submit(function(){
-            var nama_lengkap = $("#nama_lengkap").val();
-            var email = $("#email").val();
-            var alamat = $("#alamat").val();
-            var no_hp = $("#no_hp").val();
-            var foto = $("#frmAdmn").find("#foto").val();
+        $("#FormTambahMaker").submit(function(){
+            var nama_maker = $("#nama_maker").val();
+            var email_maker = $("#email_maker").val();
+            var alamat_maker = $("#alamat_maker").val();
+            var no_hp_maker = $("#no_hp_maker").val();
+            var foto_maker = $("#FormTambahMaker").find("#foto_maker").val();
             var kecamatan = $("#kecamatan").val();
-            if(nama_lengkap==""){
+            if(nama_maker==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Nama Lengkap Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#nama_lengkap").focus();
+                      $("#nama_maker").focus();
                   });
                 return false;
-            } else if (email==""){
+            } else if (email_maker==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'E-Mail Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#email").focus();
+                      $("#email_maker").focus();
                   });
                 return false;
-            } else if (alamat==""){
+            } else if (alamat_maker==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Alamat Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#alamat").focus();
+                      $("#alamat_maker").focus();
                   });
                 return false;
-            } else if (no_hp==""){
+            } else if (no_hp_maker==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'No. HP Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#no_hp").focus();
+                      $("#no_hp_maker").focus();
                   });
                 return false;
-            } else if (foto==""){
+            } else if (foto_maker==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Foto Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#foto").focus();
-                  });
-                return false;
-            } else if (kecamatan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Kecamatan Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#kecamatan").focus();
+                      $("#foto_maker").focus();
                   });
                 return false;
             }
