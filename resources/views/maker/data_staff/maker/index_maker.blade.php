@@ -175,8 +175,8 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-12">
-                                <form action="/maker/data_staff/maker" method="GET">
+                            <form action="/maker/data_staff/maker" method="GET">
+                                <div class="col-12">
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group">
@@ -191,8 +191,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                </form>
-                                        <div class="col-md-4">
+                                        <div class="col-4">
                                             <div class="form-group">
                                                 <a href="#" class="btn btn-success w-100" id="TambahMaker" >
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M16 19h6" /><path d="M19 16v6" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /></svg>
@@ -201,7 +200,8 @@
                                             </div>
                                         </div>
                                     </div>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                         <div class="row mt-2 table-container">
                             <div class="col-12">
@@ -216,11 +216,30 @@
                                                     <th>Alamat</th>
                                                     <th>No. HP</th>
                                                     <th>Foto</th>
-                                                    <th>Password</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($maker as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_staff/maker/'.$d->foto_maker);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $loop->iteration + $maker->firstItem()-1 }}</td>
+                                                    <td>{{ $d->nama_maker }}</td>
+                                                    <td>{{ $d->email_maker }}</td>
+                                                    <td>{{ $d->alamat_maker }}</td>
+                                                    <td>{{ $d->no_hp_maker }}</td>
+                                                    <td>
+                                                        @if (empty($d->foto_maker))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
