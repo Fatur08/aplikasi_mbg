@@ -60,7 +60,7 @@ class DataMakerController extends Controller
             ->where('nomor_dapur', $nomor_dapur)
             ->first();
 
-        $kecamatan_maker = $dapur->nama_dapur ?? null;
+        $kecamatan_maker = $dapur->dapur_kecamatan ?? null;
         $password_maker = 12345;
 
         if($request->hasFile('foto_maker')){
