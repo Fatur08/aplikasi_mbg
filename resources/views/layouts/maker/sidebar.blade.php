@@ -306,6 +306,14 @@
                     Keuangan
                 </span>
               </a>
+              <a class="nav-link" href="/maker/laporan/supplier" style="margin-left: 26px;">
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-package-import"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21l-8 -4.5v-9l8 -4.5l8 4.5v4.5" /><path d="M12 12l8 -4.5" /><path d="M12 12v9" /><path d="M12 12l-8 -4.5" /><path d="M22 18h-7" /><path d="M18 15l-3 3l3 3" /></svg>
+                </span>
+                <span class="nav-link-title">
+                    Supplier
+                </span>
+              </a>
               <a class="nav-link" href="/maker/laporan/dapur" style="margin-left: 26px;">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-tools-kitchen"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 3h8l-1 9h-6z" /><path d="M7 18h2v3h-2z" /><path d="M20 3v12h-5c-.023 -3.681 .184 -7.406 5 -12z" /><path d="M20 15v6h-1v-3" /><path d="M8 12l0 6" /></svg>

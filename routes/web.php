@@ -22,6 +22,7 @@ use App\Http\Controllers\LaporanDistribusiController;
 use App\Http\Controllers\LaporanKeuanganController;
 use App\Http\Controllers\LaporanDapurController;
 use App\Http\Controllers\LaporanStokController;
+use App\Http\Controllers\LaporanSupplierController;
 use App\Http\Controllers\MenuHarianController;
 use App\Http\Controllers\PengirimanDistributorController;
 use App\Http\Controllers\ProfilDistributorController;
@@ -360,6 +361,17 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::post('/maker/laporan/keuangan/{id}/update_laporan_keuangan',[LaporanKeuanganController::class,'update_maker_laporan_keuangan']);
     Route::post('/maker/laporan/keuangan/{id}/delete_laporan_keuangan',[LaporanKeuanganController::class,'delete_maker_laporan_keuangan']);
 
+    
+    //Supplier
+    Route::get('/maker/laporan/supplier',[LaporanSupplierController::class,'index_maker_laporan_supplier']);
+    Route::post('/maker/laporan/supplier/store_laporan_supplier',[LaporanSupplierController::class,'store_maker_laporan_supplier']);
+    Route::post('/maker/laporan/supplier/edit_laporan_supplier',[LaporanSupplierController::class,'edit_maker_laporan_supplier']);
+    Route::get('/maker/laporan/supplier/cetak_laporan_supplier',[LaporanSupplierController::class,'cetak_maker_laporan_supplier']);
+    Route::post('/maker/laporan/supplier/{id}/update_laporan_supplier',[LaporanSupplierController::class,'update_maker_laporan_supplier']);
+    Route::post('/maker/laporan/supplier/{id}/delete_laporan_supplier',[LaporanSupplierController::class,'delete_maker_laporan_supplier']);
+    
+    
+    
     //Dapur
     Route::get('/maker/laporan/dapur',[LaporanDapurController::class,'index_maker_dapur']);
     Route::post('/maker/laporan/dapur/kendala_dapur',[LaporanDapurController::class,'kendala_maker_dapur']);
