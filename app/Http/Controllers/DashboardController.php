@@ -116,6 +116,9 @@ class DashboardController extends Controller
                 ->value('nama_dapur')
             : '-';
 
+        // Tanggal hari ini
+        $hariIni = Carbon::today();
+
         // ===============================
         // DATA DISTRIBUSI KATEGORI SEKOLAH
         // ===============================
@@ -123,6 +126,7 @@ class DashboardController extends Controller
             ->select('tujuan_distribusi', 'jumlah_paket', 'menu_makanan')
             ->where('kategori_distribusi', 'Sekolah')
             ->where('nomor_dapur_distribusi', $nomor_dapur)
+            ->whereDate('tanggal_distribusi', $hariIni)
             ->get();
 
         // ===============================
@@ -132,6 +136,7 @@ class DashboardController extends Controller
             ->select('tujuan_distribusi', 'jumlah_paket' , 'menu_makanan')
             ->where('kategori_distribusi', 'B3')
             ->where('nomor_dapur_distribusi', $nomor_dapur)
+            ->whereDate('tanggal_distribusi', $hariIni)
             ->get();
 
         return view('dashboard.dashboardmaker', compact(
