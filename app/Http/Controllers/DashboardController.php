@@ -106,84 +106,13 @@ class DashboardController extends Controller
     {
         $maker               = DB::table('maker')->where('id_maker', auth()->id())->first();
         $nomor_dapur         = $maker->nomor_dapur_maker ?? null;
-        $kecamatan           = $request->cari_kecamatan;
-        $bulan               = $request->cari_bulan;
-    
-        // 🔹 Mulai query dasar
-        $query = LaporanDistribusi::query();
-
-        // 🔹 Filter berdasarkan kecamatan
-        if (!empty($kecamatan)) {
-            $query->where('kecamatan_sekolah', 'like', '%' . $kecamatan . '%');
-        }
-
-        // 🔹 Filter berdasarkan dapur
-        if (!empty($nomor_dapur)) {
-            $query->where('nomor_dapur_distribusi', $nomor_dapur);
-        }
-
-        // ✅ 🔹 Filter berdasarkan bulan saja (TANPA tahun)
-        if (!empty($bulan)) {
-            $query->whereMonth('tanggal_distribusi', $bulan);
-        }
-
-        // 🔹 Eksekusi query
-        $distribusi = $query->orderBy('tanggal_distribusi', 'desc')->paginate(300);
-        $dataKosong = $distribusi->isEmpty();// 🔹 Cek apakah hasilnya kosong
-        $dataKosong = $distribusi->isEmpty();
-
-        // 🔹 Ambil nama distributor (jika ada kecamatan atau dapur dipilih)
-        $nama_distributor = '';
-        if (!$dataKosong && (!empty($kecamatan) || !empty($nomor_dapur))) {
-            $nama_distributor = LaporanDistribusi::query()
-                ->when($kecamatan, fn($q) => $q->where('kecamatan_sekolah', 'like', '%' . $kecamatan . '%'))
-                ->when($nomor_dapur, fn($q) => $q->where('nomor_dapur_distribusi', $nomor_dapur))
-                ->value('nama_distributor');
-        }
-
-        // 🔹 Deteksi apakah user sudah melakukan pencarian
-        $sudahCari = !empty($kecamatan) || !empty($nomor_dapur);
-
-        
-        // 🔹 Ambil nama dapur berdasarkan nomor dapur
-            $nama_dapur = '';
-            if (!empty($nomor_dapur)) {
-                $nama_dapur = DB::table('dapur')
-                    ->where('nomor_dapur', $nomor_dapur)
-                    ->value('nama_dapur');
-            }
-
-        // Ambil semua data dapur
-        $dapurList = DB::table('dapur')
-            ->select('nomor_dapur', 'nama_dapur')
-            ->groupBy('nomor_dapur', 'nama_dapur')
-            ->get();
-        
-        
-        $data_kecamatan = [];
-        if ($nomor_dapur) {
-            $data_kecamatan = DB::table('dapur')
-                ->where('nomor_dapur', $nomor_dapur)
-                ->pluck('dapur_kecamatan')
-                ->unique()
-                ->values();
-        }
-
         $namaDapur = $nomor_dapur
-        ? DB::table('dapur')
-            ->where('nomor_dapur', $nomor_dapur)
-            ->value('nama_dapur')
-        : '-';
+            ? DB::table('dapur')
+                ->where('nomor_dapur', $nomor_dapur)
+                ->value('nama_dapur')
+            : '-';
         
-    
         return view('dashboard.dashboardmaker', compact(
-            'distribusi',
-            'nama_distributor',
-            'kecamatan',
-            'dataKosong',
-            'sudahCari',
-            'dapurList',
-            'data_kecamatan',
             'nomor_dapur',
             'namaDapur'
         ));

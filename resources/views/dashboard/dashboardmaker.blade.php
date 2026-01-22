@@ -163,7 +163,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-2">
+                            <!--<div class="row mt-2">
                                 <div class="col-12">
                                     <form action="/maker/laporan/distribusi" method="GET" id="FormLaporanDistribusimaker">
                                         <div class="row">
@@ -207,7 +207,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="row mt-2 table-container">
                                 <!--<div class="col-12">
                                     @if(!$sudahCari)
@@ -367,54 +367,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{{-- Modal Validasi Data Laporan Distribusi --}}
-<div class="modal modal-blur fade" id="modal-editlaporandistribusi" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Validasi Data Laporan Distribusi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadeditformlaporandistribusi">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{{-- Modal Bukti Pengiriman --}}
-<div class="modal modal-blur fade" id="modal-buktipengirimanlaporandistribusi" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Bukti Pengiriman</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadnotainformasibuktipengiriman">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{{-- Modal Kendala Distribusi --}}
-<div class="modal modal-blur fade" id="modal-kendaladistribusi" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Kendala Distribusi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadkendaladistribusi">
-                
             </div>
         </div>
     </div>
