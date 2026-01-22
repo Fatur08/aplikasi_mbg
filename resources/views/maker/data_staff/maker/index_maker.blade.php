@@ -326,7 +326,6 @@
                                     name="no_hp_maker"
                                     class="form-control"
                                     placeholder="Masukkan Nomor HP"
-                                    required
                                     inputmode="numeric"
                                     pattern="[0-9]+"
                                     minlength="10"
