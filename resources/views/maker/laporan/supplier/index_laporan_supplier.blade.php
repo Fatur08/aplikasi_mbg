@@ -176,13 +176,6 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    <div class="alert alert-primary">
-                                        <strong>Sisa Seluruh Dana :</strong> Rp {{ number_format($sisa_dana, 0, ',', '.') }}
-                                    </div>
-                                </div>
-                            </div>
                             <form action="/maker/laporan/supplier" method="GET" id="FormLaporansupplier">
                                 <div class="row mt-2">
                                     <div class="col-12">
