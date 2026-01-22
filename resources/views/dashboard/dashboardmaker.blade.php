@@ -148,7 +148,7 @@
                             <div class="section-info">
                                 <div class="info-card">
                                     <h4>
-                                        <span style="color:#2563eb;">{{ $namaDapur }}</span><br>
+                                        <span style="color:#2563eb;">{{ $namaDapur }}</span><br><br>
                                         <small class="text-muted">
                                             {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
                                         </small>
@@ -156,55 +156,80 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="row mt-2 table-container">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <!-- ===== Sekolah ===== -->
-                                        <div class="col-6">
-                                            <div class="table-wrapper">
-                                                <div class="table-responsive">
-                                                    <table class="table custom-table">
-                                                        <thead class="table-success">
-                                                            <tr class="text-center">
-                                                                <th colspan="3">Sekolah</th>
-                                                            </tr>
+                        <div class="row mt-2 table-container">
+                            <div class="col-12">
+                                <div class="row">
+                                    <!-- ===== Sekolah ===== -->
+                                    <div class="col-6">
+                                        <div class="table-wrapper">
+                                            <div class="table-responsive">
+                                                <table class="table custom-table">
+                                                    <thead class="table-success">
+                                                        <tr class="text-center">
+                                                            <th colspan="3">Sekolah</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th colspan="3">Menu : </th>
+                                                        </tr>
+                                                        <tr class="text-center">
+                                                            <th>No</th>
+                                                            <th>Nama Sekolah</th>
+                                                            <th>Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @forelse ($distribusiSekolah as $index => $item)
                                                             <tr>
-                                                                <th colspan="3">Menu : </th>
+                                                                <td class="text-center">{{ $index + 1 }}</td>
+                                                                <td>{{ $item->tujuan_distribusi }}</td>
+                                                                <td class="text-center">{{ $item->jumlah_paket }}</td>
                                                             </tr>
-                                                            <tr class="text-center">
-                                                                <th>No</th>
-                                                                <th>Nama Sekolah</th>
-                                                                <th>Jumlah</th>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="3" class="text-center text-muted">
+                                                                    Data Sekolah belum tersedia
+                                                                </td>
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                        @endforelse
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                        <!-- ===== B3 ===== -->
-                                        <div class="col-6">
-                                            <div class="table-wrapper">
-                                                <div class="table-responsive">
-                                                    <table class="table custom-table">
-                                                        <thead class="table-success">
-                                                            <tr class="text-center">
-                                                                <th colspan="3">B3</th>
-                                                            </tr>
+                                    </div>
+                                    <!-- ===== B3 ===== -->
+                                    <div class="col-6">
+                                        <div class="table-wrapper">
+                                            <div class="table-responsive">
+                                                <table class="table custom-table">
+                                                    <thead class="table-success">
+                                                        <tr class="text-center">
+                                                            <th colspan="3">B3</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th colspan="3">Menu : </th>
+                                                        </tr>
+                                                        <tr class="text-center">
+                                                            <th>No</th>
+                                                            <th>Nama B3</th>
+                                                            <th>Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @forelse ($distribusiB3 as $index => $item)
                                                             <tr>
-                                                                <th colspan="3">Menu : </th>
+                                                                <td class="text-center">{{ $index + 1 }}</td>
+                                                                <td>{{ $item->tujuan_distribusi }}</td>
+                                                                <td class="text-center">{{ $item->jumlah_paket }}</td>
                                                             </tr>
-                                                            <tr class="text-center">
-                                                                <th>No</th>
-                                                                <th>Nama B3</th>
-                                                                <th>Jumlah</th>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="3" class="text-center text-muted">
+                                                                    Data B3 belum tersedia
+                                                                </td>
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                        @endforelse
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

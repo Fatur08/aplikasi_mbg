@@ -104,17 +104,39 @@ class DashboardController extends Controller
 
     public function dashboardmaker(Request $request)
     {
-        $maker               = DB::table('maker')->where('id_maker', auth()->id())->first();
-        $nomor_dapur         = $maker->nomor_dapur_maker ?? null;
+        $maker = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+    
+        $nomor_dapur = $maker->nomor_dapur_maker ?? null;
+    
         $namaDapur = $nomor_dapur
             ? DB::table('dapur')
                 ->where('nomor_dapur', $nomor_dapur)
                 ->value('nama_dapur')
             : '-';
-        
+    
+        // ===============================
+        // DATA DISTRIBUSI KATEGORI SEKOLAH
+        // ===============================
+        $distribusiSekolah = DB::table('distribusi')
+            ->select('tujuan_distribusi', 'jumlah_paket')
+            ->where('kategori_distribusi', 'Sekolah')
+            ->get();
+    
+        // ===============================
+        // DATA DISTRIBUSI KATEGORI B3
+        // ===============================
+        $distribusiB3 = DB::table('distribusi')
+            ->select('tujuan_distribusi', 'jumlah_paket')
+            ->where('kategori_distribusi', 'B3')
+            ->get();
+    
         return view('dashboard.dashboardmaker', compact(
             'nomor_dapur',
-            'namaDapur'
+            'namaDapur',
+            'distribusiSekolah',
+            'distribusiB3'
         ));
     }
 

@@ -17,6 +17,7 @@ class LaporanDistribusi extends Model
         'nama_distributor',
         'kecamatan_sekolah',
         'tanggal_distribusi',
+        'kategori_distribusi',
         'tujuan_distribusi',
         'jumlah_paket',
         'menu_makanan',
