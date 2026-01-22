@@ -203,7 +203,7 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="row table-container">
+                        <div class="row mt-2 table-container">
                             <div class="col-12">
                                 <div class="table-wrapper">
                                     <div class="table-responsive">
