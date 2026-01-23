@@ -83,10 +83,10 @@ class DataStaffController extends Controller
         $queryRelawan = Relawan::query();
         $queryRelawan->select('*');
         if(!empty($cari_nama)){
-            $queryRelawan->where('nama_aslap','like','%'.$cari_nama.'%');
+            $queryRelawan->where('nama_relawan','like','%'.$cari_nama.'%');
         }
-        $aslap = $queryRelawan->get();
-        $aslap = $queryRelawan->paginate(50);
+        $relawan = $queryRelawan->get();
+        $relawan = $queryRelawan->paginate(50);
 
         // Ambil semua data dapur
         $dapurList = DB::table('dapur')
@@ -94,10 +94,10 @@ class DataStaffController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
 
-        $peranList = DB::table('aslap')
-            ->select('peran_aslap')
-            ->whereNotNull('peran_aslap')
-            ->where('peran_aslap', '!=', '')
+        $peranList = DB::table('relawan')
+            ->select('peran_relawan')
+            ->whereNotNull('peran_relawan')
+            ->where('peran_relawan', '!=', '')
             ->distinct()
             ->get();
 
