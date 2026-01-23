@@ -151,9 +151,9 @@
                                                     <td style="text-align:center">{{ $dapur->dapur_kecamatan }}</td>
                                                     <td style="text-align:center">
                                                         @php
-                                                            $admin = $admins->where('nomor_dapur_admin', $dapur->nomor_dapur)->first();
+                                                            $maker = $makers->where('nomor_dapur_maker', $dapur->nomor_dapur)->first();
                                                         @endphp
-                                                        {{ $admin->nama_admin ?? '-' }}
+                                                        {{ $maker->nama_maker ?? '-' }}
                                                     </td>
                                                     <td style="text-align:center">
                                                         @php
@@ -163,9 +163,9 @@
                                                     </td>
                                                     <td style="text-align:center">
                                                         @php
-                                                            $dist = $distributors->where('nomor_dapur_distributor', $dapur->nomor_dapur)->first();
+                                                            $dist = $drivers->where('nomor_dapur_driver', $dapur->nomor_dapur)->first();
                                                         @endphp
-                                                        {{ $dist->nama_distributor ?? '-' }}
+                                                        {{ $dist->nama_driver ?? '-' }}
                                                     </td>
                                                 </tr>
                                             @endforeach
