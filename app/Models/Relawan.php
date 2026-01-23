@@ -15,7 +15,7 @@ class Relawan extends Authenticatable
 
     protected $fillable = [
         'nama_relawan',
-        'peran_relawan',
+        'divisi_relawan',
         'no_hp_relawan',
         'foto_relawan',
         'ktp_relawan',
