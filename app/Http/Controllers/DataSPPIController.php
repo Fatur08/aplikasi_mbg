@@ -16,7 +16,7 @@ class DataSPPIController extends Controller
             ->where('id_maker', auth()->id())
             ->first();
 
-        $nomor_dapur = $sppiLogin->nomor_dapur_maker ?? null;
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
         $cari_nama   = $request->cari_nama;
 
         // Query data staff sppi
@@ -32,10 +32,10 @@ class DataSPPIController extends Controller
             $query->where('nama_sppi', 'like', '%' . $cari_nama . '%');
         }
 
-        // Pagination
+        // Pagination Hei 
         $sppi = $query->paginate(100);
 
-        return view('sppi.data_staff.sppi.index_sppi', compact('sppi'));
+        return view('maker.data_staff.sppi.index_sppi', compact('sppi'));
     }
 
 
