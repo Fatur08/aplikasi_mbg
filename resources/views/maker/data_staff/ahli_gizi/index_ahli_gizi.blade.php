@@ -169,7 +169,7 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <form action="/maker/data_staff/sppi" method="GET">
+                            <form action="/maker/data_staff/ahli_gizi" method="GET">
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-4">
