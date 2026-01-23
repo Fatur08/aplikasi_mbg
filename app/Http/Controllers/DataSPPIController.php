@@ -9,6 +9,110 @@ use Illuminate\Support\Facades\Redirect;
 
 class DataSPPIController extends Controller
 {
+    // BAGIAN OWNER
+    public function index_owner_data_staff_sppi(Request $request)
+    {
+        $pilih_dapur = $request->pilih_dapur;
+        $cari_nama   = $request->cari_nama;
+
+        // Query data staff sppi
+        $query = SPPI::query();
+
+
+        // Filter pencarian nama (jika ada)
+        if (!empty($cari_nama)) {
+            $query->where('nama_sppi', 'like', '%' . $cari_nama . '%');
+        }
+
+
+        // Filter pencarian dapur (jika ada)
+        if (!empty($pilih_dapur)) {
+            $query->where('nomor_dapur_sppi', $pilih_dapur);
+        }
+
+        // Pagination Hei 
+        $sppi = $query->paginate(100);
+
+
+        // Ambil semua data dapur
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
+        
+        
+        // ✅ Ambil nama dapur
+        $namaDapur = $pilih_dapur
+            ? DB::table('dapur')
+                ->where('nomor_dapur', $pilih_dapur)
+                ->value('nama_dapur')
+            : '-';
+
+        return view('owner.data_staff.sppi.index_sppi', compact('sppi', 'dapurList', 'namaDapur'));
+    }
+
+
+
+
+
+
+
+    public function validasi_owner_data_staff_sppi(Request $request)
+    {
+        $id = $request->id;
+        $sppi = DB::table('sppi')->get();
+        $data = DB::table('sppi')->where('id_sppi', $id)->first();
+        return view('owner.data_staff.sppi.validasi_sppi',compact('sppi','data'));
+    }
+
+
+
+    public function update_owner_validasi_sppi($id, Request $request)
+    {
+        try {
+            $status_validasi_sppi = $request->status_validasi_sppi;
+
+            // Update hanya kolom yang perlu
+            $update = DB::table('sppi')
+                ->where('id_sppi', $id)
+                ->update([
+                    'status_validasi_sppi' => $status_validasi_sppi
+                ]);
+
+            if ($update) {
+                return Redirect::back()->with(['success' => 'Status Berhasil Diubah']);
+            } else {
+                return Redirect::back()->with(['warning' => 'Tidak ada perubahan data']);
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->with(['error' => 'Data Gagal Diproses']);
+        }
+    }
+
+
+    public function batalkan_owner_validasi_sppi($id, Request $request)
+    {
+        $update = DB::table('sppi')
+            ->where('id_sppi',$id)
+            ->update([
+                'status_validasi_sppi' => 0
+            ]);
+
+        if($update){
+            return Redirect::back()->with(['success'=>'Status Berhasil Dibatalkan']);
+        } else {
+            return Redirect::back()->with(['warning'=>'Data Gagal Diproses']);
+        }
+    }
+
+
+
+
+
+
+
+
+    // BAGIAN MAKER
     public function index_maker_data_staff_sppi(Request $request)
     {
         // Ambil data maker yang login

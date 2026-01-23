@@ -99,6 +99,9 @@ Route::middleware(['auth:owner'])->group(function(){
     // SPPI
     Route::get('/owner/data_staff/sppi',[DataSPPIController::class,'index_owner_data_staff_sppi']);
     Route::post('/owner/data_staff/sppi/store_sppi',[DataSPPIController::class,'store_owner_data_staff_sppi']);
+    Route::post('/owner/data_staff/sppi/validasi_sppi',[DataSPPIController::class,'validasi_owner_data_staff_sppi']);
+    Route::post('/owner/data_staff/sppi/{id}/update_validasi_sppi',[DataSPPIController::class,'update_owner_validasi_sppi']);
+    Route::post('/owner/data_staff/sppi/{id}/batalkan_validasi_sppi',[DataSPPIController::class,'batalkan_owner_validasi_sppi']);
     
     // Ahli Gizi
     Route::get('/owner/data_staff/ahli_gizi',[DataAhliGiziController::class,'index_owner_data_staff_ahli_gizi']);
