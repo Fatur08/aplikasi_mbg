@@ -37,8 +37,15 @@ class DataMakerController extends Controller
             ->select('nomor_dapur', 'nama_dapur')
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
+        
+        
+        // Ambil nama dapur
+        $nama_dapur = DB::table('dapur')
+            ->select('nama_dapur')
+            ->where('nomor_dapur', $pilih_dapur)
+            ->get();
 
-        return view('owner.data_staff.maker.index_maker', compact('maker', 'dapurList', 'pilih_dapur'));
+        return view('owner.data_staff.maker.index_maker', compact('maker', 'dapurList', 'nama_dapur'));
     }
     
 

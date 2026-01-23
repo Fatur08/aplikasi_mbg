@@ -212,7 +212,7 @@
                                         <table class="table custom-table">
                                             <thead>
                                                 <tr>
-                                                    <th colspan="7" style="text-align: left;">Nama Dapur : {{ $pilih_dapur }}</th>
+                                                    <th colspan="7" style="text-align: left;">Nama Dapur : {{ $nama_dapur }}</th>
                                                 </tr>
                                                 <tr>
                                                     <th>No.</th>
