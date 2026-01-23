@@ -120,6 +120,9 @@ Route::middleware(['auth:owner'])->group(function(){
     // Data Aslap
     Route::get('/owner/data_staff/aslap',[DataAslapController::class,'index_owner_data_staff_aslap']);
     Route::post('/owner/data_staff/aslap/store_aslap',[DataAslapController::class,'store_owner_data_staff_aslap']);
+    Route::post('/owner/data_staff/aslap/validasi_aslap',[DataAslapController::class,'validasi_owner_data_staff_aslap']);
+    Route::post('/owner/data_staff/aslap/{id}/update_validasi_aslap',[DataAslapController::class,'update_owner_validasi_aslap']);
+    Route::post('/owner/data_staff/aslap/{id}/batalkan_validasi_aslap',[DataAslapController::class,'batalkan_owner_validasi_aslap']);
     //Route::post('/owner/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_owner_aslap']);
     //Route::post('/owner/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_owner_aslap']);
     //Route::post('/owner/data_staff/aslap/{id}/update_aslap',[DataAslapController::class,'update_owner_aslap']);
