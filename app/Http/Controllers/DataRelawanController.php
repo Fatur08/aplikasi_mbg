@@ -68,15 +68,23 @@ class DataRelawanController extends Controller
             $foto_relawan = null;
         }
 
+
+        if($request->hasFile('ktp_relawan')){
+            $ktp_relawan = $nama_relawan.".".$request
+                ->file('ktp_relawan')
+                ->getClientOriginalExtension();
+        } else {
+            $ktp_relawan = null;
+        }
+
         $data = [
             'nama_relawan'             => $nama_relawan,
             'nomor_dapur_relawan'      => $nomor_dapur,
             'email_relawan'            => $email_relawan,
             'divisi_relawan'           => $divisi_relawan,
             'no_hp_relawan'            => $no_hp_relawan,
-            'foto_relawan'             =>$foto_relawan,
-            'kecamatan_relawan'        => $kecamatan_relawan,
-            'password_relawan'         => $password_relawan,
+            'foto_relawan'             => $foto_relawan,
+            'ktp_relawan'              => $ktp_relawan,
             'status_validasi_relawan'  => 0
         ];
 
@@ -86,14 +94,28 @@ class DataRelawanController extends Controller
                 $foto_relawan = $nama_relawan.".".$request
                     ->file('foto_relawan')
                     ->getClientOriginalExtension();
-                $storagePath = 'public/uploads/data_staff/relawan/';
+                $storagePath = 'public/uploads/data_staff/relawan/foto/';
                 $request->file('foto_relawan')->storeAs($storagePath, $foto_relawan);
-                $publicPath = public_path('storage/uploads/data_staff/relawan/');
+                $publicPath = public_path('storage/uploads/data_staff/relawan/foto/');
                 if (!is_dir($publicPath)) {
                     mkdir($publicPath, 0777, true);
                 }
                 $sourceFile = storage_path('app/' . $storagePath . $foto_relawan);
-                $destinationFile = public_path('storage/uploads/data_staff/relawan/' . $foto_relawan);
+                $destinationFile = public_path('storage/uploads/data_staff/relawan/foto/' . $foto_relawan);
+                copy($sourceFile, $destinationFile);
+            }
+            if ($request->hasFile('ktp_relawan')) {
+                $ktp_relawan = $nama_relawan.".".$request
+                    ->file('ktp_relawan')
+                    ->getClientOriginalExtension();
+                $storagePath = 'public/uploads/data_staff/relawan/ktp/';
+                $request->file('ktp_relawan')->storeAs($storagePath, $ktp_relawan);
+                $publicPath = public_path('storage/uploads/data_staff/relawan/ktp/');
+                if (!is_dir($publicPath)) {
+                    mkdir($publicPath, 0777, true);
+                }
+                $sourceFile = storage_path('app/' . $storagePath . $ktp_relawan);
+                $destinationFile = public_path('storage/uploads/data_staff/relawan/ktp/' . $ktp_relawan);
                 copy($sourceFile, $destinationFile);
             }
             return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
