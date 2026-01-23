@@ -324,13 +324,35 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <div class="input-icon mb-3">
+                            <div class="input-icon">
                                 <span class="input-icon-addon">
-                                  <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4
+                                                 a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/>
+                                    </svg>
                                 </span>
-                                <input type="text" value="" id="no_hp_relawan" class="form-control" name="no_hp_relawan" placeholder="Masukkan No. HP Relawan">
-                              </div>
+                    
+                                <input
+                                    type="text"
+                                    id="no_hp_relawan"
+                                    name="no_hp_relawan"
+                                    class="form-control"
+                                    placeholder="Masukkan Nomor HP"
+                                    inputmode="numeric"
+                                    pattern="[0-9]+"
+                                    minlength="10"
+                                    maxlength="15"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                >
+                            </div>
+                    
+                            <small class="text-muted">
+                                Nomor HP hanya boleh angka (contoh: 08xxxxxxxxxx)
+                            </small>
                         </div>
                     </div>
                     <div class="row mt-3 mb-3">
