@@ -212,6 +212,9 @@
                                         <table class="table custom-table">
                                             <thead>
                                                 <tr>
+                                                    <th colspan="7">Nama Dapur : </th>
+                                                </tr>
+                                                <tr>
                                                     <th>No.</th>
                                                     <th>Nama</th>
                                                     <th>E-Mail</th>
