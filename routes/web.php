@@ -106,6 +106,9 @@ Route::middleware(['auth:owner'])->group(function(){
     // Ahli Gizi
     Route::get('/owner/data_staff/ahli_gizi',[DataAhliGiziController::class,'index_owner_data_staff_ahli_gizi']);
     Route::post('/owner/data_staff/ahli_gizi/store_ahli_gizi',[DataAhliGiziController::class,'store_owner_data_staff_ahli_gizi']);
+    Route::post('/owner/data_staff/ahli_gizi/validasi_ahli_gizi',[DataAhliGiziController::class,'validasi_owner_data_staff_ahli_gizi']);
+    Route::post('/owner/data_staff/ahli_gizi/{id}/update_validasi_ahli_gizi',[DataAhliGiziController::class,'update_owner_validasi_ahli_gizi']);
+    Route::post('/owner/data_staff/ahli_gizi/{id}/batalkan_validasi_ahli_gizi',[DataAhliGiziController::class,'batalkan_owner_validasi_ahli_gizi']);
 
     // Akuntan
     Route::get('/owner/data_staff/akuntan',[DataAkuntanController::class,'index_owner_data_staff_akuntan']);
