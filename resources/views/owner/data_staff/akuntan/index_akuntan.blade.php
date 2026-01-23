@@ -289,7 +289,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Validasi Data Ahli Gizi</h5>
+                <h5 class="modal-title">Validasi Data Akuntan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="formvalidasiakuntan">
@@ -310,7 +310,7 @@
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/owner/data_staff/ahli_gizi/validasi_akuntan',
+                url:'/owner/data_staff/akuntan/validasi_akuntan',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
