@@ -214,6 +214,34 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($ahli_gizi as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_staff/ahli_gizi/'.$d->foto_ahli_gizi);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $loop->iteration + $ahli_gizi->firstItem()-1 }}</td>
+                                                    <td>{{ $d->nama_ahli_gizi }}</td>
+                                                    <td>{{ $d->email_ahli_gizi }}</td>
+                                                    <td>{{ $d->alamat_ahli_gizi }}</td>
+                                                    <td>{{ $d->no_hp_ahli_gizi }}</td>
+                                                    <td>
+                                                        @if (empty($d->foto_ahli_gizi))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if($d->status_validasi_ahli_gizi == 0)
+                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                        @elseif($d->status_validasi_ahli_gizi == 1)
+                                                            <button class="btn btn-success btn-sm">Disetujui</button>
+                                                        @else
+                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
