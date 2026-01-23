@@ -205,7 +205,7 @@
                             </div>
                         </div>
 
-                        <!-- ===== AKUNTAN & relawan ===== -->
+                        <!-- ===== AKUNTAN & ASLAP ===== -->
                         <div class="row g-3 mb-3">
                             <div class="col-6">
                                 <a href="{{ url('/maker/data_staff/akuntan') }}" class="btn btn-info w-100 text-center py-4 text-decoration-none">
@@ -217,11 +217,11 @@
                             </div>
 
                             <div class="col-6">
-                                <a href="{{ url('/maker/data_staff/relawan') }}" class="btn btn-secondary w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/maker/data_staff/aslap') }}" class="btn btn-secondary w-100 text-center py-4 text-decoration-none">
 
-                                    <!-- <img src="{{ asset('images/relawan.png') }}" class="img-fluid mb-2" width="70"> -->
+                                    <!-- <img src="{{ asset('images/aslap.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold fs-2 text-white">relawan</div>
+                                    <div class="fw-bold fs-2 text-white">Aslap</div>
                                 </a>
                             </div>
                         </div>
