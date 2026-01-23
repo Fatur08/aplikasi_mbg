@@ -220,6 +220,34 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($sppi as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_staff/sppi/'.$d->foto_sppi);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $loop->iteration + $sppi->firstItem()-1 }}</td>
+                                                    <td>{{ $d->nama_sppi }}</td>
+                                                    <td>{{ $d->email_sppi }}</td>
+                                                    <td>{{ $d->alamat_sppi }}</td>
+                                                    <td>{{ $d->no_hp_sppi }}</td>
+                                                    <td>
+                                                        @if (empty($d->foto_sppi))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if($d->status_validasi_sppi == 0)
+                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                        @elseif($d->status_validasi_sppi == 1)
+                                                            <button class="btn btn-success btn-sm">Disetujui</button>
+                                                        @else
+                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

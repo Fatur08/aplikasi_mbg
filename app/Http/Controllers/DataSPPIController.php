@@ -35,7 +35,7 @@ class DataSPPIController extends Controller
         // Pagination
         $sppi = $query->paginate(100);
 
-        return view('sppi.data_staff.sppi.index_sppi', compact('sppi'));
+        return view('maker.data_staff.sppi.index_sppi', compact('sppi'));
     }
 
 
