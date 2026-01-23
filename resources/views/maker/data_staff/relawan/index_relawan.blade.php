@@ -175,7 +175,7 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="cari_nama" id="cari_nama" placeholder="Masukkan Nama Lengkap" value="{{ Request('nama_lengkap_cari') }}">
+                                                <input type="text" class="form-control" name="cari_nama" id="cari_nama" placeholder="Masukkan Nama Lengkap" value="{{ Request('cari_nama') }}">
                                             </div>
                                         </div>
                                         <div class="col-4">
@@ -188,7 +188,7 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <a href="#" class="btn btn-success w-100" id="TambahMaker" >
+                                                <a href="#" class="btn btn-success w-100" id="TambahRelawan" >
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M16 19h6" /><path d="M19 16v6" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /></svg>
                                                     Tambah Relawan
                                                 </a>
@@ -207,14 +207,55 @@
                                                 <tr>
                                                     <th>No.</th>
                                                     <th>Nama</th>
-                                                    <th>E-Mail</th>
-                                                    <th>Alamat</th>
+                                                    <th>Divisi</th>
                                                     <th>No. HP</th>
                                                     <th>Foto</th>
+                                                    <th>KTP</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($relawan as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_staff/relawan/'.$d->foto_relawan);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $loop->iteration + $relawan->firstItem()-1 }}</td>
+                                                    <td>{{ $d->nama_relawan }}</td>
+                                                    <td>{{ $d->divisi_relawan }}</td>
+                                                    <td>{{ $d->no_hp_relawan }}</td>
+                                                    <td>
+                                                        @if (empty($d->foto_relawan))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center"> 
+                                                        <a href="#" class="ktp_relawan btn btn-info btn-sm" id="{{ $d->id_relawan }}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
+                                                                         c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                            </svg>
+                                                            <span>Lihat</span>
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if($d->status_validasi_relawan == 0)
+                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                        @elseif($d->status_validasi_relawan == 1)
+                                                            <button class="btn btn-success btn-sm">Disetujui</button>
+                                                        @else
+                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -237,16 +278,16 @@
 
 
 
-<!-- TAMBAH MAKER -->
+<!-- TAMBAH RELAWAN -->
 <div class="modal modal-blur fade" id="modal-inputmaker" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Data Maker</h5>
+                <h5 class="modal-title">Tambah Data Relawan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/maker/data_staff/maker/store_maker" method="POST" id="FormTambahMaker" enctype="multipart/form-data">
+                <form action="/maker/data_staff/relawan/store_relawan" method="POST" id="FormTambahRelawan" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -255,7 +296,7 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
                                 </span>
-                                <input type="text" value="" id="nama_maker" class="form-control" name="nama_maker" placeholder="Masukkan Nama Lengkap">
+                                <input type="text" value="" id="nama_relawan" class="form-control" name="nama_relawan" placeholder="Masukkan Nama Lengkap">
                             </div>
                         </div>
                     </div>
@@ -281,8 +322,8 @@
 
                                 <input
                                     type="email"
-                                    id="email_maker"
-                                    name="email_maker"
+                                    id="email_relawan"
+                                    name="email_relawan"
                                     class="form-control"
                                     placeholder="Masukkan E-Mail (gmail)"
                                     pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
@@ -303,7 +344,7 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
                                 </span>
-                                <input type="text" value="" id="alamat_maker" class="form-control" name="alamat_maker" placeholder="Masukkan Alamat">
+                                <input type="text" value="" id="alamat_relawan" class="form-control" name="alamat_relawan" placeholder="Masukkan Alamat">
                               </div>
                         </div>
                     </div>
@@ -323,8 +364,8 @@
                     
                                 <input
                                     type="text"
-                                    id="no_hp_maker"
-                                    name="no_hp_maker"
+                                    id="no_hp_relawan"
+                                    name="no_hp_relawan"
                                     class="form-control"
                                     placeholder="Masukkan Nomor HP"
                                     inputmode="numeric"
@@ -342,10 +383,18 @@
                     </div>
                     <div class="row mt-3 mb-3">
                         <div class="col-6">
-                            <input type="file" id="foto_maker" name="foto_maker" class="form-control">
+                            <input type="file" id="foto_relawan" name="foto_relawan" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label>Masukkan Foto Pengenal</label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <input type="file" id="ktp_relawan" name="ktp_relawan" class="form-control">
+                        </div>
+                        <div class="col-6 mt-2">
+                            <label>Masukkan Foto KTP</label>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -367,7 +416,7 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#TambahMaker").click(function(){
+        $("#TambahRelawan").click(function(){
             $("#modal-inputmaker").modal("show");
         });
 
@@ -411,61 +460,71 @@
             });
         });
 
-        $("#FormTambahMaker").submit(function(){
-            var nama_maker = $("#nama_maker").val();
-            var email_maker = $("#email_maker").val();
-            var alamat_maker = $("#alamat_maker").val();
-            var no_hp_maker = $("#no_hp_maker").val();
-            var foto_maker = $("#FormTambahMaker").find("#foto_maker").val();
-            var kecamatan = $("#kecamatan").val();
-            if(nama_maker==""){
+        $("#FormTambahRelawan").submit(function(){
+            var nama_relawan = $("#nama_relawan").val();
+            var email_relawan = $("#email_relawan").val();
+            var alamat_relawan = $("#alamat_relawan").val();
+            var no_hp_relawan = $("#no_hp_relawan").val();
+            var foto_relawan = $("#FormTambahRelawan").find("#foto_relawan").val();
+            var ktp_relawan = $("#FormTambahRelawan").find("#ktp_relawan").val();
+            if(nama_relawan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Nama Lengkap Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#nama_maker").focus();
+                      $("#nama_relawan").focus();
                   });
                 return false;
-            } else if (email_maker==""){
+            } else if (email_relawan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'E-Mail Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#email_maker").focus();
+                      $("#email_relawan").focus();
                   });
                 return false;
-            } else if (alamat_maker==""){
+            } else if (alamat_relawan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Alamat Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#alamat_maker").focus();
+                      $("#alamat_relawan").focus();
                   });
                 return false;
-            } else if (no_hp_maker==""){
+            } else if (no_hp_relawan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'No. HP Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#no_hp_maker").focus();
+                      $("#no_hp_relawan").focus();
                   });
                 return false;
-            } else if (foto_maker==""){
+            } else if (foto_relawan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Foto Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#foto_maker").focus();
+                      $("#foto_relawan").focus();
+                  });
+                return false;
+            } else if (ktp_relawan==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'KTP Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#ktp_relawan").focus();
                   });
                 return false;
             }

@@ -221,6 +221,7 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::get('/maker/dashboardmaker',[DashboardController::class,'dashboardmaker']);
     //Route::get('/maker/dashboardmaker',[LaporanDistribusiController::class,'index_maker_laporan_distribusi']);
 
+
     // Data Staff
     // Data Maker
     Route::get('/maker/data_staff/maker',[DataMakerController::class,'index_maker_data_staff_maker']);
@@ -238,53 +239,25 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::get('/maker/data_staff/akuntan',[DataAkuntanController::class,'index_maker_data_staff_akuntan']);
     Route::post('/maker/data_staff/akuntan/store_akuntan',[DataAkuntanController::class,'store_maker_data_staff_akuntan']);
 
-
-
-
-
-
     // Data Aslap
     Route::get('/maker/data_staff/aslap',[DataAslapController::class,'index_maker_data_staff_aslap']);
     Route::post('/maker/data_staff/aslap/store_aslap',[DataAslapController::class,'store_maker_data_staff_aslap']);
+    //Route::post('/maker/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_maker_aslap']);
+    //Route::post('/maker/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_maker_aslap']);
+    //Route::post('/maker/data_staff/aslap/{id}/update_aslap',[DataAslapController::class,'update_maker_aslap']);
+    //Route::post('/maker/data_staff/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_maker_aslap']);
+    //Route::get('/maker/data_staff',[DataStaffController::class,'index_maker_data_staff']);
     
-    Route::post('/maker/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_maker_aslap']);
-    Route::post('/maker/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_maker_aslap']);
-    Route::post('/maker/data_staff/aslap/{id}/update_aslap',[DataAslapController::class,'update_maker_aslap']);
-    Route::post('/maker/data_staff/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_maker_aslap']);
-    
-    
-    Route::get('/maker/data_staff',[DataStaffController::class,'index_maker_data_staff']);
-    
-
-
-
-
-
-
-
-
     // Data Driver
     Route::get('/maker/data_staff/driver',[DataDriverController::class,'index_maker_data_staff_driver']);
     Route::post('/maker/data_staff/driver/store_driver',[DataDriverController::class,'store_maker_data_staff_driver']);
-    Route::post('/maker/data_staff/driver/edit_driver',[DataDriverController::class,'edit_maker_data_staff_driver']);
-    Route::post('/maker/data_staff/driver/{id}/update_driver',[DataDriverController::class,'update_maker_data_staff_driver']);
-    Route::post('/maker/data_staff/driver/{id}/delete_driver',[DataDriverController::class,'delete_maker_data_staff_driver']);
-
-
-
-
-    
-
-
-
-    
-
-
-
-
+    //Route::post('/maker/data_staff/driver/edit_driver',[DataDriverController::class,'edit_maker_data_staff_driver']);
+    //Route::post('/maker/data_staff/driver/{id}/update_driver',[DataDriverController::class,'update_maker_data_staff_driver']);
+    //Route::post('/maker/data_staff/driver/{id}/delete_driver',[DataDriverController::class,'delete_maker_data_staff_driver']);
 
     // Relawan
     Route::get('/maker/data_staff/relawan',[DataRelawanController::class,'index_maker_data_staff_relawan']);
+    Route::post('/maker/data_staff/relawan/store_relawan',[DataRelawanController::class,'store_maker_data_staff_relawan']);
 
 
     

@@ -2,12 +2,103 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Relawan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class DataRelawanController extends Controller
 {
+    // BAGIAN MAKER
     public function index_maker_data_staff_relawan(Request $request)
     {
-        return view('maker.data_staff.relawan.index_relawan');
+        // Ambil data maker yang login
+        $makerLogin = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
+        $cari_nama   = $request->cari_nama;
+
+        // Query data staff relawan
+        $query = Relawan::query();
+
+        // Filter berdasarkan nomor dapur
+        if ($nomor_dapur) {
+            $query->where('nomor_dapur_relawan', $nomor_dapur);
+        }
+
+        // Filter pencarian nama (jika ada)
+        if (!empty($cari_nama)) {
+            $query->where('nama_relawan', 'like', '%' . $cari_nama . '%');
+        }
+
+        // Pagination Hei 
+        $relawan = $query->paginate(100);
+
+        return view('maker.data_staff.relawan.index_relawan', compact('relawan'));
+    }
+
+
+
+
+
+    public function store_maker_data_staff_relawan(Request $request)
+    {
+        // Ambil data maker yang login
+        $makerLogin = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
+    
+        $nama_relawan   = $request->nama_relawan;
+        $email_relawan  = $request->email_relawan;
+        $divisi_relawan = $request->divisi_relawan;
+        $no_hp_relawan  = $request->no_hp_relawan;
+        $foto_relawan   = $request->foto_relawan;
+        $ktp_relawan    = $request->ktp_relawan;
+        
+
+        if($request->hasFile('foto_relawan')){
+            $foto_relawan = $nama_relawan.".".$request
+                ->file('foto_relawan')
+                ->getClientOriginalExtension();
+        } else {
+            $foto_relawan = null;
+        }
+
+        $data = [
+            'nama_relawan'             => $nama_relawan,
+            'nomor_dapur_relawan'      => $nomor_dapur,
+            'email_relawan'            => $email_relawan,
+            'divisi_relawan'           => $divisi_relawan,
+            'no_hp_relawan'            => $no_hp_relawan,
+            'foto_relawan'             =>$foto_relawan,
+            'kecamatan_relawan'        => $kecamatan_relawan,
+            'password_relawan'         => $password_relawan,
+            'status_validasi_relawan'  => 0
+        ];
+
+        $simpan = DB::table('relawan')->insert($data);
+        if ($simpan){
+            if ($request->hasFile('foto_relawan')) {
+                $foto_relawan = $nama_relawan.".".$request
+                    ->file('foto_relawan')
+                    ->getClientOriginalExtension();
+                $storagePath = 'public/uploads/data_staff/relawan/';
+                $request->file('foto_relawan')->storeAs($storagePath, $foto_relawan);
+                $publicPath = public_path('storage/uploads/data_staff/relawan/');
+                if (!is_dir($publicPath)) {
+                    mkdir($publicPath, 0777, true);
+                }
+                $sourceFile = storage_path('app/' . $storagePath . $foto_relawan);
+                $destinationFile = public_path('storage/uploads/data_staff/relawan/' . $foto_relawan);
+                copy($sourceFile, $destinationFile);
+            }
+            return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
+        } else {
+            return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
+        }
     }
 }
