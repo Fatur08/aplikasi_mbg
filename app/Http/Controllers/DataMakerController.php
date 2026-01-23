@@ -38,7 +38,7 @@ class DataMakerController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
 
-        return view('owner.data_staff.maker.index_maker', compact('maker', 'dapurList'));
+        return view('owner.data_staff.maker.index_maker', compact('maker', 'dapurList', 'pilih_dapur'));
     }
     
 
