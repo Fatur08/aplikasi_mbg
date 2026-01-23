@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class DataSPPIController extends Controller
 {
-    public function index_sppi_data_staff_sppi(Request $request)
+    public function index_maker_data_staff_sppi(Request $request)
     {
         // Ambil data maker yang login
         $makerLogin = DB::table('maker')

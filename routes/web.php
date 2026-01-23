@@ -231,6 +231,8 @@ Route::middleware(['auth:maker'])->group(function(){
 
     // SPPI
     Route::get('/maker/data_staff/sppi',[DataSPPIController::class,'index_maker_data_staff_sppi']);
+    Route::post('/maker/data_staff/sppi/store_sppi',[DataSPPIController::class,'store_maker_data_staff_sppi']);
+    
 
 
 
