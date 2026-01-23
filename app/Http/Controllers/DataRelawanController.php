@@ -133,4 +133,17 @@ class DataRelawanController extends Controller
             return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
         }
     }
+
+
+
+
+
+
+    public function ktp_maker_data_staff_relawan(Request $request)
+    {        
+        $id         = $request->id;
+        $relawan    = DB::table('relawan')->get();
+        $data       = DB::table('relawan')->where('id_relawan', $id)->first();
+        return view('maker.data_staff.relawan.ktp_relawan',compact('relawan','data'));
+    }
 }

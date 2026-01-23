@@ -259,6 +259,7 @@ Route::middleware(['auth:maker'])->group(function(){
     // Relawan
     Route::get('/maker/data_staff/relawan',[DataRelawanController::class,'index_maker_data_staff_relawan']);
     Route::post('/maker/data_staff/relawan/store_relawan',[DataRelawanController::class,'store_maker_data_staff_relawan']);
+    Route::post('/maker/data_staff/relawan/ktp_relawan',[DataRelawanController::class,'ktp_maker_data_staff_relawan']);
 
 
     

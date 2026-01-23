@@ -386,12 +386,48 @@
         </div>
     </div>
 </div>
+
+
+
+{{-- Modal KTP Relawan --}}
+<div class="modal modal-blur fade" id="modal-ktprelawan" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">KTP Data Pekerja</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loadktprelawan">
+                
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('myscript')
 <script>
     $(function(){
         $("#TambahRelawan").click(function(){
             $("#modal-inputmaker").modal("show");
+        });
+
+
+
+        $(".ktp_relawan").click(function(){
+            var id = $(this).attr('id');
+            $.ajax({
+                type:'POST',
+                url:'/maker/data_staff/relawan/ktp_relawan',
+                cache:false,
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    id : id
+                },
+                success:function(respond){
+                    $("#loadktprelawan").html(respond);
+                }
+            });
+            $("#modal-ktprelawan").modal("show");
         });
 
         $(".edit_maker").click(function(){
