@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class DataAslap extends Authenticatable
+class Aslap extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -15,19 +15,11 @@ class DataAslap extends Authenticatable
 
     protected $fillable = [
         'nama_aslap',
-        'peran_aslap',
+        'nomor_dapur_aslap',
+        'email_aslap',
+        'alamat_aslap',
         'no_hp_aslap',
         'foto_aslap',
-        'ktp_aslap',
         'status_validasi_aslap'
     ];
-
-    //protected $hidden = [
-    //    'password_data_pekerja',
-    //];
-
-    //public function getAuthPassword()
-    //{
-    //    return $this->password_data_pekerja;
-    //}
 }
