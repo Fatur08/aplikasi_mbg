@@ -101,6 +101,6 @@ class DataStaffController extends Controller
             ->distinct()
             ->get();
 
-        return view('maker.data_staff.index_data_staff', compact('kepala_dapur', 'distributor', 'aslap', 'dapurList', 'peranList'));
+        return view('maker.data_staff.index_data_staff', compact('kepala_dapur', 'distributor', 'relawan', 'dapurList', 'peranList'));
     }
 }

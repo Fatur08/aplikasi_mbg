@@ -205,7 +205,7 @@
                             </div>
                         </div>
 
-                        <!-- ===== AKUNTAN & ASLAP ===== -->
+                        <!-- ===== AKUNTAN & relawan ===== -->
                         <div class="row g-3 mb-3">
                             <div class="col-6">
                                 <a href="{{ url('/maker/data_staff/akuntan') }}" class="btn btn-info w-100 text-center py-4 text-decoration-none">
@@ -217,11 +217,11 @@
                             </div>
 
                             <div class="col-6">
-                                <a href="{{ url('/maker/data_staff/aslap') }}" class="btn btn-secondary w-100 text-center py-4 text-decoration-none">
+                                <a href="{{ url('/maker/data_staff/relawan') }}" class="btn btn-secondary w-100 text-center py-4 text-decoration-none">
 
-                                    <!-- <img src="{{ asset('images/aslap.png') }}" class="img-fluid mb-2" width="70"> -->
+                                    <!-- <img src="{{ asset('images/relawan.png') }}" class="img-fluid mb-2" width="70"> -->
 
-                                    <div class="fw-bold fs-2 text-white">Aslap</div>
+                                    <div class="fw-bold fs-2 text-white">relawan</div>
                                 </a>
                             </div>
                         </div>
@@ -874,7 +874,7 @@
 
 
 
-<!-- ASLAP (ASISTEN LAPANGAN) -->
+<!-- relawan (ASISTEN LAPANGAN) -->
 <div class="page-body">
     <div class="container-xl">
         <div class="row">
@@ -885,8 +885,8 @@
                             <div class="col-12">
                                 <div class="section-info">
                                     <div class="info-card">
-                                        <h2><span style="color:#2563eb;">ASLAP</span></h2>
-                                        <a href="#" class="btn btn-primary" id="btnTambahAslap">
+                                        <h2><span style="color:#2563eb;">relawan</span></h2>
+                                        <a href="#" class="btn btn-primary" id="btnTambahrelawan">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
@@ -895,7 +895,7 @@
                                                 <path d="M12 5l0 14" />
                                                 <path d="M5 12l14 0" />
                                             </svg>
-                                            Tambah Data Aslap
+                                            Tambah Data relawan
                                         </a>
                                     </div>
                                 </div>
@@ -915,24 +915,24 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($aslap as $d)
+                                                @foreach ($relawan as $d)
                                                 @php
-                                                    $path = Storage::url('uploads/data_induk/aslap/foto/'.$d->foto_aslap);
+                                                    $path = Storage::url('uploads/data_induk/relawan/foto/'.$d->foto_relawan);
                                                 @endphp
                                                 <tr>
-                                                    <td style="text-align:center">{{ $loop->iteration + $aslap->firstItem()-1 }}</td>
-                                                    <td>{{ $d->nama_aslap }}</td>
-                                                    <td>{{ $d->peran_aslap }}</td>
-                                                    <td>{{ $d->no_hp_aslap }}</td>
+                                                    <td style="text-align:center">{{ $loop->iteration + $relawan->firstItem()-1 }}</td>
+                                                    <td>{{ $d->nama_relawan }}</td>
+                                                    <td>{{ $d->peran_relawan }}</td>
+                                                    <td>{{ $d->no_hp_relawan }}</td>
                                                     <td style="text-align:center">
-                                                        @if (empty($d->foto_aslap))
+                                                        @if (empty($d->foto_relawan))
                                                         <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
                                                         @else
                                                         <img src="{{ url($path) }}" class="avatar" alt="">
                                                         @endif
                                                     </td>
                                                     <td style="text-align:center"> 
-                                                        <a href="#" class="ktp_aslap btn btn-info btn-sm" id="{{ $d->id_aslap }}">
+                                                        <a href="#" class="ktp_relawan btn btn-info btn-sm" id="{{ $d->id_relawan }}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round"
@@ -946,23 +946,23 @@
                                                         </a>
                                                     </td>
                                                     <td style="text-align:center">
-                                                        @if($d->status_validasi_aslap == 0)
+                                                        @if($d->status_validasi_relawan == 0)
                                                             <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                        @elseif($d->status_validasi_aslap == 1)
+                                                        @elseif($d->status_validasi_relawan == 1)
                                                             <button class="btn btn-success btn-sm">Disetujui</button>
-                                                        @elseif($d->status_validasi_aslap == 2)
+                                                        @elseif($d->status_validasi_relawan == 2)
                                                             <button class="btn btn-danger btn-sm">Ditolak</button>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         <div class="btn-group">
-                                                            <a href="#" class="edit_aslap btn btn-info btn-sm" id="{{ $d->id_aslap }}" >
+                                                            <a href="#" class="edit_relawan btn btn-info btn-sm" id="{{ $d->id_relawan }}" >
                                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                                 Edit
                                                             </a>
-                                                            <form action="/owner/data_induk/aslap/{{ $d->id_aslap }}/delete_aslap" style="margin-left: 5px;" method="POST">
+                                                            <form action="/owner/data_induk/relawan/{{ $d->id_relawan }}/delete_relawan" style="margin-left: 5px;" method="POST">
                                                                 @csrf
-                                                                <a class="btn btn-danger btn-sm delete-confirm-aslap" >
+                                                                <a class="btn btn-danger btn-sm delete-confirm-relawan" >
                                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" /><path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" /></svg>
                                                                     Hapus
                                                                 </a>
@@ -977,7 +977,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{ $aslap->links('vendor.pagination.bootstrap-5') }}
+                        {{ $relawan->links('vendor.pagination.bootstrap-5') }}
                     </div>
                 </div>
             </div>
@@ -1099,16 +1099,16 @@
 
 
 
-<!-- BAGIAN ASLAP -->
-<div class="modal modal-blur fade" id="modal-inputdataaslap" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- BAGIAN relawan -->
+<div class="modal modal-blur fade" id="modal-inputdatarelawan" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Data Aslap</h5>
+                <h5 class="modal-title">Tambah Data relawan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/maker/data_induk/aslap/store_aslap" method="POST" id="FormDataAslap" enctype="multipart/form-data">
+                <form action="/maker/data_induk/relawan/store_relawan" method="POST" id="FormDatarelawan" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -1117,7 +1117,7 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
                                 </span>
-                                <input type="text" value="" id="nama_aslap" class="form-control" name="nama_aslap" placeholder="Masukkan Nama Data Pekerja">
+                                <input type="text" value="" id="nama_relawan" class="form-control" name="nama_relawan" placeholder="Masukkan Nama Data Pekerja">
                             </div>
                         </div>
                     </div>
@@ -1127,17 +1127,17 @@
                                 <span class="input-icon-addon">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" /><path d="M12 12l0 .01" /><path d="M3 13a20 20 0 0 0 18 0" /></svg>
                                 </span>
-                                <input type="text" value="" id="peran_aslap" class="form-control" name="peran_aslap" placeholder="Masukkan Peran Data Pekerja">
+                                <input type="text" value="" id="peran_relawan" class="form-control" name="peran_relawan" placeholder="Masukkan Peran Data Pekerja">
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select name="old_peran_aslap" id="old_peran_aslap" class="form-select">
+                            <select name="old_peran_relawan" id="old_peran_relawan" class="form-select">
                                 <option value="">Pilih Peran (Jika Sebelumnya Ada)</option>
                                 @foreach($peranList as $peran)
-                                    <option value="{{ $peran->peran_aslap }}">
-                                        {{ $peran->peran_aslap }}
+                                    <option value="{{ $peran->peran_relawan }}">
+                                        {{ $peran->peran_relawan }}
                                     </option>
                                 @endforeach
                             </select>
@@ -1150,13 +1150,13 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
                                 </span>
-                                <input type="text" value="" id="no_hp_aslap" class="form-control" name="no_hp_aslap" placeholder="Masukkan No. HP Data Pekerja">
+                                <input type="text" value="" id="no_hp_relawan" class="form-control" name="no_hp_relawan" placeholder="Masukkan No. HP Data Pekerja">
                               </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select name="nomor_dapur_aslap" id="nomor_dapur_aslap" class="form-select">
+                            <select name="nomor_dapur_relawan" id="nomor_dapur_relawan" class="form-select">
                                 <option value="">Pilih Dapur</option>
                                 @foreach($dapurList as $dapur)
                                     <option value="{{ $dapur->nomor_dapur }}">{{ $dapur->nama_dapur }}</option>
@@ -1166,7 +1166,7 @@
                     </div>
                     <div class="row mt-3 mb-3">
                         <div class="col-6">
-                            <input type="file" id="foto_aslap" name="foto_aslap" class="form-control">
+                            <input type="file" id="foto_relawan" name="foto_relawan" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label>Masukkan Foto Pengenal</label>
@@ -1174,7 +1174,7 @@
                     </div>
                     <div class="row mt-3 mb-3">
                         <div class="col-6">
-                            <input type="file" id="ktp_aslap" name="ktp_aslap" class="form-control">
+                            <input type="file" id="ktp_relawan" name="ktp_relawan" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label>Foto KTP Data Pekerja</label>
@@ -1231,15 +1231,15 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#btnTambahAslap").click(function(){
-            $("#modal-inputdataaslap").modal("show");
+        $("#btnTambahrelawan").click(function(){
+            $("#modal-inputdatarelawan").modal("show");
         });
 
-        $(".edit_aslap").click(function(){
+        $(".edit_relawan").click(function(){
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/maker/data_induk/aslap/edit_aslap',
+                url:'/maker/data_induk/relawan/edit_relawan',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -1253,11 +1253,11 @@
         });
 
 
-        $(".ktp_aslap").click(function(){
+        $(".ktp_relawan").click(function(){
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/maker/data_induk/aslap/ktp_aslap',
+                url:'/maker/data_induk/relawan/ktp_relawan',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -1271,7 +1271,7 @@
         });
 
 
-        $(".delete-confirm-aslap").click(function(e){
+        $(".delete-confirm-relawan").click(function(e){
             var form = $(this).closest('form');
             e.preventDefault();
             Swal.fire({
@@ -1294,12 +1294,12 @@
             });
         });
 
-        $("#FormDataAslap").submit(function(){
+        $("#FormDatarelawan").submit(function(){
             var nama_lengkap = $("#nama_lengkap").val();
             var email = $("#email").val();
             var alamat = $("#alamat").val();
             var no_hp = $("#no_hp").val();
-            var foto = $("#FormDataAslap").find("#foto").val();
+            var foto = $("#FormDatarelawan").find("#foto").val();
             var kecamatan = $("#kecamatan").val();
             if(nama_lengkap==""){
                 Swal.fire({
