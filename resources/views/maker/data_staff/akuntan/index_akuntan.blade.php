@@ -214,6 +214,34 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($akuntan as $d)
+                                                @php
+                                                    $path = Storage::url('uploads/data_staff/akuntan/'.$d->foto_akuntan);
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $loop->iteration + $akuntan->firstItem()-1 }}</td>
+                                                    <td>{{ $d->nama_akuntan }}</td>
+                                                    <td>{{ $d->email_akuntan }}</td>
+                                                    <td>{{ $d->alamat_akuntan }}</td>
+                                                    <td>{{ $d->no_hp_akuntan }}</td>
+                                                    <td>
+                                                        @if (empty($d->foto_akuntan))
+                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
+                                                        @else
+                                                        <img src="{{ url($path) }}" class="avatar" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if($d->status_validasi_akuntan == 0)
+                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                        @elseif($d->status_validasi_akuntan == 1)
+                                                            <button class="btn btn-success btn-sm">Disetujui</button>
+                                                        @else
+                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -237,7 +265,7 @@
 
 
 <!-- TAMBAH AKUNTAN -->
-<div class="modal modal-blur fade" id="modal-inputmaker" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-inputakuntan" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -367,7 +395,7 @@
 <script>
     $(function(){
         $("#TambahAkuntan").click(function(){
-            $("#modal-inputmaker").modal("show");
+            $("#modal-inputakuntan").modal("show");
         });
 
         $(".edit_maker").click(function(){
@@ -411,60 +439,59 @@
         });
 
         $("#FormTambahAkuntan").submit(function(){
-            var nama_maker = $("#nama_maker").val();
-            var email_maker = $("#email_maker").val();
-            var alamat_maker = $("#alamat_maker").val();
-            var no_hp_maker = $("#no_hp_maker").val();
-            var foto_maker = $("#FormTambahAkuntan").find("#foto_maker").val();
-            var kecamatan = $("#kecamatan").val();
-            if(nama_maker==""){
+            var nama_akuntan = $("#nama_akuntan").val();
+            var email_akuntan = $("#email_akuntan").val();
+            var alamat_akuntan = $("#alamat_akuntan").val();
+            var no_hp_akuntan = $("#no_hp_akuntan").val();
+            var foto_akuntan = $("#FormTambahAkuntan").find("#foto_akuntan").val();
+            if(nama_akuntan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Nama Lengkap Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#nama_maker").focus();
+                      $("#nama_akuntan").focus();
                   });
                 return false;
-            } else if (email_maker==""){
+            } else if (email_akuntan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'E-Mail Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#email_maker").focus();
+                      $("#email_akuntan").focus();
                   });
                 return false;
-            } else if (alamat_maker==""){
+            } else if (alamat_akuntan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Alamat Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#alamat_maker").focus();
+                      $("#alamat_akuntan").focus();
                   });
                 return false;
-            } else if (no_hp_maker==""){
+            } else if (no_hp_akuntan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'No. HP Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#no_hp_maker").focus();
+                      $("#no_hp_akuntan").focus();
                   });
                 return false;
-            } else if (foto_maker==""){
+            } else if (foto_akuntan==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Foto Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#foto_maker").focus();
+                      $("#foto_akuntan").focus();
                   });
                 return false;
             }

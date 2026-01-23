@@ -226,23 +226,17 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::get('/maker/data_staff/maker',[DataMakerController::class,'index_maker_data_staff_maker']);
     Route::post('/maker/data_staff/maker/store_maker',[DataMakerController::class,'store_maker_data_staff_maker']);
 
-
-
-
     // SPPI
     Route::get('/maker/data_staff/sppi',[DataSPPIController::class,'index_maker_data_staff_sppi']);
     Route::post('/maker/data_staff/sppi/store_sppi',[DataSPPIController::class,'store_maker_data_staff_sppi']);
     
-
-
-
-
-
     // Ahli Gizi
     Route::get('/maker/data_staff/ahli_gizi',[DataAhliGiziController::class,'index_maker_data_staff_ahli_gizi']);
     Route::post('/maker/data_staff/ahli_gizi/store_ahli_gizi',[DataAhliGiziController::class,'store_maker_data_staff_ahli_gizi']);
 
-
+    // Akuntan
+    Route::get('/maker/data_staff/akuntan',[DataAkuntanController::class,'index_maker_data_staff_akuntan']);
+    Route::post('/maker/data_staff/akuntan/store_akuntan',[DataAkuntanController::class,'store_maker_data_staff_akuntan']);
 
 
 
@@ -268,8 +262,7 @@ Route::middleware(['auth:maker'])->group(function(){
 
 
 
-    // Akuntan
-    Route::get('/maker/data_staff/akuntan',[DataAkuntanController::class,'index_maker_data_staff_akuntan']);
+    
 
 
 
