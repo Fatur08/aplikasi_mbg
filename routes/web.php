@@ -238,6 +238,17 @@ Route::middleware(['auth:maker'])->group(function(){
 
 
 
+    // Ahli Gizi
+    Route::get('/maker/data_staff/ahli_gizi',[DataAhliGiziController::class,'index_maker_data_staff_ahli_gizi']);
+    Route::post('/maker/data_staff/ahli_gizi/store_ahli_gizi',[DataAhliGiziController::class,'store_maker_data_staff_ahli_gizi']);
+
+
+
+
+
+
+
+
     // Data Aslap
     Route::get('/maker/data_staff',[DataStaffController::class,'index_maker_data_staff']);
     Route::get('/maker/data_staff/aslap',[DataAslapController::class,'index_maker_data_staff_aslap']);
@@ -253,19 +264,6 @@ Route::middleware(['auth:maker'])->group(function(){
 
 
 
-
-
-    
-
-
-
-
-
-
-
-
-    // Ahli Gizi
-    Route::get('/maker/data_staff/ahli_gizi',[DataAhliGiziController::class,'index_maker_data_staff_ahli_gizi']);
     
 
 

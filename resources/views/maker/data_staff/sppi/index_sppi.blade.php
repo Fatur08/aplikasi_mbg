@@ -270,12 +270,12 @@
 
 
 
-<!-- TAMBAH MAKER -->
+<!-- TAMBAH SPPI -->
 <div class="modal modal-blur fade" id="modal-inputsppi" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Data Maker</h5>
+                <h5 class="modal-title">Tambah Data SPPI</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -450,7 +450,6 @@
             var alamat_sppi = $("#alamat_sppi").val();
             var no_hp_sppi = $("#no_hp_sppi").val();
             var foto_sppi = $("#FormTambahSPPI").find("#foto_sppi").val();
-            var kecamatan = $("#kecamatan").val();
             if(nama_sppi==""){
                 Swal.fire({
                     title: 'Warning!',
