@@ -8,7 +8,51 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class DataMakerController extends Controller
-{
+{  
+    // BAGIAN OWNER
+    public function index_owner_data_staff_maker(Request $request)
+    {
+        $pilih_dapur = $request->pilih_dapur;
+        $cari_nama   = $request->cari_nama;
+
+        // Query data staff maker
+        $query = Maker::query();
+
+        // Filter pencarian nama (jika ada)
+        if (!empty($cari_nama)) {
+            $query->where('nama_maker', 'like', '%' . $cari_nama . '%');
+        }
+
+
+        // Filter pencarian dapur (jika ada)
+        if (!empty($pilih_dapur)) {
+            $query->where('nomor_dapur_maker', $pilih_dapur);
+        }
+
+        // Pagination
+        $maker = $query->paginate(100);
+
+        // Ambil semua data dapur
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
+
+        return view('owner.data_staff.maker.index_maker', compact('maker', 'dapurList'));
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+    // BAGIAN MAKER
     public function index_maker_data_staff_maker(Request $request)
     {
         // Ambil data maker yang login

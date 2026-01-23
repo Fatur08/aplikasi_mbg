@@ -90,8 +90,8 @@ Route::middleware(['auth:owner'])->group(function(){
     // Data Staff
     Route::get('/owner/data_staff/',[DataStaffController::class,'index_owner_data_staff']);
     // Data Maker
-    Route::get('/owner/data_staff/owner',[DataMakerController::class,'index_owner_data_staff_owner']);
-    Route::post('/owner/data_staff/owner/store_owner',[DataMakerController::class,'store_owner_data_staff_owner']);
+    Route::get('/owner/data_staff/maker',[DataMakerController::class,'index_owner_data_staff_maker']);
+    Route::post('/owner/data_staff/maker/store_maker',[DataMakerController::class,'store_owner_data_staff_maker']);
 
     // SPPI
     Route::get('/owner/data_staff/sppi',[DataSPPIController::class,'index_owner_data_staff_sppi']);
