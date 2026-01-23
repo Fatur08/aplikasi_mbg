@@ -13,7 +13,7 @@ use App\Http\Controllers\DataAslapController;
 use App\Http\Controllers\DataMakerController;
 use App\Http\Controllers\DataRelawanController;
 use App\Http\Controllers\DataSPPIController;
-use App\Http\Controllers\DistributorController;
+use App\Http\Controllers\DataDriverController;
 use App\Http\Controllers\InformasiMenuHarianController;
 use App\Http\Controllers\InformasiPengirimanController;
 use App\Http\Controllers\InformasiStokLimitController;
@@ -24,9 +24,9 @@ use App\Http\Controllers\LaporanDapurController;
 use App\Http\Controllers\LaporanStokController;
 use App\Http\Controllers\LaporanSupplierController;
 use App\Http\Controllers\MenuHarianController;
-use App\Http\Controllers\PengirimanDistributorController;
-use App\Http\Controllers\ProfilDistributorController;
-use App\Http\Controllers\RiwayatDistributorController;
+use App\Http\Controllers\PengirimanDataDriverController;
+use App\Http\Controllers\ProfilDataDriverController;
+use App\Http\Controllers\RiwayatDataDriverController;
 use App\Http\Controllers\StokKeluarController;
 use App\Http\Controllers\StokLimitController;
 use App\Http\Controllers\StokMasukController;
@@ -103,11 +103,11 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::post('/owner/data_staff/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_owner_kepala_dapur']);
 
     //Distributor
-    Route::get('/owner/data_staff/distributor',[DistributorController::class,'index_owner_distributor']);
-    Route::post('/owner/data_staff/distributor/store_distributor',[DistributorController::class,'store_owner_distributor']);
-    Route::post('/owner/data_staff/distributor/edit_distributor',[DistributorController::class,'edit_owner_distributor']);
-    Route::post('/owner/data_staff/distributor/{id}/update_distributor',[DistributorController::class,'update_owner_distributor']);
-    Route::post('/owner/data_staff/distributor/{id}/delete_distributor',[DistributorController::class,'delete_owner_distributor']);
+    Route::get('/owner/data_staff/distributor',[DataDriverController::class,'index_owner_distributor']);
+    Route::post('/owner/data_staff/distributor/store_distributor',[DataDriverController::class,'store_owner_distributor']);
+    Route::post('/owner/data_staff/distributor/edit_distributor',[DataDriverController::class,'edit_owner_distributor']);
+    Route::post('/owner/data_staff/distributor/{id}/update_distributor',[DataDriverController::class,'update_owner_distributor']);
+    Route::post('/owner/data_staff/distributor/{id}/delete_distributor',[DataDriverController::class,'delete_owner_distributor']);
 
 
     //Data Pekerja
@@ -259,6 +259,20 @@ Route::middleware(['auth:maker'])->group(function(){
 
 
 
+
+
+
+
+    // Data Driver
+    Route::get('/maker/data_staff/driver',[DataDriverController::class,'index_maker_data_staff_driver']);
+    Route::post('/maker/data_staff/driver/store_driver',[DataDriverController::class,'store_maker_data_staff_driver']);
+    Route::post('/maker/data_staff/driver/edit_driver',[DataDriverController::class,'edit_maker_data_staff_driver']);
+    Route::post('/maker/data_staff/driver/{id}/update_driver',[DataDriverController::class,'update_maker_data_staff_driver']);
+    Route::post('/maker/data_staff/driver/{id}/delete_driver',[DataDriverController::class,'delete_maker_data_staff_driver']);
+
+
+
+
     
 
 
@@ -283,12 +297,7 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::post('/maker/data_staff/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_maker_kepala_dapur']);
     Route::post('/maker/data_staff/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_maker_kepala_dapur']);
 
-    //Distributor
-    Route::get('/maker/data_staff/distributor',[DistributorController::class,'index_maker_distributor']);
-    Route::post('/maker/data_staff/distributor/store_distributor',[DistributorController::class,'store_maker_distributor']);
-    Route::post('/maker/data_staff/distributor/edit_distributor',[DistributorController::class,'edit_maker_distributor']);
-    Route::post('/maker/data_staff/distributor/{id}/update_distributor',[DistributorController::class,'update_maker_distributor']);
-    Route::post('/maker/data_staff/distributor/{id}/delete_distributor',[DistributorController::class,'delete_maker_distributor']);
+    
 
     //Dapur
     Route::get('/maker/data_staff/dapur',[DapurController::class,'index_maker_dapur']);
@@ -456,16 +465,16 @@ Route::middleware(['auth:distributor'])->group(function () {
     Route::get('/proseslogoutdistributor', [AuthController::class,'proseslogoutdistributor']);
 
     //Riwayat
-    Route::get('/distributor/riwayat_distributor/index_riwayat_distributor', [RiwayatDistributorController::class,'index_riwayat_distributor']);
-    Route::post('/distributor/riwayat_distributor/get_riwayat_distributor', [RiwayatDistributorController::class,'get_riwayat_distributor']);
+    Route::get('/distributor/riwayat_distributor/index_riwayat_distributor', [RiwayatDataDriverController::class,'index_riwayat_distributor']);
+    Route::post('/distributor/riwayat_distributor/get_riwayat_distributor', [RiwayatDataDriverController::class,'get_riwayat_distributor']);
 
     //Pengiriman
-    Route::get('/distributor/pengiriman_distributor/index_pengiriman_distributor', [PengirimanDistributorController::class,'index_pengiriman_distributor']);
-    Route::get('/distributor/pengiriman_distributor/{id}/konfirmasi_pengiriman_distributor', [PengirimanDistributorController::class,'konfirmasi_pengiriman_distributor']);
-    Route::post('/distributor/pengiriman_distributor/store_pengiriman_distributor', [PengirimanDistributorController::class,'store_pengiriman_distributor']);
-    Route::post('/distributor/pengiriman_distributor/lihat_bukti_pengiriman', [PengirimanDistributorController::class,'lihat_bukti_pengiriman']);
+    Route::get('/distributor/pengiriman_distributor/index_pengiriman_distributor', [PengirimanDataDriverController::class,'index_pengiriman_distributor']);
+    Route::get('/distributor/pengiriman_distributor/{id}/konfirmasi_pengiriman_distributor', [PengirimanDataDriverController::class,'konfirmasi_pengiriman_distributor']);
+    Route::post('/distributor/pengiriman_distributor/store_pengiriman_distributor', [PengirimanDataDriverController::class,'store_pengiriman_distributor']);
+    Route::post('/distributor/pengiriman_distributor/lihat_bukti_pengiriman', [PengirimanDataDriverController::class,'lihat_bukti_pengiriman']);
 
     //Profil
-    Route::get('/distributor/profil_distributor/index_profil_distributor', [ProfilDistributorController::class,'index_profil_distributor']);
-    Route::post('/distributor/profil_distributor/update_profil_distributor', [ProfilDistributorController::class,'update_profil_distributor']);
+    Route::get('/distributor/profil_distributor/index_profil_distributor', [ProfilDataDriverController::class,'index_profil_distributor']);
+    Route::post('/distributor/profil_distributor/update_profil_distributor', [ProfilDataDriverController::class,'update_profil_distributor']);
 });
