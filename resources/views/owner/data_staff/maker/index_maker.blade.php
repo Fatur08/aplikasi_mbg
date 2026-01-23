@@ -257,10 +257,13 @@
                                                                 Validasi
                                                             </a>
                                                             @else
-                                                            <a href="/owner/data_staff/maker/{{ $d->id_maker }}/batalkan_validasi_maker" class="btn btn-sm bg-danger">
-                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10l4 4m0 -4l-4 4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
-                                                                Batalkan
-                                                            </a>
+                                                            <form action="/owner/data_staff/maker/{{ $d->id_maker }}/batalkan_validasi_maker" style="margin-left: 5px;" method="POST">
+                                                                @csrf  
+                                                                <a class="btn btn-sm bg-danger batalkan_validasi_maker">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10l4 4m0 -4l-4 4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                                                                    Batalkan
+                                                                </a>
+                                                            </form>
                                                             @endif
                                                         </div>
                                                     </td>
@@ -454,6 +457,31 @@
                 }
             });
             $("#modal-validasimaker").modal("show");
+        });
+
+
+
+        $(".batalkan_validasi_maker").click(function(e){
+            var form = $(this).closest('form');
+            e.preventDefault();
+            Swal.fire({
+                title: "Apakah Anda Yakin ingin batalkan",
+                text: "Jika Ya Maka Status Validasi akan berubah",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Batalkan Saja"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Data Berhasil Di Batalkan",
+                        icon: "success"
+                  });
+                }
+            });
         });
 
         
