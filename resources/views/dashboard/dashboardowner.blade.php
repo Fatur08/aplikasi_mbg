@@ -61,7 +61,7 @@
                     Halaman
                 </div>
                 <h2 class="page-title">
-                    Dashboard
+                    Dashboard Owner
                 </h2>
             </div>
         </div>

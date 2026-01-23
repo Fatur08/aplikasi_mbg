@@ -261,23 +261,23 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::post('/maker/data_staff/relawan/store_relawan',[DataRelawanController::class,'store_maker_data_staff_relawan']);
     Route::post('/maker/data_staff/relawan/ktp_relawan',[DataRelawanController::class,'ktp_maker_data_staff_relawan']);
 
-
-    
-    
     
     //Kepala Dapur
-    Route::get('/maker/data_staff/kepala_dapur',[KepalaDapurController::class,'index_maker_kepala_dapur']);
-    Route::post('/maker/data_staff/kepala_dapur/store_kepala_dapur',[KepalaDapurController::class,'store_maker_kepala_dapur']);
-    Route::post('/maker/data_staff/kepala_dapur/edit_kepala_dapur',[KepalaDapurController::class,'edit_maker_kepala_dapur']);
-    Route::post('/maker/data_staff/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_maker_kepala_dapur']);
-    Route::post('/maker/data_staff/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_maker_kepala_dapur']);
+    //Route::get('/maker/data_staff/kepala_dapur',[KepalaDapurController::class,'index_maker_kepala_dapur']);
+    //Route::post('/maker/data_staff/kepala_dapur/store_kepala_dapur',[KepalaDapurController::class,'store_maker_kepala_dapur']);
+    //Route::post('/maker/data_staff/kepala_dapur/edit_kepala_dapur',[KepalaDapurController::class,'edit_maker_kepala_dapur']);
+    //Route::post('/maker/data_staff/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_maker_kepala_dapur']);
+    //Route::post('/maker/data_staff/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_maker_kepala_dapur']);
 
     
 
     //Dapur
-    Route::get('/maker/data_staff/dapur',[DapurController::class,'index_maker_dapur']);
-    Route::post('/maker/data_staff/dapur/store_dapur',[DapurController::class,'store_maker_dapur']);
-    Route::post('/maker/data_staff/dapur/{id}/delete_dapur',[DapurController::class,'delete_maker_dapur']);
+    //Route::get('/maker/data_staff/dapur',[DapurController::class,'index_maker_dapur']);
+    //Route::post('/maker/data_staff/dapur/store_dapur',[DapurController::class,'store_maker_dapur']);
+    //Route::post('/maker/data_staff/dapur/{id}/delete_dapur',[DapurController::class,'delete_maker_dapur']);
+
+    
+
 
     //Data Supplier
     //Supplier

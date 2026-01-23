@@ -12,55 +12,9 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        $hariini = date("Y-m-d");
-        $bulanini = date("m") * 1; // 1 atau Januari
-        $tahunini = date("Y"); // 2024
-        $nisn = Auth::guard('murid')
-            ->user()
-            ->nisn;
-
-        $presensihariini = DB::table('presensi')
-            ->where('nisn', $nisn)
-            ->where('tgl_presensi',$hariini)
-            ->first();
-
-        $historibulanini = DB::table('presensi')
-            ->where('nisn',$nisn)
-            ->whereRaw('MONTH(tgl_presensi)="'.$bulanini.'"')
-            ->whereRaw('YEAR(tgl_presensi)="'. $tahunini . '"')
-            ->orderBy('tgl_presensi')
-            ->get();
-
-        $rekappresensi = DB::table('presensi')
-            ->selectRaw('COUNT(nisn) as jmlhadir, SUM(IF(jam_in > "07:00",1,0)) as jmlterlambat')  
-            ->where('nisn',$nisn)
-            ->whereRaw('MONTH(tgl_presensi)="'.$bulanini.'"')
-            ->whereRaw('YEAR(tgl_presensi)="'. $tahunini . '"')
-            ->first();
-
-        $leaderboard = DB::table('presensi')
-            ->join('murid','presensi.nisn', '=', 'murid.nisn')
-            ->where('tgl_presensi',$hariini)
-            ->orderBy('jam_in')
-            ->get();
-        
-        $namabulan = ["","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-        
-        $rekapizin = DB::table('pengajuan_izin')
-            ->selectRaw('SUM(IF(status="i",1,0)) as jmlizin, SUM(IF(status="s",1,0)) as jmlsakit')
-            ->where('nisn',$nisn)
-            ->whereRaw('MONTH(tgl_izin)="'.$bulanini.'"')
-            ->whereRaw('YEAR(tgl_izin)="'. $tahunini . '"')
-            ->where('status_approved', 1)
-            ->first();
-        return view('dashboard.dashboard', compact('presensihariini','historibulanini','namabulan','bulanini','tahunini','rekappresensi','leaderboard','rekapizin'));
-    }
-
     public function dashboardowner(Request $request)
     {
-        $pilih_dapur = $request->input('pilih_dapur');
+        $pilih_dapur   = $request->input('pilih_dapur');
 
         // Ambil bulan & tahun sekarang
         $bulanSekarang = Carbon::now()->month;
@@ -74,7 +28,7 @@ class DashboardController extends Controller
         // Data pendukung
         $makers       = \App\Models\Maker::all();
         $kepalaDapur  = \App\Models\KepalaDapur::all();
-        $distributors = \App\Models\Distributor::all();
+        $drivers      = \App\Models\Driver::all();
         
         // ✅ Data distribusi (filter dapur + bulan berjalan)
         $dataDistribusi = LaporanDistribusi::when($pilih_dapur, function ($query, $pilih_dapur) {
@@ -99,7 +53,7 @@ class DashboardController extends Controller
         $dataKosong = $sudahCari && $dataDapur->isEmpty();
         
         // Kirim ke view
-        return view('dashboard.dashboardowner', compact('dapurList', 'dataDapur', 'makers', 'kepalaDapur', 'distributors', 'dataKosong', 'sudahCari', 'dataDistribusi'));
+        return view('dashboard.dashboardowner', compact('dapurList', 'dataDapur', 'makers', 'kepalaDapur', 'drivers', 'dataKosong', 'sudahCari', 'dataDistribusi'));
     }
 
     public function dashboardmaker(Request $request)
@@ -178,7 +132,7 @@ class DashboardController extends Controller
                 'distribusi.tujuan_distribusi',
                 'distribusi.status_distribusi',
                 'distribusi.kecamatan_sekolah',
-                'distribusi.nama_distributor'
+                'distribusi.nama_driver'
             );
         
         if (!empty($searchKecamatan)) {
@@ -231,14 +185,14 @@ class DashboardController extends Controller
         ));
     }
 
-    public function dashboarddistributor(Request $request)
+    public function dashboarddriver(Request $request)
     {
-        $distributor = Auth::guard('distributor')->user();
-        $nomor_dapur_distributor = $distributor->nomor_dapur_distributor;
+        $driver = Auth::guard('driver')->user();
+        $nomor_dapur_driver = $driver->nomor_dapur_driver;
 
         $distribusi = DB::table('distribusi')
-        ->where(function ($query) use ($distributor) {
-            $query->where('nomor_dapur_distribusi', $distributor->nomor_dapur_distributor);
+        ->where(function ($query) use ($driver) {
+            $query->where('nomor_dapur_distribusi', $driver->nomor_dapur_driver);
         })
         ->whereDate('tanggal_distribusi', now()->toDateString())
         ->orderByRaw("FIELD(status_distribusi, 0, 1, 2)")
@@ -247,23 +201,23 @@ class DashboardController extends Controller
         $today = Carbon::today();
         
         $totalDistribusi = DB::table('distribusi')
-            ->where('nomor_dapur_distribusi', $nomor_dapur_distributor)
+            ->where('nomor_dapur_distribusi', $nomor_dapur_driver)
             ->whereDate('tanggal_distribusi', $today)
             ->count();
         
         $totalTerkirim = DB::table('distribusi')
-            ->where('nomor_dapur_distribusi', $nomor_dapur_distributor)
+            ->where('nomor_dapur_distribusi', $nomor_dapur_driver)
             ->whereDate('tanggal_distribusi', $today)
             ->where('status_distribusi', 1)
             ->count();
         
         $totalBelumTerkirim = DB::table('distribusi')
-            ->where('nomor_dapur_distribusi', $nomor_dapur_distributor)
+            ->where('nomor_dapur_distribusi', $nomor_dapur_driver)
             ->whereDate('tanggal_distribusi', $today)
             ->whereIn('status_distribusi', [0, 2])
             ->count();
         
-        return view('dashboard.dashboarddistributor', compact(
+        return view('dashboard.dashboarddriver', compact(
             'distribusi',
             'totalDistribusi',
             'totalTerkirim',
