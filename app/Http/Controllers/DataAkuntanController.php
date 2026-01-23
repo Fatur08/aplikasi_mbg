@@ -47,7 +47,7 @@ class DataAkuntanController extends Controller
                 ->value('nama_dapur')
             : '-';
 
-        return view('maker.data_staff.akuntan.index_akuntan', compact('akuntan', 'dapurList', 'namaDapur'));
+        return view('owner.data_staff.akuntan.index_akuntan', compact('akuntan', 'dapurList', 'namaDapur'));
     }
 
 
