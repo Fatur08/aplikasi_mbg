@@ -242,7 +242,15 @@
                                                         <img src="{{ url($path) }}" class="avatar" alt="">
                                                         @endif
                                                     </td>
-                                                    <td></td>
+                                                    <td class="text-center">
+                                                        @if($d->status_validasi_maker == 0)
+                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                        @elseif($d->status_validasi_maker == 1)
+                                                            <button class="btn btn-success btn-sm">Disetujui</button>
+                                                        @else
+                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

@@ -20,7 +20,8 @@ class Maker extends Authenticatable
         'no_hp_maker',
         'foto_maker',
         'kecamatan_maker',
-        'password_maker'
+        'password_maker',
+        'status_validasi_maker'
     ];
 
     protected $hidden = [
