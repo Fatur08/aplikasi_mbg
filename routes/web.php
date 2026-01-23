@@ -113,6 +113,9 @@ Route::middleware(['auth:owner'])->group(function(){
     // Akuntan
     Route::get('/owner/data_staff/akuntan',[DataAkuntanController::class,'index_owner_data_staff_akuntan']);
     Route::post('/owner/data_staff/akuntan/store_akuntan',[DataAkuntanController::class,'store_owner_data_staff_akuntan']);
+    Route::post('/owner/data_staff/akuntan/validasi_akuntan',[DataAkuntanController::class,'validasi_owner_data_staff_akuntan']);
+    Route::post('/owner/data_staff/akuntan/{id}/update_validasi_akuntan',[DataAkuntanController::class,'update_owner_validasi_akuntan']);
+    Route::post('/owner/data_staff/akuntan/{id}/batalkan_validasi_akuntan',[DataAkuntanController::class,'batalkan_owner_validasi_akuntan']);
 
     // Data Aslap
     Route::get('/owner/data_staff/aslap',[DataAslapController::class,'index_owner_data_staff_aslap']);
