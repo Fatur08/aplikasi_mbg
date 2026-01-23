@@ -39,13 +39,14 @@ class DataMakerController extends Controller
             ->get();
         
         
-        // Ambil nama dapur
-        $nama_dapur = DB::table('dapur')
-            ->select('nama_dapur')
-            ->where('nomor_dapur', $pilih_dapur)
-            ->get();
+        // ✅ Ambil nama dapur
+        $namaDapur = $pilih_dapur
+            ? DB::table('dapur')
+                ->where('nomor_dapur', $pilih_dapur)
+                ->value('nama_dapur')
+            : '-';
 
-        return view('owner.data_staff.maker.index_maker', compact('maker', 'dapurList', 'nama_dapur'));
+        return view('owner.data_staff.maker.index_maker', compact('maker', 'dapurList', 'namaDapur'));
     }
     
 
