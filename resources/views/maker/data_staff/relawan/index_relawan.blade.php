@@ -217,7 +217,7 @@
                                             <tbody>
                                                 @foreach ($relawan as $d)
                                                 @php
-                                                    $path = Storage::url('uploads/data_staff/relawan/'.$d->foto_relawan);
+                                                    $path = Storage::url('uploads/data_staff/relawan/foto/'.$d->foto_relawan);
                                                 @endphp
                                                 <tr>
                                                     <td>{{ $loop->iteration + $relawan->firstItem()-1 }}</td>
