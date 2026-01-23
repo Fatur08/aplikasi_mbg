@@ -92,6 +92,9 @@ Route::middleware(['auth:owner'])->group(function(){
     // Data Maker
     Route::get('/owner/data_staff/maker',[DataMakerController::class,'index_owner_data_staff_maker']);
     Route::post('/owner/data_staff/maker/store_maker',[DataMakerController::class,'store_owner_data_staff_maker']);
+    Route::post('/owner/data_staff/maker/validasi_maker',[DataMakerController::class,'validasi_owner_data_staff_maker']);
+    Route::post('/owner/data_staff/maker/{id}/update_validasi_maker',[DataMakerController::class,'update_owner_validasi_maker']);
+    Route::post('/owner/data_staff/maker/{id}/batalkan_validasi_maker',[DataMakerController::class,'batalkan_owner_validasi_maker']);
 
     // SPPI
     Route::get('/owner/data_staff/sppi',[DataSPPIController::class,'index_owner_data_staff_sppi']);

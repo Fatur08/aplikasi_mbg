@@ -414,6 +414,23 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- VALIDASI DATA MAKER -->
+<div class="modal modal-blur fade" id="modal-validasimaker" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validasi Data Maker</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="formvalidasimaker">
+                
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('myscript')
 <script>
@@ -422,45 +439,24 @@
             $("#modal-inputmaker").modal("show");
         });
 
-        $(".edit_maker").click(function(){
+        $(".validasi_maker").click(function(){
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/owner/data_induk/maker/edit_maker',
+                url:'/owner/data_staff/maker/validasi_maker',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
                     id : id
                 },
                 success:function(respond){
-                    $("#loadeditformmaker").html(respond);
+                    $("#formvalidasimaker").html(respond);
                 }
             });
-            $("#modal-editmaker").modal("show");
+            $("#modal-validasimaker").modal("show");
         });
 
-        $(".delete-confirm-kepaladapur").click(function(e){
-            var form = $(this).closest('form');
-            e.preventDefault();
-            Swal.fire({
-                title: "Apakah Anda Yakin Data ini Mau Di Hapus?",
-                text: "Jika Ya Maka Data Akan Terhapus Permanen",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Hapus Saja"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Data Berhasil Di Hapus",
-                        icon: "success"
-                  });
-                }
-            });
-        });
+        
 
         $("#FormTambahMaker").submit(function(){
             var nama_maker = $("#nama_maker").val();

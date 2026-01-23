@@ -48,6 +48,56 @@ class DataMakerController extends Controller
 
         return view('owner.data_staff.maker.index_maker', compact('maker', 'dapurList', 'namaDapur'));
     }
+
+
+
+    public function validasi_owner_data_staff_maker(Request $request)
+    {
+        $id = $request->id;
+        $maker = DB::table('maker')->get();
+        $data = DB::table('maker')->where('id_maker', $id)->first();
+        return view('owner.data_staff.maker.validasi_maker',compact('maker','data'));
+    }
+
+
+
+    public function update_owner_validasi_maker($id, Request $request)
+    {
+        try {
+            $status_validasi_maker = $request->status_validasi_maker;
+
+            // Update hanya kolom yang perlu
+            $update = DB::table('maker')
+                ->where('id_maker', $id)
+                ->update([
+                    'status_validasi_maker' => $status_validasi_maker
+                ]);
+
+            if ($update) {
+                return Redirect::back()->with(['success' => 'Status Berhasil Diubah']);
+            } else {
+                return Redirect::back()->with(['warning' => 'Tidak ada perubahan data']);
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->with(['error' => 'Data Gagal Diproses']);
+        }
+    }
+
+
+    public function batalkan_owner_validasi_maker($id, Request $request)
+    {
+        $update = DB::table('maker')
+            ->where('id_maker',$id)
+            ->update([
+                'status_validasi_maker' => 0
+            ]);
+
+        if($update){
+            return Redirect::back()->with(['success'=>'Status Berhasil Dibatalkan']);
+        } else {
+            return Redirect::back()->with(['warning'=>'Data Gagal Diproses']);
+        }
+    }
     
 
 
