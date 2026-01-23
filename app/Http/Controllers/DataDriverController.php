@@ -234,6 +234,12 @@ class DataDriverController extends Controller
         $alamat_driver = $request->alamat_driver;
         $no_hp_driver  = $request->no_hp_driver;
         $foto_driver   = $request->foto_driver;
+        $dapur = DB::table('dapur')
+            ->where('nomor_dapur', $nomor_dapur)
+            ->first();
+
+        $kecamatan_driver = $dapur->dapur_kecamatan ?? null;
+        $password_driver = 12345;
         
 
         if($request->hasFile('foto_driver')){
@@ -251,6 +257,8 @@ class DataDriverController extends Controller
             'alamat_driver'           => $alamat_driver,
             'no_hp_driver'            => $no_hp_driver,
             'foto_driver'             =>$foto_driver,
+            'kecamatan_driver'        => $kecamatan_driver,
+            'password_driver'         => $password_driver,
             'status_validasi_driver'  => 0
         ];
 
