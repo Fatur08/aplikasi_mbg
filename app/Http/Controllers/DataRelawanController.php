@@ -36,7 +36,14 @@ class DataRelawanController extends Controller
         // Pagination Hei 
         $relawan = $query->paginate(100);
 
-        return view('maker.data_staff.relawan.index_relawan', compact('relawan'));
+        $divisiList = DB::table('relawan')
+            ->select('divisi_relawan')
+            ->whereNotNull('divisi_relawan')
+            ->where('divisi_relawan', '!=', '')
+            ->distinct()
+            ->get();
+
+        return view('maker.data_staff.relawan.index_relawan', compact('relawan', 'divisiList'));
     }
 
 

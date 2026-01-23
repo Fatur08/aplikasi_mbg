@@ -296,89 +296,41 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
                                 </span>
-                                <input type="text" value="" id="nama_relawan" class="form-control" name="nama_relawan" placeholder="Masukkan Nama Lengkap">
+                                <input type="text" value="" id="nama_relawan" class="form-control" name="nama_relawan" placeholder="Masukkan Nama Relawan">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <div class="input-icon">
+                            <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                         class="icon icon-tabler icons-tabler-outline icon-tabler-barcode">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M4 7v-1a2 2 0 0 1 2 -2h2" />
-                                        <path d="M4 17v1a2 2 0 0 0 2 2h2" />
-                                        <path d="M16 4h2a2 2 0 0 1 2 2v1" />
-                                        <path d="M16 20h2a2 2 0 0 0 2 -2v-1" />
-                                        <path d="M5 11h1v2h-1z" />
-                                        <path d="M10 11l0 2" />
-                                        <path d="M14 11h1v2h-1z" />
-                                        <path d="M19 11l0 2" />
-                                    </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" /><path d="M12 12l0 .01" /><path d="M3 13a20 20 0 0 0 18 0" /></svg>
                                 </span>
-
-                                <input
-                                    type="email"
-                                    id="email_relawan"
-                                    name="email_relawan"
-                                    class="form-control"
-                                    placeholder="Masukkan E-Mail (gmail)"
-                                    pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
-                                    title="Email harus menggunakan domain @gmail.com"
-                                    oninput="this.value = this.value.toLowerCase()"
-                                >
+                                <input type="text" value="" id="divisi_relawan" class="form-control" name="divisi_relawan" placeholder="Masukkan Divisi Relawan (Jika Belum Ada)">
                             </div>
-
-                            <small class="text-muted">
-                                Email harus menggunakan domain <strong>@gmail.com</strong>
-                            </small>
                         </div>
                     </div>
-                    <div class="row mt-3 mb-3">
+                    <div class="row mb-3">
                         <div class="col-12">
-                            <div class="input-icon">
+                            <select name="old_divisi_relawan" id="old_divisi_relawan" class="form-select">
+                                <option value="">Pilih Divisi (Jika Sudah Ada)</option>
+                                @foreach($divisiList as $divisi)
+                                    <option value="{{ $divisi->divisi_relawan }}">
+                                        {{ $divisi->divisi_relawan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
                                 </span>
-                                <input type="text" value="" id="alamat_relawan" class="form-control" name="alamat_relawan" placeholder="Masukkan Alamat">
+                                <input type="text" value="" id="no_hp_relawan" class="form-control" name="no_hp_relawan" placeholder="Masukkan No. HP Relawan">
                               </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="input-icon">
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                         class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4
-                                                 a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/>
-                                    </svg>
-                                </span>
-                    
-                                <input
-                                    type="text"
-                                    id="no_hp_relawan"
-                                    name="no_hp_relawan"
-                                    class="form-control"
-                                    placeholder="Masukkan Nomor HP"
-                                    inputmode="numeric"
-                                    pattern="[0-9]+"
-                                    minlength="10"
-                                    maxlength="15"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                >
-                            </div>
-                    
-                            <small class="text-muted">
-                                Nomor HP hanya boleh angka (contoh: 08xxxxxxxxxx)
-                            </small>
                         </div>
                     </div>
                     <div class="row mt-3 mb-3">
@@ -389,12 +341,12 @@
                             <label>Masukkan Foto Pengenal</label>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mt-3 mb-3">
                         <div class="col-6">
                             <input type="file" id="ktp_relawan" name="ktp_relawan" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
-                            <label>Masukkan Foto KTP</label>
+                            <label>Foto KTP Relawan</label>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -462,8 +414,6 @@
 
         $("#FormTambahRelawan").submit(function(){
             var nama_relawan = $("#nama_relawan").val();
-            var email_relawan = $("#email_relawan").val();
-            var alamat_relawan = $("#alamat_relawan").val();
             var no_hp_relawan = $("#no_hp_relawan").val();
             var foto_relawan = $("#FormTambahRelawan").find("#foto_relawan").val();
             var ktp_relawan = $("#FormTambahRelawan").find("#ktp_relawan").val();
@@ -475,26 +425,6 @@
                     confirmButtonText: 'OK'
                   }).then(()=> {
                       $("#nama_relawan").focus();
-                  });
-                return false;
-            } else if (email_relawan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'E-Mail Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#email_relawan").focus();
-                  });
-                return false;
-            } else if (alamat_relawan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Alamat Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#alamat_relawan").focus();
                   });
                 return false;
             } else if (no_hp_relawan==""){
