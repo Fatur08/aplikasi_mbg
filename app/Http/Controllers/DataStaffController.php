@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataAslap;
+use App\Models\Relawan;
 use App\Models\KepalaDapur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,13 +80,13 @@ class DataStaffController extends Controller
 
 
         // BAGIAN DATA PEKERJA
-        $queryDataAslap = DataAslap::query();
-        $queryDataAslap->select('*');
+        $queryRelawan = Relawan::query();
+        $queryRelawan->select('*');
         if(!empty($cari_nama)){
-            $queryDataAslap->where('nama_aslap','like','%'.$cari_nama.'%');
+            $queryRelawan->where('nama_aslap','like','%'.$cari_nama.'%');
         }
-        $aslap = $queryDataAslap->get();
-        $aslap = $queryDataAslap->paginate(50);
+        $aslap = $queryRelawan->get();
+        $aslap = $queryRelawan->paginate(50);
 
         // Ambil semua data dapur
         $dapurList = DB::table('dapur')
