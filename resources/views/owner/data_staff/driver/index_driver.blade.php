@@ -133,7 +133,7 @@
                                     Halaman
                                 </div>
                                 <h2 class="page-title">
-                                    Data Aslap
+                                    Data Driver
                                 </h2>
                             </td>
                             <td style="text-align:right">
@@ -178,7 +178,7 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <form action="/owner/data_staff/aslap" method="GET">
+                            <form action="/owner/data_staff/driver" method="GET">
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-4">
@@ -228,41 +228,41 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($aslap as $d)
+                                                @foreach ($driver as $d)
                                                 @php
-                                                    $path = Storage::url('uploads/data_staff/aslap/'.$d->foto_aslap);
+                                                    $path = Storage::url('uploads/data_staff/driver/'.$d->foto_driver);
                                                 @endphp
                                                 <tr>
-                                                    <td>{{ $loop->iteration + $aslap->firstItem()-1 }}</td>
-                                                    <td>{{ $d->nama_aslap }}</td>
-                                                    <td>{{ $d->email_aslap }}</td>
-                                                    <td>{{ $d->alamat_aslap }}</td>
-                                                    <td>{{ $d->no_hp_aslap }}</td>
+                                                    <td>{{ $loop->iteration + $driver->firstItem()-1 }}</td>
+                                                    <td>{{ $d->nama_driver }}</td>
+                                                    <td>{{ $d->email_driver }}</td>
+                                                    <td>{{ $d->alamat_driver }}</td>
+                                                    <td>{{ $d->no_hp_driver }}</td>
                                                     <td>
-                                                        @if (empty($d->foto_aslap))
+                                                        @if (empty($d->foto_driver))
                                                         <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
                                                         @else
                                                         <img src="{{ url($path) }}" class="avatar" alt="">
                                                         @endif
                                                     </td>
                                                     <td class="text-center">
-                                                        @if($d->status_validasi_aslap == 0)
+                                                        @if($d->status_validasi_driver == 0)
                                                             <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                        @elseif($d->status_validasi_aslap == 1)
+                                                        @elseif($d->status_validasi_driver == 1)
                                                             <button class="btn btn-success btn-sm">Disetujui</button>
                                                         @else
                                                             <button class="btn btn-danger btn-sm">Ditolak</button>
                                                         @endif
                                                         <div class="btn-group">
-                                                            @if ($d->status_validasi_aslap == 0)
-                                                            <a href="#" class="validasi_aslap btn btn-info btn-sm" id="{{ $d->id_aslap }}" >
+                                                            @if ($d->status_validasi_driver == 0)
+                                                            <a href="#" class="validasi_driver btn btn-info btn-sm" id="{{ $d->id_driver }}" >
                                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                                 Validasi
                                                             </a>
                                                             @else
-                                                            <form action="/owner/data_staff/aslap/{{ $d->id_aslap }}/batalkan_validasi_aslap" style="margin-left: 5px;" method="POST">
+                                                            <form action="/owner/data_staff/driver/{{ $d->id_driver }}/batalkan_validasi_driver" style="margin-left: 5px;" method="POST">
                                                                 @csrf  
-                                                                <a class="btn btn-sm bg-danger batalkan_validasi_aslap">
+                                                                <a class="btn btn-sm bg-danger batalkan_validasi_driver">
                                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10l4 4m0 -4l-4 4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
                                                                     Batalkan
                                                                 </a>
@@ -293,15 +293,16 @@
 
 
 
-<!-- VALIDASI DATA ASLAP -->
-<div class="modal modal-blur fade" id="modal-validasiaslap" tabindex="-1" role="dialog" aria-hidden="true">
+
+<!-- VALIDASI DATA DRIVER -->
+<div class="modal modal-blur fade" id="modal-validasidriver" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Validasi Data Aslap</h5>
+                <h5 class="modal-title">Validasi Data Driver</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="formvalidasiaslap">
+            <div class="modal-body" id="formvalidasidriver">
                 
             </div>
         </div>
@@ -311,30 +312,30 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#TambahAslap").click(function(){
-            $("#modal-inputaslap").modal("show");
+        $("#TambahDriver").click(function(){
+            $("#modal-inputdriver").modal("show");
         });
 
-        $(".validasi_aslap").click(function(){
+        $(".validasi_driver").click(function(){
             var id = $(this).attr('id');
             $.ajax({
                 type:'POST',
-                url:'/owner/data_staff/aslap/validasi_aslap',
+                url:'/owner/data_staff/driver/validasi_driver',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
                     id : id
                 },
                 success:function(respond){
-                    $("#formvalidasiaslap").html(respond);
+                    $("#formvalidasidriver").html(respond);
                 }
             });
-            $("#modal-validasiaslap").modal("show");
+            $("#modal-validasidriver").modal("show");
         });
 
 
 
-        $(".batalkan_validasi_aslap").click(function(e){
+        $(".batalkan_validasi_driver").click(function(e){
             var form = $(this).closest('form');
             e.preventDefault();
             Swal.fire({
@@ -357,60 +358,60 @@
             });
         });
 
-        $("#FormTambahAslap").submit(function(){
-            var nama_aslap = $("#nama_aslap").val();
-            var email_aslap = $("#email_aslap").val();
-            var alamat_aslap = $("#alamat_aslap").val();
-            var no_hp_aslap = $("#no_hp_aslap").val();
-            var foto_aslap = $("#FormTambahAslap").find("#foto_aslap").val();
-            if(nama_aslap==""){
+        $("#FormTambahDriver").submit(function(){
+            var nama_driver = $("#nama_driver").val();
+            var email_driver = $("#email_driver").val();
+            var alamat_driver = $("#alamat_driver").val();
+            var no_hp_driver = $("#no_hp_driver").val();
+            var foto_driver = $("#FormTambahDriver").find("#foto_driver").val();
+            if(nama_driver==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Nama Lengkap Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#nama_aslap").focus();
+                      $("#nama_driver").focus();
                   });
                 return false;
-            } else if (email_aslap==""){
+            } else if (email_driver==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'E-Mail Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#email_aslap").focus();
+                      $("#email_driver").focus();
                   });
                 return false;
-            } else if (alamat_aslap==""){
+            } else if (alamat_driver==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Alamat Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#alamat_aslap").focus();
+                      $("#alamat_driver").focus();
                   });
                 return false;
-            } else if (no_hp_aslap==""){
+            } else if (no_hp_driver==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'No. HP Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#no_hp_aslap").focus();
+                      $("#no_hp_driver").focus();
                   });
                 return false;
-            } else if (foto_aslap==""){
+            } else if (foto_driver==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Foto Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#foto_aslap").focus();
+                      $("#foto_driver").focus();
                   });
                 return false;
             }

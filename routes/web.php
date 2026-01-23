@@ -132,6 +132,9 @@ Route::middleware(['auth:owner'])->group(function(){
     // Data Driver
     Route::get('/owner/data_staff/driver',[DataDriverController::class,'index_owner_data_staff_driver']);
     Route::post('/owner/data_staff/driver/store_driver',[DataDriverController::class,'store_owner_data_staff_driver']);
+    Route::post('/owner/data_staff/driver/validasi_driver',[DataDriverController::class,'validasi_owner_data_staff_driver']);
+    Route::post('/owner/data_staff/driver/{id}/update_validasi_driver',[DataDriverController::class,'update_owner_validasi_driver']);
+    Route::post('/owner/data_staff/driver/{id}/batalkan_validasi_driver',[DataDriverController::class,'batalkan_owner_validasi_driver']);
     //Route::post('/owner/data_staff/driver/edit_driver',[DataDriverController::class,'edit_owner_data_staff_driver']);
     //Route::post('/owner/data_staff/driver/{id}/update_driver',[DataDriverController::class,'update_owner_data_staff_driver']);
     //Route::post('/owner/data_staff/driver/{id}/delete_driver',[DataDriverController::class,'delete_owner_data_staff_driver']);

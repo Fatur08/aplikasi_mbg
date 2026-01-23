@@ -11,147 +11,97 @@ use Illuminate\Support\Facades\Storage;
 
 class DataDriverController extends Controller
 {
-    //Bagian Owner
-    //public function index_owner_distributor(Request $request)
-    //{
-    //    $nama_lengkap_cari = $request->nama_lengkap_cari;
-    //    $kecamatan_cari = $request->kecamatan_cari;
-    //    $query = Distributor::query();
-    //    $query->select('*');
-    //    if(!empty($nama_lengkap_cari)){
-    //        $query->where('nama_distributor','like','%'.$nama_lengkap_cari.'%');
-    //    }
-    //    if(!empty($kecamatan_cari)){
-    //        $query->where('kecamatan_distributor','like','%'.$kecamatan_cari.'%');
-    //    }
-    //    $distributor = $query->get();
-    //    $distributor = $query->paginate(10);
-    //    return view('owner.data_induk.distributor.index_distributor', compact('distributor'));
-    //}
-//
-    //public function store_owner_distributor(Request $request)
-    //{
-    //    $nama_distributor = $request->nama_distributor;
-    //    $email_distributor = $request->email_distributor;
-    //    $alamat_distributor = $request->alamat_distributor;
-    //    $no_hp_distributor = $request->no_hp_distributor;
-    //    $kecamatan_distributor = $request->kecamatan_distributor;
-    //    $password_distributor = 12345;
-//
-    //    if($request->hasFile('foto_distributor')){
-    //        $foto_distributor = $nama_distributor.".".$request
-    //            ->file('foto_distributor')
-    //            ->getClientOriginalExtension();
-    //    } else {
-    //        $foto_distributor = null;
-    //    }
-//
-    //    $data = [
-    //        'nama_distributor' => $nama_distributor,
-    //        'email_distributor' => $email_distributor,
-    //        'alamat_distributor' => $alamat_distributor,
-    //        'no_hp_distributor' => $no_hp_distributor,
-    //        'foto_distributor' => $foto_distributor,
-    //        'kecamatan_distributor' => $kecamatan_distributor,
-    //        'password_distributor' => $password_distributor
-    //    ];
-//
-    //    $simpan = DB::table('distributor')->insert($data);
-    //    if ($simpan){
-    //        if ($request->hasFile('foto_distributor')) {
-    //            $foto_distributor = $nama_distributor.".".$request
-    //                ->file('foto_distributor')
-    //                ->getClientOriginalExtension();
-    //            $storagePath = 'public/uploads/data_induk/distributor/';
-    //            $request->file('foto_distributor')->storeAs($storagePath, $foto_distributor);
-    //            $publicPath = public_path('storage/uploads/data_induk/distributor/');
-    //            if (!is_dir($publicPath)) {
-    //                mkdir($publicPath, 0777, true);
-    //            }
-    //            $sourceFile = storage_path('app/' . $storagePath . $foto_distributor);
-    //            $destinationFile = public_path('storage/uploads/data_induk/distributor/' . $foto_distributor);
-    //            copy($sourceFile, $destinationFile);
-    //        }
-    //        return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
-    //    } else {
-    //        return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
-    //    }
-    //}
-//
-    //public function edit_owner_distributor(Request $request)
-    //{
-    //    $id = $request->id;
-    //    $distributor = DB::table('distributor')->get();
-    //    $data = DB::table('distributor')->where('id_distributor', $id)->first();
-    //    return view('owner.data_induk.distributor.edit_distributor',compact('distributor','data'));
-    //}
-//
-    //public function update_owner_distributor($id_distributor, Request $request)
-    //{
-    //    $id_distributor = $request->id_distributor;
-    //    $nama_distributor = $request->nama_distributor;
-    //    $email_distributor = $request->email_distributor;
-    //    $alamat_distributor = $request->alamat_distributor;
-    //    $no_hp_distributor = $request->no_hp_distributor;
-    //    $kecamatan_distributor = $request->kecamatan_distributor;
-    //    $old_foto_distributor = $request->old_foto_distributor;
-    //    $password_distributor = $request->password_distributor;
-//
-    //    if($request->hasFile('foto_distributor')){
-    //        $foto_distributor = $id_distributor.".".$request
-    //            ->file('foto_distributor')
-    //            ->getClientOriginalExtension();
-    //    } else {
-    //        $foto_distributor = $old_foto_distributor;
-    //    }
-//
-    //    try {
-    //        $data = [
-    //            'nama_distributor' => $nama_distributor,
-    //            'email_distributor' => $email_distributor,
-    //            'alamat_distributor' => $alamat_distributor,
-    //            'no_hp_distributor' => $no_hp_distributor,
-    //            'foto_distributor'=>$foto_distributor,
-    //            'kecamatan_distributor' => $kecamatan_distributor,
-    //            'password_distributor' => $password_distributor
-    //        ];
-    //        $update = DB::table('distributor')->where('id_distributor', $id_distributor)->update($data);
-    //        if ($update){
-    //            if ($request->hasFile('foto_distributor')) {
-    //                $foto_distributor = $id_distributor.".".$request
-    //                    ->file('foto_distributor')
-    //                    ->getClientOriginalExtension();
-    //                $folderpath = "public/uploads/data_induk/distributor/";
-    //                $folderpathold = $folderpath . $old_foto_distributor;
-    //                if (Storage::exists($folderpathold)) {
-    //                    Storage::delete($folderpathold);
-    //                }
-    //                $request->file('foto_distributor')->storeAs($folderpath, $foto_distributor);
-    //                $publicPath = public_path('storage/uploads/data_induk/distributor/');
-    //                if (!is_dir($publicPath)) {
-    //                    mkdir($publicPath, 0777, true);
-    //                }
-    //                $sourceFile = storage_path('app/' . $folderpath . $foto_distributor);
-    //                $destinationFile = public_path('storage/uploads/data_induk/distributor/' . $foto_distributor);
-    //                copy($sourceFile, $destinationFile);
-    //            }
-    //            return Redirect::back()->with(['success' => 'Data Berhasil Diupdate']);
-    //        }
-    //    } catch (\Exception $e) {
-    //        //dd($e);
-    //        return Redirect::back()->with(['error' => 'Data Gagal Diupdate']);
-    //    }
-    //}
-//
-    //public function delete_owner_distributor($id_distributor)
-    //{
-    //    $delete = DB::table('distributor')->where('id_distributor', $id_distributor)->delete();
-    //    if($delete){
-    //        return Redirect::back()->with(['success' => 'Data Berhasil Dihapus']);
-    //    } else {
-    //        return Redirect::back()->with(['warning' => 'Data Berhasil Dihapus']);
-    //    }
-    //}
+    // BAGIAN OWNER
+    public function index_owner_data_staff_driver(Request $request)
+    {
+        $pilih_dapur = $request->pilih_dapur;
+        $cari_nama   = $request->cari_nama;
+
+        // Query data staff driver
+        $query = Driver::query();
+
+        // Filter pencarian nama (jika ada)
+        if (!empty($cari_nama)) {
+            $query->where('nama_driver', 'like', '%' . $cari_nama . '%');
+        }
+
+
+        // Filter pencarian dapur (jika ada)
+        if (!empty($pilih_dapur)) {
+            $query->where('nomor_dapur_driver', $pilih_dapur);
+        }
+
+        // Pagination Hei 
+        $driver = $query->paginate(100);
+
+
+        // Ambil semua data dapur
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
+        
+        
+        // ✅ Ambil nama dapur
+        $namaDapur = $pilih_dapur
+            ? DB::table('dapur')
+                ->where('nomor_dapur', $pilih_dapur)
+                ->value('nama_dapur')
+            : '-';
+
+        return view('owner.data_staff.driver.index_driver', compact('driver', 'dapurList', 'namaDapur'));
+    }
+
+
+
+
+    public function validasi_owner_data_staff_driver(Request $request)
+    {
+        $id = $request->id;
+        $driver = DB::table('driver')->get();
+        $data = DB::table('driver')->where('id_driver', $id)->first();
+        return view('owner.data_staff.driver.validasi_driver',compact('driver','data'));
+    }
+
+
+
+    public function update_owner_validasi_driver($id, Request $request)
+    {
+        try {
+            $status_validasi_driver = $request->status_validasi_driver;
+
+            // Update hanya kolom yang perlu
+            $update = DB::table('driver')
+                ->where('id_driver', $id)
+                ->update([
+                    'status_validasi_driver' => $status_validasi_driver
+                ]);
+
+            if ($update) {
+                return Redirect::back()->with(['success' => 'Status Berhasil Diubah']);
+            } else {
+                return Redirect::back()->with(['warning' => 'Tidak ada perubahan data']);
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->with(['error' => 'Data Gagal Diproses']);
+        }
+    }
+
+
+    public function batalkan_owner_validasi_driver($id, Request $request)
+    {
+        $update = DB::table('driver')
+            ->where('id_driver',$id)
+            ->update([
+                'status_validasi_driver' => 0
+            ]);
+
+        if($update){
+            return Redirect::back()->with(['success'=>'Status Berhasil Dibatalkan']);
+        } else {
+            return Redirect::back()->with(['warning'=>'Data Gagal Diproses']);
+        }
+    }
 
 
 
