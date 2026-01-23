@@ -60,7 +60,6 @@ class DataRelawanController extends Controller
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
     
         $nama_relawan       = $request->nama_relawan;
-        $email_relawan      = $request->email_relawan;
         $no_hp_relawan      = $request->no_hp_relawan;
         $foto_relawan       = $request->foto_relawan;
         $ktp_relawan        = $request->ktp_relawan;
@@ -92,7 +91,6 @@ class DataRelawanController extends Controller
         $data = [
             'nama_relawan'             => $nama_relawan,
             'nomor_dapur_relawan'      => $nomor_dapur,
-            'email_relawan'            => $email_relawan,
             'divisi_relawan'           => $final_divisi_relawan,
             'no_hp_relawan'            => $no_hp_relawan,
             'foto_relawan'             => $foto_relawan,
