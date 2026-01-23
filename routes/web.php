@@ -143,6 +143,9 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::get('/owner/data_staff/relawan',[DataRelawanController::class,'index_owner_data_staff_relawan']);
     Route::post('/owner/data_staff/relawan/store_relawan',[DataRelawanController::class,'store_owner_data_staff_relawan']);
     Route::post('/owner/data_staff/relawan/ktp_relawan',[DataRelawanController::class,'ktp_owner_data_staff_relawan']);
+    Route::post('/owner/data_staff/relawan/validasi_relawan',[DataRelawanController::class,'validasi_owner_data_staff_relawan']);
+    Route::post('/owner/data_staff/relawan/{id}/update_validasi_relawan',[DataRelawanController::class,'update_owner_validasi_relawan']);
+    Route::post('/owner/data_staff/relawan/{id}/batalkan_validasi_relawan',[DataRelawanController::class,'batalkan_owner_validasi_relawan']);
 
 
     //Dapur

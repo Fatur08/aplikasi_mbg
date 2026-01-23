@@ -9,6 +9,124 @@ use Illuminate\Support\Facades\Redirect;
 
 class DataRelawanController extends Controller
 {
+    // BAGIAN OWNER
+    public function index_owner_data_staff_relawan(Request $request)
+    {
+        $pilih_dapur = $request->pilih_dapur;
+        $cari_nama   = $request->cari_nama;
+
+        // Query data staff relawan
+        $query = Relawan::query();
+
+        // Filter pencarian nama (jika ada)
+        if (!empty($cari_nama)) {
+            $query->where('nama_relawan', 'like', '%' . $cari_nama . '%');
+        }
+
+
+        // Filter pencarian dapur (jika ada)
+        if (!empty($pilih_dapur)) {
+            $query->where('nomor_dapur_relawan', $pilih_dapur);
+        }
+
+        // Pagination Hei 
+        $relawan = $query->paginate(100);
+
+
+        // Ambil semua data dapur
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
+        
+        
+        // ✅ Ambil nama dapur
+        $namaDapur = $pilih_dapur
+            ? DB::table('dapur')
+                ->where('nomor_dapur', $pilih_dapur)
+                ->value('nama_dapur')
+            : '-';
+
+        return view('owner.data_staff.relawan.index_relawan', compact('relawan', 'dapurList', 'namaDapur'));
+    }
+
+
+
+    public function ktp_owner_data_staff_relawan(Request $request)
+    {        
+        $id         = $request->id;
+        $relawan    = DB::table('relawan')->get();
+        $data       = DB::table('relawan')->where('id_relawan', $id)->first();
+        return view('owner.data_staff.relawan.ktp_relawan',compact('relawan','data'));
+    }
+
+
+
+
+    public function validasi_owner_data_staff_relawan(Request $request)
+    {
+        $id = $request->id;
+        $relawan = DB::table('relawan')->get();
+        $data = DB::table('relawan')->where('id_relawan', $id)->first();
+        return view('owner.data_staff.relawan.validasi_relawan',compact('relawan','data'));
+    }
+
+
+
+    public function update_owner_validasi_relawan($id, Request $request)
+    {
+        try {
+            $status_validasi_relawan = $request->status_validasi_relawan;
+
+            // Update hanya kolom yang perlu
+            $update = DB::table('relawan')
+                ->where('id_relawan', $id)
+                ->update([
+                    'status_validasi_relawan' => $status_validasi_relawan
+                ]);
+
+            if ($update) {
+                return Redirect::back()->with(['success' => 'Status Berhasil Diubah']);
+            } else {
+                return Redirect::back()->with(['warning' => 'Tidak ada perubahan data']);
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->with(['error' => 'Data Gagal Diproses']);
+        }
+    }
+
+
+    public function batalkan_owner_validasi_relawan($id, Request $request)
+    {
+        $update = DB::table('relawan')
+            ->where('id_relawan',$id)
+            ->update([
+                'status_validasi_relawan' => 0
+            ]);
+
+        if($update){
+            return Redirect::back()->with(['success'=>'Status Berhasil Dibatalkan']);
+        } else {
+            return Redirect::back()->with(['warning'=>'Data Gagal Diproses']);
+        }
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // BAGIAN MAKER
     public function index_maker_data_staff_relawan(Request $request)
     {
