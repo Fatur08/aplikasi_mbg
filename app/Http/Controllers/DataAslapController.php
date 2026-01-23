@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aslap;
 use App\Models\DataAslap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -406,7 +407,7 @@ class DataAslapController extends Controller
         $cari_nama   = $request->cari_nama;
 
         // Query data staff aslap
-        $query = Akuntan::query();
+        $query = Aslap::query();
 
         // Filter berdasarkan nomor dapur
         if ($nomor_dapur) {
