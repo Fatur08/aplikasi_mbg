@@ -47,33 +47,33 @@ class DataStaffController extends Controller
         $kepala_dapur = $querykepaladapur->orderBy('kepala_dapur.nama_lengkap', 'asc')->get();
 
 
-        // 🔹 Query utama distributor dengan join dapur unik
-        $querydistributor = DB::table('distributor')
+        // 🔹 Query utama driver dengan join dapur unik
+        $querydriver = DB::table('driver')
             ->joinSub($subDapur, 'dapur_unik', function ($join) {
-                $join->on('distributor.nomor_dapur_distributor', '=', 'dapur_unik.nomor_dapur');
+                $join->on('driver.nomor_dapur_driver', '=', 'dapur_unik.nomor_dapur');
             })
             ->join('dapur', 'dapur.id_dapur', '=', 'dapur_unik.id_dapur')
             ->select(
-                'distributor.id_distributor',
-                'distributor.nama_distributor',
-                'distributor.email_distributor',
-                'distributor.alamat_distributor',
-                'distributor.no_hp_distributor',
-                'distributor.foto_distributor',
-                'distributor.nomor_dapur_distributor',
-                'distributor.password_distributor',
+                'driver.id_driver',
+                'driver.nama_driver',
+                'driver.email_driver',
+                'driver.alamat_driver',
+                'driver.no_hp_driver',
+                'driver.foto_driver',
+                'driver.nomor_dapur_driver',
+                'driver.password_driver',
                 'dapur.nama_dapur',
                 'dapur.dapur_kecamatan'
             )
-            ->where('distributor.nomor_dapur_distributor', $nomor_dapur_maker);
+            ->where('driver.nomor_dapur_driver', $nomor_dapur_maker);
 
-        // 🔍 Filter pencarian nama distributor (jika diinput)
+        // 🔍 Filter pencarian nama driver (jika diinput)
         if (!empty($cari_nama)) {
-            $querydistributor->where('distributor.nama_distributor', 'like', '%' . $cari_nama . '%');
+            $querydriver->where('driver.nama_driver', 'like', '%' . $cari_nama . '%');
         }
 
         // 🔹 Ambil data
-        $distributor = $querydistributor->orderBy('distributor.nama_distributor', 'asc')->get();
+        $driver = $querydriver->orderBy('driver.nama_driver', 'asc')->get();
 
         
         
@@ -101,6 +101,6 @@ class DataStaffController extends Controller
             ->distinct()
             ->get();
 
-        return view('maker.data_staff.index_data_staff', compact('kepala_dapur', 'distributor', 'relawan', 'dapurList', 'peranList'));
+        return view('maker.data_staff.index_data_staff', compact('kepala_dapur', 'driver', 'relawan', 'dapurList', 'peranList'));
     }
 }
