@@ -59,13 +59,18 @@ class DataRelawanController extends Controller
 
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
     
-        $nama_relawan   = $request->nama_relawan;
-        $email_relawan  = $request->email_relawan;
-        $divisi_relawan = $request->divisi_relawan;
-        $no_hp_relawan  = $request->no_hp_relawan;
-        $foto_relawan   = $request->foto_relawan;
-        $ktp_relawan    = $request->ktp_relawan;
-        
+        $nama_relawan       = $request->nama_relawan;
+        $email_relawan      = $request->email_relawan;
+        $no_hp_relawan      = $request->no_hp_relawan;
+        $foto_relawan       = $request->foto_relawan;
+        $ktp_relawan        = $request->ktp_relawan;
+        $divisi_relawan     = $request->divisi_relawan;
+        $old_divisi_relawan = $request->old_divisi_relawan;
+
+        $final_divisi_relawan = !empty($divisi_relawan)
+            ? $divisi_relawan
+            : $old_divisi_relawan;
+    
 
         if($request->hasFile('foto_relawan')){
             $foto_relawan = $nama_relawan.".".$request
@@ -88,7 +93,7 @@ class DataRelawanController extends Controller
             'nama_relawan'             => $nama_relawan,
             'nomor_dapur_relawan'      => $nomor_dapur,
             'email_relawan'            => $email_relawan,
-            'divisi_relawan'           => $divisi_relawan,
+            'divisi_relawan'           => $final_divisi_relawan,
             'no_hp_relawan'            => $no_hp_relawan,
             'foto_relawan'             => $foto_relawan,
             'ktp_relawan'              => $ktp_relawan,
