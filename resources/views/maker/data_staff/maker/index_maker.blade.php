@@ -180,7 +180,7 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="cari_nama" id="cari_nama" placeholder="Masukkan Nama Lengkap" value="{{ Request('nama_lengkap_cari') }}">
+                                                <input type="text" class="form-control" name="cari_nama" id="cari_nama" placeholder="Masukkan Nama Lengkap" value="{{ Request('cari_nama') }}">
                                             </div>
                                         </div>
                                         <div class="col-4">

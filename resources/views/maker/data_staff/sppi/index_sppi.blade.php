@@ -180,7 +180,7 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="cari_nama" id="cari_nama" placeholder="Masukkan Nama Lengkap" value="{{ Request('nama_lengkap_cari') }}">
+                                                <input type="text" class="form-control" name="cari_nama" id="cari_nama" placeholder="Masukkan Nama Lengkap" value="{{ Request('cari_nama') }}">
                                             </div>
                                         </div>
                                         <div class="col-4">
@@ -193,7 +193,7 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <a href="#" class="btn btn-success w-100" id="TambahMaker" >
+                                                <a href="#" class="btn btn-success w-100" id="TambahSPPI" >
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M16 19h6" /><path d="M19 16v6" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /></svg>
                                                     Tambah SPPI
                                                 </a>
@@ -243,7 +243,7 @@
 
 
 <!-- TAMBAH MAKER -->
-<div class="modal modal-blur fade" id="modal-inputmaker" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-inputsppi" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -251,7 +251,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/maker/data_staff/maker/store_maker" method="POST" id="FormTambahMaker" enctype="multipart/form-data">
+                <form action="/maker/data_staff/sppi/store_sppi" method="POST" id="FormTambahSPPI" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -260,7 +260,7 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
                                 </span>
-                                <input type="text" value="" id="nama_maker" class="form-control" name="nama_maker" placeholder="Masukkan Nama Lengkap">
+                                <input type="text" value="" id="nama_sppi" class="form-control" name="nama_sppi" placeholder="Masukkan Nama Lengkap">
                             </div>
                         </div>
                     </div>
@@ -286,8 +286,8 @@
 
                                 <input
                                     type="email"
-                                    id="email_maker"
-                                    name="email_maker"
+                                    id="email_sppi"
+                                    name="email_sppi"
                                     class="form-control"
                                     placeholder="Masukkan E-Mail (gmail)"
                                     pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
@@ -308,7 +308,7 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
                                 </span>
-                                <input type="text" value="" id="alamat_maker" class="form-control" name="alamat_maker" placeholder="Masukkan Alamat">
+                                <input type="text" value="" id="alamat_sppi" class="form-control" name="alamat_sppi" placeholder="Masukkan Alamat">
                               </div>
                         </div>
                     </div>
@@ -328,8 +328,8 @@
                     
                                 <input
                                     type="text"
-                                    id="no_hp_maker"
-                                    name="no_hp_maker"
+                                    id="no_hp_sppi"
+                                    name="no_hp_sppi"
                                     class="form-control"
                                     placeholder="Masukkan Nomor HP"
                                     inputmode="numeric"
@@ -347,7 +347,7 @@
                     </div>
                     <div class="row mt-3 mb-3">
                         <div class="col-6">
-                            <input type="file" id="foto_maker" name="foto_maker" class="form-control">
+                            <input type="file" id="foto_sppi" name="foto_sppi" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label>Masukkan Foto Pengenal</label>
@@ -372,8 +372,8 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#TambahMaker").click(function(){
-            $("#modal-inputmaker").modal("show");
+        $("#TambahSPPI").click(function(){
+            $("#modal-inputsppi").modal("show");
         });
 
         $(".edit_maker").click(function(){
@@ -416,61 +416,61 @@
             });
         });
 
-        $("#FormTambahMaker").submit(function(){
-            var nama_maker = $("#nama_maker").val();
-            var email_maker = $("#email_maker").val();
-            var alamat_maker = $("#alamat_maker").val();
-            var no_hp_maker = $("#no_hp_maker").val();
-            var foto_maker = $("#FormTambahMaker").find("#foto_maker").val();
+        $("#FormTambahSPPI").submit(function(){
+            var nama_sppi = $("#nama_sppi").val();
+            var email_sppi = $("#email_sppi").val();
+            var alamat_sppi = $("#alamat_sppi").val();
+            var no_hp_sppi = $("#no_hp_sppi").val();
+            var foto_sppi = $("#FormTambahSPPI").find("#foto_sppi").val();
             var kecamatan = $("#kecamatan").val();
-            if(nama_maker==""){
+            if(nama_sppi==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Nama Lengkap Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#nama_maker").focus();
+                      $("#nama_sppi").focus();
                   });
                 return false;
-            } else if (email_maker==""){
+            } else if (email_sppi==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'E-Mail Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#email_maker").focus();
+                      $("#email_sppi").focus();
                   });
                 return false;
-            } else if (alamat_maker==""){
+            } else if (alamat_sppi==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Alamat Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#alamat_maker").focus();
+                      $("#alamat_sppi").focus();
                   });
                 return false;
-            } else if (no_hp_maker==""){
+            } else if (no_hp_sppi==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'No. HP Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#no_hp_maker").focus();
+                      $("#no_hp_sppi").focus();
                   });
                 return false;
-            } else if (foto_maker==""){
+            } else if (foto_sppi==""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Foto Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                   }).then(()=> {
-                      $("#foto_maker").focus();
+                      $("#foto_sppi").focus();
                   });
                 return false;
             }

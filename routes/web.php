@@ -221,7 +221,22 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::get('/maker/dashboardmaker',[DashboardController::class,'dashboardmaker']);
     //Route::get('/maker/dashboardmaker',[LaporanDistribusiController::class,'index_maker_laporan_distribusi']);
 
-    //Data Staff
+    // Data Staff
+    // Data Maker
+    Route::get('/maker/data_staff/maker',[DataMakerController::class,'index_maker_data_staff_maker']);
+    Route::post('/maker/data_staff/maker/store_maker',[DataMakerController::class,'store_maker_data_staff_maker']);
+
+
+
+
+    // SPPI
+    Route::get('/maker/data_staff/sppi',[DataSPPIController::class,'index_maker_data_staff_sppi']);
+
+
+
+
+
+    // Data Aslap
     Route::get('/maker/data_staff',[DataStaffController::class,'index_maker_data_staff']);
     Route::get('/maker/data_staff/aslap',[DataAslapController::class,'index_maker_data_staff_aslap']);
     Route::post('/maker/data_staff/aslap/store_aslap',[DataAslapController::class,'store_maker_aslap']);
@@ -231,17 +246,14 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::post('/maker/data_staff/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_maker_aslap']);
     
     
-    // Data Maker
-    Route::get('/maker/data_staff/maker',[DataMakerController::class,'index_maker_data_staff_maker']);
-    Route::post('/maker/data_staff/maker/store_maker',[DataMakerController::class,'store_maker_data_staff_maker']);
+    
 
 
 
 
 
 
-    // SPPI
-    Route::get('/maker/data_staff/sppi',[DataSPPIController::class,'index_maker_data_staff_sppi']);
+    
 
 
 
