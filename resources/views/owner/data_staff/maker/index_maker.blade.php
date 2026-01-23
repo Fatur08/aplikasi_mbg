@@ -212,7 +212,7 @@
                                         <table class="table custom-table">
                                             <thead>
                                                 <tr>
-                                                    <th colspan="7">Nama Dapur : </th>
+                                                    <th colspan="7" style="text-align: left;">Nama Dapur : </th>
                                                 </tr>
                                                 <tr>
                                                     <th>No.</th>
