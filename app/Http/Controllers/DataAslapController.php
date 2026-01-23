@@ -394,79 +394,88 @@ class DataAslapController extends Controller
 
 
 
-    // BAGIAN maker
+    // BAGIAN MAKER
     public function index_maker_data_staff_aslap(Request $request)
     {
-        return view('maker.data_staff.aslap.index_aslap');
+        // Ambil data maker yang login
+        $makerLogin = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
+        $cari_nama   = $request->cari_nama;
+
+        // Query data staff aslap
+        $query = Akuntan::query();
+
+        // Filter berdasarkan nomor dapur
+        if ($nomor_dapur) {
+            $query->where('nomor_dapur_aslap', $nomor_dapur);
+        }
+
+        // Filter pencarian nama (jika ada)
+        if (!empty($cari_nama)) {
+            $query->where('nama_aslap', 'like', '%' . $cari_nama . '%');
+        }
+
+        // Pagination Hei 
+        $aslap = $query->paginate(100);
+
+        return view('maker.data_staff.aslap.index_aslap', compact('aslap'));
     }
-    
-    
-    
-    
-    
-    public function store_maker_aslap(Request $request)
+
+
+
+
+
+    public function store_maker_data_staff_aslap(Request $request)
     {
-        $nama_aslap = $request->nama_aslap;
-        $peran_aslap = $request->peran_aslap;
-        $no_hp_aslap = $request->no_hp_aslap;
-        $nomor_dapur_aslap = $request->nomor_dapur_aslap;
+        // Ambil data maker yang login
+        $makerLogin = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
+    
+        $nama_aslap   = $request->nama_aslap;
+        $email_aslap  = $request->email_aslap;
+        $alamat_aslap = $request->alamat_aslap;
+        $no_hp_aslap  = $request->no_hp_aslap;
+        $foto_aslap   = $request->foto_aslap;
+        
 
         if($request->hasFile('foto_aslap')){
-            $foto_aslap = "Foto_" . $nama_aslap . "." .
-                $request->file('foto_aslap')->getClientOriginalExtension();
+            $foto_aslap = $nama_aslap.".".$request
+                ->file('foto_aslap')
+                ->getClientOriginalExtension();
         } else {
             $foto_aslap = null;
         }
 
-
-
-        if($request->hasFile('ktp_aslap')){
-            $ktp_aslap = "KTP_". $nama_aslap.".".$request
-                ->file('ktp_aslap')
-                ->getClientOriginalExtension();
-        } else {
-            $ktp_aslap = null;
-        }
-
-
-
-
         $data = [
-            'nomor_dapur_aslap' => $nomor_dapur_aslap,
-            'nama_aslap' => $nama_aslap,
-            'peran_aslap' => $peran_aslap,
-            'no_hp_aslap' => $no_hp_aslap,
-            'foto_aslap' => $foto_aslap,
-            'ktp_aslap' => $ktp_aslap,
-            'status_validasi_aslap' => 0
+            'nama_aslap'             => $nama_aslap,
+            'nomor_dapur_aslap'      => $nomor_dapur,
+            'email_aslap'            => $email_aslap,
+            'alamat_aslap'           => $alamat_aslap,
+            'no_hp_aslap'            => $no_hp_aslap,
+            'foto_aslap'             =>$foto_aslap,
+            'status_validasi_aslap'  => 0
         ];
 
         $simpan = DB::table('aslap')->insert($data);
         if ($simpan){
             if ($request->hasFile('foto_aslap')) {
-                $foto_aslap = "Foto_" . $nama_aslap . "." .$request->file('foto_aslap')->getClientOriginalExtension();
-                $storagePath = 'public/uploads/data_induk/aslap/foto/';
+                $foto_aslap = $nama_aslap.".".$request
+                    ->file('foto_aslap')
+                    ->getClientOriginalExtension();
+                $storagePath = 'public/uploads/data_staff/aslap/';
                 $request->file('foto_aslap')->storeAs($storagePath, $foto_aslap);
-                $publicPath = public_path('storage/uploads/data_induk/aslap/foto/');
+                $publicPath = public_path('storage/uploads/data_staff/aslap/');
                 if (!is_dir($publicPath)) {
                     mkdir($publicPath, 0777, true);
                 }
                 $sourceFile = storage_path('app/' . $storagePath . $foto_aslap);
-                $destinationFile = public_path('storage/uploads/data_induk/aslap/foto/' . $foto_aslap);
-                copy($sourceFile, $destinationFile);
-            }
-            if ($request->hasFile('ktp_aslap')) {
-                $ktp_aslap = "KTP_".$nama_aslap.".".$request
-                    ->file('ktp_aslap')
-                    ->getClientOriginalExtension();
-                $storagePath = 'public/uploads/data_induk/aslap/ktp/';
-                $request->file('ktp_aslap')->storeAs($storagePath, $ktp_aslap);
-                $publicPath = public_path('storage/uploads/data_induk/aslap/ktp/');
-                if (!is_dir($publicPath)) {
-                    mkdir($publicPath, 0777, true);
-                }
-                $sourceFile = storage_path('app/' . $storagePath . $ktp_aslap);
-                $destinationFile = public_path('storage/uploads/data_induk/aslap/ktp/' . $ktp_aslap);
+                $destinationFile = public_path('storage/uploads/data_staff/aslap/' . $foto_aslap);
                 copy($sourceFile, $destinationFile);
             }
             return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
@@ -474,6 +483,13 @@ class DataAslapController extends Controller
             return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
         }
     }
+
+
+
+
+
+
+
 
 
 

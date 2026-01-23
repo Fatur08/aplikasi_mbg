@@ -244,15 +244,16 @@ Route::middleware(['auth:maker'])->group(function(){
 
 
     // Data Aslap
-    Route::get('/maker/data_staff',[DataStaffController::class,'index_maker_data_staff']);
     Route::get('/maker/data_staff/aslap',[DataAslapController::class,'index_maker_data_staff_aslap']);
-    Route::post('/maker/data_staff/aslap/store_aslap',[DataAslapController::class,'store_maker_aslap']);
+    Route::post('/maker/data_staff/aslap/store_aslap',[DataAslapController::class,'store_maker_data_staff_aslap']);
+    
     Route::post('/maker/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_maker_aslap']);
     Route::post('/maker/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_maker_aslap']);
     Route::post('/maker/data_staff/aslap/{id}/update_aslap',[DataAslapController::class,'update_maker_aslap']);
     Route::post('/maker/data_staff/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_maker_aslap']);
     
     
+    Route::get('/maker/data_staff',[DataStaffController::class,'index_maker_data_staff']);
     
 
 
