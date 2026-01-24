@@ -253,7 +253,7 @@
                                                     <tr>
                                                         <td class="text-center">{{ $i + 1 }}</td>
                                                         <td class="text-center">
-                                                            {{ \Carbon\Carbon::parse($d->tanggal_laporan_keuangan)->translatedFormat('l, d F Y') }}
+                                                            {{ \Carbon\Carbon::parse($d->tanggal_laporan_keuangan)->translatedFormat('d F Y') }}
                                                         </td>
 
                                                         <td class="text-center">
