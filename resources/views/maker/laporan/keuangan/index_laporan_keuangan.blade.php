@@ -136,7 +136,7 @@
                                     Laporan Keuangan
                                 </h2>
                             </td>
-                            <td style="text-align:right">
+                            <!--<td style="text-align:right">
                                 <a href="#" class="btn btn-primary" id="TambahLaporanKeuangan">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                          viewBox="0 0 24 24" fill="none" stroke="currentColor" 
@@ -148,7 +148,7 @@
                                     </svg>
                                     Tambah Data
                                 </a>
-                            </td>
+                            </td>-->
                         </tr>
                     </tbody>
                 </table>
@@ -248,18 +248,11 @@
                                                         <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
                                                         <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
                                                         <th style="text-align: center; vertical-align: middle;" rowspan="2">Barang</th>
-                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Jumlah</th>
                                                         <th style="text-align: center; vertical-align: middle;" colspan="2">Keterangan</th>
-                                                        <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Pengeluaran</th>
-                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Margin</th>
-                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
-                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
                                                     </tr>
                                                     <tr>
                                                         <th style="text-align: center; vertical-align: middle;">Koperasi</th>
                                                         <th style="text-align: center; vertical-align: middle;">Supplier</th>
-                                                        <!--<th style="text-align: center; vertical-align: middle;">Pemasukan</th>
-                                                        <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>-->
                                                     </tr>
                                                 </thead>
                                                 <tbody>
