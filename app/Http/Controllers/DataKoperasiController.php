@@ -410,40 +410,11 @@ class DataKoperasiController extends Controller
                 ->update([
                     'status_data_koperasi' => $status_data_koperasi
                 ]);
-            
-            // ✅ 3. Update status_informasi_supplier juga (1 atau 2 mengikuti status_koperasi)
-            if (!empty($koperasi->id_informasi_supplier)) {
-                DB::table('informasi_supplier')
-                    ->where('id_informasi_supplier', $koperasi->id_informasi_supplier)
-                    ->update([
-                        'status_informasi_supplier' => $status_data_koperasi
-                    ]);
-            }
-        
-            // ✅ 4. Proses keuangan jika status = 1 ATAU 2
-            if (in_array($status_data_koperasi, [1, 2])) {
-
-                // Cek apakah data keuangan sudah ada
-                $cekKeuangan = DB::table('keuangan')
-                    ->where('id_data_koperasi', $id)
-                    ->first();
-            
-                if (!$cekKeuangan) {
-                    // ✅ Insert keuangan hanya jika belum ada
-                    DB::table('keuangan')->insert([
-                        'id_data_koperasi'          => $koperasi->id_data_koperasi,
-                        'id_informasi_supplier'     => $koperasi->id_informasi_supplier ?? null,
-                        'nomor_dapur_keuangan'      => $koperasi->nomor_dapur_data_koperasi,
-                        'tanggal_laporan_keuangan'  => $koperasi->tanggal_data_koperasi,
-                        'jenis_transaksi'           => $koperasi->jenis_data_koperasi,
-                    ]);
-                }
-            }
         
             DB::commit();
         
             return Redirect::back()->with([
-                'success' => 'Status koperasi & supplier berhasil diperbarui dan data keuangan diproses'
+                'success' => 'Status koperasi berhasil diperbarui'
             ]);
         
         } catch (\Exception $e) {
@@ -472,32 +443,19 @@ class DataKoperasiController extends Controller
                 return Redirect::back()->with(['error' => 'Data koperasi tidak ditemukan']);
             }
 
-            // ✅ 2. Ambil id_informasi_supplier dari data koperasi
-            $id_informasi_supplier = $dataKoperasi->id_informasi_supplier;
 
-            // ✅ 3. Update status_data_koperasi jadi 0
+            // ✅ Update status_data_koperasi jadi 0
             DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
                 ->update([
                     'status_data_koperasi' => 0
                 ]);
 
-            // ✅ 4. Update status_informasi_supplier jadi 0
-            DB::table('informasi_supplier')
-                ->where('id_informasi_supplier', $id_informasi_supplier)
-                ->update([
-                    'status_informasi_supplier' => 0
-                ]);
-
-            // ✅ 5. Hapus data keuangan yang terkait
-            DB::table('keuangan')
-                ->where('id_data_koperasi', $id)
-                ->delete();
 
             DB::commit();
 
             return Redirect::back()->with([
-                'success' => 'Validasi berhasil dibatalkan, status supplier diperbarui, dan data keuangan dihapus'
+                'success' => 'Validasi berhasil dibatalkan'
             ]);
 
         } catch (\Exception $e) {

@@ -184,9 +184,9 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::get('/owner/data_koperasi',[DataKoperasiController::class,'index_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/lihat_barang_modal_keluar',[DataKoperasiController::class,'lihat_owner_barang_modal_keluar']);
     Route::post('/owner/data_koperasi/bukti_terima_data_koperasi',[DataKoperasiController::class,'bukti_owner_data_koperasi']);
-    Route::post('/owner/data_koperasi/validasi_data_koperasi',[DataRelawanController::class,'validasi_owner_data_koperasi']);
-    Route::post('/owner/data_koperasi//{id}/update_validasi_data_koperasi',[DataRelawanController::class,'update_owner_validasi_data_koperasi']);
-    Route::post('/owner/data_koperasi/{id}/batalkan_validasi_data_koperasi',[DataRelawanController::class,'batalkan_owner_validasi_data_koperasi']);
+    Route::post('/owner/data_koperasi/validasi_data_koperasi',[DataKoperasiController::class,'validasi_owner_data_koperasi']);
+    Route::post('/owner/data_koperasi/{id}/update_validasi_data_koperasi',[DataKoperasiController::class,'update_validasi_owner_data_koperasi']);
+    Route::post('/owner/data_koperasi/{id}/batalkan_validasi_data_koperasi',[DataKoperasiController::class,'batalkan_validasi_owner_data_koperasi']);
 
     Route::post('/owner/data_koperasi/store_data_koperasi',[DataKoperasiController::class,'store_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/edit_modal_masuk_data_koperasi',[DataKoperasiController::class,'edit_modal_masuk_owner_data_koperasi']);
@@ -195,9 +195,6 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::post('/owner/data_koperasi/{id}/update_modal_keluar_data_koperasi',[DataKoperasiController::class,'update_modal_keluar_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/lihat_barang_modal_keluar',[DataKoperasiController::class,'lihat_owner_barang_modal_keluar']);
     Route::get('/owner/data_koperasi/cetak_data_koperasi',[DataKoperasiController::class,'cetak_owner_data_koperasi']);
-    Route::post('/owner/data_koperasi/validasi_data_koperasi',[DataKoperasiController::class,'validasi_owner_data_koperasi']);
-    Route::post('/owner/data_koperasi/{id}/update_validasi_data_koperasi',[DataKoperasiController::class,'update_validasi_owner_data_koperasi']);
-    Route::post('/owner/data_koperasi/{id}/batalkan_validasi_data_koperasi',[DataKoperasiController::class,'batalkan_validasi_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/{id}/delete_data_koperasi',[DataKoperasiController::class,'delete_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/tambah_barang_modal_keluar',[DataKoperasiController::class,'tambah_owner_barang_modal_keluar']);
     Route::post('/owner/data_koperasi/{id}/store_barang_modal_keluar',[DataKoperasiController::class,'store_owner_barang_modal_keluar']);
