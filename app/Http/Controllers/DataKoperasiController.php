@@ -937,31 +937,32 @@ class DataKoperasiController extends Controller
     {
         $maker = Auth::guard('maker')->user();
         $nomor_dapur_maker = $maker->nomor_dapur_maker;
-
-        // id_data_koperasi dikirim dari request
+    
         $id_data_koperasi = $request->id;
-
-        // Siapkan variabel barang_list
-        $barang_list = collect();
-
-        // Ambil dari barang_modal_keluar berdasar id_data_koperasi
-        if ($barang_list->isEmpty()) {
-            $barang_list = DB::table('barang_modal_keluar')
-                ->where('barang_modal_keluar.id_data_koperasi', $id_data_koperasi)
-                ->where('barang_modal_keluar.nomor_dapur_barang_modal_keluar', $nomor_dapur_maker)
-                ->select(
-                    'barang_modal_keluar.id_barang_modal_keluar as id_barang',
-                    'barang_modal_keluar.nama_barang_modal_keluar as nama_barang',
-                    'barang_modal_keluar.jumlah_barang_modal_keluar as jumlah',
-                    'barang_modal_keluar.satuan_barang_modal_keluar as satuan',
-                    'barang_modal_keluar.harga_barang_modal_keluar as harga',
-                    DB::raw("'Modal Keluar' as sumber_data")
-                )
-                ->get();
-        }
-
-        // Kirim ke view sebagai barang_list (lebih jelas)
-        return view('maker.data_koperasi.lihat_barang_modal_keluar', compact('barang_list'));
+    
+        // Ambil data barang modal keluar
+        $barang_list = DB::table('barang_modal_keluar')
+            ->where('id_data_koperasi', $id_data_koperasi)
+            ->where('nomor_dapur_barang_modal_keluar', $nomor_dapur_maker)
+            ->select(
+                'id_barang_modal_keluar as id_barang',
+                'nama_barang_modal_keluar as nama_barang',
+                'jumlah_barang_modal_keluar as jumlah',
+                'satuan_barang_modal_keluar as satuan',
+                'harga_barang_modal_keluar as harga',
+                DB::raw("'Modal Keluar' as sumber_data")
+            )
+            ->get();
+    
+        // Hitung total harga
+        $total_harganya = $barang_list->sum(function ($item) {
+            return ($item->jumlah ?? 0) * ($item->harga ?? 0);
+        });
+    
+        return view(
+            'maker.data_koperasi.lihat_barang_modal_keluar',
+            compact('barang_list', 'total_harganya')
+        );
     }
 
     public function delete_maker_data_koperasi($id)
