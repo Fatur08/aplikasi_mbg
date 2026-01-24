@@ -244,7 +244,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/maker/data_koperasi/store_data_koperasi" method="POST" id="frmDtKprs" enctype="multipart/form-data">
+                <form action="/maker/data_koperasi/store_data_koperasi" method="POST" id="InputDataKoperasi" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -520,6 +520,42 @@
                 return false;
             }
         });
+
+
+
+
+
+
+        $("#InputDataKoperasi").submit(function(){
+            var tanggal_data_koperasi = $("#tanggal_data_koperasi").val();
+            var bukti_terima_data_koperasi = $("#InputDataKoperasi").find("#bukti_terima_data_koperasi").val();
+            if(tanggal_data_koperasi==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Tanggal Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#tanggal_data_koperasi").focus();
+                  });
+                return false;
+            } else if (bukti_terima_data_koperasi==""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Bukti Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                  }).then(()=> {
+                      $("#bukti_terima_data_koperasi").focus();
+                  });
+                return false;
+            }
+        });
+
+
+
+
+
 
 
         flatpickr("#tanggal_data_koperasi", {
