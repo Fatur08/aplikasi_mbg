@@ -226,186 +226,58 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @forelse($data_koperasi as $no => $d)
+                                                <tr>
+                                                    <td>{{ $no + 1 }}</td>
+
+                                                    <td>{{ $d->tanggal_format }}</td>
+
+                                                    <td>
+                                                        <div class="align-items-center">
+                                                            <!--<a href="#" class="tambah_barang_modal_keluar btn btn-info btn-sm"
+                                                               data-id="{{ $d->id_data_koperasi }}">
+                                                                ➕ Tambah
+                                                            </a>-->
+
+                                                            <a href="#" class="lihat_barang_modal_keluar btn btn-info btn-sm"
+                                                               data-id="{{ $d->id_data_koperasi }}">
+                                                                👁 Lihat
+                                                            </a>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        Rp. {{ number_format($d->total_harga, 0, ',', '.') }}
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <a href="#" class="bukti_terima_data_koperasi btn btn-info btn-sm"
+                                                           data-id="{{ $d->id_data_koperasi }}">
+                                                            👁 Lihat
+                                                        </a>
+                                                    </td>
+
+                                                    <td>
+                                                        @if($d->status_data_koperasi == 0)
+                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                        @elseif($d->status_data_koperasi == 1)
+                                                            <button class="btn btn-success btn-sm">Disetujui</button>
+                                                        @else
+                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center text-muted">
+                                                        Data koperasi belum tersedia
+                                                    </td>
+                                                </tr>
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-12">
-                                @if(!$sudahCari)
-                                    <div class="alert alert-info text-center">
-                                        Silakan lakukan pencarian terlebih dahulu
-                                    </div>
-                                @elseif($dataKosong)
-                                    <div class="alert alert-warning text-center">
-                                        Data tidak ditemukan
-                                    </div>
-                                @else
-                                    @foreach ($grouped as $tanggal => $data)
-                                        @php
-                                            $dataMasuk  = $data->filter(fn($d) => $d->jenis_data_koperasi === 'modal_masuk');
-                                            $dataKeluar = $data->filter(fn($d) => $d->jenis_data_koperasi === 'modal_keluar');
-
-                                            $totalMasuk  = $dataMasuk->sum('harga_data_koperasi');
-                                            $totalKeluar = $dataKeluar->sum(fn($d) => (int) $d->total_harga_supplier);
-
-                                            $selisih = $totalMasuk - $totalKeluar;
-                                        @endphp
-
-                                        <div class="card mb-4 shadow-sm">
-                                            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                                                <h2><b>{{ $tanggal }}</b></h2>
-                                                <h2>Selisih: <b>Rp {{ number_format($selisih, 0, ',', '.') }}</b></h2>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <!-- ===== Modal Masuk ===== -->
-                                                    <div class="col-md-6">
-                                                        <h3 class="text-success"><b>Modal Masuk</b></h3>
-                                                        <table class="table table-bordered table-sm">
-                                                            <thead class="table-success">
-                                                                <tr class="text-center">
-                                                                    <th>No</th>
-                                                                    <th>Sumber</th>
-                                                                    <th>Jumlah</th>
-                                                                    <th>Validasi</th>
-                                                                    <th>Aksi</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @php $noMasuk = 1; @endphp
-                                                                @foreach ($dataMasuk as $d)
-                                                                    <tr>
-                                                                        <td class="text-center">{{ $noMasuk++ }}</td>
-                                                                        <td>{{ $d->kategori_data_koperasi ?? '-' }}</td>
-                                                                        <td>Rp {{ number_format($d->harga_data_koperasi, 0, ',', '.') }}</td>
-                                                                        <td class="text-center">
-                                                                            @if($d->status_data_koperasi == 0)
-                                                                                <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                                            @elseif($d->status_data_koperasi == 1)
-                                                                                <button class="btn btn-success btn-sm">Disetujui</button>
-                                                                            @else
-                                                                                <button class="btn btn-danger btn-sm">Ditolak</button>
-                                                                            @endif
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <div class="btn-group-vertical">
-                                                                                @if($d->status_data_koperasi == 0)
-                                                                                <a href="#" class="validasi_data_koperasi btn btn-primary btn-sm mb-1" id="{{ $d->id_data_koperasi }}">
-                                                                                    <i class="bi bi-pencil-square"></i> Validasi
-                                                                                </a>
-                                                                                @else
-                                                                                <form action="/owner/data_koperasi/{{ $d->id_data_koperasi }}/batalkan_validasi_data_koperasi" method="POST">
-                                                                                    @csrf    
-                                                                                    <a class="btn btn-danger btn-sm batalkan_validasi_data_koperasi mb-1" >
-                                                                                        Batalkan
-                                                                                    </a>
-                                                                                </form>
-                                                                                @endif
-                                                                                <a href="#" class="edit_modal_masuk_data_koperasi btn btn-info btn-sm mb-1" id="{{ $d->id_data_koperasi }}">
-                                                                                    <i class="bi bi-pencil-square"></i> Edit
-                                                                                </a>
-                                                                                <form action="/owner/data_koperasi/{{ $d->id_data_koperasi }}/delete_data_koperasi" method="POST">
-                                                                                    @csrf
-                                                                                    <a class="btn btn-danger btn-sm delete-confirm-data-koperasi mb-1">
-                                                                                        <i class="bi bi-trash"></i> Hapus
-                                                                                    </a>
-                                                                                </form>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                            <tfoot class="table-light">
-                                                                <tr>
-                                                                    <th colspan="2" class="text-end">Total</th>
-                                                                    <th colspan="3">Rp {{ number_format($totalMasuk, 0, ',', '.') }}</th>
-                                                                </tr>
-                                                            </tfoot>
-                                                        </table>
-                                                    </div>
-
-                                                    <!-- ===== Modal Keluar ===== -->
-                                                    <div class="col-md-6">
-                                                        <h3 class="text-danger"><b>Modal Keluar</b></h3>
-                                                        <table class="table table-bordered table-sm">
-                                                            <thead class="table-danger">
-                                                                <tr class="text-center">
-                                                                    <th>No</th>
-                                                                    <th>Tujuan</th>
-                                                                    <th>Jumlah</th>
-                                                                    <th>Validasi</th>
-                                                                    <th>Aksi</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @php $noKeluar = 1; @endphp
-                                                                @foreach ($dataKeluar as $d)
-                                                                    <tr>
-                                                                        <td class="text-center">{{ $noKeluar++ }}</td>
-                                                                        <td>{{ $d->kategori_data_koperasi ?? '-' }}</td>
-                                                                        <td>Rp {{ number_format($d->total_harga_supplier, 0, ',', '.') }}</td>
-                                                                        <td class="text-center">
-                                                                            @if($d->status_data_koperasi == 0)
-                                                                                <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                                            @elseif($d->status_data_koperasi == 1)
-                                                                                <button class="btn btn-success btn-sm">Disetujui</button>
-                                                                            @else
-                                                                                <button class="btn btn-danger btn-sm">Ditolak</button>
-                                                                            @endif
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <div class="btn-group-vertical">
-                                                                                @if($d->status_data_koperasi == 0)
-                                                                                <a href="#" class="validasi_data_koperasi btn btn-primary btn-sm mb-1" id="{{ $d->id_data_koperasi }}">
-                                                                                    <i class="bi bi-pencil-square"></i> Validasi
-                                                                                </a>
-                                                                                @else
-                                                                                <form action="/owner/data_koperasi/{{ $d->id_data_koperasi }}/batalkan_validasi_data_koperasi" method="POST">
-                                                                                    @csrf    
-                                                                                    <a class="btn btn-danger btn-sm batalkan_validasi_data_koperasi mb-1" >
-                                                                                        Batalkan
-                                                                                    </a>
-                                                                                </form>
-                                                                                @endif
-                                                                                <a href="#" class="edit_modal_keluar_data_koperasi btn btn-info btn-sm mb-1" id="{{ $d->id_data_koperasi }}">
-                                                                                    <i class="bi bi-pencil-square"></i> Edit
-                                                                                </a>
-                                                                                <form action="/owner/data_koperasi/{{ $d->id_data_koperasi }}/delete_data_koperasi" method="POST">
-                                                                                    @csrf
-                                                                                    <a class="btn btn-danger btn-sm delete-confirm-data-koperasi mb-1">
-                                                                                        <i class="bi bi-trash"></i> Hapus
-                                                                                    </a>
-                                                                                </form>
-                                                                                <a href="#" class="tambah_barang_modal_keluar btn btn-success btn-sm mb-1" data-id="{{ $d->id_data_koperasi }}">
-                                                                                    <i class="bi bi-plus-circle"></i> Tambah
-                                                                                </a>
-                                                                                <a href="#" class="lihat_barang_modal_keluar btn btn-secondary btn-sm" data-id="{{ $d->id_data_koperasi }}">
-                                                                                    <i class="bi bi-eye"></i> Lihat
-                                                                                </a>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                            <tfoot class="table-light">
-                                                                <tr>
-                                                                    <th colspan="2" class="text-end">Total</th>
-                                                                    <th colspan="3">Rp {{ number_format($totalKeluar, 0, ',', '.') }}</th>
-                                                                </tr>
-                                                            </tfoot>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                    <div class="mt-3">
-                                        
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>
@@ -417,77 +289,36 @@
 
 
 
-{{-- Edit Modal Masuk Data Koperasi --}}
-<div class="modal modal-blur fade" id="modal-editmodalmasukdatakoperasi" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Modal Masuk Data Koperasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadeditmodalmasukformdatakoperasi">
-                
-            </div>
-        </div>
-    </div>
-</div>
 
 
-{{-- Edit Modal Keluar Data Koperasi --}}
-<div class="modal modal-blur fade" id="modal-editmodalkeluardatakoperasi" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Modal Keluar Data Koperasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadeditmodalkeluarformdatakoperasi">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{{-- Modal Validasi Data Koperasi --}}
-<div class="modal modal-blur fade" id="modal-valdiasiinformdatakoperasi" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Validasi Data Koperasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadvalidasiformdatakoperasi">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Modal Tambah Barang Modal Keluar --}}
-<div class="modal modal-blur fade" id="modal-tambahbarangmodalkeluar" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Tambah Barang Modal Keluar</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadformtambahbarangmodalkeluar">
-                
-            </div>
-        </div>
-    </div>
-</div>
 
 {{-- Modal Lihat Barang Modal Keluar --}}
 <div class="modal modal-blur fade" id="modal-lihatbarangmodalkeluar" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Lihat Barang Modal Keluar</h5>
+                <h5 class="modal-title">Lihat Barang Data Koperasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="loadformlihatbarangmodalkeluar">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{{-- Modal Lihat Bukti Terima Data Koperasi --}}
+<div class="modal modal-blur fade" id="modal-lihatbuktiterima" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lihat Bukti Terima</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loadformlihatbuktiterima">
                 
             </div>
         </div>
@@ -497,65 +328,6 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#btnTambahDataKoperasi").click(function(){
-            $("#modal-inputdatakoperasi").modal("show");
-        });
-
-
-        $(".edit_modal_masuk_data_koperasi").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/owner/data_koperasi/edit_modal_masuk_data_koperasi',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadeditmodalmasukformdatakoperasi").html(respond);
-                }
-            });
-            $("#modal-editmodalmasukdatakoperasi").modal("show");
-        });
-
-
-        $(".edit_modal_keluar_data_koperasi").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/owner/data_koperasi/edit_modal_keluar_data_koperasi',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadeditmodalkeluarformdatakoperasi").html(respond);
-                }
-            });
-            $("#modal-editmodalkeluardatakoperasi").modal("show");
-        });
-
-
-        $(".tambah_barang_modal_keluar").click(function(){
-            var id = $(this).attr('data-id');
-            $.ajax({
-                type:'POST',
-                url:'/owner/data_koperasi/tambah_barang_modal_keluar',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadformtambahbarangmodalkeluar").html(respond);
-                }
-            });
-            $("#modal-tambahbarangmodalkeluar").modal("show");
-        });
-
-
         $(".lihat_barang_modal_keluar").click(function(){
             var id = $(this).attr('data-id');
             $.ajax({
@@ -572,6 +344,29 @@
             });
             $("#modal-lihatbarangmodalkeluar").modal("show");
         });
+
+
+        $(".bukti_terima_data_koperasi").click(function(){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type:'POST',
+                url:'/owner/data_koperasi/bukti_terima_data_koperasi',
+                cache:false,
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    id : id
+                },
+                success:function(respond){
+                    $("#loadformlihatbuktiterima").html(respond);
+                }
+            });
+            $("#modal-lihatbuktiterima").modal("show");
+        });
+
+
+
+
+
 
 
         $(".validasi_data_koperasi").click(function(){

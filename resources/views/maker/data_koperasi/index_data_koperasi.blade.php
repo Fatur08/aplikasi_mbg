@@ -331,20 +331,6 @@
 
 
 
-{{-- Edit Modal Masuk Data Koperasi --}}
-<div class="modal modal-blur fade" id="modal-editmodalmasukdatakoperasi" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Modal Masuk Data Koperasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadeditmodalmasukformdatakoperasi">
-                
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -365,20 +351,7 @@
 
 
 
-{{-- Edit Modal Keluar Data Koperasi --}}
-<div class="modal modal-blur fade" id="modal-editmodalkeluardatakoperasi" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Modal Keluar Data Koperasi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadeditmodalkeluarformdatakoperasi">
-                
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 
@@ -478,67 +451,8 @@
         });
 
 
-        $(".edit_modal_masuk_data_koperasi").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/maker/data_koperasi/edit_modal_masuk_data_koperasi',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadeditmodalmasukformdatakoperasi").html(respond);
-                }
-            });
-            $("#modal-editmodalmasukdatakoperasi").modal("show");
-        });
 
 
-
-        $(".edit_modal_keluar_data_koperasi").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/maker/data_koperasi/edit_modal_keluar_data_koperasi',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadeditmodalkeluarformdatakoperasi").html(respond);
-                }
-            });
-            $("#modal-editmodalkeluardatakoperasi").modal("show");
-        });
-
-
-        
-
-        $(".delete-confirm-data-koperasi").click(function(e){
-            var form = $(this).closest('form');
-            e.preventDefault();
-            Swal.fire({
-                title: "Apakah Anda Yakin Data ini Mau Di Hapus?",
-                text: "Jika Ya Maka Data Akan Terhapus Permanen",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Hapus Saja"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Data Berhasil Di Hapus",
-                        icon: "success"
-                  });
-                }
-            });
-        });
 
         $("#FormDataKoperasimaker").submit(function(){
             var dari_tanggal = $("#dari_tanggal").val();
@@ -641,36 +555,7 @@
         });
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        let dari = document.getElementById("dari_tanggal");
-        let sampai = document.getElementById("sampai_tanggal");
-        let bulan = document.getElementById("bulan");
-
-        function toggleBulan() {
-            if (dari.value && sampai.value) {
-                bulan.disabled = true;
-                bulan.value = "";
-            } else {
-                bulan.disabled = false;
-            }
-        }
-
-        function toggleTanggal() {
-            if (bulan.value) {
-                dari.disabled = true;
-                sampai.disabled = true;
-                dari.value = "";
-                sampai.value = "";
-            } else {
-                dari.disabled = false;
-                sampai.disabled = false;
-            }
-        }
-
-        dari.addEventListener("change", toggleBulan);
-        sampai.addEventListener("change", toggleBulan);
-        bulan.addEventListener("change", toggleTanggal);
-    });
+    
 
     document.getElementById("cetak_data_koperasi").addEventListener("click", function() {
         let dari_tanggal    = document.getElementById("dari_tanggal").value;

@@ -14,92 +14,91 @@ class DataKoperasiController extends Controller
     // BAGIAN OWNER
     public function index_owner_data_koperasi(Request $request)
     {
+        $pilih_dapur    = $request->pilih_dapur;
         $dari_tanggal   = $request->dari_tanggal;
         $sampai_tanggal = $request->sampai_tanggal;
-        $pilih_dapur    = $request->pilih_dapur;
 
-        $query = DataKoperasi::query()
-            ->leftJoin(
-                DB::raw('(SELECT nomor_dapur, MAX(nama_dapur) AS nama_dapur FROM dapur GROUP BY nomor_dapur) AS dapur'),
-                'data_koperasi.nomor_dapur_data_koperasi',
-                '=',
-                'dapur.nomor_dapur'
-            )
-            ->select('data_koperasi.*', 'dapur.nama_dapur');
-
-        /* ================= FILTER DAPUR ================= */
-        if (!empty($pilih_dapur)) {
-            $query->where('data_koperasi.nomor_dapur_data_koperasi', $pilih_dapur);
-        }
+        $query = DataKoperasi::where('nomor_dapur_data_koperasi', $pilih_dapur);
 
         /* ================= FILTER RANGE TANGGAL ================= */
-        if (!empty($dari_tanggal) && !empty($sampai_tanggal)) {
-            $query->whereBetween('tanggal_data_koperasi', [
-                $dari_tanggal,
-                $sampai_tanggal
-            ]);
-        } elseif (!empty($dari_tanggal)) {
+        if ($dari_tanggal && $sampai_tanggal) {
+            $query->whereBetween('tanggal_data_koperasi', [$dari_tanggal, $sampai_tanggal]);
+        } elseif ($dari_tanggal) {
             $query->whereDate('tanggal_data_koperasi', '>=', $dari_tanggal);
-        } elseif (!empty($sampai_tanggal)) {
+        } elseif ($sampai_tanggal) {
             $query->whereDate('tanggal_data_koperasi', '<=', $sampai_tanggal);
         }
 
-        $query->orderBy('tanggal_data_koperasi', 'asc');
+        $data_koperasi = $query
+            ->orderBy('tanggal_data_koperasi', 'asc')
+            ->get();
 
-        $data_koperasi = $query->paginate(1000);
+        /* ================= OLAH DATA UNTUK BLADE ================= */
+        foreach ($data_koperasi as $d) {
 
-        /* ================= FLAG STATUS ================= */
-        $dataKosong = $data_koperasi->isEmpty();
-
-        $sudahCari =
-            !empty($dari_tanggal) ||
-            !empty($sampai_tanggal) ||
-            !empty($pilih_dapur);
-
-        /* ================= GROUPING ================= */
-        $grouped = $data_koperasi->getCollection()->groupBy(function ($item) {
-            return Carbon::parse($item->tanggal_data_koperasi)
+            // Format tanggal Indonesia
+            $d->tanggal_format = Carbon::parse($d->tanggal_data_koperasi)
                 ->translatedFormat('d F Y');
-        });
 
-        /* ================= HITUNG TOTAL ================= */
-        foreach ($data_koperasi as $item) {
-
-            if ($item->jenis_data_koperasi !== 'modal_keluar') {
-                $item->total_harga_supplier = $item->harga_data_koperasi;
-                continue;
-            }
-
-            // MODAL KELUAR - SUPPLIER
-            if (!empty($item->id_informasi_supplier)) {
-                $item->total_harga_supplier = DB::table('barang_supplier')
-                    ->where('id_informasi_supplier', $item->id_informasi_supplier)
-                    ->where('nomor_dapur_barang_supplier', $item->nomor_dapur_data_koperasi)
-                    ->sum('harga_barang_supplier');
-            }
-            // MODAL KELUAR - NON SUPPLIER
-            else {
-                $item->total_harga_supplier = DB::table('barang_modal_keluar')
-                    ->where('id_data_koperasi', $item->id_data_koperasi)
-                    ->where('nomor_dapur_barang_modal_keluar', $item->nomor_dapur_data_koperasi)
-                    ->sum('harga_barang_modal_keluar');
-            }
+            // Total harga dari tabel barang_modal_keluar
+            $d->total_harga = DB::table('barang_modal_keluar')
+                ->where('id_data_koperasi', $d->id_data_koperasi)
+                ->where('nomor_dapur_barang_modal_keluar', $d->nomor_dapur_data_koperasi)
+                ->sum('harga_barang_modal_keluar');
         }
 
-        /* ================= LIST DAPUR ================= */
-        $dapurList = DB::table('dapur')
-            ->select('nomor_dapur', 'nama_dapur')
-            ->groupBy('nomor_dapur', 'nama_dapur')
-            ->get();
+        $dataKosong = $data_koperasi->isEmpty();
 
         return view('owner.data_koperasi.index_data_koperasi', compact(
             'data_koperasi',
-            'dataKosong',
-            'sudahCari',
-            'grouped',
-            'dapurList'
+            'dataKosong'
         ));
     }
+
+
+
+
+    public function lihat_owner_barang_modal_keluar(Request $request)
+    {
+        $pilih_dapur    = $request->pilih_dapur;
+        $id_data_koperasi = $request->id;
+
+        // Ambil data barang modal keluar
+        $barang_list = DB::table('barang_modal_keluar')
+            ->where('id_data_koperasi', $id_data_koperasi)
+            ->where('nomor_dapur_barang_modal_keluar', $pilih_dapur)
+            ->select(
+                'id_barang_modal_keluar as id_barang',
+                'nama_barang_modal_keluar as nama_barang',
+                'jumlah_barang_modal_keluar as jumlah',
+                'satuan_barang_modal_keluar as satuan',
+                'harga_barang_modal_keluar as harga',
+                DB::raw("'Modal Keluar' as sumber_data")
+            )
+            ->get();
+
+        // Hitung total harga
+        $total_harganya = $barang_list->sum('harga');
+
+        return view(
+            'maker.data_koperasi.lihat_barang_modal_keluar',
+            compact('barang_list', 'total_harganya')
+        );
+    }
+
+
+
+    public function bukti_owner_data_koperasi(Request $request)
+    {
+        $id                 = $request->id;
+        $data_koperasi      = DB::table('data_koperasi')->get();
+        $data               = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
+        return view('maker.data_koperasi.bukti_terima_data_koperasi',compact('data_koperasi','data'));
+    }
+
+
+
+
 
     public function cetak_owner_data_koperasi(Request $request)
     {
@@ -354,61 +353,6 @@ class DataKoperasiController extends Controller
             return back()->with('error', 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage());
         }
     }
-
-
-
-    public function lihat_owner_barang_modal_keluar(Request $request)
-    {
-        // id_data_koperasi dikirim dari request
-        $id_data_koperasi = $request->id;
-
-        // Cek data koperasi untuk ambil id_informasi_supplier-nya
-        $data_koperasi = DB::table('data_koperasi')
-            ->where('id_data_koperasi', $id_data_koperasi)
-            ->first();
-
-        $id_informasi_supplier = $data_koperasi->id_informasi_supplier ?? null;
-        $nomor_dapur = $data_koperasi->nomor_dapur_data_koperasi;
-
-        // Siapkan variabel barang_list
-        $barang_list = collect();
-
-        // 1) Coba ambil dari barang_supplier berdasar id_informasi_supplier
-        $barang_list = DB::table('barang_supplier')
-            ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
-            ->where('barang_supplier.id_informasi_supplier', $id_informasi_supplier)
-            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur)
-            ->select(
-                'barang_supplier.id_barang_supplier as id_barang',
-                'barang_supplier.nama_barang_supplier as nama_barang',
-                'barang_supplier.jumlah_barang_supplier as jumlah',
-                'barang_supplier.satuan_barang_supplier as satuan',
-                'barang_supplier.harga_barang_supplier as harga',
-                DB::raw("'Supplier' as sumber_data")
-            )
-            ->get();
-
-        // 2) Jika tidak ada (kosong) → ambil dari barang_modal_keluar berdasar id_data_koperasi
-        if ($barang_list->isEmpty()) {
-            $barang_list = DB::table('barang_modal_keluar')
-                ->where('barang_modal_keluar.id_data_koperasi', $id_data_koperasi)
-                ->where('barang_modal_keluar.nomor_dapur_barang_modal_keluar', $nomor_dapur)
-                ->select(
-                    'barang_modal_keluar.id_barang_modal_keluar as id_barang',
-                    'barang_modal_keluar.nama_barang_modal_keluar as nama_barang',
-                    'barang_modal_keluar.jumlah_barang_modal_keluar as jumlah',
-                    'barang_modal_keluar.satuan_barang_modal_keluar as satuan',
-                    'barang_modal_keluar.harga_barang_modal_keluar as harga',
-                    DB::raw("'Modal Keluar' as sumber_data")
-                )
-                ->get();
-        }
-
-        // Kirim ke view sebagai barang_list (lebih jelas)
-        return view('maker.data_koperasi.lihat_barang_modal_keluar', compact('barang_list'));
-    }
-
-
 
     public function delete_owner_data_koperasi($id)
     {

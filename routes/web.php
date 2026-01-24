@@ -182,6 +182,9 @@ Route::middleware(['auth:owner'])->group(function(){
 
     //Data Koperasi
     Route::get('/owner/data_koperasi',[DataKoperasiController::class,'index_owner_data_koperasi']);
+    Route::post('/owner/data_koperasi/lihat_barang_modal_keluar',[DataKoperasiController::class,'lihat_owner_barang_modal_keluar']);
+    Route::post('/owner/data_koperasi/bukti_terima_data_koperasi',[DataKoperasiController::class,'bukti_owner_data_koperasi']);
+
     Route::post('/owner/data_koperasi/store_data_koperasi',[DataKoperasiController::class,'store_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/edit_modal_masuk_data_koperasi',[DataKoperasiController::class,'edit_modal_masuk_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/{id}/update_modal_masuk_data_koperasi',[DataKoperasiController::class,'update_modal_masuk_owner_data_koperasi']);
