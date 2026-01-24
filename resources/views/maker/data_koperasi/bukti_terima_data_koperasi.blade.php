@@ -9,7 +9,7 @@
 </style>
 
 <div>
-    @if(!empty($data->ktp_relawan))
+    @if(!empty($data->bukti_terima_data_koperasi))
         <img src="{{ asset('storage/uploads/data_koperasi/bukti_terima/'.$data->bukti_terima_data_koperasi) }}"
              class="bukti-terima-img">
     @else
