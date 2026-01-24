@@ -49,9 +49,17 @@ class DataKoperasiController extends Controller
 
         $dataKosong = $data_koperasi->isEmpty();
 
+
+        /* ================= LIST DAPUR ================= */
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
+
         return view('owner.data_koperasi.index_data_koperasi', compact(
             'data_koperasi',
-            'dataKosong'
+            'dataKosong',
+            'dapurList'
         ));
     }
 
