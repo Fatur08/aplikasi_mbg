@@ -157,7 +157,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/owner/laporan/stok" method="GET">
+                                    <form action="/owner/laporan/stok" id="FormLaporanStokHarian" method="GET">
                                         <div class="row">
                                             <div class="col-3">
                                                 <div class="input-icon">
@@ -268,3 +268,62 @@
     </div>
 </div>
 @endsection
+@push('myscript')
+<script>
+    flatpickr("#dari_tanggal", {
+        altInput: true,
+        altFormat: "d F Y",      // 15 September 2025
+        dateFormat: "Y-m-d",     // dikirim ke backend
+        locale: "id",
+        allowInput: true
+    });
+    
+    flatpickr("#sampai_tanggal", {
+        altInput: true,
+        altFormat: "d F Y",
+        dateFormat: "Y-m-d",
+        locale: "id",
+        allowInput: true
+    });
+
+
+
+    $("#FormLaporanStokHarian").submit(function(){
+        var pilih_dapur = $("#pilih_dapur").val();
+        var dari_tanggal = $("#dari_tanggal").val();
+        var sampai_tanggal = $("#sampai_tanggal").val();
+        if(pilih_dapur == ""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Dapur Harus Diisi',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            }).then(()=> {
+                $("#pilih_dapur").focus();
+            });
+            return false;
+        
+        } else if(dari_tanggal == ""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Dari Tanggal Harus Diisi',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            }).then(()=> {
+                $("#dari_tanggal").focus();
+            });
+            return false;
+        } else if(sampai_tanggal == ""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Sampai Tanggal Harus Diisi',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            }).then(()=> {
+                $("#sampai_tanggal").focus();
+            });
+            return false;
+        }
+    });
+</script>
+@endpush
