@@ -937,9 +937,9 @@ class DataKoperasiController extends Controller
     {
         $maker = Auth::guard('maker')->user();
         $nomor_dapur_maker = $maker->nomor_dapur_maker;
-    
+
         $id_data_koperasi = $request->id;
-    
+
         // Ambil data barang modal keluar
         $barang_list = DB::table('barang_modal_keluar')
             ->where('id_data_koperasi', $id_data_koperasi)
@@ -953,12 +953,10 @@ class DataKoperasiController extends Controller
                 DB::raw("'Modal Keluar' as sumber_data")
             )
             ->get();
-    
+
         // Hitung total harga
-        $total_harganya = $barang_list->sum(function ($item) {
-            return ($item->jumlah ?? 0) * ($item->harga ?? 0);
-        });
-    
+        $total_harganya = $barang_list->sum('harga');
+
         return view(
             'maker.data_koperasi.lihat_barang_modal_keluar',
             compact('barang_list', 'total_harganya')

@@ -23,8 +23,8 @@
     </tbody>
     <tfoot class="table-light">
         <tr>
-            <th colspan="2" class="text-end">Total</th>
-            <th colspan="2">Rp {{ number_format($total_harganya, 0, ',', '.') }}</th>
+            <th colspan="3" class="text-end">Total</th>
+            <th colspan="1">Rp {{ number_format($total_harganya, 0, ',', '.') }}</th>
         </tr>
     </tfoot>
 </table>
