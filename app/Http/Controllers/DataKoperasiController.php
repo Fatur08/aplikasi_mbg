@@ -879,11 +879,9 @@ class DataKoperasiController extends Controller
     public function store_maker_data_koperasi(Request $request)
     {
         // Ambil data maker yang sedang login
-        $maker              = Auth::guard('maker')->user();
-        $nomor_dapur_maker  = $maker->nomor_dapur_maker;
-
-        $tanggal_data_koperasi         = $request->tanggal_data_koperasi;
-        $butki_terima_data_koperasi    = $request->butki_terima_data_koperasi;
+        $maker                  = Auth::guard('maker')->user();
+        $nomor_dapur_maker      = $maker->nomor_dapur_maker;
+        $tanggal_data_koperasi  = $request->tanggal_data_koperasi;
 
         if($request->hasFile('bukti_terima_data_koperasi')){
             $bukti_terima_data_koperasi = "Bukti Terima_Data Koperasi".$tanggal_data_koperasi.".".$request
@@ -905,23 +903,23 @@ class DataKoperasiController extends Controller
                 'status_data_koperasi'             => 0, // default: menunggu validasi
             ]);
 
-            // 2️⃣ Jika jenis_data_koperasi adalah "modal_masuk", tambahkan juga ke tabel keuangan
-            if ($jenis_data_koperasi === 'modal_masuk') {
+            // 2️⃣ Jika belum ada data ditanggal tanggal_data_koperasi, tambahkan juga ke tabel keuangan. Jika sudah ada cukup update kolom id_data_koperasi nya saja
+            $dataKeuangan = DB::table('keuangan')
+                ->where('tanggal_laporan_keuangan', $tanggal_data_koperasi)
+                ->where('nomor_dapur_keuangan', $nomor_dapur_maker)
+                ->first();
+            if (!$dataKeuangan) {
                 DB::table('keuangan')->insert([
-                    'id_data_koperasi'           => $id_data_koperasi,
-                    'nomor_dapur_keuangan'       => $nomor_dapur_maker,
-                    'tanggal_laporan_keuangan'   => $tanggal_data_koperasi,
-                    'kategori_laporan_keuangan'  => $kategori_data_koperasi,
-                    'jenis_transaksi'            => 'Pemasukan',
-                    'jumlah_dana'                => $harga_data_koperasi,
+                'id_data_koperasi'           => $id_data_koperasi,
+                'nomor_dapur_keuangan'       => $nomor_dapur_maker,
+                'tanggal_laporan_keuangan'   => $tanggal_data_koperasi,
                 ]);
-            } elseif ($jenis_data_koperasi === 'modal_keluar') {
-                DB::table('keuangan')->insert([
-                    'id_data_koperasi'           => $id_data_koperasi,
-                    'nomor_dapur_keuangan'       => $nomor_dapur_maker,
-                    'tanggal_laporan_keuangan'   => $tanggal_data_koperasi,
-                    'kategori_laporan_keuangan'  => $kategori_data_koperasi,
-                    'jenis_transaksi'            => 'Pengeluaran',
+            } else {
+                // ✅ SUDAH ADA → UPDATE id_data_koperasi SAJA
+                DB::table('keuangan')
+                    ->where('id_laporan_keuangan', $dataKeuangan->id_laporan_keuangan)
+                    ->update([
+                        'id_data_koperasi' => $id_data_koperasi
                 ]);
             }
 
