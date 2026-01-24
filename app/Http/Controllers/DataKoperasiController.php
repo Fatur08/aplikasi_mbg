@@ -699,92 +699,46 @@ class DataKoperasiController extends Controller
     // BAGIAN MAKER
     public function index_maker_data_koperasi(Request $request)
     {
-        // Ambil data maker yang sedang login
-        $maker          = Auth::guard('maker')->user();
-        $dapur          = $maker->nomor_dapur_maker;
-
+        $maker = Auth::guard('maker')->user();
+        $dapur = $maker->nomor_dapur_maker;
+    
         $dari_tanggal   = $request->dari_tanggal;
         $sampai_tanggal = $request->sampai_tanggal;
-
-        $query = DataKoperasi::query()
-            ->leftJoin(
-                DB::raw('(SELECT nomor_dapur, MAX(nama_dapur) AS nama_dapur FROM dapur GROUP BY nomor_dapur) AS dapur'),
-                'data_koperasi.nomor_dapur_data_koperasi',
-                '=',
-                'dapur.nomor_dapur'
-            )
-            ->select('data_koperasi.*', 'dapur.nama_dapur');
-
-        /* ================= FILTER DAPUR ================= */
-        if (!empty($dapur)) {
-            $query->where('data_koperasi.nomor_dapur_data_koperasi', $dapur);
-        }
-
+    
+        $query = DataKoperasi::where('nomor_dapur_data_koperasi', $dapur);
+    
         /* ================= FILTER RANGE TANGGAL ================= */
-        if (!empty($dari_tanggal) && !empty($sampai_tanggal)) {
-            $query->whereBetween('tanggal_data_koperasi', [
-                $dari_tanggal,
-                $sampai_tanggal
-            ]);
-        } elseif (!empty($dari_tanggal)) {
+        if ($dari_tanggal && $sampai_tanggal) {
+            $query->whereBetween('tanggal_data_koperasi', [$dari_tanggal, $sampai_tanggal]);
+        } elseif ($dari_tanggal) {
             $query->whereDate('tanggal_data_koperasi', '>=', $dari_tanggal);
-        } elseif (!empty($sampai_tanggal)) {
+        } elseif ($sampai_tanggal) {
             $query->whereDate('tanggal_data_koperasi', '<=', $sampai_tanggal);
         }
-
-        $query->orderBy('tanggal_data_koperasi', 'asc');
-
-        $data_koperasi = $query->paginate(1000);
-
-        /* ================= FLAG STATUS ================= */
-        $dataKosong = $data_koperasi->isEmpty();
-
-        $sudahCari =
-            !empty($dari_tanggal) ||
-            !empty($sampai_tanggal);
-
-        /* ================= GROUPING ================= */
-        $grouped = $data_koperasi->getCollection()->groupBy(function ($item) {
-            return Carbon::parse($item->tanggal_data_koperasi)
-                ->translatedFormat('d F Y');
-        });
-
-        /* ================= HITUNG TOTAL ================= */
-        foreach ($data_koperasi as $item) {
-
-            if ($item->jenis_data_koperasi !== 'modal_keluar') {
-                $item->total_harga_supplier = $item->harga_data_koperasi;
-                continue;
-            }
-
-            // MODAL KELUAR - SUPPLIER
-            if (!empty($item->id_informasi_supplier)) {
-                $item->total_harga_supplier = DB::table('barang_supplier')
-                    ->where('id_informasi_supplier', $item->id_informasi_supplier)
-                    ->where('nomor_dapur_barang_supplier', $item->nomor_dapur_data_koperasi)
-                    ->sum('harga_barang_supplier');
-            }
-            // MODAL KELUAR - NON SUPPLIER
-            else {
-                $item->total_harga_supplier = DB::table('barang_modal_keluar')
-                    ->where('id_data_koperasi', $item->id_data_koperasi)
-                    ->where('nomor_dapur_barang_modal_keluar', $item->nomor_dapur_data_koperasi)
-                    ->sum('harga_barang_modal_keluar');
-            }
-        }
-
-        /* ================= LIST DAPUR ================= */
-        $dapurList = DB::table('dapur')
-            ->select('nomor_dapur', 'nama_dapur')
-            ->groupBy('nomor_dapur', 'nama_dapur')
+    
+        $data_koperasi = $query
+            ->orderBy('tanggal_data_koperasi', 'asc')
             ->get();
-
+    
+        /* ================= OLAH DATA UNTUK BLADE ================= */
+        foreach ($data_koperasi as $d) {
+    
+            // Format tanggal Indonesia
+            $d->tanggal_format = Carbon::parse($d->tanggal_data_koperasi)
+                ->translatedFormat('d F Y');
+    
+            // Total harga dari tabel barang_modal_keluar
+            $d->total_harga = DB::table('barang_modal_keluar')
+                ->where('id_data_koperasi', $d->id_data_koperasi)
+                ->where('nomor_dapur_barang_modal_keluar', $d->nomor_dapur_data_koperasi)
+                ->sum('harga_barang_modal_keluar');
+        }
+    
+        $dataKosong = $data_koperasi->isEmpty();
+    
         return view('maker.data_koperasi.index_data_koperasi', compact(
             'data_koperasi',
-            'dataKosong',
-            'sudahCari',
-            'grouped',
-            'dapurList'
+            'dataKosong'
         ));
     }
 

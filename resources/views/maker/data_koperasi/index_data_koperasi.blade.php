@@ -221,6 +221,54 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @forelse($data_koperasi as $no => $d)
+                                                <tr>
+                                                    <td>{{ $no + 1 }}</td>
+
+                                                    <td>{{ $d->tanggal_format }}</td>
+
+                                                    <td>
+                                                        <div class="align-items-center">
+                                                            <a href="#" class="tambah_barang_data_koperasi btn btn-info btn-sm"
+                                                               data-id="{{ $d->id_data_koperasi }}">
+                                                                ➕ Tambah
+                                                            </a>
+
+                                                            <a href="#" class="lihat_barang_data_koperasi btn btn-info btn-sm"
+                                                               data-id="{{ $d->id_data_koperasi }}">
+                                                                👁 Lihat
+                                                            </a>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        Rp {{ number_format($d->total_harga, 0, ',', '.') }}
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <a href="#" class="bukti_terima_data_koperasi btn btn-info btn-sm"
+                                                           data-id="{{ $d->id_data_koperasi }}">
+                                                            👁 Lihat
+                                                        </a>
+                                                    </td>
+
+                                                    <td>
+                                                        @if($d->status_data_koperasi == 0)
+                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                        @elseif($d->status_data_koperasi == 1)
+                                                            <button class="btn btn-success btn-sm">Disetujui</button>
+                                                        @else
+                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center text-muted">
+                                                        Data koperasi belum tersedia
+                                                    </td>
+                                                </tr>
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
