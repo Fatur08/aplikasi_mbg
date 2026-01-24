@@ -397,30 +397,30 @@
         </div>
     </div>
 </div>
+
+
+
+
+{{-- Modal Lihat Bukti Terima Data Koperasi --}}
+<div class="modal modal-blur fade" id="modal-lihatbuktiterima" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lihat Bukti Terima</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loadformlihatbuktiterima">
+                
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('myscript')
 <script>
     $(function(){
         $("#btnTambahDataKoperasi").click(function(){
             $("#modal-inputdatakoperasi").modal("show");
-        });
-
-
-        $(".edit_modal_masuk_data_koperasi").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/maker/data_koperasi/edit_modal_masuk_data_koperasi',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadeditmodalmasukformdatakoperasi").html(respond);
-                }
-            });
-            $("#modal-editmodalmasukdatakoperasi").modal("show");
         });
 
 
@@ -439,6 +439,60 @@
                 }
             });
             $("#modal-tambahbarangmodalkeluar").modal("show");
+        });
+
+
+        $(".lihat_barang_modal_keluar").click(function(){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type:'POST',
+                url:'/maker/data_koperasi/lihat_barang_modal_keluar',
+                cache:false,
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    id : id
+                },
+                success:function(respond){
+                    $("#loadformlihatbarangmodalkeluar").html(respond);
+                }
+            });
+            $("#modal-lihatbarangmodalkeluar").modal("show");
+        });
+
+
+        $(".bukti_terima_data_koperasi").click(function(){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type:'POST',
+                url:'/maker/data_koperasi/bukti_terima_data_koperasi',
+                cache:false,
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    id : id
+                },
+                success:function(respond){
+                    $("#loadformlihatbuktiterima").html(respond);
+                }
+            });
+            $("#modal-lihatbuktiterima").modal("show");
+        });
+
+
+        $(".edit_modal_masuk_data_koperasi").click(function(){
+            var id = $(this).attr('id');
+            $.ajax({
+                type:'POST',
+                url:'/maker/data_koperasi/edit_modal_masuk_data_koperasi',
+                cache:false,
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    id : id
+                },
+                success:function(respond){
+                    $("#loadeditmodalmasukformdatakoperasi").html(respond);
+                }
+            });
+            $("#modal-editmodalmasukdatakoperasi").modal("show");
         });
 
 
@@ -461,22 +515,7 @@
         });
 
 
-        $(".lihat_barang_modal_keluar").click(function(){
-            var id = $(this).attr('data-id');
-            $.ajax({
-                type:'POST',
-                url:'/maker/data_koperasi/lihat_barang_modal_keluar',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadformlihatbarangmodalkeluar").html(respond);
-                }
-            });
-            $("#modal-lihatbarangmodalkeluar").modal("show");
-        });
+        
 
         $(".delete-confirm-data-koperasi").click(function(e){
             var form = $(this).closest('form');

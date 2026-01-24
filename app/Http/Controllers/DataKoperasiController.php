@@ -963,6 +963,19 @@ class DataKoperasiController extends Controller
         );
     }
 
+
+
+    public function bukti_maker_data_koperasi(Request $request)
+    {
+        $id                 = $request->id;
+        $data_koperasi      = DB::table('data_koperasi')->get();
+        $data               = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
+        return view('maker.data_koperasi.bukti_terima_data_koperasi',compact('data_koperasi','data'));
+    }
+
+
+
+
     public function delete_maker_data_koperasi($id)
     {
         $delete = DB::table('data_koperasi')->where('id_data_koperasi', $id)->delete();
