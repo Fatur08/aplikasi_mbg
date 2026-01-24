@@ -5,7 +5,6 @@
             <th>Barang</th>
             <th>Jumlah</th>
             <th>Harga</th>
-            <th>Sumber</th> {{-- opsional --}}
         </tr>
     </thead>
     <tbody>
@@ -15,7 +14,6 @@
                 <td>{{ $item->nama_barang }}</td>
                 <td>{{ $item->jumlah }} {{ $item->satuan }}</td>
                 <td>Rp {{ number_format($item->harga ?? 0, 0, ',', '.') }}</td>
-                <td>{{ ucfirst($item->sumber_data ?? '') }}</td> {{-- supplier / modal_keluar --}}
             </tr>
         @empty
             <tr>

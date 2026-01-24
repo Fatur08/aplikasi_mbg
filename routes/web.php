@@ -331,11 +331,11 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::post('/maker/data_koperasi/store_data_koperasi',[DataKoperasiController::class,'store_maker_data_koperasi']);
     Route::post('/maker/data_koperasi/tambah_barang_modal_keluar',[DataKoperasiController::class,'tambah_maker_barang_modal_keluar']);
     Route::post('/maker/data_koperasi/{id}/store_barang_modal_keluar',[DataKoperasiController::class,'store_maker_barang_modal_keluar']);
+    Route::post('/maker/data_koperasi/lihat_barang_modal_keluar',[DataKoperasiController::class,'lihat_maker_barang_modal_keluar']);
     Route::post('/maker/data_koperasi/edit_modal_masuk_data_koperasi',[DataKoperasiController::class,'edit_modal_masuk_maker_data_koperasi']);
     Route::post('/maker/data_koperasi/{id}/update_modal_masuk_data_koperasi',[DataKoperasiController::class,'update_modal_masuk_maker_data_koperasi']);
     Route::post('/maker/data_koperasi/edit_modal_keluar_data_koperasi',[DataKoperasiController::class,'edit_modal_keluar_maker_data_koperasi']);
     Route::post('/maker/data_koperasi/{id}/update_modal_keluar_data_koperasi',[DataKoperasiController::class,'update_modal_keluar_maker_data_koperasi']);
-    Route::post('/maker/data_koperasi/lihat_barang_modal_keluar',[DataKoperasiController::class,'lihat_maker_barang_modal_keluar']);
     Route::get('/maker/data_koperasi/cetak_data_koperasi',[DataKoperasiController::class,'cetak_maker_data_koperasi']);
     Route::post('/maker/data_koperasi/{id}/update_data_koperasi',[DataKoperasiController::class,'update_maker_data_koperasi']);
     Route::post('/maker/data_koperasi/{id}/delete_data_koperasi',[DataKoperasiController::class,'delete_maker_data_koperasi']);

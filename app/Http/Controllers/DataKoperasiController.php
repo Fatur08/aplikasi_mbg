@@ -933,6 +933,51 @@ class DataKoperasiController extends Controller
 
 
 
+    public function lihat_maker_barang_modal_keluar(Request $request)
+    {
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur_maker = $maker->nomor_dapur_maker;
+
+        // id_data_koperasi dikirim dari request
+        $id_data_koperasi = $request->id;
+
+        // Siapkan variabel barang_list
+        $barang_list = collect();
+
+        // Ambil dari barang_modal_keluar berdasar id_data_koperasi
+        if ($barang_list->isEmpty()) {
+            $barang_list = DB::table('barang_modal_keluar')
+                ->where('barang_modal_keluar.id_data_koperasi', $id_data_koperasi)
+                ->where('barang_modal_keluar.nomor_dapur_barang_modal_keluar', $nomor_dapur_maker)
+                ->select(
+                    'barang_modal_keluar.id_barang_modal_keluar as id_barang',
+                    'barang_modal_keluar.nama_barang_modal_keluar as nama_barang',
+                    'barang_modal_keluar.jumlah_barang_modal_keluar as jumlah',
+                    'barang_modal_keluar.satuan_barang_modal_keluar as satuan',
+                    'barang_modal_keluar.harga_barang_modal_keluar as harga',
+                    DB::raw("'Modal Keluar' as sumber_data")
+                )
+                ->get();
+        }
+
+        // Kirim ke view sebagai barang_list (lebih jelas)
+        return view('maker.data_koperasi.lihat_barang_modal_keluar', compact('barang_list'));
+    }
+
+    public function delete_maker_data_koperasi($id)
+    {
+        $delete = DB::table('data_koperasi')->where('id_data_koperasi', $id)->delete();
+        if($delete){
+            return Redirect::back()->with(['success' => 'Data Berhasil Dihapus']);
+        } else {
+            return Redirect::back()->with(['warning' => 'Data Berhasil Dihapus']);
+        }
+    }
+
+
+
+
+
 
     public function cetak_maker_data_koperasi(Request $request)
     {
@@ -1219,66 +1264,5 @@ class DataKoperasiController extends Controller
         }
     }
 
-    public function lihat_maker_barang_modal_keluar(Request $request)
-    {
-        $maker = Auth::guard('maker')->user();
-        $nomor_dapur_maker = $maker->nomor_dapur_maker;
-
-        // id_data_koperasi dikirim dari request
-        $id_data_koperasi = $request->id;
-
-        // Cek data koperasi untuk ambil id_informasi_supplier-nya
-        $data_koperasi = DB::table('data_koperasi')
-            ->where('id_data_koperasi', $id_data_koperasi)
-            ->first();
-
-        $id_informasi_supplier = $data_koperasi->id_informasi_supplier ?? null;
-
-        // Siapkan variabel barang_list
-        $barang_list = collect();
-
-        // 1) Coba ambil dari barang_supplier berdasar id_informasi_supplier
-        $barang_list = DB::table('barang_supplier')
-            ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
-            ->where('barang_supplier.id_informasi_supplier', $id_informasi_supplier)
-            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur_maker)
-            ->select(
-                'barang_supplier.id_barang_supplier as id_barang',
-                'barang_supplier.nama_barang_supplier as nama_barang',
-                'barang_supplier.jumlah_barang_supplier as jumlah',
-                'barang_supplier.satuan_barang_supplier as satuan',
-                'barang_supplier.harga_barang_supplier as harga',
-                DB::raw("'Supplier' as sumber_data")
-            )
-            ->get();
-
-        // 2) Jika tidak ada (kosong) → ambil dari barang_modal_keluar berdasar id_data_koperasi
-        if ($barang_list->isEmpty()) {
-            $barang_list = DB::table('barang_modal_keluar')
-                ->where('barang_modal_keluar.id_data_koperasi', $id_data_koperasi)
-                ->where('barang_modal_keluar.nomor_dapur_barang_modal_keluar', $nomor_dapur_maker)
-                ->select(
-                    'barang_modal_keluar.id_barang_modal_keluar as id_barang',
-                    'barang_modal_keluar.nama_barang_modal_keluar as nama_barang',
-                    'barang_modal_keluar.jumlah_barang_modal_keluar as jumlah',
-                    'barang_modal_keluar.satuan_barang_modal_keluar as satuan',
-                    'barang_modal_keluar.harga_barang_modal_keluar as harga',
-                    DB::raw("'Modal Keluar' as sumber_data")
-                )
-                ->get();
-        }
-
-        // Kirim ke view sebagai barang_list (lebih jelas)
-        return view('maker.data_koperasi.lihat_barang_modal_keluar', compact('barang_list'));
-    }
-
-    public function delete_maker_data_koperasi($id)
-    {
-        $delete = DB::table('data_koperasi')->where('id_data_koperasi', $id)->delete();
-        if($delete){
-            return Redirect::back()->with(['success' => 'Data Berhasil Dihapus']);
-        } else {
-            return Redirect::back()->with(['warning' => 'Data Berhasil Dihapus']);
-        }
-    }
+    
 }

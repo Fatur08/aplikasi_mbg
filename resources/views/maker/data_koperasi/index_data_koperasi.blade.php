@@ -234,7 +234,7 @@
                                                                 ➕ Tambah
                                                             </a>
 
-                                                            <a href="#" class="lihat_barang_data_koperasi btn btn-info btn-sm"
+                                                            <a href="#" class="lihat_barang_modal_keluar btn btn-info btn-sm"
                                                                data-id="{{ $d->id_data_koperasi }}">
                                                                 👁 Lihat
                                                             </a>
@@ -388,7 +388,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Lihat Barang Modal Keluar</h5>
+                <h5 class="modal-title">Lihat Barang Data Koperasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="loadformlihatbarangmodalkeluar">
