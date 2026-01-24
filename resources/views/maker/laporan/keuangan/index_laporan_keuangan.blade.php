@@ -252,7 +252,9 @@
                                                     @foreach ($data as $i => $d)
                                                     <tr>
                                                         <td class="text-center">{{ $i + 1 }}</td>
-                                                        <td class="text-center">{{ $d->tanggal_laporan_keuangan }}</td>
+                                                        <td class="text-center">
+                                                            {{ \Carbon\Carbon::parse($d->tanggal_laporan_keuangan)->translatedFormat('l, d F Y') }}
+                                                        </td>
 
                                                         <td class="text-center">
                                                             <a href="#" class="lihat_barang_modal_keluar btn btn-info btn-sm"
