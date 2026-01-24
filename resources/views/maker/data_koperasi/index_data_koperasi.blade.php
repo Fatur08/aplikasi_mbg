@@ -215,7 +215,6 @@
                                                     <th>No.</th>
                                                     <th>Tanggal</th>
                                                     <th>Barang</th>
-                                                    <th>Jumlah</th>
                                                     <th>Harga</th>
                                                     <th>Bukti</th>
                                                     <th>Status</th>
