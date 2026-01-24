@@ -237,17 +237,7 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::post('/owner/laporan/keuangan/{id}/update_laporan_keuangan',[LaporanKeuanganController::class,'update_owner_laporan_keuangan']);
     Route::post('/owner/laporan/keuangan/{id}/delete_laporan_keuangan',[LaporanKeuanganController::class,'delete_owner_laporan_keuangan']);
 
-    
-    //Supplier
-    Route::get('/owner/laporan/supplier',[LaporanSupplierController::class,'index_owner_laporan_supplier']);
-    Route::post('/owner/laporan/supplier/store_laporan_supplier',[LaporanSupplierController::class,'store_owner_laporan_supplier']);
-    Route::post('/owner/laporan/supplier/edit_laporan_supplier',[LaporanSupplierController::class,'edit_owner_laporan_supplier']);
-    Route::get('/owner/laporan/supplier/cetak_laporan_supplier',[LaporanSupplierController::class,'cetak_owner_laporan_supplier']);
-    Route::post('/owner/laporan/supplier/{id}/update_laporan_supplier',[LaporanSupplierController::class,'update_owner_laporan_supplier']);
-    Route::post('/owner/laporan/supplier/{id}/delete_laporan_supplier',[LaporanSupplierController::class,'delete_owner_laporan_supplier']);
-    
-    
-    //Dapur
+    //Harian Dapur
     Route::get('/owner/laporan/dapur',[LaporanDapurController::class,'index_owner_dapur']);
     Route::post('/owner/laporan/dapur/lihat_bahan_terpakai',[LaporanDapurController::class,'lihat_bahan_terpakai']);
     Route::post('/owner/laporan/dapur/lihat_kendala',[LaporanDapurController::class,'lihat_kendala']);
@@ -258,6 +248,7 @@ Route::middleware(['auth:owner'])->group(function(){
 Route::middleware(['auth:maker'])->group(function(){
     Route::get('/proseslogoutmaker', [AuthController::class,'proseslogoutmaker']);
     Route::get('/maker/dashboardmaker',[DashboardController::class,'dashboardmaker']);
+    //Route::get('/maker/dashboardmaker',[LaporanDistribusiController::class,'index_maker_laporan_distribusi']);
 
 
     // Data Staff
@@ -281,15 +272,38 @@ Route::middleware(['auth:maker'])->group(function(){
     // Data Aslap
     Route::get('/maker/data_staff/aslap',[DataAslapController::class,'index_maker_data_staff_aslap']);
     Route::post('/maker/data_staff/aslap/store_aslap',[DataAslapController::class,'store_maker_data_staff_aslap']);
+    //Route::post('/maker/data_staff/aslap/edit_aslap',[DataAslapController::class,'edit_maker_aslap']);
+    //Route::post('/maker/data_staff/aslap/ktp_aslap',[DataAslapController::class,'ktp_maker_aslap']);
+    //Route::post('/maker/data_staff/aslap/{id}/update_aslap',[DataAslapController::class,'update_maker_aslap']);
+    //Route::post('/maker/data_staff/aslap/{id}/delete_aslap',[DataAslapController::class,'delete_maker_aslap']);
+    //Route::get('/maker/data_staff',[DataStaffController::class,'index_maker_data_staff']);
     
     // Data Driver
     Route::get('/maker/data_staff/driver',[DataDriverController::class,'index_maker_data_staff_driver']);
     Route::post('/maker/data_staff/driver/store_driver',[DataDriverController::class,'store_maker_data_staff_driver']);
+    //Route::post('/maker/data_staff/driver/edit_driver',[DataDriverController::class,'edit_maker_data_staff_driver']);
+    //Route::post('/maker/data_staff/driver/{id}/update_driver',[DataDriverController::class,'update_maker_data_staff_driver']);
+    //Route::post('/maker/data_staff/driver/{id}/delete_driver',[DataDriverController::class,'delete_maker_data_staff_driver']);
 
     // Relawan
     Route::get('/maker/data_staff/relawan',[DataRelawanController::class,'index_maker_data_staff_relawan']);
     Route::post('/maker/data_staff/relawan/store_relawan',[DataRelawanController::class,'store_maker_data_staff_relawan']);
     Route::post('/maker/data_staff/relawan/ktp_relawan',[DataRelawanController::class,'ktp_maker_data_staff_relawan']);
+
+    
+    //Kepala Dapur
+    //Route::get('/maker/data_staff/kepala_dapur',[KepalaDapurController::class,'index_maker_kepala_dapur']);
+    //Route::post('/maker/data_staff/kepala_dapur/store_kepala_dapur',[KepalaDapurController::class,'store_maker_kepala_dapur']);
+    //Route::post('/maker/data_staff/kepala_dapur/edit_kepala_dapur',[KepalaDapurController::class,'edit_maker_kepala_dapur']);
+    //Route::post('/maker/data_staff/kepala_dapur/{id}/update_kepala_dapur',[KepalaDapurController::class,'update_maker_kepala_dapur']);
+    //Route::post('/maker/data_staff/kepala_dapur/{id}/delete_kepala_dapur',[KepalaDapurController::class,'delete_maker_kepala_dapur']);
+
+    
+
+    //Dapur
+    //Route::get('/maker/data_staff/dapur',[DapurController::class,'index_maker_dapur']);
+    //Route::post('/maker/data_staff/dapur/store_dapur',[DapurController::class,'store_maker_dapur']);
+    //Route::post('/maker/data_staff/dapur/{id}/delete_dapur',[DapurController::class,'delete_maker_dapur']);
 
 
 
