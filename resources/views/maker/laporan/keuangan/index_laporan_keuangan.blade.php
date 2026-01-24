@@ -176,13 +176,6 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    <div class="alert alert-primary">
-                                        <strong>Sisa Seluruh Dana :</strong> Rp {{ number_format($sisa_dana, 0, ',', '.') }}
-                                    </div>
-                                </div>
-                            </div>
                             <form action="/maker/laporan/keuangan" method="GET" id="FormLaporanKeuangan">
                                 <div class="row mt-2">
                                     <div class="col-12">
@@ -260,20 +253,20 @@
                                                     <tr>
                                                         <td class="text-center">{{ $i + 1 }}</td>
                                                         <td class="text-center">{{ $d->tanggal_laporan_keuangan }}</td>
-                                                    
+
                                                         <td class="text-center">
                                                             <a href="#" class="lihat_barang_modal_keluar btn btn-info btn-sm"
                                                                data-id="{{ $d->id_data_koperasi }}">
                                                                 👁 Lihat
                                                             </a>
                                                         </td>
-                                                    
+
                                                         <td class="text-center">
                                                             @if ($d->dari_koperasi)
                                                                 ✅
                                                             @endif
                                                         </td>
-                                                    
+
                                                         <td class="text-center">
                                                             @if ($d->dari_supplier)
                                                                 ✅
