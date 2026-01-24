@@ -229,7 +229,7 @@
 
                                                     <td>
                                                         <div class="align-items-center">
-                                                            <a href="#" class="tambah_barang_data_koperasi btn btn-info btn-sm"
+                                                            <a href="#" class="tambah_barang_modal_keluar btn btn-info btn-sm"
                                                                data-id="{{ $d->id_data_koperasi }}">
                                                                 ➕ Tambah
                                                             </a>
@@ -242,7 +242,7 @@
                                                     </td>
 
                                                     <td>
-                                                        Rp {{ number_format($d->total_harga, 0, ',', '.') }}
+                                                        Rp. {{ number_format($d->total_harga, 0, ',', '.') }}
                                                     </td>
 
                                                     <td class="text-center">
@@ -353,7 +353,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Barang Modal Keluar</h5>
+                <h5 class="modal-title">Tambah Barang Data Koperasi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="loadformtambahbarangmodalkeluar">
@@ -382,20 +382,6 @@
 
 
 
-{{-- Modal Tambah Barang Modal Keluar --}}
-<div class="modal modal-blur fade" id="modal-tambahbarangmodalkeluar" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Tambah Barang Modal Keluar</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadformtambahbarangmodalkeluar">
-                
-            </div>
-        </div>
-    </div>
-</div>
 
 {{-- Modal Lihat Barang Modal Keluar --}}
 <div class="modal modal-blur fade" id="modal-lihatbarangmodalkeluar" tabindex="-1" role="dialog" aria-hidden="true">
@@ -474,23 +460,6 @@
             $("#modal-editmodalkeluardatakoperasi").modal("show");
         });
 
-
-        $(".tambah_barang_modal_keluar").click(function(){
-            var id = $(this).attr('data-id');
-            $.ajax({
-                type:'POST',
-                url:'/maker/data_koperasi/tambah_barang_modal_keluar',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadformtambahbarangmodalkeluar").html(respond);
-                }
-            });
-            $("#modal-tambahbarangmodalkeluar").modal("show");
-        });
 
         $(".lihat_barang_modal_keluar").click(function(){
             var id = $(this).attr('data-id');
