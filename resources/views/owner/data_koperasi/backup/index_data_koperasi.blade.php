@@ -93,28 +93,6 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <div class="table-wrapper">
-                                    <div class="table-responsive">
-                                        <table class="table custom-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>No.</th>
-                                                    <th>Barang</th>
-                                                    <th>Jumlah</th>
-                                                    <th>Harga</th>
-                                                    <th>Bukti</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-12">
                                 @if(!$sudahCari)
                                     <div class="alert alert-info text-center">
                                         Silakan lakukan pencarian terlebih dahulu
