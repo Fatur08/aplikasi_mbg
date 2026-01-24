@@ -68,13 +68,19 @@ class DataKoperasiController extends Controller
 
     public function lihat_owner_barang_modal_keluar(Request $request)
     {
-        $pilih_dapur    = $request->pilih_dapur;
         $id_data_koperasi = $request->id;
+
+        // Cek data koperasi untuk ambil id_informasi_supplier-nya
+        $data_koperasi = DB::table('data_koperasi')
+            ->where('id_data_koperasi', $id_data_koperasi)
+            ->first();
+
+        $nomor_dapur = $data_koperasi->nomor_dapur_data_koperasi;
 
         // Ambil data barang modal keluar
         $barang_list = DB::table('barang_modal_keluar')
             ->where('id_data_koperasi', $id_data_koperasi)
-            ->where('nomor_dapur_barang_modal_keluar', $pilih_dapur)
+            ->where('nomor_dapur_barang_modal_keluar', $nomor_dapur)
             ->select(
                 'id_barang_modal_keluar as id_barang',
                 'nama_barang_modal_keluar as nama_barang',
