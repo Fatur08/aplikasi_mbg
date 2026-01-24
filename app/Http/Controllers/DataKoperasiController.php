@@ -891,10 +891,12 @@ class DataKoperasiController extends Controller
             ->where('nomor_dapur_data_koperasi', $nomor_dapur_maker)
             ->where('tanggal_data_koperasi', $tanggal_data_koperasi)
             ->first();
-    
+
         if ($cekDataKoperasi) {
+            $tanggalFormat = Carbon::parse($tanggal_data_koperasi)
+                ->translatedFormat('l, d F Y');
             return Redirect::back()->with([
-                'warning' => 'Data koperasi pada tanggal ' . $tanggal_data_koperasi . ' sudah ada. Silakan input melalui menu Input Barang.'
+                'warning' => 'Data koperasi pada tanggal ' . $tanggalFormat . ' sudah ada. Silakan input melalui menu Input Barang.'
             ]);
         }
 
