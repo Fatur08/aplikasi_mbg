@@ -883,6 +883,23 @@ class DataKoperasiController extends Controller
         $nomor_dapur_maker      = $maker->nomor_dapur_maker;
         $tanggal_data_koperasi  = $request->tanggal_data_koperasi;
 
+
+        /**
+         * 🔴 CEK APAKAH DATA KOPERASI SUDAH ADA DI TANGGAL TERSEBUT
+         */
+        $cekDataKoperasi = DB::table('data_koperasi')
+            ->where('nomor_dapur_data_koperasi', $nomor_dapur_maker)
+            ->where('tanggal_data_koperasi', $tanggal_data_koperasi)
+            ->first();
+    
+        if ($cekDataKoperasi) {
+            return Redirect::back()->with([
+                'warning' => 'Data koperasi pada tanggal ' . $tanggal_data_koperasi . ' sudah ada. Silakan input melalui menu Input Barang.'
+            ]);
+        }
+
+
+
         if($request->hasFile('bukti_terima_data_koperasi')){
             $bukti_terima_data_koperasi = "Bukti Terima_Data Koperasi_".$tanggal_data_koperasi.".".$request
                 ->file('bukti_terima_data_koperasi')
