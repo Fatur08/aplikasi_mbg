@@ -124,7 +124,6 @@ class LaporanStokController extends Controller
     
         return view('owner.laporan.stok.index_laporan_stok', compact(
             'data_laporan',
-            'dapur',
             'dari_tanggal',
             'sampai_tanggal',
             'dapurList',
