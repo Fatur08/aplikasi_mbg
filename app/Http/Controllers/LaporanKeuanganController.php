@@ -445,172 +445,41 @@ class LaporanKeuanganController extends Controller
     // BAGIAN MAKER
     public function index_maker_laporan_keuangan(Request $request)
     {
-        $maker         = Auth::guard('maker')->user();
-        $dapur         = $maker->nomor_dapur_maker;
-        $dari_tanggal  = $request->dari_tanggal;
-        $sampai_tanggal= $request->sampai_tanggal;
+        $maker = Auth::guard('maker')->user();
+        $dapur = $maker->nomor_dapur_maker;
 
-        // ===================== QUERY UTAMA =====================
-        $query = DB::table('keuangan')
-            ->leftJoin('data_koperasi', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
-            ->leftJoin('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
-            ->leftJoin('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
+        $dari_tanggal   = $request->dari_tanggal;
+        $sampai_tanggal = $request->sampai_tanggal;
+
+        $data = DB::table('keuangan as k')
+            ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($dapur) {
+                $join->on('k.id_data_koperasi', '=', 'bmk.id_data_koperasi')
+                     ->where('bmk.nomor_dapur_barang_modal_keluar', '=', $dapur);
+            })
+            ->leftJoin('barang_supplier as bs', function ($join) use ($dapur) {
+                $join->on('k.id_informasi_supplier', '=', 'bs.id_informasi_supplier')
+                     ->where('bs.nomor_dapur_barang_supplier', '=', $dapur);
+            })
+            ->where('k.nomor_dapur_keuangan', $dapur)
+            ->when($dari_tanggal && $sampai_tanggal, function ($query) use ($dari_tanggal, $sampai_tanggal) {
+                $query->whereBetween('k.tanggal_laporan_keuangan', [
+                    $dari_tanggal,
+                    $sampai_tanggal
+                ]);
+            })
             ->select(
-                'keuangan.*',
-                'data_koperasi.*',
-                'barang_supplier.harga_barang_supplier',
-                'barang_modal_keluar.harga_barang_modal_keluar'
-            );
-
-        // 🔹 Filter tanggal (REPLACE bulan & tahun)
-        if (!empty($dari_tanggal) && !empty($sampai_tanggal)) {
-            $query->whereBetween('keuangan.tanggal_laporan_keuangan', [
-                $dari_tanggal,
-                $sampai_tanggal
-            ]);
-        }
-
-        if (!empty($dapur)) {
-            $query->where('keuangan.nomor_dapur_keuangan', $dapur);
-        }
-
-        $laporan_keuangan = $query
-            ->orderBy('keuangan.tanggal_laporan_keuangan', 'asc')
-            ->paginate(300);
-        
-        /* ================= FLAG STATUS ================= */
-        $dataKosong = $laporan_keuangan->isEmpty();
-
-        $sudahCari =
-            !empty($dari_tanggal) ||
-            !empty($sampai_tanggal);
-        
-
-        $grouped = $laporan_keuangan->getCollection()
-            ->groupBy('tanggal_laporan_keuangan');
-
-        // ===================== TOTAL PEMASUKAN =====================
-        $total_pemasukan = DB::table('data_koperasi')
-            ->join('keuangan', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
-            ->where('data_koperasi.jenis_data_koperasi', 'modal_masuk')
-
-            ->when($dari_tanggal && $sampai_tanggal, function ($q) use ($dari_tanggal, $sampai_tanggal) {
-                $q->whereBetween('keuangan.tanggal_laporan_keuangan', [$dari_tanggal, $sampai_tanggal]);
-            })
-
-            ->when($dapur, function ($q) use ($dapur) {
-                $q->where('keuangan.nomor_dapur_keuangan', $dapur);
-            })
-
-            ->sum('data_koperasi.harga_data_koperasi');
-
-        // ===================== TOTAL PENGELUARAN SUPPLIER =====================
-        $total_pengeluaran_supplier = DB::table('data_koperasi')
-            ->join('keuangan', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
-            ->join('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
-
-            ->when($dari_tanggal && $sampai_tanggal, function ($q) use ($dari_tanggal, $sampai_tanggal) {
-                $q->whereBetween('keuangan.tanggal_laporan_keuangan', [$dari_tanggal, $sampai_tanggal]);
-            })
-
-            ->when($dapur, function ($q) use ($dapur) {
-                $q->where('keuangan.nomor_dapur_keuangan', $dapur);
-            })
-
-            ->sum('barang_supplier.harga_barang_supplier');
-
-        // ===================== TOTAL MODAL KELUAR =====================
-        $total_pengeluaran_modal_keluar = DB::table('data_koperasi')
-            ->join('keuangan', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
-            ->join('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
-
-            ->when($dari_tanggal && $sampai_tanggal, function ($q) use ($dari_tanggal, $sampai_tanggal) {
-                $q->whereBetween('keuangan.tanggal_laporan_keuangan', [$dari_tanggal, $sampai_tanggal]);
-            })
-
-            ->when($dapur, function ($q) use ($dapur) {
-                $q->where('keuangan.nomor_dapur_keuangan', $dapur);
-            })
-
-            ->sum('barang_modal_keluar.harga_barang_modal_keluar');
-
-        $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
-        $sisa_dana = $total_pemasukan - $total_pengeluaran;
-
-        // ===================== DATA GRAFIK =====================
-        $data = DB::table('keuangan')
-            ->join('data_koperasi', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
-            ->leftJoin('barang_supplier', 'barang_supplier.id_informasi_supplier', '=', 'data_koperasi.id_informasi_supplier')
-            ->leftJoin('barang_modal_keluar', 'barang_modal_keluar.id_data_koperasi', '=', 'data_koperasi.id_data_koperasi')
-
-            ->select(
-                'keuangan.tanggal_laporan_keuangan',
-
-                DB::raw('SUM(
-                    CASE 
-                        WHEN data_koperasi.jenis_data_koperasi = "modal_masuk"
-                        THEN data_koperasi.harga_data_koperasi
-                        ELSE 0
-                    END
-                ) AS total_pemasukan'),
-
-                DB::raw('
-                    SUM(COALESCE(barang_supplier.harga_barang_supplier,0)) +
-                    SUM(COALESCE(barang_modal_keluar.harga_barang_modal_keluar,0))
-                    AS total_pengeluaran
-                '),
-
-                DB::raw('
-                    SUM(
-                        CASE 
-                            WHEN data_koperasi.jenis_data_koperasi = "modal_masuk"
-                            THEN data_koperasi.harga_data_koperasi
-                            ELSE 0
-                        END
-                    ) -
-                    (
-                        SUM(COALESCE(barang_supplier.harga_barang_supplier,0)) +
-                        SUM(COALESCE(barang_modal_keluar.harga_barang_modal_keluar,0))
-                    )
-                    AS margin
-                ')
+                'k.id_data_koperasi',
+                'k.tanggal_laporan_keuangan',
+                DB::raw('CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END AS dari_koperasi'),
+                DB::raw('CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END AS dari_supplier')
             )
-
-            ->when($dari_tanggal && $sampai_tanggal, function ($q) use ($dari_tanggal, $sampai_tanggal) {
-                $q->whereBetween('keuangan.tanggal_laporan_keuangan', [$dari_tanggal, $sampai_tanggal]);
-            })
-
-            ->when($dapur, function ($q) use ($dapur) {
-                $q->where('keuangan.nomor_dapur_keuangan', $dapur);
-            })
-
-            ->groupBy('keuangan.tanggal_laporan_keuangan')
-            ->orderBy('keuangan.tanggal_laporan_keuangan', 'asc')
-            ->get()
-            ->map(function ($item) {
-                $item->tanggal_laporan_keuangan = Carbon::parse($item->tanggal_laporan_keuangan)
-                    ->translatedFormat('d F Y');
-                return $item;
-            });
-
-        // ===================== DATA DAPUR =====================
-        $dapurList = DB::table('dapur')
-            ->select('nomor_dapur', 'nama_dapur')
-            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->orderBy('k.tanggal_laporan_keuangan', 'desc')
             ->get();
 
         return view('maker.laporan.keuangan.index_laporan_keuangan', compact(
-            'laporan_keuangan',
-            'dataKosong',
-            'sudahCari',
-            'grouped',
-            'total_pemasukan',
-            'total_pengeluaran',
-            'sisa_dana',
             'data',
             'dari_tanggal',
-            'sampai_tanggal',
-            'dapurList'
+            'sampai_tanggal'
         ));
     }
 
