@@ -884,7 +884,7 @@ class DataKoperasiController extends Controller
         $tanggal_data_koperasi  = $request->tanggal_data_koperasi;
 
         if($request->hasFile('bukti_terima_data_koperasi')){
-            $bukti_terima_data_koperasi = "Bukti Terima_Data Koperasi".$tanggal_data_koperasi.".".$request
+            $bukti_terima_data_koperasi = "Bukti Terima_Data Koperasi_".$tanggal_data_koperasi.".".$request
                 ->file('bukti_terima_data_koperasi')
                 ->getClientOriginalExtension();
         } else {
@@ -902,6 +902,18 @@ class DataKoperasiController extends Controller
                 'bukti_terima_data_koperasi'       => $bukti_terima_data_koperasi,
                 'status_data_koperasi'             => 0, // default: menunggu validasi
             ]);
+
+            if ($request->hasFile('bukti_terima_data_koperasi')) {
+                $storagePath = 'public/uploads/data_koperasi/bukti_terima/';
+                $request->file('bukti_terima_data_koperasi')->storeAs($storagePath, $bukti_terima_data_koperasi);
+                $publicPath = public_path('storage/uploads/data_koperasi/bukti_terima/');
+                if (!is_dir($publicPath)) {
+                    mkdir($publicPath, 0777, true);
+                }
+                $sourceFile = storage_path('app/' . $storagePath . $bukti_terima_data_koperasi);
+                $destinationFile = public_path('storage/uploads/data_koperasi/bukti_terima/' . $bukti_terima_data_koperasi);
+                copy($sourceFile, $destinationFile);
+            }
 
             // 2️⃣ Jika belum ada data ditanggal tanggal_data_koperasi, tambahkan juga ke tabel keuangan. Jika sudah ada cukup update kolom id_data_koperasi nya saja
             $dataKeuangan = DB::table('keuangan')
