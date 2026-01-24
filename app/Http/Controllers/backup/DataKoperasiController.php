@@ -879,19 +879,13 @@ class DataKoperasiController extends Controller
     public function store_maker_data_koperasi(Request $request)
     {
         // Ambil data maker yang sedang login
-        $maker              = Auth::guard('maker')->user();
-        $nomor_dapur_maker  = $maker->nomor_dapur_maker;
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur_maker = $maker->nomor_dapur_maker;
 
-        $tanggal_data_koperasi         = $request->tanggal_data_koperasi;
-        $butki_terima_data_koperasi    = $request->butki_terima_data_koperasi;
-
-        if($request->hasFile('bukti_terima_data_koperasi')){
-            $bukti_terima_data_koperasi = "Bukti Terima_Data Koperasi".$tanggal_data_koperasi.".".$request
-                ->file('bukti_terima_data_koperasi')
-                ->getClientOriginalExtension();
-        } else {
-            $bukti_terima_data_koperasi = null;
-        }
+        $jenis_data_koperasi    = $request->jenis_data_koperasi;
+        $kategori_data_koperasi = $request->kategori_data_koperasi;
+        $tanggal_data_koperasi  = $request->tanggal_data_koperasi;
+        $harga_data_koperasi    = $request->harga_data_koperasi;
 
         // Mulai transaksi database agar aman jika salah satu gagal
         DB::beginTransaction();
@@ -899,10 +893,12 @@ class DataKoperasiController extends Controller
         try {
             // 1️⃣ Simpan data ke tabel data_koperasi
             $id_data_koperasi = DB::table('data_koperasi')->insertGetId([
-                'nomor_dapur_data_koperasi'        => $nomor_dapur_maker,
-                'tanggal_data_koperasi'            => $tanggal_data_koperasi,
-                'bukti_terima_data_koperasi'       => $bukti_terima_data_koperasi,
-                'status_data_koperasi'             => 0, // default: menunggu validasi
+                'nomor_dapur_data_koperasi' => $nomor_dapur_maker,
+                'jenis_data_koperasi'       => $jenis_data_koperasi,
+                'kategori_data_koperasi'    => $kategori_data_koperasi,
+                'tanggal_data_koperasi'     => $tanggal_data_koperasi,
+                'harga_data_koperasi'       => $harga_data_koperasi,
+                'status_data_koperasi'      => 0, // default: menunggu validasi
             ]);
 
             // 2️⃣ Jika jenis_data_koperasi adalah "modal_masuk", tambahkan juga ke tabel keuangan
