@@ -2,8 +2,8 @@
 @section('content')
 <form action="/maker/data_koperasi/{{ $data->id_data_koperasi }}/store_barang_modal_keluar" method="POST" id="frmTmbhBrgMdlKlr" enctype="multipart/form-data">
     @csrf
-    <input type="text" readonly value="{{ $data->id_data_koperasi }}"   id="id_data_koperasi"           class="form-control"    name="id_data_koperasi"             hidden>
-    <input type="text" readonly value="{{ $data->nomor_dapur_data_koperasi }}"        id="pilih_dapur_modal_keluar"   class="form-control"    name="pilih_dapur_modal_keluar"     hidden>
+    <input type="text" readonly value="{{ $data->id_data_koperasi }}"               id="id_data_koperasi"           class="form-control"    name="id_data_koperasi"             hidden>
+    <input type="text" readonly value="{{ $data->nomor_dapur_data_koperasi }}"      id="pilih_dapur_modal_keluar"   class="form-control"    name="pilih_dapur_modal_keluar"     hidden>
     <div class="row">
         <div class="col-12">
             <label class="form-label">Jumlah Barang</label>
