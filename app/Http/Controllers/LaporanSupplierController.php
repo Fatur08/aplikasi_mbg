@@ -17,14 +17,16 @@ class LaporanSupplierController extends Controller
     
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
     
-        // Data supplier (sudah ada)
+        // Data supplier
         $supplier = DB::table('informasi_supplier')
             ->where('nomor_dapur_informasi_supplier', $nomor_dapur)
             ->get();
     
-        // ✅ Ambil data barang supplier
+        // ✅ Ambil data barang supplier YANG SUDAH ADA TANGGAL
         $barangSupplier = DB::table('barang_supplier')
             ->where('nomor_dapur_barang_supplier', $nomor_dapur)
+            ->whereNotNull('tanggal_barang_supplier')   // tidak NULL
+            ->where('tanggal_barang_supplier', '!=', '') // tidak string kosong
             ->orderBy('tanggal_barang_supplier', 'desc')
             ->get();
     
