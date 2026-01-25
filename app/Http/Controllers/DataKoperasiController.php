@@ -387,42 +387,75 @@ class DataKoperasiController extends Controller
     }
 
 
-    public function update_validasi_owner_data_koperasi($id, Request $request)
+    public function update_validasi_owner_data_koperasi(Request $request, $id)
     {
-        $id                     = $request->id; 
-        $status_data_koperasi   = $request->status_data_koperasi;
-    
         DB::beginTransaction();
-    
+
         try {
-            // ✅ 1. Ambil data koperasi berdasarkan id_data_koperasi
+            // ===============================
+            // 1️⃣ Ambil data koperasi
+            // ===============================
             $koperasi = DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
                 ->first();
-        
+
             if (!$koperasi) {
-                return Redirect::back()->with(['error' => 'Data koperasi tidak ditemukan']);
+                return redirect()->back()->with('error', 'Data koperasi tidak ditemukan');
             }
-        
-            // ✅ 2. Update status_data_koperasi
+
+            // ===============================
+            // 2️⃣ Update status data koperasi
+            // ===============================
             DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
                 ->update([
-                    'status_data_koperasi' => $status_data_koperasi
+                    'status_data_koperasi' => $request->status_data_koperasi
                 ]);
-        
+
+            // ===============================
+            // 3️⃣ Data penting untuk keuangan
+            // ===============================
+            $tanggal_data_koperasi = $koperasi->tanggal_data_koperasi;
+            $nomor_dapur     = $koperasi->nomor_dapur_data_koperasi;
+
+            // ===============================
+            // 4️⃣ Cek data keuangan di tanggal tsb
+            // ===============================
+            $dataKeuangan = DB::table('keuangan')
+                ->where('tanggal_laporan_keuangan', $tanggal_data_koperasi)
+                ->where('nomor_dapur_keuangan', $nomor_dapur)
+                ->first();
+
+            if (!$dataKeuangan) {
+                // ➕ BELUM ADA → INSERT
+                DB::table('keuangan')->insert([
+                    'id_data_koperasi'         => $id,
+                    'nomor_dapur_keuangan'     => $nomor_dapur,
+                    'tanggal_laporan_keuangan' => $tanggal_data_koperasi,
+                    'created_at'               => now(),
+                    'updated_at'               => now(),
+                ]);
+            } else {
+                // 🔁 SUDAH ADA → UPDATE id_data_koperasi
+                DB::table('keuangan')
+                    ->where('id_laporan_keuangan', $dataKeuangan->id_laporan_keuangan)
+                    ->update([
+                        'id_data_koperasi' => $id,
+                        'updated_at'       => now(),
+                    ]);
+            }
+
             DB::commit();
-        
-            return Redirect::back()->with([
-                'success' => 'Status koperasi berhasil diperbarui'
-            ]);
-        
+
+            return redirect()->back()->with('success', 'Status koperasi berhasil diperbarui');
+
         } catch (\Exception $e) {
             DB::rollBack();
-        
-            return Redirect::back()->with([
-                'error' => 'Data Gagal Divalidasi: ' . $e->getMessage()
-            ]);
+
+            return redirect()->back()->with(
+                'error',
+                'Data gagal divalidasi: ' . $e->getMessage()
+            );
         }
     }
 
@@ -716,26 +749,6 @@ class DataKoperasiController extends Controller
                 $sourceFile = storage_path('app/' . $storagePath . $bukti_terima_data_koperasi);
                 $destinationFile = public_path('storage/uploads/data_koperasi/bukti_terima/' . $bukti_terima_data_koperasi);
                 copy($sourceFile, $destinationFile);
-            }
-
-            // 2️⃣ Jika belum ada data ditanggal tanggal_data_koperasi, tambahkan juga ke tabel keuangan. Jika sudah ada cukup update kolom id_data_koperasi nya saja
-            $dataKeuangan = DB::table('keuangan')
-                ->where('tanggal_laporan_keuangan', $tanggal_data_koperasi)
-                ->where('nomor_dapur_keuangan', $nomor_dapur_maker)
-                ->first();
-            if (!$dataKeuangan) {
-                DB::table('keuangan')->insert([
-                'id_data_koperasi'           => $id_data_koperasi,
-                'nomor_dapur_keuangan'       => $nomor_dapur_maker,
-                'tanggal_laporan_keuangan'   => $tanggal_data_koperasi,
-                ]);
-            } else {
-                // ✅ SUDAH ADA → UPDATE id_data_koperasi SAJA
-                DB::table('keuangan')
-                    ->where('id_laporan_keuangan', $dataKeuangan->id_laporan_keuangan)
-                    ->update([
-                        'id_data_koperasi' => $id_data_koperasi
-                ]);
             }
 
             // 3️⃣ Commit transaksi jika semua berhasil
