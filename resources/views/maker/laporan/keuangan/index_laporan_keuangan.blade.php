@@ -260,7 +260,7 @@
                                                         <td class="text-center">
                                                             <a href="#"
                                                                class="barang_laporan_keuangan btn btn-info btn-sm"
-                                                               data-id="{{ $d->id_laporan_keuangan }}">
+                                                               data-id="{{ $d->id_ }}">
                                                                 👁 Lihat
                                                             </a>
                                                         </td>
