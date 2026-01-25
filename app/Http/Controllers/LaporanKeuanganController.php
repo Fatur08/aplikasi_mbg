@@ -194,12 +194,12 @@ class LaporanKeuanganController extends Controller
         $id_data_koperasi = $request->id;
 
         // Cek data koperasi untuk ambil id_informasi_supplier-nya
-        $data_koperasi = DB::table('data_koperasi')
+        $keuangan = DB::table('keuangan')
             ->where('id_data_koperasi', $id_data_koperasi)
             ->first();
 
-        $id_informasi_supplier = $data_koperasi->id_informasi_supplier ?? null;
-        $nomor_dapur = $data_koperasi->nomor_dapur_data_koperasi;
+        $id_informasi_supplier = $keuangan->id_informasi_supplier ?? null;
+        $nomor_dapur = $keuangan->nomor_dapur_keuangan;
 
         // Siapkan variabel barang_list
         $barang_list = collect();

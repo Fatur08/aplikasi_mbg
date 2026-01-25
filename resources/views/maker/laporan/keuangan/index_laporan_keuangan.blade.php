@@ -257,7 +257,7 @@
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <a href="#" class="lihat_barang_modal_keluar btn btn-info btn-sm"
+                                                            <a href="#" class="barang_laporan_keuangan btn btn-info btn-sm"
                                                                data-id="{{ $d->id_data_koperasi }}">
                                                                 👁 Lihat
                                                             </a>
@@ -309,7 +309,7 @@
 @push('myscript')
 <script>
     $(function(){
-        $(".lihat_barang_modal_keluar").click(function(){
+        $(".barang_laporan_keuangan").click(function(){
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
