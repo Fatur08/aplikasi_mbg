@@ -183,16 +183,29 @@ class LaporanKeuanganController extends Controller
 
     public function barang_owner_laporan_keuangan(Request $request)
     {
-        $sumber = $request->sumber; // supplier | koperasi
-        $id     = $request->id;
-
+        $id_laporan = $request->id;
+    
         // ===============================
-        // 🔹 JIKA DARI SUPPLIER
+        // 1️⃣ Ambil header laporan
         // ===============================
-        if ($sumber === 'supplier') {
-
+        $keuangan = DB::table('keuangan')
+            ->where('id_laporan_keuangan', $id_laporan)
+            ->first();
+    
+        if (!$keuangan) {
+            return redirect()->back()->with('error', 'Laporan keuangan tidak ditemukan');
+        }
+    
+        $barang_list = collect();
+    
+        // ===============================
+        // 2️⃣ PRIORITAS: SUPPLIER
+        // ===============================
+        if ($keuangan->id_informasi_supplier) {
             $barang_list = DB::table('barang_supplier')
-                ->where('id_informasi_supplier', $id)
+                ->where('id_informasi_supplier', $keuangan->id_informasi_supplier)
+                ->where('nomor_dapur_barang_supplier', $keuangan->nomor_dapur_keuangan)
+                ->whereDate('tanggal_barang_supplier', $keuangan->tanggal_laporan_keuangan)
                 ->select(
                     'id_barang_supplier as id_barang',
                     'nama_barang_supplier as nama_barang',
@@ -201,17 +214,16 @@ class LaporanKeuanganController extends Controller
                     'harga_barang_supplier as harga',
                     DB::raw("'Supplier' as sumber_data")
                 )
-                ->orderBy('tanggal_barang_supplier', 'asc')
                 ->get();
-
         }
+    
         // ===============================
-        // 🔹 JIKA DARI KOPERASI
+        // 3️⃣ FALLBACK: KOPERASI
         // ===============================
-        else {
-
+        if ($barang_list->isEmpty() && $keuangan->id_data_koperasi) {
             $barang_list = DB::table('barang_modal_keluar')
-                ->where('id_data_koperasi', $id)
+                ->where('id_data_koperasi', $keuangan->id_data_koperasi)
+                ->where('nomor_dapur_barang_modal_keluar', $keuangan->nomor_dapur_keuangan)
                 ->select(
                     'id_barang_modal_keluar as id_barang',
                     'nama_barang_modal_keluar as nama_barang',
@@ -222,7 +234,7 @@ class LaporanKeuanganController extends Controller
                 )
                 ->get();
         }
-
+    
         return view(
             'owner.laporan.keuangan.barang_laporan_keuangan',
             compact('barang_list')
