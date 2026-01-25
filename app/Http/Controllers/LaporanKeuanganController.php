@@ -256,9 +256,17 @@ class LaporanKeuanganController extends Controller
             ->get();
         
 
+        $total_harganya = $laporan->sum(function ($row) {
+            return $row->harga_barang_modal_keluar 
+                ?? $row->harga_barang_supplier 
+                ?? 0;
+        });
 
-
-        // ===================== DATA GRAFIK =====================
+        
+        
+        
+        
+            // ===================== DATA GRAFIK =====================
         $grafik = DB::table('keuangan as k')
         ->select(
             'k.tanggal_laporan_keuangan',
@@ -338,7 +346,8 @@ class LaporanKeuanganController extends Controller
             'laporan',
             'dari_tanggal',
             'sampai_tanggal',
-            'pilih_supplier_koperasi'
+            'pilih_supplier_koperasi',
+            'total_harganya'
         ));
     }
 

@@ -172,6 +172,12 @@
             </tr>
             @endforelse
         </tbody>
+        <tfoot class="table-light">
+            <tr>
+                <th colspan="6" class="text-end">Total</th>
+                <th colspan="1">Rp {{ number_format($total_harganya, 0, ',', '.') }}</th>
+            </tr>
+        </tfoot>
     </table>
 
     <div class="footer" style="text-align:right; margin-top:40px;">
