@@ -247,9 +247,11 @@ class LaporanDapurController extends Controller
     public function tambah_maker_operasional_dapur(Request $request)
     {
         $distribusi = DB::table('distribusi')
-        ->select('tujuan_distribusi', 'jumlah_paket')
-        ->get();
-
+            ->select('tujuan_distribusi', 'jumlah_paket')
+            ->groupBy('tujuan_distribusi', 'jumlah_paket')
+            ->orderBy('tujuan_distribusi', 'asc')
+            ->get();
+    
         return view('maker.laporan.dapur.tambah_operasional_dapur', compact('distribusi'));
     }
 
