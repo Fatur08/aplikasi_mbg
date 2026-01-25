@@ -295,6 +295,16 @@
                             <label>Masukkan Bukti (Foto)</label>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <button class="btn btn-primary w-100">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-send"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                                    Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -396,27 +406,27 @@
             let supplierId = $(this).val();
             $('#jumlah_item').html('').prop('disabled', true);
             $('#container-barang').html('');
-        
+
             if (!supplierId) return;
-        
+
             $.get(`/maker/laporan/supplier/get-jumlah-barang/${supplierId}`, function (res) {
                 let jumlah = res.jumlah;
-        
+
                 $('#jumlah_item').append('<option value="">-- Pilih Jumlah --</option>');
-        
+
                 if (jumlah === 0) {
                     $('#jumlah_item').append(
                         '<option value="">Barang supplier belum tersedia</option>'
                     );
                     return;
                 }
-        
-                for (let i = 1; i <= jumlah; i++) {
+
+                for (let i = 0; i <= jumlah; i++) {
                     $('#jumlah_item').append(
                         `<option value="${i}">${i}</option>`
                     );
                 }
-        
+
                 $('#jumlah_item').prop('disabled', false);
             });
         });
