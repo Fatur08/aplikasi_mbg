@@ -583,7 +583,7 @@ class LaporanKeuanganController extends Controller
                     'barang_modal_keluar.jumlah_barang_modal_keluar as jumlah',
                     'barang_modal_keluar.satuan_barang_modal_keluar as satuan',
                     'barang_modal_keluar.harga_barang_modal_keluar as harga',
-                    DB::raw("'Modal Keluar' as sumber_data")
+                    DB::raw("'Koperasi' as sumber_data")
                 )
                 ->get();
         }
