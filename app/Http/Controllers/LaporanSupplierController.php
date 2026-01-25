@@ -92,85 +92,135 @@ class LaporanSupplierController extends Controller
     }
 
 
-    public function update_owner_validasi_barang_supplier($id, Request $request)
+    public function update_owner_validasi_barang_supplier(Request $request, $id)
     {
-        $id                     = $request->id; 
-        $status_barang_supplier   = $request->status_barang_supplier;
-    
         DB::beginTransaction();
-    
+
         try {
-            // ✅ 1. Ambil data barang_supplier berdasarkan id_barang_supplier
-            $barang_supplier = DB::table('barang_supplier')
+            // ===============================
+            // 1️⃣ Ambil data barang supplier
+            // ===============================
+            $barangSupplier = DB::table('barang_supplier')
                 ->where('id_barang_supplier', $id)
                 ->first();
-        
-            if (!$barang_supplier) {
-                return Redirect::back()->with(['error' => 'Data Barang Supplier tidak ditemukan']);
+
+            if (!$barangSupplier) {
+                return redirect()->back()->with(
+                    'error',
+                    'Data barang supplier tidak ditemukan'
+                );
             }
-        
-            // ✅ 2. Update status_barang_supplier
+
+            // ===============================
+            // 2️⃣ Update status barang supplier
+            // ===============================
             DB::table('barang_supplier')
                 ->where('id_barang_supplier', $id)
                 ->update([
-                    'status_barang_supplier' => $status_barang_supplier
+                    'status_barang_supplier' => $request->status_barang_supplier
                 ]);
-        
+
+            // ===============================
+            // 3️⃣ Data penting keuangan
+            // ===============================
+            $tanggalLaporan = $barangSupplier->tanggal_barang_supplier;
+            $nomorDapur     = $barangSupplier->nomor_dapur_barang_supplier;
+
+            // ===============================
+            // 4️⃣ Cek data keuangan
+            // ===============================
+            $keuangan = DB::table('keuangan')
+                ->where('tanggal_laporan_keuangan', $tanggalLaporan)
+                ->where('nomor_dapur_keuangan', $nomorDapur)
+                ->first();
+
+            if (!$keuangan) {
+                // ➕ BELUM ADA → INSERT BARU
+                DB::table('keuangan')->insert([
+                    'id_informasi_supplier'   => $id,
+                    'nomor_dapur_keuangan'    => $nomorDapur,
+                    'tanggal_laporan_keuangan'=> $tanggalLaporan,
+                ]);
+            } else {
+                // 🔁 SUDAH ADA → UPDATE ID SUPPLIER SAJA
+                DB::table('keuangan')
+                    ->where('id_laporan_keuangan', $keuangan->id_laporan_keuangan)
+                    ->update([
+                        'id_informasi_supplier' => $id
+                    ]);
+            }
+
             DB::commit();
-        
-            return Redirect::back()->with([
-                'success' => 'Status barang supplier berhasil diperbarui'
-            ]);
-        
+
+            return redirect()->back()->with(
+                'success',
+                'Status barang supplier berhasil divalidasi'
+            );
+
         } catch (\Exception $e) {
             DB::rollBack();
-        
-            return Redirect::back()->with([
-                'error' => 'Data Gagal Divalidasi: ' . $e->getMessage()
-            ]);
+
+            return redirect()->back()->with(
+                'error',
+                'Proses gagal: ' . $e->getMessage()
+            );
         }
     }
 
 
 
 
-    public function batalkan_owner_validasi_laporan_supplier($id, Request $request)
+    public function batalkan_owner_validasi_laporan_supplier(Request $request, $id)
     {
-        $id = $request->id; // id_data_koperasi
-
         DB::beginTransaction();
-
+    
         try {
-            // ✅ 1. Ambil data barang supplier berdasarkan id_barang_supplier
+            // ===============================
+            // 1️⃣ Ambil data barang supplier
+            // ===============================
             $barangSupplier = DB::table('barang_supplier')
                 ->where('id_barang_supplier', $id)
                 ->first();
-
+    
             if (!$barangSupplier) {
-                return Redirect::back()->with(['error' => 'Barang Supplier tidak ditemukan']);
+                return redirect()->back()->with(
+                    'error',
+                    'Barang supplier tidak ditemukan'
+                );
             }
-
-
-            // ✅ Update status_barang_supplier jadi 0
+    
+            // ===============================
+            // 2️⃣ Batalkan status barang supplier
+            // ===============================
             DB::table('barang_supplier')
                 ->where('id_barang_supplier', $id)
                 ->update([
                     'status_barang_supplier' => 0
                 ]);
-
-
+    
+            // ===============================
+            // 3️⃣ Hapus data di keuangan
+            // ===============================
+            DB::table('keuangan')
+                ->where('id_informasi_supplier', $barangSupplier->id_informasi_supplier)
+                ->where('nomor_dapur_keuangan', $barangSupplier->nomor_dapur_barang_supplier)
+                ->where('tanggal_laporan_keuangan', $barangSupplier->tanggal_barang_supplier)
+                ->delete();
+    
             DB::commit();
-
-            return Redirect::back()->with([
-                'success' => 'Validasi berhasil dibatalkan'
-            ]);
-
+    
+            return redirect()->back()->with(
+                'success',
+                'Validasi barang supplier berhasil dibatalkan'
+            );
+    
         } catch (\Exception $e) {
             DB::rollBack();
-
-            return Redirect::back()->with([
-                'error' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ]);
+    
+            return redirect()->back()->with(
+                'error',
+                'Terjadi kesalahan: ' . $e->getMessage()
+            );
         }
     }
     
