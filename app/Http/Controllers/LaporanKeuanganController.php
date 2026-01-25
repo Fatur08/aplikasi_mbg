@@ -207,69 +207,38 @@ class LaporanKeuanganController extends Controller
         $sampai_tanggal          = $request->sampai_tanggal;
         $pilih_supllier_koperasi = $request->pilih_supllier_koperasi;
     
-        $data = DB::table('keuangan as k')
-            ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($pilih_dapur) {
-                $join->on('k.id_data_koperasi', '=', 'bmk.id_data_koperasi')
-                     ->where('bmk.nomor_dapur_barang_modal_keluar', $pilih_dapur);
-            })
-            ->leftJoin('barang_supplier as bs', function ($join) use ($pilih_dapur) {
-                $join->on('k.id_informasi_supplier', '=', 'bs.id_informasi_supplier')
-                     ->where('bs.nomor_dapur_barang_supplier', $pilih_dapur);
-            })
+        $laporan = DB::table('keuangan as k')
+            ->leftJoin('barang_modal_keluar as bmk', 'k.id_data_koperasi', '=', 'bmk.id_data_koperasi')
+            ->leftJoin('barang_supplier as bs', 'k.id_informasi_supplier', '=', 'bs.id_informasi_supplier')
             ->where('k.nomor_dapur_keuangan', $pilih_dapur)
-    
-            // HANYA TAMPILKAN JIKA ADA BARANG
-            ->where(function ($q) {
-                $q->whereNotNull('bmk.id_data_koperasi')
-                  ->orWhereNotNull('bs.id_informasi_supplier');
+
+            ->when($dari_tanggal && $sampai_tanggal, function ($q) use ($dari_tanggal, $sampai_tanggal) {
+                $q->whereBetween('k.tanggal_laporan_keuangan', [$dari_tanggal, $sampai_tanggal]);
             })
-    
-            // FILTER TANGGAL
-            ->when($dari_tanggal && $sampai_tanggal, function ($query) use ($dari_tanggal, $sampai_tanggal) {
-                $query->whereBetween('k.tanggal_laporan_keuangan', [
-                    $dari_tanggal,
-                    $sampai_tanggal
-                ]);
+
+            ->when($pilih_supllier_koperasi === 'Koperasi', function ($q) {
+                $q->whereNotNull('bmk.id_data_koperasi');
             })
-    
-            // FILTER INSTANSI
-            ->when($pilih_supllier_koperasi === 'Supplier', function ($query) {
-                $query->whereNotNull('bs.id_informasi_supplier');
+
+            ->when($pilih_supllier_koperasi === 'Supplier', function ($q) {
+                $q->whereNotNull('bs.id_informasi_supplier');
             })
-            ->when($pilih_supllier_koperasi === 'Koperasi', function ($query) {
-                $query->whereNotNull('bmk.id_data_koperasi');
-            })
-    
+
             ->select(
-                'k.id_data_koperasi',
                 'k.tanggal_laporan_keuangan',
-                DB::raw('MAX(CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
-                DB::raw('MAX(CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
+
+                // BARANG KOPERASI
+                'bmk.nama_barang_modal_keluar',
+                'bmk.jumlah_barang_modal_keluar',
+                'bmk.harga_barang_modal_keluar',
+
+                // BARANG SUPPLIER
+                'bs.nama_barang_supplier',
+                'bs.jumlah_barang_supplier',
+                'bs.harga_barang_supplier'
             )
-            ->groupBy(
-                'k.id_data_koperasi',
-                'k.tanggal_laporan_keuangan'
-            );
-
-
-        $keuangan = $data
-            ->orderBy('k.tanggal_laporan_keuangan', 'desc')
+            ->orderBy('k.tanggal_laporan_keuangan', 'asc')
             ->get();
-        
-        
-        /* ================= OLAH DATA UNTUK BLADE ================= */
-        foreach ($keuangan as $d) {
-
-            // Format tanggal Indonesia
-            $d->tanggal_format = Carbon::parse($d->tanggal_laporan_keuangan)
-                ->translatedFormat('d F Y');
-
-            // Total harga dari tabel barang_modal_keluar
-            $d->total_harga = DB::table('barang_modal_keluar')
-                ->where('id_data_koperasi', $d->id_data_koperasi)
-                ->where('nomor_dapur_barang_modal_keluar', $d->nomor_dapur_data_koperasi)
-                ->sum('harga_barang_modal_keluar');
-        }
         
         
         
@@ -342,13 +311,10 @@ class LaporanKeuanganController extends Controller
             });
     
         return view('owner.laporan.keuangan.cetak_laporan_keuangan', compact(
-            'data',
+            'laporan',
             'dari_tanggal',
             'sampai_tanggal',
-            'pilih_supllier_koperasi',
-            'grafik',
-            'dataKosong',
-            'sudahCari'
+            'pilih_supllier_koperasi'
         ));
     }
 

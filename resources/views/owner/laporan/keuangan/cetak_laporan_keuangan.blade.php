@@ -95,10 +95,6 @@
         </h4>
     </div>
 
-    <div style="margin-bottom:15px; font-size:16px;">
-        <strong>Sisa Seluruh Dana : Rp {{ number_format($sisa_dana, 0, ',', '.') }}</strong>
-    </div>
-
 
     <div class="row mt-2">
         <div class="col-12">
@@ -115,79 +111,65 @@
             <tr>
                 <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
                 <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
-                <th style="text-align: center; vertical-align: middle;" colspan="2">Sumber</th>
-                <th style="text-align: center; vertical-align: middle;" rowspan="2">Pengeluaran</th>
-                <th style="text-align: center; vertical-align: middle;" rowspan="2">Margin</th>
-                <!--<th style="text-align: center; vertical-align: middle;" rowspan="2">Validasi</th>
-                <th style="text-align: center; vertical-align: middle;" rowspan="2">Aksi</th>-->
+                <th style="text-align: center; vertical-align: middle;" rowspan="2">Barang</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="2">Jumlah</th>
+                <th style="text-align: center; vertical-align: middle;" colspan="2">Keterangan</th>
+                <th style="text-align: center; vertical-align: middle;" rowspan="2">Dana</th>
             </tr>
             <tr>
                 <th style="text-align: center; vertical-align: middle;">Koperasi</th>
                 <th style="text-align: center; vertical-align: middle;">Supplier</th>
-                <!--<th style="text-align: center; vertical-align: middle;">Pemasukan</th>
-                <th style="text-align: center; vertical-align: middle;">Pengeluaran</th>-->
             </tr>
         </thead>
         <tbody>
-            @forelse ($grouped as $tanggal => $data_per_tanggal)
-                @php
-                    // Pisahkan data berdasarkan jenis transaksi
-                    $pemasukan = $data_per_tanggal->where('jenis_transaksi', 'Pemasukan');
-                    $pengeluaran = $data_per_tanggal->where('jenis_transaksi', 'Pengeluaran');
-                                                    
-                    // Hitung total pemasukan
-                    $total_pemasukan = $data_per_tanggal
-                        ->where('jenis_data_koperasi', 'modal_masuk')
-                        ->where('status_data_koperasi', 1)
-                        ->sum('harga_data_koperasi');
-                                                    
-                    // Hitung total pengeluaran dari sumber berbeda
-                    $total_pengeluaran_supplier = $data_per_tanggal
-                        ->whereNotNull('harga_barang_supplier')
-                        ->sum('harga_barang_supplier');
-                    $total_pengeluaran_modal_keluar = $data_per_tanggal
-                        ->whereNotNull('harga_barang_modal_keluar')
-                        ->sum('harga_barang_modal_keluar');
-                    $total_pengeluaran = $total_pengeluaran_supplier + $total_pengeluaran_modal_keluar;
-                                                    
-                    // Selisih total
-                    $selisih = $total_pemasukan - $total_pengeluaran;
-                                                    
-                    // Ambil data pertama untuk id & status validasi
-                    $laporan = $data_per_tanggal->first();
-                    $id_laporan = optional($laporan)->id_laporan_keuangan;
-                    $status_validasi = optional($laporan)->status_validasi;
-                                                    
-                    // Cek apakah pengeluaran dari data koperasi atau supplier
-                    $ada_koperasi = $data_per_tanggal->contains('id_data_koperasi', '!=', null);
-                    $ada_supplier = $data_per_tanggal->contains('id_informasi_supplier', '!=', null);
-                @endphp
-    
-                <tr>
-                    <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>
-                    <td>{{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}</td>
-                    <td style="text-align: center; vertical-align: middle;">
-                        {{ ($ada_koperasi && !$ada_supplier) ? '✅' : '' }}
-                    </td>                         
-                    <td style="text-align: center; vertical-align: middle;">
-                        {{ ($ada_koperasi && $ada_supplier) ? '✅' : '' }}
-                    </td>
-                    <!--<td class="text-success">
-                        Rp {{ number_format($total_pemasukan, 0, ',', '.') }}
-                    </td>-->
-                    <td class="text-danger">
-                        Rp {{ number_format($total_pengeluaran, 0, ',', '.') }}
-                    </td>
-                    <td>
-                        <strong class="{{ $selisih >= 0 ? 'text-success' : 'text-danger' }}">
-                            Rp {{ number_format($selisih, 0, ',', '.') }}
-                        </strong>
-                    </td>
-                </tr>
+            @forelse ($laporan as $i => $row)
+            <tr>
+                {{-- No --}}
+                <td class="text-center">{{ $i + 1 }}</td>
+
+                {{-- Tanggal --}}
+                <td class="text-center">
+                    {{ \Carbon\Carbon::parse($row->tanggal_laporan_keuangan)->translatedFormat('d F Y') }}
+                </td>
+
+                {{-- Barang --}}
+                <td>
+                    {{ $row->nama_barang_modal_keluar ?? $row->nama_barang_supplier }}
+                </td>
+
+                {{-- Jumlah --}}
+                <td class="text-center">
+                    {{ $row->jumlah_barang_modal_keluar ?? $row->jumlah_barang_supplier }}
+                </td>
+
+                {{-- Koperasi --}}
+                <td class="text-center">
+                    @if ($row->nama_barang_modal_keluar)
+                        ✔
+                    @endif
+                </td>
+
+                {{-- Supplier --}}
+                <td class="text-center">
+                    @if ($row->nama_barang_supplier)
+                        ✔
+                    @endif
+                </td>
+
+                {{-- Dana --}}
+                <td class="text-end">
+                    Rp {{ number_format(
+                        $row->harga_barang_modal_keluar ?? $row->harga_barang_supplier,
+                        0, ',', '.'
+                    ) }}
+                </td>
+            </tr>
             @empty
-                <tr>
-                    <td colspan="7" class="text-center text-muted">Tidak ada data</td>
-                </tr>
+            <tr>
+                <td colspan="7" class="text-center">
+                    Tidak ada data laporan keuangan
+                </td>
+            </tr>
             @endforelse
         </tbody>
     </table>
@@ -232,49 +214,78 @@
     </style>
 
     <script>
-        let koperasiData = @json($data);
-        
-        const labels      = koperasiData.map(item => item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal');
-        const modalMasuk  = koperasiData.map(item => item.total_pemasukan);
-        const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
-        const margin      = koperasiData.map(item => item.margin);
-        
-        const ctxBar = document.getElementById('koperasiChart').getContext('2d');
-        new Chart(ctxBar, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Pemasukan',
-                        data: modalMasuk,
-                        backgroundColor: 'rgba(0, 76, 255, 1)'
-                    },
-                    {
+        // === BAGIAN DIAGRAM BATANG ===
+        let koperasiData = @json($grafik);
+
+        if (!koperasiData || koperasiData.length === 0) {
+            console.warn('DATA GRAFIK KOSONG');
+        }
+
+        const labels = koperasiData.map(item =>
+            item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal'
+        );
+
+        const modalKeluar = koperasiData.map(item =>
+            Number(item.total_pengeluaran) || 0
+        );
+
+        // FORMAT RUPIAH
+        function formatRupiah(angka) {
+            return 'Rp.' + angka.toLocaleString('id-ID');
+        }
+
+        const canvas = document.getElementById('koperasiChartOwner');
+
+        if (canvas) {
+            const ctxBar = canvas.getContext('2d');
+
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
                         label: 'Pengeluaran',
                         data: modalKeluar,
                         backgroundColor: 'rgba(255, 0, 0, 0.7)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { font: { size: 14 } }
+                        },
+                        datalabels: {
+                            display: true,
+                            anchor: 'end',   // nempel di ujung atas batang
+                            align: 'end',    // arah ke atas
+                            offset: -4,      // naik sedikit biar tidak nempel batang
+                            color: '#000',
+                            font: {
+                                weight: 'bold',
+                                size: 12
+                            },
+                            formatter: function (value) {
+                                return value > 0
+                                    ? 'Rp.' + value.toLocaleString('id-ID')
+                                    : '';
+                            }
+                        }
                     },
-                    {
-                        label: 'Margin',
-                        data: margin,
-                        backgroundColor: 'rgba(47, 255, 0, 0.7)'
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) {
+                                    return formatRupiah(value);
+                                }
+                            }
+                        }
                     }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { labels: { font: { size: 14 } } }
                 }
-            }
-        });
-    
-        // ✅ PRINT SETELAH GRAFIK SELESAI DIRAWAT
-        setTimeout(() => {
-            window.print();
-        }, 1000);
+            });
+        }
     </script>
 
 </body>
