@@ -1,4 +1,4 @@
-@extends('layouts.maker.tabler')
+@extends('layouts.owner.tabler')
 @section('content')
 <style>
 /* === Section Info Dapur === */
@@ -136,7 +136,7 @@
                                     Laporan Supplier
                                 </h2>
                             </td>
-                            <td style="text-align:right">
+                            <!--<td style="text-align:right">
                                 <a href="#" class="btn btn-primary" id="TambahLaporansupplier">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                          viewBox="0 0 24 24" fill="none" stroke="currentColor" 
@@ -148,7 +148,7 @@
                                     </svg>
                                     Tambah Data
                                 </a>
-                            </td>
+                            </td>-->
                         </tr>
                     </tbody>
                 </table>
@@ -176,11 +176,11 @@
                                     </div>
                                 @endif
                             </div>
-                            <form action="/maker/laporan/supplier" method="GET" id="FormLaporansupplier">
+                            <form action="/owner/laporan/supplier" method="GET" id="FormLaporansupplier">
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <div class="row g-2 align-items-end">
-                                            <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-6">
                                                 <div class="input-icon">
                                                     <span class="input-icon-addon">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
@@ -188,7 +188,7 @@
                                                     <input type="text" value="" id="dari_tanggal" name="dari_tanggal" class="form-control" placeholder="Dari Tanggal" autocomplete="off">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-6">
                                                 <div class="input-icon">
                                                     <span class="input-icon-addon">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M16 3l0 4" /><path d="M8 3l0 4" /><path d="M4 11l16 0" /><path d="M8 15h2v2h-2z" /></svg>
@@ -196,7 +196,19 @@
                                                     <input type="text" value="" id="sampai_tanggal" name="sampai_tanggal" class="form-control" placeholder="Sampai Tanggal" autocomplete="off">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="input-icon">
+                                                    <select name="pilih_dapur" id="pilih_dapur" class="form-select">
+                                                        <option value="">Pilih Dapur</option>
+                                                        @foreach($dapurList as $dapur)
+                                                            <option value="{{ $dapur->nomor_dapur }}">{{ $dapur->nama_dapur }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-primary w-100">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
@@ -299,7 +311,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/maker/laporan/supplier/store_laporan_supplier" method="POST" id="FormLaporansupplier" enctype="multipart/form-data">
+                <form action="/owner/laporan/supplier/store_laporan_supplier" method="POST" id="FormLaporansupplier" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -380,115 +392,11 @@
 @push('myscript')
 <script>
     $(function(){
-        $("#TambahLaporansupplier").click(function(){
-            $("#modal-inputlaporansupplier").modal("show");
-        });
-
-
-
-        $('#jumlah_item').on('change', function () {
-            let jumlah = $(this).val();
-            let supplier = $('#id_informasi_supplier').val();
-
-            if (!supplier) {
-                alert('Pilih supplier terlebih dahulu');
-                $(this).val('');
-                return;
-            }
-
-            $('#container-barang').html('');
-
-            for (let i = 0; i < jumlah; i++) {
-                $('#container-barang').append(`
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5>Barang ${i + 1}</h5>
-
-                            <div class="mb-2">
-                                <label>Nama Barang</label>
-                                <select name="barang[${i}][nama_barang_supplier]" class="form-select nama-barang" required>
-                                    <option value="">-- Pilih Barang --</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-2">
-                                <label>Satuan</label>
-                                <input type="text" name="barang[${i}][satuan_barang_supplier]" class="form-control" required>
-                            </div>
-
-                            <div class="mb-2">
-                                <label>Jumlah</label>
-                                <input type="number" name="barang[${i}][jumlah_barang_supplier]" class="form-control" required>
-                            </div>
-
-                            <div class="mb-2">
-                                <label>Harga</label>
-                                <input type="number" name="barang[${i}][harga_barang_supplier]" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-                `);
-            }
-
-            loadBarangSupplier();
-        });
-
-        function loadBarangSupplier() {
-            let supplier = $('#id_informasi_supplier').val();
-
-            $.get(`/maker/laporan/supplier/get-barang/${supplier}`, function (data) {
-                $('.nama-barang').each(function () {
-                    let select = $(this);
-                    select.html('<option value="">-- Pilih Barang --</option>');
-                    data.forEach(item => {
-                        select.append(`<option value="${item.nama_barang_supplier}">
-                            ${item.nama_barang_supplier}
-                        </option>`);
-                    });
-                });
-            });
-        }
-
-
-
-
-        $('#id_informasi_supplier').on('change', function () {
-            let supplierId = $(this).val();
-            $('#jumlah_item').html('').prop('disabled', true);
-            $('#container-barang').html('');
-
-            if (!supplierId) return;
-
-            $.get(`/maker/laporan/supplier/get-jumlah-barang/${supplierId}`, function (res) {
-                let jumlah = res.jumlah;
-
-                $('#jumlah_item').append('<option value="">-- Pilih Jumlah --</option>');
-
-                if (jumlah === 0) {
-                    $('#jumlah_item').append(
-                        '<option value="">Barang supplier belum tersedia</option>'
-                    );
-                    return;
-                }
-
-                for (let i = 1; i <= jumlah; i++) {
-                    $('#jumlah_item').append(
-                        `<option value="${i}">${i}</option>`
-                    );
-                }
-
-                $('#jumlah_item').prop('disabled', false);
-            });
-        });
-
-
-
-
         $(".bukti_barang_supplier").click(function(){
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/maker/laporan/supplier/bukti_barang_supplier',
+                url:'/owner/laporan/supplier/bukti_barang_supplier',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
@@ -500,52 +408,11 @@
             });
             $("#modal-lihatbuktibarangsupplier").modal("show");
         });
-
-
-
-
-
-
-        $(".edit_laporan_supplier").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/owner/laporan/supplier/edit_laporan_supplier',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadeditformlaporansupplier").html(respond);
-                }
-            });
-            $("#modal-editlaporansupplier").modal("show");
-        });
-
-        $(".delete-confirm-laporan-supplier").click(function(e){
-            var form = $(this).closest('form');
-            e.preventDefault();
-            Swal.fire({
-                title: "Apakah Anda Yakin Data ini Mau Di Hapus?",
-                text: "Jika Ya Maka Data Akan Terhapus Permanen",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Hapus Saja"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Data Berhasil Di Hapus",
-                        icon: "success"
-                  });
-                }
-            });
-        });
-
+        
+        
+        
+        
+        
         $("#FormLaporansupplier").submit(function(){
             var dari_tanggal   = $("#dari_tanggal").val();
             var sampai_tanggal = $("#sampai_tanggal").val();

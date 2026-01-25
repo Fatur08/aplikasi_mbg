@@ -56,10 +56,20 @@ class LaporanSupplierController extends Controller
         $barangSupplier = $barangSupplierQuery
             ->orderBy('tanggal_barang_supplier', 'desc')
             ->get();
+
+
+
+
+
+        /* ================= LIST DAPUR ================= */
+        $dapurList = DB::table('dapur')
+            ->select('nomor_dapur', 'nama_dapur')
+            ->groupBy('nomor_dapur', 'nama_dapur')
+            ->get();
     
         return view(
             'owner.laporan.supplier.index_laporan_supplier',
-            compact('supplier', 'barangSupplier')
+            compact('supplier', 'barangSupplier', 'dapurList')
         );
     }
 
