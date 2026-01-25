@@ -282,9 +282,6 @@
                                 <label class="form-label">Jumlah Jenis Barang</label>
                                 <select id="jumlah_item" class="form-select">
                                     <option value="">-- Pilih Jumlah --</option>
-                                    @for ($i = 1; $i <= 10; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endfor
                                 </select>
                             </div>
                         </div>
@@ -391,6 +388,40 @@
                 });
             });
         }
+
+
+
+
+        $('#id_informasi_supplier').on('change', function () {
+            let supplierId = $(this).val();
+            $('#jumlah_item').html('').prop('disabled', true);
+            $('#container-barang').html('');
+        
+            if (!supplierId) return;
+        
+            $.get(`/maker/laporan/supplier/get-jumlah-barang/${supplierId}`, function (res) {
+                let jumlah = res.jumlah;
+        
+                $('#jumlah_item').append('<option value="">-- Pilih Jumlah --</option>');
+        
+                if (jumlah === 0) {
+                    $('#jumlah_item').append(
+                        '<option value="">Barang supplier belum tersedia</option>'
+                    );
+                    return;
+                }
+        
+                for (let i = 1; i <= jumlah; i++) {
+                    $('#jumlah_item').append(
+                        `<option value="${i}">${i}</option>`
+                    );
+                }
+        
+                $('#jumlah_item').prop('disabled', false);
+            });
+        });
+
+
 
 
 

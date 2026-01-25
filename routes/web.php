@@ -375,6 +375,7 @@ Route::middleware(['auth:maker'])->group(function(){
     //Supplier
     Route::get('/maker/laporan/supplier',[LaporanSupplierController::class,'index_maker_laporan_supplier']);
     Route::get('/maker/laporan/supplier/get-barang/{id_supplier}',[LaporanSupplierController::class, 'getBarangSupplier']);
+    Route::get('/maker/laporan/supplier/get-jumlah-barang/{id_supplier}',[LaporanSupplierController::class, 'getJumlahBarangSupplier']);
     Route::post('/maker/laporan/supplier/store_laporan_supplier',[LaporanSupplierController::class,'store_maker_laporan_supplier']);
 
     Route::post('/maker/laporan/supplier/edit_laporan_supplier',[LaporanSupplierController::class,'edit_maker_laporan_supplier']);
