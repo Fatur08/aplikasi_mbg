@@ -1074,7 +1074,7 @@ class DataSupplierController extends Controller
             DB::commit();
 
             return Redirect::back()->with([
-                'success' => 'Data barang koperasi berhasil disimpan dan status koperasi direset'
+                'success' => 'Data barang supplier berhasil disimpan dan status informasi supplier direset'
             ]);
 
         } catch (\Exception $e) {
