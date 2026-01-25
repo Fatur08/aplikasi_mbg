@@ -244,9 +244,25 @@ class LaporanDapurController extends Controller
     }
 
 
-    public function tambah_operasional_dapur(Request $request)
+    public function tambah_maker_operasional_dapur(Request $request)
     {
-        return view('maker.laporan.dapur.tambah_operasional_dapur');
+        $distribusi = DB::table('distribusi')
+        ->select('tujuan_distribusi', 'jumlah_paket')
+        ->get();
+
+        return view('maker.laporan.dapur.tambah_operasional_dapur', compact('distribusi'));
+    }
+
+    public function update_maker_operasional_dapur(Request $request)
+    {
+        DB::table('distribusi')->insert([
+            'tanggal_distribusi'   => $request->tanggal_operasional_dapur,
+            'menu_makanan'         => $request->menu_operasional_dapur,
+            'kendala_distribusi'   => $request->kendala_operasional_dapur,
+            'tujuan_distribusi'    => $request->pilih_instansi,
+        ]);
+
+        return redirect()->back()->with('success', 'Data operasional dapur berhasil disimpan');
     }
 
 

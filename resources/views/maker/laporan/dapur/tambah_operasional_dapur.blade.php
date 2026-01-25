@@ -1,12 +1,17 @@
 @extends('layouts.maker.laporan.dapur.layout_dapur')
 @section('content')
-<form action="/maker/laporan/dapur/store_operasional_dapur" method="POST" id="FormTambahOperasionalDapur" enctype="multipart/form-data">
+<form action="/maker/laporan/dapur/update_operasional_dapur" method="POST" id="FormTambahOperasionalDapur" enctype="multipart/form-data">
     @csrf
     <div class="row">
         <div class="col-12">
             <div class="input-icon mb-3">
-                <select name="pilih_instansi" id="pilih_instansi" class="form-select">
+                <select name="pilih_instansi" id="pilih_instansi" class="form-select" required>
                     <option value="">Pilih Instansi</option>
+                    @foreach ($distribusi as $d)
+                        <option value="{{ $d->tujuan_distribusi }}">
+                            {{ $d->tujuan_distribusi }} ({{ $d->jumlah_paket }} Paket)
+                        </option>
+                    @endforeach
                 </select>
               </div>
         </div>
@@ -71,7 +76,7 @@
             allowInput: true
         });
 
-        $("#FormTambahOperasionalDapu").submit(function(){
+        $("#FormTambahOperasionalDapur").submit(function(){
             var modal_masuk = $("#modal_masuk").val();
             var modal_keluar = $("#modal_keluar").val();
             var tanggal_data_koperasi = $("#tanggal_data_koperasi").val();
