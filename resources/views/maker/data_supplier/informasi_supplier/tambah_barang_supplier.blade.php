@@ -53,24 +53,7 @@ $(document).ready(function () {
                     <input type="text" name="nama_barang_supplier[]" class="form-control"
                         placeholder="Nama Barang Ke-${i}" required>
                 </div>
-
-                <div class="input-icon mb-3">
-                    <span class="input-icon-addon">🔢</span>
-                    <input type="number" name="jumlah_barang_supplier[]" class="form-control"
-                        placeholder="Jumlah Barang Ke-${i}" required>
-                </div>
-
-                <div class="input-icon mb-3">
-                    <span class="input-icon-addon">📐</span>
-                    <input type="text" name="satuan_barang_supplier[]" class="form-control"
-                        placeholder="Satuan Barang Ke-${i}" required>
-                </div>
-
-                <div class="input-icon mb-3">
-                    <span class="input-icon-addon">💰</span>
-                    <input type="number" name="harga_barang_supplier[]" class="form-control"
-                        placeholder="Total Harga Barang Ke-${i}" required>
-                </div>
+                
             </div>`;
         }
 

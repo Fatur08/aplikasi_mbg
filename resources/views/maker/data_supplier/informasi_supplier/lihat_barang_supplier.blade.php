@@ -3,8 +3,6 @@
         <tr>
             <th>No</th>
             <th>Barang</th>
-            <th>Jumlah</th>
-            <th>Harga</th>
         </tr>
     </thead>
     <tbody>
@@ -12,12 +10,10 @@
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $item->nama_barang_supplier }}</td>
-                <td>{{ $item->jumlah_barang_supplier }} {{ $item->satuan_barang_supplier }}</td>
-                <td>Rp {{ number_format($item->harga_barang_supplier, 0, ',', '.') }}</td>
             </tr>
         @empty
             <tr>
-                <td colspan="4" class="text-center">Belum ada data barang supplier.</td>
+                <td colspan="2" class="text-center">Belum ada data barang supplier.</td>
             </tr>
         @endforelse
     </tbody>

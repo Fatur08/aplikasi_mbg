@@ -1045,9 +1045,6 @@ class DataSupplierController extends Controller
             // 4. AMBIL DATA BARANG DINAMIS DARI FORM
             // ============================================================
             $nama_barang   = $request->nama_barang_supplier;
-            $jumlah_barang = $request->jumlah_barang_supplier;
-            $satuan_barang = $request->satuan_barang_supplier;
-            $harga_barang  = $request->harga_barang_supplier;
             
             // ============================================================
             // 5. INSERT BARANG MODAL KELUAR
@@ -1061,9 +1058,6 @@ class DataSupplierController extends Controller
             
                         DB::table('barang_supplier')->insert([
                             'nama_barang_supplier'        => $nama,
-                            'jumlah_barang_supplier'      => $jumlah_barang[$index],
-                            'satuan_barang_supplier'      => $satuan_barang[$index] ?? null,
-                            'harga_barang_supplier'       => $harga_barang[$index] ?? 0,
                             'nomor_dapur_barang_supplier' => $nomor_dapur,
                             'id_informasi_supplier'       => $id_informasi_supplier,
                         ]);
@@ -1102,10 +1096,7 @@ class DataSupplierController extends Controller
             ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur_maker)
             ->select(
                 'barang_supplier.*',
-                'barang_supplier.nama_barang_supplier',
-                'barang_supplier.jumlah_barang_supplier',
-                'barang_supplier.satuan_barang_supplier',
-                'barang_supplier.harga_barang_supplier'
+                'barang_supplier.nama_barang_supplier'
             )
             ->get();
 

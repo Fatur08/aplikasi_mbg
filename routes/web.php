@@ -306,8 +306,8 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::get('/maker/data_supplier/informasi_supplier',[DataSupplierController::class,'index_maker_informasi_supplier']);
     Route::post('/maker/data_supplier/informasi_supplier/tambah_barang_supplier',[DataSupplierController::class,'tambah_maker_barang_supplier']);
     Route::post('/maker/data_supplier/informasi_supplier/{id}/store_barang_supplier',[DataSupplierController::class,'store_maker_barang_supplier']);
-    Route::post('/maker/data_supplier/informasi_supplier/store_informasi_supplier',[DataSupplierController::class,'store_maker_informasi_supplier']);
     Route::post('/maker/data_supplier/informasi_supplier/lihat_barang_supplier',[DataSupplierController::class,'lihat_maker_barang_supplier']);
+    Route::post('/maker/data_supplier/informasi_supplier/store_informasi_supplier',[DataSupplierController::class,'store_maker_informasi_supplier']);
     Route::post('/maker/data_supplier/informasi_supplier/nota_informasi_supplier',[DataSupplierController::class,'nota_maker_informasi_supplier']);
     Route::post('/maker/data_supplier/informasi_supplier/bukti_terima_informasi_supplier',[DataSupplierController::class,'bukti_terima_maker_informasi_supplier']);
     Route::post('/maker/data_supplier/informasi_supplier/edit_informasi_supplier',[DataSupplierController::class,'edit_maker_informasi_supplier']);
