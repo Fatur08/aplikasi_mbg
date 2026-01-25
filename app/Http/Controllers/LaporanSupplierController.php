@@ -78,107 +78,76 @@ class LaporanSupplierController extends Controller
 
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
 
-        // upload bukti
-        if($request->hasFile('bukti_barang_supplier')){
-            $bukti_barang_supplier = "Bukti_".$tanggal_data_koperasi.".".$request
-                ->file('bukti_barang_supplier')
-                ->getClientOriginalExtension();
-        } else {
-            $bukti_barang_supplier = null;
+        /* ===============================
+           UPLOAD BUKTI (SATU KALI SAJA)
+        ================================*/
+        $bukti_barang_supplier = null;
+
+        if ($request->hasFile('bukti_barang_supplier')) {
+            $bukti_barang_supplier = 'Bukti_' .
+                date('Ymd_His') . '.' .
+                $request->file('bukti_barang_supplier')->getClientOriginalExtension();
+
+            $request->file('bukti_barang_supplier')
+                ->storeAs(
+                    'public/uploads/data_koperasi/bukti_terima',
+                    $bukti_barang_supplier
+                );
         }
 
+        /* ===============================
+           LOOP BARANG
+        ================================*/
         foreach ($request->barang as $item) {
 
-            // 1️⃣ Cek data barang berdasarkan supplier + dapur + nama barang
             $cekBarang = DB::table('barang_supplier')
                 ->where('id_informasi_supplier', $request->id_informasi_supplier)
                 ->where('nomor_dapur_barang_supplier', $nomor_dapur)
                 ->where('nama_barang_supplier', $item['nama_barang_supplier'])
                 ->first();
 
-            // 2️⃣ Jika BELUM ADA → INSERT BARU
+            // ❌ BELUM ADA → INSERT BARU
             if (!$cekBarang) {
 
                 DB::table('barang_supplier')->insert([
                     'nomor_dapur_barang_supplier' => $nomor_dapur,
                     'id_informasi_supplier'       => $request->id_informasi_supplier,
                     'tanggal_barang_supplier'     => $request->tanggal_laporan_supplier,
-                    'nama_barang_supplier'       => $item['nama_barang_supplier'],
-                    'satuan_barang_supplier'     => $item['satuan_barang_supplier'],
-                    'jumlah_barang_supplier'     => $item['jumlah_barang_supplier'],
-                    'harga_barang_supplier'      => $item['harga_barang_supplier'],
-                    'bukti_barang_supplier'      => $bukti_barang_supplier
+                    'nama_barang_supplier'        => $item['nama_barang_supplier'],
+                    'satuan_barang_supplier'      => $item['satuan_barang_supplier'],
+                    'jumlah_barang_supplier'      => $item['jumlah_barang_supplier'],
+                    'harga_barang_supplier'       => $item['harga_barang_supplier'],
+                    'bukti_barang_supplier'       => $bukti_barang_supplier,
                 ]);
 
+            } 
+            // ⚠️ ADA TAPI TANGGAL KOSONG → UPDATE
+            else if (empty($cekBarang->tanggal_barang_supplier)) {
 
-                if ($request->hasFile('bukti_barang_supplier')) {
-                    $storagePath = 'public/uploads/data_koperasi/bukti_terima/';
-                    $request->file('bukti_barang_supplier')->storeAs($storagePath, $bukti_barang_supplier);
-                    $publicPath = public_path('storage/uploads/data_koperasi/bukti_terima/');
-                    if (!is_dir($publicPath)) {
-                        mkdir($publicPath, 0777, true);
-                    }
-                    $sourceFile = storage_path('app/' . $storagePath . $bukti_barang_supplier);
-                    $destinationFile = public_path('storage/uploads/data_koperasi/bukti_terima/' . $bukti_barang_supplier);
-                    copy($sourceFile, $destinationFile);
-                }
-
-            } else {
-
-                // 3️⃣ Jika ADA tapi tanggal masih KOSONG → UPDATE
-                if (empty($cekBarang->tanggal_laporan_supplier)) {
-
-                    DB::table('barang_supplier')
-                        ->where('id_barang_supplier', $cekBarang->id_barang_supplier)
-                        ->update([
-                            'tanggal_barang_supplier' => $request->tanggal_laporan_supplier,
-                            'satuan_barang_supplier'   => $item['satuan_barang_supplier'],
-                            'jumlah_barang_supplier'   => $item['jumlah_barang_supplier'],
-                            'harga_barang_supplier'    => $item['harga_barang_supplier'],
-                            'bukti_barang_supplier'    => $bukti_barang_supplier,
-                        ]);
-
-                    
-                    if ($request->hasFile('bukti_barang_supplier')) {
-                        $storagePath = 'public/uploads/data_koperasi/bukti_terima/';
-                        $request->file('bukti_barang_supplier')->storeAs($storagePath, $bukti_barang_supplier);
-                        $publicPath = public_path('storage/uploads/data_koperasi/bukti_terima/');
-                        if (!is_dir($publicPath)) {
-                            mkdir($publicPath, 0777, true);
-                        }
-                        $sourceFile = storage_path('app/' . $storagePath . $bukti_barang_supplier);
-                        $destinationFile = public_path('storage/uploads/data_koperasi/bukti_terima/' . $bukti_barang_supplier);
-                        copy($sourceFile, $destinationFile);
-                    }
-
-                } else {
-
-                    // 4️⃣ Jika SEMUA SUDAH ADA → INSERT BARIS BARU
-                    DB::table('barang_supplier')->insert([
-                        'nomor_dapur_barang_supplier' => $nomor_dapur,
-                        'id_informasi_supplier'       => $request->id_informasi_supplier,
-                        'tanggal_barang_supplier'   => $request->tanggal_laporan_supplier,
-                        'nama_barang_supplier'       => $item['nama_barang_supplier'],
-                        'satuan_barang_supplier'     => $item['satuan_barang_supplier'],
-                        'jumlah_barang_supplier'     => $item['jumlah_barang_supplier'],
-                        'harga_barang_supplier'      => $item['harga_barang_supplier'],
-                        'bukti_barang_supplier'      => $bukti_barang_supplier,
+                DB::table('barang_supplier')
+                    ->where('id_barang_supplier', $cekBarang->id_barang_supplier)
+                    ->update([
+                        'tanggal_barang_supplier' => $request->tanggal_laporan_supplier,
+                        'satuan_barang_supplier'  => $item['satuan_barang_supplier'],
+                        'jumlah_barang_supplier'  => $item['jumlah_barang_supplier'],
+                        'harga_barang_supplier'   => $item['harga_barang_supplier'],
+                        'bukti_barang_supplier'   => $bukti_barang_supplier,
                     ]);
 
+            } 
+            // ✅ SEMUA SUDAH ADA → INSERT BARU
+            else {
 
-
-                    if ($request->hasFile('bukti_barang_supplier')) {
-                        $storagePath = 'public/uploads/data_koperasi/bukti_terima/';
-                        $request->file('bukti_barang_supplier')->storeAs($storagePath, $bukti_barang_supplier);
-                        $publicPath = public_path('storage/uploads/data_koperasi/bukti_terima/');
-                        if (!is_dir($publicPath)) {
-                            mkdir($publicPath, 0777, true);
-                        }
-                        $sourceFile = storage_path('app/' . $storagePath . $bukti_barang_supplier);
-                        $destinationFile = public_path('storage/uploads/data_koperasi/bukti_terima/' . $bukti_barang_supplier);
-                        copy($sourceFile, $destinationFile);
-                    }
-                }
+                DB::table('barang_supplier')->insert([
+                    'nomor_dapur_barang_supplier' => $nomor_dapur,
+                    'id_informasi_supplier'       => $request->id_informasi_supplier,
+                    'tanggal_barang_supplier'     => $request->tanggal_laporan_supplier,
+                    'nama_barang_supplier'        => $item['nama_barang_supplier'],
+                    'satuan_barang_supplier'      => $item['satuan_barang_supplier'],
+                    'jumlah_barang_supplier'      => $item['jumlah_barang_supplier'],
+                    'harga_barang_supplier'       => $item['harga_barang_supplier'],
+                    'bukti_barang_supplier'       => $bukti_barang_supplier,
+                ]);
             }
         }
 
