@@ -139,7 +139,7 @@
 
                 {{-- Jumlah --}}
                 <td class="text-center">
-                    {{ $row->jumlah_barang_modal_keluar ?? $row->jumlah_barang_supplier }}
+                    {{ $row->jumlah_barang_modal_keluar ?? $row->jumlah_barang_supplier }} {{ $row->satuan_barang_modal_keluar ?? $row->satuan_barang_supplier }}
                 </td>
 
                 {{-- Koperasi --}}

@@ -246,10 +246,12 @@ class LaporanKeuanganController extends Controller
 
                 'bmk.nama_barang_modal_keluar',
                 'bmk.jumlah_barang_modal_keluar',
+                'bmk.satuan_barang_modal_keluar',
                 'bmk.harga_barang_modal_keluar',
 
                 'bs.nama_barang_supplier',
                 'bs.jumlah_barang_supplier',
+                'bs.satuan_barang_supplier',
                 'bs.harga_barang_supplier'
             )
             ->orderBy('k.tanggal_laporan_keuangan', 'asc')
