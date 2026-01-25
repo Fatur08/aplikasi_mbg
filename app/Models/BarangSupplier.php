@@ -20,7 +20,8 @@ class BarangSupplier extends Model
         'satuan_barang_supplier',
         'harga_barang_supplier',
         'tanggal_barang_supplier',
-        'bukti_barang_supplier'
+        'bukti_barang_supplier',
+        'status_barang_supplier'
     ];
 
     public function InformasiSupplier()

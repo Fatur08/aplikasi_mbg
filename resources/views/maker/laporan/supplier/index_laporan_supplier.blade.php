@@ -225,6 +225,54 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @forelse ($barangSupplier as $key => $item)
+                                                        <tr class="text-center">
+                                                            <td>{{ $key + 1 }}</td>
+                                                
+                                                            <td>
+                                                                {{ $item->tanggal_barang_supplier
+                                                                    ? \Carbon\Carbon::parse($item->tanggal_barang_supplier)->format('d-m-Y')
+                                                                    : '-' }}
+                                                            </td>
+                                                
+                                                            <td>{{ $item->nama_barang_supplier }}</td>
+                                                
+                                                            <td>
+                                                                {{ number_format($item->jumlah_barang_supplier) }}
+                                                                {{ $item->satuan_barang_supplier }}
+                                                            </td>
+                                                
+                                                            <td>
+                                                                Rp {{ number_format($item->harga_barang_supplier, 0, ',', '.') }}
+                                                            </td>
+                                                
+                                                            <td>
+                                                                @if ($item->bukti_barang_supplier)
+                                                                    <a href="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/' . $item->bukti_barang_supplier) }}"
+                                                                       target="_blank"
+                                                                       class="btn btn-sm btn-primary">
+                                                                        Lihat
+                                                                    </a>
+                                                                @else
+                                                                    <span class="badge bg-secondary">Tidak ada</span>
+                                                                @endif
+                                                            </td>
+                                                
+                                                            <td>
+                                                                @if ($item->tanggal_barang_supplier)
+                                                                    <span class="badge bg-success">Tercatat</span>
+                                                                @else
+                                                                    <span class="badge bg-warning text-dark">Pending</span>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="7" class="text-center text-muted">
+                                                                Data barang supplier belum tersedia
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
                                                 </tbody>
                                             </table>
                                         </div>

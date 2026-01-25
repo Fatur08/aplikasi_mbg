@@ -11,16 +11,27 @@ class LaporanSupplierController extends Controller
     public function index_maker_laporan_supplier()
     {
         // Ambil data maker yang login
-        $makerLogin      = DB::table('maker')
+        $makerLogin = DB::table('maker')
             ->where('id_maker', auth()->id())
             ->first();
-
-        $nomor_dapur     = $makerLogin->nomor_dapur_maker ?? null;
     
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
+    
+        // Data supplier (sudah ada)
         $supplier = DB::table('informasi_supplier')
             ->where('nomor_dapur_informasi_supplier', $nomor_dapur)
             ->get();
-        return view('maker.laporan.supplier.index_laporan_supplier', compact('supplier'));
+    
+        // ✅ Ambil data barang supplier
+        $barangSupplier = DB::table('barang_supplier')
+            ->where('nomor_dapur_barang_supplier', $nomor_dapur)
+            ->orderBy('tanggal_barang_supplier', 'desc')
+            ->get();
+    
+        return view(
+            'maker.laporan.supplier.index_laporan_supplier',
+            compact('supplier', 'barangSupplier')
+        );
     }
 
 
