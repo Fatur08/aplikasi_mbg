@@ -13,6 +13,83 @@ use Carbon\Carbon;
 
 class LaporanSupplierController extends Controller
 {
+    // BAGIAN OWNER
+    public function index_owner_laporan_supplier(Request $request)
+    {
+        // Ambil data maker yang login
+        $makerLogin = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+    
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
+    
+        // Data supplier
+        $supplier = DB::table('informasi_supplier')
+            ->where('nomor_dapur_informasi_supplier', $nomor_dapur)
+            ->get();
+    
+        // Query dasar barang supplier
+        $barangSupplierQuery = DB::table('barang_supplier')
+            ->where('nomor_dapur_barang_supplier', $nomor_dapur)
+            ->whereNotNull('tanggal_barang_supplier')
+            ->where('tanggal_barang_supplier', '!=', '');
+    
+        // 🔍 Filter dari_tanggal
+        if ($request->filled('dari_tanggal')) {
+            $barangSupplierQuery->whereDate(
+                'tanggal_barang_supplier',
+                '>=',
+                $request->dari_tanggal
+            );
+        }
+    
+        // 🔍 Filter sampai_tanggal
+        if ($request->filled('sampai_tanggal')) {
+            $barangSupplierQuery->whereDate(
+                'tanggal_barang_supplier',
+                '<=',
+                $request->sampai_tanggal
+            );
+        }
+    
+        // Eksekusi query
+        $barangSupplier = $barangSupplierQuery
+            ->orderBy('tanggal_barang_supplier', 'desc')
+            ->get();
+    
+        return view(
+            'owner.laporan.supplier.index_laporan_supplier',
+            compact('supplier', 'barangSupplier')
+        );
+    }
+
+
+
+
+
+
+    public function bukti_owner_barang_supplier(Request $request)
+    {
+        $id                 = $request->id;
+        $barang_supplier      = DB::table('barang_supplier')->get();
+        $data               = DB::table('barang_supplier')->where('id_barang_supplier', $id)->first();
+        return view('owner.laporan.supplier.bukti_barang_supplier',compact('barang_supplier','data'));
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // BAGIAN MAKER
     public function index_maker_laporan_supplier(Request $request)
     {

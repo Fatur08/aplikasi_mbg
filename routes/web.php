@@ -241,11 +241,10 @@ Route::middleware(['auth:owner'])->group(function(){
     
     //Supplier
     Route::get('/owner/laporan/supplier',[LaporanSupplierController::class,'index_owner_laporan_supplier']);
+    Route::get('/owner/laporan/supplier/get-barang/{id_supplier}',[LaporanSupplierController::class, 'getBarangSupplier']);
+    Route::get('/owner/laporan/supplier/get-jumlah-barang/{id_supplier}',[LaporanSupplierController::class, 'getJumlahBarangSupplier']);
     Route::post('/owner/laporan/supplier/store_laporan_supplier',[LaporanSupplierController::class,'store_owner_laporan_supplier']);
-    Route::post('/owner/laporan/supplier/edit_laporan_supplier',[LaporanSupplierController::class,'edit_owner_laporan_supplier']);
-    Route::get('/owner/laporan/supplier/cetak_laporan_supplier',[LaporanSupplierController::class,'cetak_owner_laporan_supplier']);
-    Route::post('/owner/laporan/supplier/{id}/update_laporan_supplier',[LaporanSupplierController::class,'update_owner_laporan_supplier']);
-    Route::post('/owner/laporan/supplier/{id}/delete_laporan_supplier',[LaporanSupplierController::class,'delete_owner_laporan_supplier']);
+    Route::post('/owner/laporan/supplier/bukti_barang_supplier',[LaporanSupplierController::class,'bukti_owner_barang_supplier']);
     
     
     //Dapur
