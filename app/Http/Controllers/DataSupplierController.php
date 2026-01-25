@@ -351,7 +351,7 @@ class DataSupplierController extends Controller
         }
     }
 
-    
+
 
 
 
@@ -1018,13 +1018,11 @@ class DataSupplierController extends Controller
 
         // Ambil data bahan dari tabel bahan_menu
         $barang_supplier = DB::table('barang_supplier')
-            ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
-            ->where('barang_supplier.id_informasi_supplier', $id_informasi_supplier)
-            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur_maker)
-            ->select(
-                'barang_supplier.*',
-                'barang_supplier.nama_barang_supplier'
-            )
+            ->where('id_informasi_supplier', $id_informasi_supplier)
+            ->where('nomor_dapur_barang_supplier', $nomor_dapur_maker)
+            ->select('nama_barang_supplier')
+            ->distinct()
+            ->orderBy('nama_barang_supplier')
             ->get();
 
         return view('maker.data_supplier.informasi_supplier.lihat_barang_supplier', compact('barang_supplier'));
