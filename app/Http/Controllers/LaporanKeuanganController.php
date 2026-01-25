@@ -240,17 +240,6 @@ class LaporanKeuanganController extends Controller
             ->orderBy('k.tanggal_laporan_keuangan', 'asc')
             ->get();
         
-        
-        
-        
-            /* ================= FLAG STATUS ================= */
-        $dataKosong = $data->isEmpty();
-
-        $sudahCari =
-            !empty($dari_tanggal) ||
-            !empty($sampai_tanggal) ||
-            !empty($pilih_dapur);
-        
 
 
 
