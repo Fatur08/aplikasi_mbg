@@ -67,7 +67,17 @@ class LaporanKeuanganController extends Controller
             ->get();
         
         
+        /* ================= FLAG STATUS ================= */
+        $dataKosong = $data->isEmpty();
+
+        $sudahCari =
+            !empty($dari_tanggal) ||
+            !empty($sampai_tanggal) ||
+            !empty($pilih_dapur);
         
+
+
+
         // ===================== DATA GRAFIK =====================
         $grafik = DB::table('keuangan')
             ->join('data_koperasi', 'data_koperasi.id_data_koperasi', '=', 'keuangan.id_data_koperasi')
@@ -136,7 +146,9 @@ class LaporanKeuanganController extends Controller
             'sampai_tanggal',
             'pilih_supllier_koperasi',
             'grafik',
-            'dapurList'
+            'dapurList',
+            'dataKosong',
+            'sudahCari'
         ));
     }
 
