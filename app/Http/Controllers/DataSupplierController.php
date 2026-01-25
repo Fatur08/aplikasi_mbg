@@ -521,49 +521,6 @@ class DataSupplierController extends Controller
                     'status_informasi_supplier' => $status_validasi
                 ]);
 
-            // 2️⃣ Jika berhasil, update juga status data koperasi yang berkaitan
-            if ($updateSupplier) {
-                DB::table('data_koperasi')
-                    ->where('id_informasi_supplier', $id)
-                    ->update([
-                        'status_data_koperasi' => $status_validasi
-                    ]);
-            }
-
-
-            $koperasi = DB::table('data_koperasi')
-                ->where('id_informasi_supplier', $id)
-                ->first();
-
-
-            if ($status_validasi == 1) {
-
-                // ✅ Konversi jenis transaksi
-                if ($koperasi->jenis_data_koperasi === 'modal_keluar') {
-                    $jenis_transaksi = 'Pengeluaran';
-                } elseif ($koperasi->jenis_data_koperasi === 'modal_masuk') {
-                    $jenis_transaksi = 'Pemasukan';
-                } else {
-                    $jenis_transaksi = $koperasi->jenis_data_koperasi; // fallback jika ada jenis lain
-                }
-                
-                // Cek apakah data keuangan sudah ada
-                $cekKeuangan = DB::table('keuangan')
-                    ->where('id_data_koperasi', $id)
-                    ->first();
-            
-                if (!$cekKeuangan) {
-                    // ✅ Insert keuangan hanya jika belum ada
-                    DB::table('keuangan')->insert([
-                        'id_data_koperasi'          => $koperasi->id_data_koperasi,
-                        'id_informasi_supplier'     => $koperasi->id_informasi_supplier ?? null,
-                        'nomor_dapur_keuangan'      => $koperasi->nomor_dapur_data_koperasi,
-                        'tanggal_laporan_keuangan'  => $koperasi->tanggal_data_koperasi,
-                        'jenis_transaksi'           => $jenis_transaksi,
-                    ]);
-                }
-            }
-
             DB::commit();
 
             return Redirect::back()->with(['success' => 'Data Berhasil Divalidasi']);
@@ -580,34 +537,12 @@ class DataSupplierController extends Controller
             $id = $request->id;
         
             
-            // ✅ Ambil data koperasi berdasarkan id_informasi_supplier
-            $koperasi = DB::table('data_koperasi')
-                ->where('id_informasi_supplier', $id)
-                ->first();
-            
-            
-                // Jika data koperasi ada, hapus data keuangan terkait
-            if ($koperasi) {
-                DB::table('keuangan')
-                    ->where('id_data_koperasi', $koperasi->id_data_koperasi)
-                    ->delete();
-            }
-            
-            
             // Update status di tabel informasi_supplier
             DB::table('informasi_supplier')
                 ->where('id_informasi_supplier', $id)
                 ->update([
                     'status_informasi_supplier' => 0
                 ]);
-            
-            // Update status di tabel data_koperasi
-            DB::table('data_koperasi')
-                ->where('id_informasi_supplier', $id)
-                ->update([
-                    'status_data_koperasi' => 0
-                ]);
-                
             
             return Redirect::back()->with(['success' => 'Validasi Berhasil Dibatalkan!']);
         

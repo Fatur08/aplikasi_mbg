@@ -167,12 +167,12 @@ Route::middleware(['auth:owner'])->group(function(){
     //Informasi Supplier
     Route::get('/owner/data_supplier/informasi_supplier',[DataSupplierController::class,'index_owner_informasi_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/lihat_barang_supplier',[DataSupplierController::class,'lihat_owner_barang_supplier']);
+    Route::post('/owner/data_supplier/informasi_supplier/validasi_informasi_supplier',[DataSupplierController::class,'validasi_owner_informasi_supplier']);
+    Route::post('/owner/data_supplier/informasi_supplier/{id}/update_validasi_informasi_supplier',[DataSupplierController::class,'update_validasi_owner_informasi_supplier']);
     
     Route::post('/owner/data_supplier/informasi_supplier/store_informasi_supplier',[DataSupplierController::class,'store_owner_informasi_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/nota_informasi_supplier',[DataSupplierController::class,'nota_owner_informasi_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/bukti_terima_informasi_supplier',[DataSupplierController::class,'bukti_terima_owner_informasi_supplier']);
-    Route::post('/owner/data_supplier/informasi_supplier/validasi_informasi_supplier',[DataSupplierController::class,'validasi_owner_informasi_supplier']);
-    Route::post('/owner/data_supplier/informasi_supplier/{id}/update_validasi_informasi_supplier',[DataSupplierController::class,'update_validasi_owner_informasi_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/{id}/batalkan_validasi_informasi_supplier',[DataSupplierController::class,'batalkan_validasi_owner_informasi_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/edit_informasi_supplier',[DataSupplierController::class,'edit_owner_informasi_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/{id}/update_informasi_supplier',[DataSupplierController::class,'update_owner_informasi_supplier']);
