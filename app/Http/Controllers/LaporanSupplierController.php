@@ -88,7 +88,7 @@ class LaporanSupplierController extends Controller
     {
         $id = $request->id;
         $data = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
-        return view('owner.data_koperasi.validasi_data_koperasi',compact('data'));
+        return view('owner.laporan.supplier.validasi_laporan_supplier',compact('data'));
     }
 
 
