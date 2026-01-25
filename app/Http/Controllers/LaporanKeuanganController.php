@@ -173,6 +173,7 @@ class LaporanKeuanganController extends Controller
 
         $id_informasi_supplier = $keuangan->id_informasi_supplier ?? null;
         $nomor_dapur = $keuangan->nomor_dapur_keuangan;
+        $tanggal_laporan_keuangan = $keuangan->tanggal_laporan_keuangan;
 
         // Siapkan variabel barang_list
         $barang_list = collect();
@@ -182,6 +183,7 @@ class LaporanKeuanganController extends Controller
             ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
             ->where('barang_supplier.id_informasi_supplier', $id_informasi_supplier)
             ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur)
+            ->where('barang_supplier.tanggal_barang_supplier', $tanggal_laporan_keuangan)
             ->select(
                 'barang_supplier.id_barang_supplier as id_barang',
                 'barang_supplier.nama_barang_supplier as nama_barang',
