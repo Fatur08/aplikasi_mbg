@@ -197,7 +197,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mt-2">
                                             <div class="col-6">
                                                 <div class="input-icon">
                                                     <select name="pilih_dapur" id="pilih_dapur" class="form-select">

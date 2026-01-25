@@ -16,12 +16,7 @@ class LaporanSupplierController extends Controller
     // BAGIAN OWNER
     public function index_owner_laporan_supplier(Request $request)
     {
-        // Ambil data maker yang login
-        $makerLogin = DB::table('maker')
-            ->where('id_maker', auth()->id())
-            ->first();
-    
-        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
+        $nomor_dapur = $pilih_dapur;
     
         // Data supplier
         $supplier = DB::table('informasi_supplier')
