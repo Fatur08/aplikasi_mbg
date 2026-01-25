@@ -18,7 +18,7 @@
 
     @elseif($bukti && $sumber === 'supplier')
         <img
-            src="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/' . $bukti) }}"
+            src="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/'.$bukti) }}"
             class="bukti-terima-img"
             alt="Bukti Supplier"
         >

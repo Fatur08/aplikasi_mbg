@@ -21,15 +21,15 @@ class LaporanKeuanganController extends Controller
         $pilih_supplier_koperasi = $request->pilih_supplier_koperasi;
     
         $data = DB::table('keuangan as k')
-            ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($pilih_dapur) {
+            ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($dapur) {
                 $join->on('k.id_data_koperasi', '=', 'bmk.id_data_koperasi')
-                     ->where('bmk.nomor_dapur_barang_modal_keluar', $pilih_dapur);
+                     ->where('bmk.nomor_dapur_barang_modal_keluar', $dapur);
             })
-            ->leftJoin('barang_supplier as bs', function ($join) use ($pilih_dapur) {
+            ->leftJoin('barang_supplier as bs', function ($join) use ($dapur) {
                 $join->on('k.id_informasi_supplier', '=', 'bs.id_informasi_supplier')
-                     ->where('bs.nomor_dapur_barang_supplier', $pilih_dapur);
+                     ->where('bs.nomor_dapur_barang_supplier', $dapur);
             })
-            ->where('k.nomor_dapur_keuangan', $pilih_dapur)
+            ->where('k.nomor_dapur_keuangan', $dapur)
 
             // hanya tampilkan yang benar-benar ada barang
             ->where(function ($q) {
@@ -226,6 +226,71 @@ class LaporanKeuanganController extends Controller
         return view(
             'owner.laporan.keuangan.barang_laporan_keuangan',
             compact('barang_list')
+        );
+    }
+
+
+
+
+
+    public function bukti_owner_laporan_keuangan(Request $request)
+    {
+        $id_laporan_keuangan = $request->id;
+
+        // ===============================
+        // 1️⃣ Ambil data keuangan
+        // ===============================
+        $keuangan = DB::table('keuangan')
+            ->where('id_laporan_keuangan', $id_laporan_keuangan)
+            ->first();
+
+        if (!$keuangan) {
+            return redirect()->back()->with(
+                'error',
+                'Data keuangan tidak ditemukan'
+            );
+        }
+
+        $bukti = null;
+        $sumber = null;
+
+        // ===============================
+        // 2️⃣ Jika dari KOPERASI
+        // ===============================
+        if (!empty($keuangan->id_data_koperasi)) {
+            $koperasi = DB::table('data_koperasi')
+                ->where('id_data_koperasi', $keuangan->id_data_koperasi)
+                ->select('bukti_terima_data_koperasi')
+                ->first();
+
+            if ($koperasi && $koperasi->bukti_terima_data_koperasi) {
+                $bukti  = $koperasi->bukti_terima_data_koperasi;
+                $sumber = 'koperasi';
+            }
+        }
+
+        // ===============================
+        // 3️⃣ Jika dari SUPPLIER
+        // ===============================
+        if (!empty($keuangan->id_informasi_supplier)) {
+            $supplier = DB::table('barang_supplier')
+                ->where('id_informasi_supplier', $keuangan->id_informasi_supplier)
+                ->whereDate(
+                    'tanggal_barang_supplier',
+                    $keuangan->tanggal_laporan_keuangan
+                )
+                ->select('bukti_barang_supplier')
+                ->first();
+
+            if ($supplier && $supplier->bukti_barang_supplier) {
+                $bukti  = $supplier->bukti_barang_supplier;
+                $sumber = 'supplier';
+            }
+        }
+
+        return view(
+            'owner.laporan.keuangan.bukti_laporan_keuangan',
+            compact('bukti', 'sumber')
         );
     }
 
@@ -621,24 +686,24 @@ class LaporanKeuanganController extends Controller
     public function bukti_maker_laporan_keuangan(Request $request)
     {
         $id_laporan_keuangan = $request->id;
-    
+
         // ===============================
         // 1️⃣ Ambil data keuangan
         // ===============================
         $keuangan = DB::table('keuangan')
             ->where('id_laporan_keuangan', $id_laporan_keuangan)
             ->first();
-    
+
         if (!$keuangan) {
             return redirect()->back()->with(
                 'error',
                 'Data keuangan tidak ditemukan'
             );
         }
-    
+
         $bukti = null;
         $sumber = null;
-    
+
         // ===============================
         // 2️⃣ Jika dari KOPERASI
         // ===============================
@@ -647,13 +712,13 @@ class LaporanKeuanganController extends Controller
                 ->where('id_data_koperasi', $keuangan->id_data_koperasi)
                 ->select('bukti_terima_data_koperasi')
                 ->first();
-    
+
             if ($koperasi && $koperasi->bukti_terima_data_koperasi) {
                 $bukti  = $koperasi->bukti_terima_data_koperasi;
                 $sumber = 'koperasi';
             }
         }
-    
+
         // ===============================
         // 3️⃣ Jika dari SUPPLIER
         // ===============================
@@ -666,13 +731,13 @@ class LaporanKeuanganController extends Controller
                 )
                 ->select('bukti_barang_supplier')
                 ->first();
-    
+
             if ($supplier && $supplier->bukti_barang_supplier) {
                 $bukti  = $supplier->bukti_barang_supplier;
                 $sumber = 'supplier';
             }
         }
-    
+
         return view(
             'maker.laporan.keuangan.bukti_laporan_keuangan',
             compact('bukti', 'sumber')

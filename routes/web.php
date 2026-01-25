@@ -233,6 +233,8 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::get('/owner/laporan/keuangan',[LaporanKeuanganController::class,'index_owner_laporan_keuangan']);
     Route::post('/owner/laporan/keuangan/barang_laporan_keuangan',[LaporanKeuanganController::class,'barang_owner_laporan_keuangan']);
     Route::get('/owner/laporan/keuangan/cetak_laporan_keuangan',[LaporanKeuanganController::class,'cetak_owner_laporan_keuangan']);
+    Route::post('/owner/laporan/keuangan/bukti_laporan_keuangan',[LaporanKeuanganController::class,'bukti_owner_laporan_keuangan']);
+    
     Route::post('/owner/laporan/keuangan/store_laporan_keuangan',[LaporanKeuanganController::class,'store_owner_laporan_keuangan']);
     Route::post('/owner/laporan/keuangan/edit_laporan_keuangan',[LaporanKeuanganController::class,'edit_owner_laporan_keuangan']);
     Route::post('/owner/laporan/keuangan/{id}/update_laporan_keuangan',[LaporanKeuanganController::class,'update_owner_laporan_keuangan']);
@@ -364,7 +366,7 @@ Route::middleware(['auth:maker'])->group(function(){
     //Keuangan
     Route::get('/maker/laporan/keuangan',[LaporanKeuanganController::class,'index_maker_laporan_keuangan']);
     Route::post('/maker/laporan/keuangan/barang_laporan_keuangan',[LaporanKeuanganController::class,'barang_maker_laporan_keuangan']);
-Route::post('/maker/laporan/keuangan/bukti_laporan_keuangan',[LaporanKeuanganController::class,'bukti_maker_laporan_keuangan']);
+    Route::post('/maker/laporan/keuangan/bukti_laporan_keuangan',[LaporanKeuanganController::class,'bukti_maker_laporan_keuangan']);
 
     Route::post('/maker/laporan/keuangan/store_laporan_keuangan',[LaporanKeuanganController::class,'store_maker_laporan_keuangan']);
     Route::post('/maker/laporan/keuangan/edit_laporan_keuangan',[LaporanKeuanganController::class,'edit_maker_laporan_keuangan']);
