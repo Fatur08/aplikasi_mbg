@@ -269,7 +269,7 @@
                                     <option value="">-- Pilih Supplier --</option>
                                     @foreach ($supplier as $s)
                                         <option value="{{ $s->id_informasi_supplier }}">
-                                            {{ $s->nama_supplier }}
+                                            {{ $s->nama_informasi_supplier }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -332,38 +332,38 @@
         $('#jumlah_item').on('change', function () {
             let jumlah = $(this).val();
             let supplier = $('#id_informasi_supplier').val();
-        
+
             if (!supplier) {
                 alert('Pilih supplier terlebih dahulu');
                 $(this).val('');
                 return;
             }
-        
+
             $('#container-barang').html('');
-        
+
             for (let i = 0; i < jumlah; i++) {
                 $('#container-barang').append(`
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5>Barang ${i + 1}</h5>
-        
+
                             <div class="mb-2">
                                 <label>Nama Barang</label>
                                 <select name="barang[${i}][nama_barang_supplier]" class="form-select nama-barang" required>
                                     <option value="">-- Pilih Barang --</option>
                                 </select>
                             </div>
-        
+
                             <div class="mb-2">
                                 <label>Satuan</label>
                                 <input type="text" name="barang[${i}][satuan_barang_supplier]" class="form-control" required>
                             </div>
-        
+
                             <div class="mb-2">
                                 <label>Jumlah</label>
                                 <input type="number" name="barang[${i}][jumlah_barang_supplier]" class="form-control" required>
                             </div>
-        
+
                             <div class="mb-2">
                                 <label>Harga</label>
                                 <input type="number" name="barang[${i}][harga_barang_supplier]" class="form-control" required>
@@ -372,13 +372,13 @@
                     </div>
                 `);
             }
-        
+
             loadBarangSupplier();
         });
-        
+
         function loadBarangSupplier() {
             let supplier = $('#id_informasi_supplier').val();
-        
+
             $.get(`/maker/laporan/supplier/get-barang/${supplier}`, function (data) {
                 $('.nama-barang').each(function () {
                     let select = $(this);
