@@ -79,8 +79,13 @@ class LaporanSupplierController extends Controller
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
 
         // upload bukti
-        $path = $request->file('bukti_barang_supplier')
-            ->store('bukti_supplier', 'public');
+        if($request->hasFile('bukti_barang_supplier')){
+            $bukti_barang_supplier = "Bukti_".$tanggal_data_koperasi.".".$request
+                ->file('bukti_barang_supplier')
+                ->getClientOriginalExtension();
+        } else {
+            $bukti_barang_supplier = null;
+        }
 
         foreach ($request->barang as $item) {
 
@@ -97,13 +102,26 @@ class LaporanSupplierController extends Controller
                 DB::table('barang_supplier')->insert([
                     'nomor_dapur_barang_supplier' => $nomor_dapur,
                     'id_informasi_supplier'       => $request->id_informasi_supplier,
-                    'tanggal_barang_supplier'   => $request->tanggal_laporan_supplier,
+                    'tanggal_barang_supplier'     => $request->tanggal_laporan_supplier,
                     'nama_barang_supplier'       => $item['nama_barang_supplier'],
                     'satuan_barang_supplier'     => $item['satuan_barang_supplier'],
                     'jumlah_barang_supplier'     => $item['jumlah_barang_supplier'],
                     'harga_barang_supplier'      => $item['harga_barang_supplier'],
-                    'bukti_barang_supplier'      => $path
+                    'bukti_barang_supplier'      => $bukti_barang_supplier
                 ]);
+
+
+                if ($request->hasFile('bukti_barang_supplier')) {
+                    $storagePath = 'public/uploads/data_koperasi/bukti_terima/';
+                    $request->file('bukti_barang_supplier')->storeAs($storagePath, $bukti_barang_supplier);
+                    $publicPath = public_path('storage/uploads/data_koperasi/bukti_terima/');
+                    if (!is_dir($publicPath)) {
+                        mkdir($publicPath, 0777, true);
+                    }
+                    $sourceFile = storage_path('app/' . $storagePath . $bukti_barang_supplier);
+                    $destinationFile = public_path('storage/uploads/data_koperasi/bukti_terima/' . $bukti_barang_supplier);
+                    copy($sourceFile, $destinationFile);
+                }
 
             } else {
 
@@ -117,22 +135,49 @@ class LaporanSupplierController extends Controller
                             'satuan_barang_supplier'   => $item['satuan_barang_supplier'],
                             'jumlah_barang_supplier'   => $item['jumlah_barang_supplier'],
                             'harga_barang_supplier'    => $item['harga_barang_supplier'],
-                            'bukti_barang_supplier'    => $path,
+                            'bukti_barang_supplier'    => $bukti_barang_supplier,
                         ]);
+
+                    
+                    if ($request->hasFile('bukti_barang_supplier')) {
+                        $storagePath = 'public/uploads/data_koperasi/bukti_terima/';
+                        $request->file('bukti_barang_supplier')->storeAs($storagePath, $bukti_barang_supplier);
+                        $publicPath = public_path('storage/uploads/data_koperasi/bukti_terima/');
+                        if (!is_dir($publicPath)) {
+                            mkdir($publicPath, 0777, true);
+                        }
+                        $sourceFile = storage_path('app/' . $storagePath . $bukti_barang_supplier);
+                        $destinationFile = public_path('storage/uploads/data_koperasi/bukti_terima/' . $bukti_barang_supplier);
+                        copy($sourceFile, $destinationFile);
+                    }
 
                 } else {
 
                     // 4️⃣ Jika SEMUA SUDAH ADA → INSERT BARIS BARU
                     DB::table('barang_supplier')->insert([
-                        'nomor_dapur_barang_supplier' => $maker->nomor_dapur_maker,
+                        'nomor_dapur_barang_supplier' => $nomor_dapur,
                         'id_informasi_supplier'       => $request->id_informasi_supplier,
                         'tanggal_barang_supplier'   => $request->tanggal_laporan_supplier,
                         'nama_barang_supplier'       => $item['nama_barang_supplier'],
                         'satuan_barang_supplier'     => $item['satuan_barang_supplier'],
                         'jumlah_barang_supplier'     => $item['jumlah_barang_supplier'],
                         'harga_barang_supplier'      => $item['harga_barang_supplier'],
-                        'bukti_barang_supplier'      => $path,
+                        'bukti_barang_supplier'      => $bukti_barang_supplier,
                     ]);
+
+
+
+                    if ($request->hasFile('bukti_barang_supplier')) {
+                        $storagePath = 'public/uploads/data_koperasi/bukti_terima/';
+                        $request->file('bukti_barang_supplier')->storeAs($storagePath, $bukti_barang_supplier);
+                        $publicPath = public_path('storage/uploads/data_koperasi/bukti_terima/');
+                        if (!is_dir($publicPath)) {
+                            mkdir($publicPath, 0777, true);
+                        }
+                        $sourceFile = storage_path('app/' . $storagePath . $bukti_barang_supplier);
+                        $destinationFile = public_path('storage/uploads/data_koperasi/bukti_terima/' . $bukti_barang_supplier);
+                        copy($sourceFile, $destinationFile);
+                    }
                 }
             }
         }
