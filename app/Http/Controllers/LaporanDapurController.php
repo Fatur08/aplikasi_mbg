@@ -138,17 +138,17 @@ class LaporanDapurController extends Controller
     {
         $maker = Auth::guard('maker')->user();
         $nomor_dapur = $maker->nomor_dapur_maker;
-    
+
         $pilih_instansi  = $request->pilih_instansi;
         $dari_tanggal    = $request->dari_tanggal;
         $sampai_tanggal  = $request->sampai_tanggal;
-    
+
         // ===============================
         // Query utama data distribusi
         // ===============================
         $dataDistribusi = DB::table('distribusi')
             ->when($nomor_dapur, function ($q) use ($nomor_dapur) {
-                $q->where('nomor_dapur', $nomor_dapur);
+                $q->where('nomor_dapur_distribusi', $nomor_dapur);
             })
             ->when($pilih_instansi, function ($q) use ($pilih_instansi) {
                 $q->where('tujuan_distribusi', $pilih_instansi);
@@ -158,12 +158,12 @@ class LaporanDapurController extends Controller
             })
             ->orderBy('tanggal_distribusi', 'asc')
             ->get();
-    
+
         // ===============================
         // Total porsi
         // ===============================
         $totalPorsi = $dataDistribusi->sum('jumlah_paket');
-    
+
         // ===============================
         // Dropdown instansi (tanpa duplikat)
         // ===============================
@@ -172,7 +172,7 @@ class LaporanDapurController extends Controller
             ->groupBy('tujuan_distribusi')
             ->orderBy('tujuan_distribusi', 'asc')
             ->get();
-    
+
         return view('maker.laporan.dapur.index_dapur', compact(
             'dataDistribusi',
             'totalPorsi',
