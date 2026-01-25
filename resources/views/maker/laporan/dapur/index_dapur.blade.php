@@ -279,7 +279,7 @@
                                                     <tr>
                                                         <td style="text-align:center">{{ $index + 1 }}</td>
                                                         <td style="text-align:center">
-                                                            {{ \Carbon\Carbon::parse($row->tanggal_distribusi)->format('d-m-Y') }}
+                                                            {{ \Carbon\Carbon::parse($row->tanggal_distribusi)->translatedFormat('d F Y') }}
                                                         </td>
                                                         <td>{{ $row->tujuan_distribusi }}</td>
                                                         <td>{{ $row->menu_makanan }}</td>
