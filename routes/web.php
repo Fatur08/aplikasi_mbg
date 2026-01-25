@@ -193,7 +193,6 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::post('/owner/data_koperasi/{id}/update_modal_masuk_data_koperasi',[DataKoperasiController::class,'update_modal_masuk_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/edit_modal_keluar_data_koperasi',[DataKoperasiController::class,'edit_modal_keluar_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/{id}/update_modal_keluar_data_koperasi',[DataKoperasiController::class,'update_modal_keluar_owner_data_koperasi']);
-    Route::post('/owner/data_koperasi/lihat_barang_modal_keluar',[DataKoperasiController::class,'lihat_owner_barang_modal_keluar']);
     Route::get('/owner/data_koperasi/cetak_data_koperasi',[DataKoperasiController::class,'cetak_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/{id}/delete_data_koperasi',[DataKoperasiController::class,'delete_owner_data_koperasi']);
     Route::post('/owner/data_koperasi/tambah_barang_modal_keluar',[DataKoperasiController::class,'tambah_owner_barang_modal_keluar']);
