@@ -413,9 +413,7 @@
     let koperasiData = @json($grafik);
 
     const labels      = koperasiData.map(item => item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal');
-    const modalMasuk  = koperasiData.map(item => item.total_pemasukan);
     const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
-    const margin      = koperasiData.map(item => item.margin);
 
     const ctxBar = document.getElementById('koperasiChartOwner').getContext('2d');
     new Chart(ctxBar, {
@@ -424,19 +422,9 @@
             labels: labels,
             datasets: [
                 {
-                    label: 'Pemasukan',
-                    data: modalMasuk,
-                    backgroundColor: 'rgba(0, 76, 255, 1)'
-                },
-                {
                     label: 'Pengeluaran',
                     data: modalKeluar,
                     backgroundColor: 'rgba(255, 0, 0, 0.7)'
-                },
-                {
-                    label: 'Margin',
-                    data: margin,
-                    backgroundColor: 'rgba(47, 255, 0, 0.7)'
                 }
             ]
         },
