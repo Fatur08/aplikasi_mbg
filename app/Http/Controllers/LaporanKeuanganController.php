@@ -21,41 +21,50 @@ class LaporanKeuanganController extends Controller
         $pilih_supllier_koperasi = $request->pilih_supllier_koperasi;
     
         $data = DB::table('keuangan as k')
-        ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($pilih_dapur) {
-            $join->on('k.id_data_koperasi', '=', 'bmk.id_data_koperasi')
-                 ->where('bmk.nomor_dapur_barang_modal_keluar', $pilih_dapur);
-        })
-        ->leftJoin('barang_supplier as bs', function ($join) use ($pilih_dapur) {
-            $join->on('k.id_informasi_supplier', '=', 'bs.id_informasi_supplier')
-                 ->where('bs.nomor_dapur_barang_supplier', $pilih_dapur);
-        })
-        ->where('k.nomor_dapur_keuangan', $pilih_dapur)
-
-        // HANYA YANG ADA DATA
-        ->where(function ($q) {
-            $q->whereNotNull('bmk.id_data_koperasi')
-              ->orWhereNotNull('bs.id_informasi_supplier');
-        })
-
-        ->select(
-            'k.id_data_koperasi',
-            'k.tanggal_laporan_keuangan',
-
-            DB::raw('
-                SUM(COALESCE(bmk.harga_barang_modal_keluar,0)) +
-                SUM(COALESCE(bs.harga_barang_supplier,0))
-                AS total_harga
-            '),
-
-            DB::raw('MAX(CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
-            DB::raw('MAX(CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
-        )
-        ->groupBy(
-            'k.id_data_koperasi',
-            'k.tanggal_laporan_keuangan'
-        )
-        ->orderBy('k.tanggal_laporan_keuangan', 'desc')
-        ->get();
+            ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($dapur) {
+                $join->on('k.id_data_koperasi', '=', 'bmk.id_data_koperasi')
+                     ->where('bmk.nomor_dapur_barang_modal_keluar', $dapur);
+            })
+            ->leftJoin('barang_supplier as bs', function ($join) use ($dapur) {
+                $join->on('k.id_informasi_supplier', '=', 'bs.id_informasi_supplier')
+                     ->where('bs.nomor_dapur_barang_supplier', $dapur);
+            })
+            ->where('k.nomor_dapur_keuangan', $dapur)
+    
+            // HANYA TAMPILKAN JIKA ADA BARANG
+            ->where(function ($q) {
+                $q->whereNotNull('bmk.id_data_koperasi')
+                  ->orWhereNotNull('bs.id_informasi_supplier');
+            })
+    
+            // FILTER TANGGAL
+            ->when($dari_tanggal && $sampai_tanggal, function ($query) use ($dari_tanggal, $sampai_tanggal) {
+                $query->whereBetween('k.tanggal_laporan_keuangan', [
+                    $dari_tanggal,
+                    $sampai_tanggal
+                ]);
+            })
+    
+            // FILTER INSTANSI
+            ->when($pilih_supllier_koperasi === 'Supplier', function ($query) {
+                $query->whereNotNull('bs.id_informasi_supplier');
+            })
+            ->when($pilih_supllier_koperasi === 'Koperasi', function ($query) {
+                $query->whereNotNull('bmk.id_data_koperasi');
+            })
+    
+            ->select(
+                'k.id_data_koperasi',
+                'k.tanggal_laporan_keuangan',
+                DB::raw('MAX(CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
+                DB::raw('MAX(CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
+            )
+            ->groupBy(
+                'k.id_data_koperasi',
+                'k.tanggal_laporan_keuangan'
+            )
+            ->orderBy('k.tanggal_laporan_keuangan', 'desc')
+            ->get();
         
         
         /* ================= FLAG STATUS ================= */
@@ -211,28 +220,28 @@ class LaporanKeuanganController extends Controller
             ->join('data_koperasi as dk', 'dk.id_data_koperasi', '=', 'k.id_data_koperasi')
             ->leftJoin('barang_modal_keluar as bmk', 'dk.id_data_koperasi', '=', 'bmk.id_data_koperasi')
             ->leftJoin('barang_supplier as bs', 'dk.id_informasi_supplier', '=', 'bs.id_informasi_supplier')
-        
+
             ->where('k.nomor_dapur_keuangan', $pilih_dapur)
-        
+
             ->when($dari_tanggal && $sampai_tanggal, function ($q) use ($dari_tanggal, $sampai_tanggal) {
                 $q->whereBetween('k.tanggal_laporan_keuangan', [$dari_tanggal, $sampai_tanggal]);
             })
-        
+
             ->when($pilih_supllier_koperasi === 'Koperasi', function ($q) {
                 $q->whereNotNull('bmk.id_data_koperasi');
             })
-        
+
             ->when($pilih_supllier_koperasi === 'Supplier', function ($q) {
                 $q->whereNotNull('bs.id_informasi_supplier');
             })
-        
+
             ->select(
                 'k.tanggal_laporan_keuangan',
-        
+
                 'bmk.nama_barang_modal_keluar',
                 'bmk.jumlah_barang_modal_keluar',
                 'bmk.harga_barang_modal_keluar',
-        
+
                 'bs.nama_barang_supplier',
                 'bs.jumlah_barang_supplier',
                 'bs.harga_barang_supplier'
