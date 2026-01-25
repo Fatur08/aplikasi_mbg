@@ -272,10 +272,21 @@
                                                             </td>
 
                                                             <td class="text-center">
-                                                                <a href="#" class="bukti_terima_data_koperasi btn btn-info btn-sm"
-                                                                   data-id="{{ $d->id_data_koperasi }}">
-                                                                    👁 Lihat
-                                                                </a>
+                                                                @if ($d->dari_koperasi)
+                                                                    <a href="#"
+                                                                       class="bukti_terima_data_koperasi btn btn-info btn-sm"
+                                                                       data-sumber="koperasi"
+                                                                       data-id="{{ $d->id_data_koperasi }}">
+                                                                        👁 Lihat
+                                                                    </a>
+                                                                @elseif ($d->dari_supplier)
+                                                                    <a href="#"
+                                                                       class="bukti_terima_data_koperasi btn btn-info btn-sm"
+                                                                       data-sumber="supplier"
+                                                                       data-id="{{ $d->id_informasi_supplier }}">
+                                                                        👁 Lihat
+                                                                    </a>
+                                                                @endif
                                                             </td>
 
                                                             <td class="text-center">

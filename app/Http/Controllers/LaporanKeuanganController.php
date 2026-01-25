@@ -30,13 +30,13 @@ class LaporanKeuanganController extends Controller
                      ->where('bs.nomor_dapur_barang_supplier', $pilih_dapur);
             })
             ->where('k.nomor_dapur_keuangan', $pilih_dapur)
-    
-            // HANYA TAMPILKAN JIKA ADA BARANG
+        
+            // TAMPILKAN JIKA ADA BARANG
             ->where(function ($q) {
-                $q->whereNotNull('bmk.id_data_koperasi')
-                  ->orWhereNotNull('bs.id_informasi_supplier');
+                $q->whereNotNull('bmk.id_barang_modal_keluar')
+                  ->orWhereNotNull('bs.id_barang_supplier');
             })
-    
+        
             // FILTER TANGGAL
             ->when($dari_tanggal && $sampai_tanggal, function ($query) use ($dari_tanggal, $sampai_tanggal) {
                 $query->whereBetween('k.tanggal_laporan_keuangan', [
@@ -44,29 +44,34 @@ class LaporanKeuanganController extends Controller
                     $sampai_tanggal
                 ]);
             })
-    
+        
             // FILTER INSTANSI
             ->when($pilih_supplier_koperasi === 'Supplier', function ($query) {
-                $query->whereNotNull('bs.id_informasi_supplier');
+                $query->whereNotNull('bs.id_barang_supplier');
             })
             ->when($pilih_supplier_koperasi === 'Koperasi', function ($query) {
-                $query->whereNotNull('bmk.id_data_koperasi');
+                $query->whereNotNull('bmk.id_barang_modal_keluar');
             })
+        
             ->select(
+                'k.id_keuangan',
                 'k.id_data_koperasi',
+                'k.id_informasi_supplier',
                 'k.tanggal_laporan_keuangan',
-
+        
                 DB::raw('
-                    SUM(COALESCE(bmk.harga_barang_modal_keluar,0)) +
-                    SUM(COALESCE(bs.harga_barang_supplier,0))
+                    SUM(DISTINCT COALESCE(bmk.harga_barang_modal_keluar,0)) +
+                    SUM(DISTINCT COALESCE(bs.harga_barang_supplier,0))
                     AS total_harga
                 '),
-
-                DB::raw('MAX(CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
-                DB::raw('MAX(CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
+        
+                DB::raw('MAX(CASE WHEN bmk.id_barang_modal_keluar IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
+                DB::raw('MAX(CASE WHEN bs.id_barang_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
             )
             ->groupBy(
+                'k.id_keuangan',
                 'k.id_data_koperasi',
+                'k.id_informasi_supplier',
                 'k.tanggal_laporan_keuangan'
             )
             ->orderBy('k.tanggal_laporan_keuangan', 'desc')
@@ -203,7 +208,7 @@ class LaporanKeuanganController extends Controller
                     'barang_modal_keluar.jumlah_barang_modal_keluar as jumlah',
                     'barang_modal_keluar.satuan_barang_modal_keluar as satuan',
                     'barang_modal_keluar.harga_barang_modal_keluar as harga',
-                    DB::raw("'Modal Keluar' as sumber_data")
+                    DB::raw("'Koperasi' as sumber_data")
                 )
                 ->get();
         }
