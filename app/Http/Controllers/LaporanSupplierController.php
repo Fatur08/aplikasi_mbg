@@ -27,15 +27,20 @@ class LaporanSupplierController extends Controller
 
     public function getJumlahBarangSupplier($id_supplier)
     {
-        $maker = auth()->user();
-    
+        // Ambil data maker yang login
+        $makerLogin      = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+
+        $nomor_dapur     = $makerLogin->nomor_dapur_maker ?? null;
+
         $jumlah = DB::table('barang_supplier')
             ->where('id_informasi_supplier', $id_supplier)
-            ->where('nomor_dapur_barang_supplier', $maker->nomor_dapur_maker)
+            ->where('nomor_dapur_barang_supplier', $nomor_dapur)
             ->select('nama_barang_supplier')
             ->groupBy('nama_barang_supplier')
             ->count();
-    
+
         return response()->json([
             'jumlah' => $jumlah
         ]);

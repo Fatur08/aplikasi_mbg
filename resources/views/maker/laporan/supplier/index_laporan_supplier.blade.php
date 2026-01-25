@@ -396,27 +396,27 @@
             let supplierId = $(this).val();
             $('#jumlah_item').html('').prop('disabled', true);
             $('#container-barang').html('');
-
+        
             if (!supplierId) return;
-
+        
             $.get(`/maker/laporan/supplier/get-jumlah-barang/${supplierId}`, function (res) {
                 let jumlah = res.jumlah;
-
+        
                 $('#jumlah_item').append('<option value="">-- Pilih Jumlah --</option>');
-
+        
                 if (jumlah === 0) {
                     $('#jumlah_item').append(
                         '<option value="">Barang supplier belum tersedia</option>'
                     );
                     return;
                 }
-
-                for (let i = 0; i <= jumlah; i++) {
+        
+                for (let i = 1; i <= jumlah; i++) {
                     $('#jumlah_item').append(
                         `<option value="${i}">${i}</option>`
                     );
                 }
-
+        
                 $('#jumlah_item').prop('disabled', false);
             });
         });
