@@ -130,6 +130,49 @@ class LaporanSupplierController extends Controller
             ]);
         }
     }
+
+
+
+
+    public function batalkan_owner_validasi_laporan_supplier($id, Request $request)
+    {
+        $id = $request->id; // id_data_koperasi
+
+        DB::beginTransaction();
+
+        try {
+            // ✅ 1. Ambil data barang supplier berdasarkan id_barang_supplier
+            $barangSupplier = DB::table('barang_supplier')
+                ->where('id_barang_supplier', $id)
+                ->first();
+
+            if (!$barangSupplier) {
+                return Redirect::back()->with(['error' => 'Barang Supplier tidak ditemukan']);
+            }
+
+
+            // ✅ Update status_barang_supplier jadi 0
+            DB::table('barang_supplier')
+                ->where('id_barang_supplier', $id)
+                ->update([
+                    'status_barang_supplier' => 0
+                ]);
+
+
+            DB::commit();
+
+            return Redirect::back()->with([
+                'success' => 'Validasi berhasil dibatalkan'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return Redirect::back()->with([
+                'error' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ]);
+        }
+    }
     
 
 
