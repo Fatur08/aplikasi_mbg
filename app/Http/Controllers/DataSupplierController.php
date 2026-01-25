@@ -972,10 +972,10 @@ class DataSupplierController extends Controller
         if ($nomor_dapur !== null && $nomor_dapur !== '') {
             $query->where('nomor_dapur_informasi_supplier', $nomor_dapur);
         }
-        $supplier = $query->get();
-        $supplier = $query->paginate(1000);
+        $informasi_supplier = $query->get();
+        $informasi_supplier = $query->paginate(1000);
         $nama_supplier = DB::table('informasi_supplier')->select('id_informasi_supplier', 'nama_informasi_supplier')->get();
-        return view('maker.data_supplier.informasi_supplier.index_informasi_supplier' ,compact('supplier'));
+        return view('maker.data_supplier.informasi_supplier.index_informasi_supplier' ,compact('informasi_supplier'));
     }
 
     public function store_maker_informasi_supplier(Request $request)

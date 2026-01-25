@@ -214,13 +214,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($supplier as $d)
-                                                @php
-                                                    $path = Storage::url('uploads/supplier/'.$d->foto);
-                                                @endphp
+                                                @foreach ($informasi_supplier as $d)
                                                 <tr>
                                                     <td style="text-align:center">{{ $loop->iteration + $supplier->firstItem()-1 }}</td>
-                                                    <td>{{ $d->nama_supplier }}</td>
+                                                    <td>{{ $d->nama_informasi_supplier }}</td>
                                                     <td>
                                                         <div class="align-items-center">
                                                             <a href="#" class="tambah_barang_modal_keluar btn btn-info btn-sm"
@@ -234,14 +231,14 @@
                                                             </a>
                                                         </div>
                                                     </td>
-                                                    <td>{{ $d->alamat_supplier }}</td>
-                                                    <td>{{ $d->no_hp_supplier }}</td>
+                                                    <td>{{ $d->alamat_informasi_supplier }}</td>
+                                                    <td>{{ $d->no_hp_informasi_supplier }}</td>
                                                     <td style="text-align:center">
-                                                        @if($d->status_supplier == 0)
+                                                        @if($d->status_informasi_supplier == 0)
                                                             <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                        @elseif($d->status_supplier == 1)
+                                                        @elseif($d->status_informasi_supplier == 1)
                                                             <button class="btn btn-success btn-sm">Disetujui</button>
-                                                        @elseif($d->status_supplier == 2)
+                                                        @elseif($d->status_informasi_supplier == 2)
                                                             <button class="btn btn-danger btn-sm">Ditolak</button>
                                                         @endif
                                                     </td>
