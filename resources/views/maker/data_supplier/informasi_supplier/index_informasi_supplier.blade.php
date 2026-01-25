@@ -220,7 +220,7 @@
                                                     <td>{{ $d->nama_informasi_supplier }}</td>
                                                     <td>
                                                         <div class="align-items-center">
-                                                            <a href="#" class="tambah_barang_modal_keluar btn btn-info btn-sm"
+                                                            <a href="#" class="tambah_barang_supplier btn btn-info btn-sm"
                                                                data-id="{{ $d->id_data_koperasi }}">
                                                                 ➕ Tambah
                                                             </a>
@@ -340,75 +340,15 @@
 </div>
 
 
-{{-- Modal Edit Supplier --}}
-<div class="modal modal-blur fade" id="modal-editinformasisupplier" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Data Supplier</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadeditforminformasisupplier">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Modal Tambah Barang Terpakai --}}
-<div class="modal modal-blur fade" id="modal-tambahbahansupplier" tabindex="-1" role="dialog" aria-hidden="true">
+{{-- Modal Tambah Barang Supplier --}}
+<div class="modal modal-blur fade" id="modal-tambahbarangsupplier" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Tambah Barang Supplier</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="loadformtambahbahansupplier">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Modal Lihat Barang Supplier --}}
-<div class="modal modal-blur fade" id="modal-lihatbarangsupplier" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Lihat Barang Supplier</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadformlihatbarangsupplier">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Modal Nota --}}
-<div class="modal modal-blur fade" id="modal-notainformasisupplier" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Nota</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadnotainformasisupplier">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Modal Bukti Terima --}}
-<div class="modal modal-blur fade" id="modal-buktiterimainformasisupplier" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Bukti Terima</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadbuktiterimainformasisupplier">
+            <div class="modal-body" id="loadformtambahbarangsupplier">
                 
             </div>
         </div>
@@ -422,22 +362,7 @@
             $("#modal-inputsupplier").modal("show");
         });
 
-        $(".edit_informasi_supplier").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/maker/data_supplier/informasi_supplier/edit_informasi_supplier',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadeditforminformasisupplier").html(respond);
-                }
-            });
-            $("#modal-editinformasisupplier").modal("show");
-        });
+        
 
         $(".tambah_barang_supplier").click(function(){
             var id = $(this).attr('data-id');
@@ -450,85 +375,13 @@
                     id : id
                 },
                 success:function(respond){
-                    $("#loadformtambahbahansupplier").html(respond);
+                    $("#loadformtambahbarangsupplier").html(respond);
                 }
             });
-            $("#modal-tambahbahansupplier").modal("show");
+            $("#modal-tambahbarangsupplier").modal("show");
         });
 
-        $(".lihat_barang_supplier").click(function(){
-            var id = $(this).attr('data-id');
-            $.ajax({
-                type:'POST',
-                url:'/maker/data_supplier/informasi_supplier/lihat_barang_supplier',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadformlihatbarangsupplier").html(respond);
-                }
-            });
-            $("#modal-lihatbarangsupplier").modal("show");
-        });
 
-        $(".nota_informasi_supplier").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/maker/data_supplier/informasi_supplier/nota_informasi_supplier',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadnotainformasisupplier").html(respond);
-                }
-            });
-            $("#modal-notainformasisupplier").modal("show");
-        });
-
-        $(".bukti_terima_informasi_supplier").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/maker/data_supplier/informasi_supplier/bukti_terima_informasi_supplier',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadbuktiterimainformasisupplier").html(respond);
-                }
-            });
-            $("#modal-buktiterimainformasisupplier").modal("show");
-        });
-
-        $(".delete-confirm-informasi-supplier").click(function(e){
-            var form = $(this).closest('form');
-            e.preventDefault();
-            Swal.fire({
-                title: "Apakah Anda Yakin Data ini Mau Di Hapus?",
-                text: "Jika Ya Maka Data Akan Terhapus Permanen",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Hapus Saja"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Data Berhasil Di Hapus",
-                        icon: "success"
-                  });
-                }
-            });
-        });
 
         $("#frmSpplr").submit(function(){
             var nama_supplier = $("#nama_supplier").val();
