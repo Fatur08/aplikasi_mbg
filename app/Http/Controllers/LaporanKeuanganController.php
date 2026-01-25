@@ -505,6 +505,7 @@ class LaporanKeuanganController extends Controller
     
         $dari_tanggal   = $request->dari_tanggal;
         $sampai_tanggal = $request->sampai_tanggal;
+        $pilih_instansi = $request->pilih_instansi;
     
         $data = DB::table('keuangan as k')
             ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($dapur) {
@@ -516,12 +517,23 @@ class LaporanKeuanganController extends Controller
                      ->where('bs.nomor_dapur_barang_supplier', $dapur);
             })
             ->where('k.nomor_dapur_keuangan', $dapur)
+    
+            // FILTER TANGGAL
             ->when($dari_tanggal && $sampai_tanggal, function ($query) use ($dari_tanggal, $sampai_tanggal) {
                 $query->whereBetween('k.tanggal_laporan_keuangan', [
                     $dari_tanggal,
                     $sampai_tanggal
                 ]);
             })
+    
+            // FILTER INSTANSI
+            ->when($pilih_instansi === 'Supplier', function ($query) {
+                $query->whereNotNull('bs.id_informasi_supplier');
+            })
+            ->when($pilih_instansi === 'Koperasi', function ($query) {
+                $query->whereNotNull('bmk.id_data_koperasi');
+            })
+    
             ->select(
                 'k.id_data_koperasi',
                 'k.tanggal_laporan_keuangan',
@@ -538,7 +550,8 @@ class LaporanKeuanganController extends Controller
         return view('maker.laporan.keuangan.index_laporan_keuangan', compact(
             'data',
             'dari_tanggal',
-            'sampai_tanggal'
+            'sampai_tanggal',
+            'pilih_instansi'
         ));
     }
 

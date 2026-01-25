@@ -206,8 +206,8 @@
                                                 <div class="input-icon">
                                                     <select name="pilih_instansi" id="pilih_instansi" class="form-select">
                                                         <option value="">Pilih Supplier / Koperasi</option>
-                                                        <option value="Supplier">Supplier</option>
-                                                        <option value="Koperasi">Koperasi</option>
+                                                        <option value="Supplier" {{ request('pilih_instansi') == 'Supplier' ? 'selected' : '' }}>Supplier</option>
+                                                        <option value="Koperasi" {{ request('pilih_instansi') == 'Koperasi' ? 'selected' : '' }}>Koperasi</option>
                                                     </select>
                                                 </div>
                                             </div>
