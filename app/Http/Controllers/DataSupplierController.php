@@ -264,6 +264,97 @@ class DataSupplierController extends Controller
         return view('owner.data_supplier.informasi_supplier.index_informasi_supplier', compact('nama_supplier', 'informasi_supplier', 'dapurList'));
     }
 
+
+
+
+
+    public function lihat_owner_barang_supplier(Request $request)
+    {
+        // Ambil ID informasi supplier dari request
+        $id_informasi_supplier = $request->id;
+        
+        // ✅ Ambil SATU nomor_dapur berdasarkan id_informasi_supplier
+        $nomor_dapur = DB::table('barang_supplier')
+            ->where('id_informasi_supplier', $id_informasi_supplier)
+            ->value('nomor_dapur_barang_supplier'); // hanya ambil 1 nilai saja
+
+        // Ambil data bahan dari tabel bahan_menu
+        $barang_supplier = DB::table('barang_supplier')
+            ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
+            ->where('barang_supplier.id_informasi_supplier', $id_informasi_supplier)
+            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur)
+            ->select(
+                'barang_supplier.*',
+                'barang_supplier.nama_barang_supplier',
+            )
+            ->get();
+
+        return view('owner.data_supplier.informasi_supplier.lihat_barang_supplier', compact('barang_supplier'));
+    }
+
+
+
+
+    public function validasi_owner_informasi_supplier(Request $request)
+    {
+        $id = $request->id;
+        $data = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
+        return view('owner.data_supplier.informasi_supplier.validasi_informasi_supplier',compact('data'));
+    }
+
+    public function update_validasi_owner_informasi_supplier($id, Request $request)
+    {
+        $id                 = $request->id;
+        $status_validasi    = $request->status_informasi_supplier;
+
+        try {
+            DB::beginTransaction();
+
+            // 1️⃣ Update status informasi supplier
+            $updateSupplier = DB::table('informasi_supplier')
+                ->where('id_informasi_supplier', $id)
+                ->update([
+                    'status_informasi_supplier' => $status_validasi
+                ]);
+
+            DB::commit();
+
+            return Redirect::back()->with(['success' => 'Data Berhasil Divalidasi']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // dd($e);
+            return Redirect::back()->with(['error' => 'Data Gagal Divalidasi: ' . $e->getMessage()]);
+        }
+    }
+
+    public function batalkan_validasi_owner_informasi_supplier(Request $request)
+    {
+        try {
+            $id = $request->id;
+        
+            
+            // Update status di tabel informasi_supplier
+            DB::table('informasi_supplier')
+                ->where('id_informasi_supplier', $id)
+                ->update([
+                    'status_informasi_supplier' => 0
+                ]);
+            
+            return Redirect::back()->with(['success' => 'Validasi Berhasil Dibatalkan!']);
+        
+        } catch (\Exception $e) {
+            // dd($e);
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat membatalkan validasi.'
+            ]);
+        }
+    }
+
+    
+
+
+
     public function store_owner_informasi_supplier(Request $request)
     {
         $id_supplier = $request->id_supplier;
@@ -499,61 +590,6 @@ class DataSupplierController extends Controller
     }
 
 
-    public function validasi_owner_informasi_supplier(Request $request)
-    {
-        $id = $request->id;
-        $data = DB::table('informasi_supplier')->where('id_informasi_supplier', $id)->first();
-        return view('owner.data_supplier.informasi_supplier.validasi_informasi_supplier',compact('data'));
-    }
-
-    public function update_validasi_owner_informasi_supplier($id, Request $request)
-    {
-        $id                 = $request->id;
-        $status_validasi    = $request->status_informasi_supplier;
-
-        try {
-            DB::beginTransaction();
-
-            // 1️⃣ Update status informasi supplier
-            $updateSupplier = DB::table('informasi_supplier')
-                ->where('id_informasi_supplier', $id)
-                ->update([
-                    'status_informasi_supplier' => $status_validasi
-                ]);
-
-            DB::commit();
-
-            return Redirect::back()->with(['success' => 'Data Berhasil Divalidasi']);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            // dd($e);
-            return Redirect::back()->with(['error' => 'Data Gagal Divalidasi: ' . $e->getMessage()]);
-        }
-    }
-
-    public function batalkan_validasi_owner_informasi_supplier(Request $request)
-    {
-        try {
-            $id = $request->id;
-        
-            
-            // Update status di tabel informasi_supplier
-            DB::table('informasi_supplier')
-                ->where('id_informasi_supplier', $id)
-                ->update([
-                    'status_informasi_supplier' => 0
-                ]);
-            
-            return Redirect::back()->with(['success' => 'Validasi Berhasil Dibatalkan!']);
-        
-        } catch (\Exception $e) {
-            // dd($e);
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat membatalkan validasi.'
-            ]);
-        }
-    }
 
 
     public function tambah_owner_barang_supplier(Request $request)
@@ -659,29 +695,7 @@ class DataSupplierController extends Controller
         }
     }
 
-    public function lihat_owner_barang_supplier(Request $request)
-    {
-        // Ambil ID informasi supplier dari request
-        $id_informasi_supplier = $request->id;
-        
-        // ✅ Ambil SATU nomor_dapur berdasarkan id_informasi_supplier
-        $nomor_dapur = DB::table('barang_supplier')
-            ->where('id_informasi_supplier', $id_informasi_supplier)
-            ->value('nomor_dapur_barang_supplier'); // hanya ambil 1 nilai saja
-
-        // Ambil data bahan dari tabel bahan_menu
-        $barang_supplier = DB::table('barang_supplier')
-            ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
-            ->where('barang_supplier.id_informasi_supplier', $id_informasi_supplier)
-            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur)
-            ->select(
-                'barang_supplier.*',
-                'barang_supplier.nama_barang_supplier',
-            )
-            ->get();
-
-        return view('owner.data_supplier.informasi_supplier.lihat_barang_supplier', compact('barang_supplier'));
-    }
+    
 
 
 
