@@ -83,16 +83,26 @@ class LaporanSupplierController extends Controller
         ================================*/
         $bukti_barang_supplier = null;
 
-        if ($request->hasFile('bukti_barang_supplier')) {
-            $bukti_barang_supplier = 'Bukti_' .
-                date('Ymd_His') . '.' .
-                $request->file('bukti_barang_supplier')->getClientOriginalExtension();
+        // upload bukti
+        if($request->hasFile('bukti_barang_supplier')){
+            $bukti_barang_supplier = "Bukti_".$request->tanggal_laporan_supplier.".".$request
+                ->file('bukti_barang_supplier')
+                ->getClientOriginalExtension();
+        } else {
+            $bukti_barang_supplier = null;
+        }
 
-            $request->file('bukti_barang_supplier')
-                ->storeAs(
-                    'public/uploads/data_koperasi/bukti_terima',
-                    $bukti_barang_supplier
-                );
+
+        if ($request->hasFile('bukti_barang_supplier')) {
+            $storagePath = 'public/uploads/data_koperasi/bukti_terima/';
+            $request->file('bukti_barang_supplier')->storeAs($storagePath, $bukti_barang_supplier);
+            $publicPath = public_path('storage/uploads/data_koperasi/bukti_terima/');
+            if (!is_dir($publicPath)) {
+                mkdir($publicPath, 0777, true);
+            }
+            $sourceFile = storage_path('app/' . $storagePath . $bukti_barang_supplier);
+            $destinationFile = public_path('storage/uploads/data_koperasi/bukti_terima/' . $bukti_barang_supplier);
+            copy($sourceFile, $destinationFile);
         }
 
         /* ===============================
