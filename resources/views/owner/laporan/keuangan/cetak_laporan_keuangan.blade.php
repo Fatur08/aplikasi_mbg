@@ -143,14 +143,14 @@
                 </td>
 
                 {{-- Koperasi --}}
-                <td class="text-center">
+                <td class="text-center" style="text-align: center; vertical-align: middle;">
                     @if ($row->nama_barang_modal_keluar)
                         ✔
                     @endif
                 </td>
 
                 {{-- Supplier --}}
-                <td class="text-center">
+                <td class="text-center" style="text-align: center; vertical-align: middle;">
                     @if ($row->nama_barang_supplier)
                         ✔
                     @endif

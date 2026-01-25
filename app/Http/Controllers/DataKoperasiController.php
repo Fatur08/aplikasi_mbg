@@ -95,7 +95,7 @@ class DataKoperasiController extends Controller
         $total_harganya = $barang_list->sum('harga');
 
         return view(
-            'maker.data_koperasi.lihat_barang_modal_keluar',
+            'owner.data_koperasi.lihat_barang_modal_keluar',
             compact('barang_list', 'total_harganya')
         );
     }
