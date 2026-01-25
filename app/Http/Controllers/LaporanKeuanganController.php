@@ -135,7 +135,8 @@ class LaporanKeuanganController extends Controller
             'dari_tanggal',
             'sampai_tanggal',
             'pilih_supllier_koperasi',
-            'grafik'
+            'grafik',
+            'dapurList'
         ));
     }
 
