@@ -248,21 +248,13 @@
 
                                                             <td>
                                                                 @if ($item->bukti_barang_supplier)
-                                                                    <a href="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/' . $item->bukti_barang_supplier) }}"
-                                                                       target="_blank"
-                                                                       class="btn btn-sm btn-primary">
-                                                                        Lihat
+                                                                    <a href="#" class="bukti_barang_supplier btn btn-info btn-sm"
+                                                                       data-id="{{ $item->id_barang_supplier }}">
+                                                                        👁 Lihat
                                                                     </a>
                                                                 @else
                                                                     <span class="badge bg-secondary">Tidak ada</span>
                                                                 @endif
-                                                            </td>
-
-                                                            <td class="text-center">
-                                                                <a href="#" class="bukti_barang_supplier btn btn-info btn-sm"
-                                                                   data-id="{{ $d->id_barang_supplier }}">
-                                                                    👁 Lihat
-                                                                </a>
                                                             </td>
 
 
