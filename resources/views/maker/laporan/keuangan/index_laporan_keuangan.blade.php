@@ -204,10 +204,10 @@
                                         <div class="row g-2 align-items-end">
                                             <div class="col-md-6">
                                                 <div class="input-icon">
-                                                    <select name="pilih_instansi" id="pilih_instansi" class="form-select">
+                                                    <select name="pilih_supllier_koperasi" id="pilih_supllier_koperasi" class="form-select">
                                                         <option value="">Pilih Supplier / Koperasi</option>
-                                                        <option value="Supplier" {{ request('pilih_instansi') == 'Supplier' ? 'selected' : '' }}>Supplier</option>
-                                                        <option value="Koperasi" {{ request('pilih_instansi') == 'Koperasi' ? 'selected' : '' }}>Koperasi</option>
+                                                        <option value="Supplier" {{ request('pilih_supllier_koperasi') == 'Supplier' ? 'selected' : '' }}>Supplier</option>
+                                                        <option value="Koperasi" {{ request('pilih_supllier_koperasi') == 'Koperasi' ? 'selected' : '' }}>Koperasi</option>
                                                     </select>
                                                 </div>
                                             </div>
