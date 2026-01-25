@@ -197,10 +197,10 @@
                                         <div class="row mt-2">
                                             <div class="col-4">
                                                 <div class="input-icon">
-                                                    <select name="pilih_supllier_koperasi" id="pilih_supllier_koperasi" class="form-select">
+                                                    <select name="pilih_supplier_koperasi" id="pilih_supplier_koperasi" class="form-select">
                                                         <option value="">Pilih Supplier / Koperasi</option>
-                                                        <option value="Supplier" {{ request('pilih_supllier_koperasi') == 'Supplier' ? 'selected' : '' }}>Supplier</option>
-                                                        <option value="Koperasi" {{ request('pilih_supllier_koperasi') == 'Koperasi' ? 'selected' : '' }}>Koperasi</option>
+                                                        <option value="Supplier" {{ request('pilih_supplier_koperasi') == 'Supplier' ? 'selected' : '' }}>Supplier</option>
+                                                        <option value="Koperasi" {{ request('pilih_supplier_koperasi') == 'Koperasi' ? 'selected' : '' }}>Koperasi</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -384,7 +384,7 @@
             var pilih_dapur                = $("#pilih_dapur").val();
             var dari_tanggal               = $("#dari_tanggal").val();
             var sampai_tanggal             = $("#sampai_tanggal").val();
-            var pilih_supllier_koperasi    = $("#pilih_supllier_koperasi").val();
+            var pilih_supplier_koperasi    = $("#pilih_supplier_koperasi").val();
                 
             if(pilih_dapur == ""){
                 Swal.fire({
@@ -417,14 +417,14 @@
                     $("#sampai_tanggal").focus();
                 });
                 return false;
-            } else if(pilih_supllier_koperasi == ""){
+            } else if(pilih_supplier_koperasi == ""){
                 Swal.fire({
                     title: 'Warning!',
                     text: 'Koperasi/Supplier Harus Diisi',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                 }).then(()=> {
-                    $("#pilih_supllier_koperasi").focus();
+                    $("#pilih_supplier_koperasi").focus();
                 });
                 return false;
             }

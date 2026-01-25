@@ -18,7 +18,7 @@ class LaporanKeuanganController extends Controller
         $pilih_dapur             = $request->pilih_dapur;
         $dari_tanggal            = $request->dari_tanggal;
         $sampai_tanggal          = $request->sampai_tanggal;
-        $pilih_supllier_koperasi = $request->pilih_supllier_koperasi;
+        $pilih_supplier_koperasi = $request->pilih_supplier_koperasi;
     
         $data = DB::table('keuangan as k')
             ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($pilih_dapur) {
@@ -46,10 +46,10 @@ class LaporanKeuanganController extends Controller
             })
     
             // FILTER INSTANSI
-            ->when($pilih_supllier_koperasi === 'Supplier', function ($query) {
+            ->when($pilih_supplier_koperasi === 'Supplier', function ($query) {
                 $query->whereNotNull('bs.id_informasi_supplier');
             })
-            ->when($pilih_supllier_koperasi === 'Koperasi', function ($query) {
+            ->when($pilih_supplier_koperasi === 'Koperasi', function ($query) {
                 $query->whereNotNull('bmk.id_data_koperasi');
             })
             ->select(
@@ -150,7 +150,7 @@ class LaporanKeuanganController extends Controller
             'data',
             'dari_tanggal',
             'sampai_tanggal',
-            'pilih_supllier_koperasi',
+            'pilih_supplier_koperasi',
             'grafik',
             'dapurList',
             'dataKosong',
@@ -220,7 +220,7 @@ class LaporanKeuanganController extends Controller
         $pilih_dapur             = $request->pilih_dapur;
         $dari_tanggal            = $request->dari_tanggal;
         $sampai_tanggal          = $request->sampai_tanggal;
-        $pilih_supllier_koperasi = $request->pilih_supllier_koperasi;
+        $pilih_supplier_koperasi = $request->pilih_supplier_koperasi;
     
         $laporan = DB::table('keuangan as k')
             ->join('data_koperasi as dk', 'dk.id_data_koperasi', '=', 'k.id_data_koperasi')
@@ -233,11 +233,11 @@ class LaporanKeuanganController extends Controller
                 $q->whereBetween('k.tanggal_laporan_keuangan', [$dari_tanggal, $sampai_tanggal]);
             })
 
-            ->when($pilih_supllier_koperasi === 'Koperasi', function ($q) {
+            ->when($pilih_supplier_koperasi === 'Koperasi', function ($q) {
                 $q->whereNotNull('bmk.id_data_koperasi');
             })
 
-            ->when($pilih_supllier_koperasi === 'Supplier', function ($q) {
+            ->when($pilih_supplier_koperasi === 'Supplier', function ($q) {
                 $q->whereNotNull('bs.id_informasi_supplier');
             })
 
@@ -262,7 +262,7 @@ class LaporanKeuanganController extends Controller
         $grafik = DB::table('keuangan as k')
         ->select(
             'k.tanggal_laporan_keuangan',
-    
+
             DB::raw('
                 (
                     SELECT SUM(dk.harga_data_koperasi)
@@ -271,7 +271,7 @@ class LaporanKeuanganController extends Controller
                     AND dk.jenis_data_koperasi = "modal_masuk"
                 ) AS total_pemasukan
             '),
-    
+
             DB::raw('
                 (
                     SELECT COALESCE(SUM(bs.harga_barang_supplier),0)
@@ -289,7 +289,7 @@ class LaporanKeuanganController extends Controller
                 )
                 AS total_pengeluaran
             '),
-    
+
             DB::raw('
                 (
                     (
@@ -338,7 +338,7 @@ class LaporanKeuanganController extends Controller
             'laporan',
             'dari_tanggal',
             'sampai_tanggal',
-            'pilih_supllier_koperasi'
+            'pilih_supplier_koperasi'
         ));
     }
 
@@ -453,7 +453,7 @@ class LaporanKeuanganController extends Controller
     
         $dari_tanggal   = $request->dari_tanggal;
         $sampai_tanggal = $request->sampai_tanggal;
-        $pilih_supllier_koperasi = $request->pilih_supllier_koperasi;
+        $pilih_supplier_koperasi = $request->pilih_supplier_koperasi;
     
         $data = DB::table('keuangan as k')
             ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($dapur) {
@@ -481,10 +481,10 @@ class LaporanKeuanganController extends Controller
             })
     
             // FILTER INSTANSI
-            ->when($pilih_supllier_koperasi === 'Supplier', function ($query) {
+            ->when($pilih_supplier_koperasi === 'Supplier', function ($query) {
                 $query->whereNotNull('bs.id_informasi_supplier');
             })
-            ->when($pilih_supllier_koperasi === 'Koperasi', function ($query) {
+            ->when($pilih_supplier_koperasi === 'Koperasi', function ($query) {
                 $query->whereNotNull('bmk.id_data_koperasi');
             })
     
@@ -505,7 +505,7 @@ class LaporanKeuanganController extends Controller
             'data',
             'dari_tanggal',
             'sampai_tanggal',
-            'pilih_supllier_koperasi'
+            'pilih_supplier_koperasi'
         ));
     }
 
