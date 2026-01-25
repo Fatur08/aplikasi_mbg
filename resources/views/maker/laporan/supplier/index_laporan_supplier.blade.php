@@ -421,7 +421,7 @@
                     return;
                 }
 
-                for (let i = 0; i <= jumlah; i++) {
+                for (let i = 1; i <= jumlah; i++) {
                     $('#jumlah_item').append(
                         `<option value="${i}">${i}</option>`
                     );
