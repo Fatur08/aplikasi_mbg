@@ -198,9 +198,9 @@ class LaporanDapurController extends Controller
 
         $data = [
             'nomor_dapur_distribusi'   => $nomor_dapur,
-            'tujuan_distribusi'   => $request->tujuan_distribusi,
-            'jenis_distribusi'   => $request->jenis_distribusi,
-            'jumlah_paket' => (int) $request->jumlah_paket
+            'kategori_distribusi'   => $request->pilih_sekolah_atau_b3,
+            'tujuan_distribusi'   => $request->nama_sekolah_atau_b3,
+            'jumlah_paket' => (int) $request->jumlah_pm
         ];
 
         $simpan = DB::table('distribusi')->insert($data);
