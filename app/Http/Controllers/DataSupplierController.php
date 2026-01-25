@@ -1021,42 +1021,26 @@ class DataSupplierController extends Controller
     public function store_maker_barang_supplier(Request $request)
     {
         DB::beginTransaction();
-
+    
         try {
-
-            // ============================================================
-            // 1. AMBIL DATA DARI FORM
-            // ============================================================
-            $maker                  = Auth::guard('maker')->user();
-            $nomor_dapur            = $maker->nomor_dapur_maker;
-            $id_informasi_supplier  = $request->id_informasi_supplier;
-
-
-            // ============================================================
-            // 2. RESET STATUS VALIDASI INFORMASI SUPPLIER
-            // ============================================================
+    
+            $maker = Auth::guard('maker')->user();
+            $nomor_dapur = $maker->nomor_dapur_maker;
+            $id_informasi_supplier = $request->id_informasi_supplier;
+    
+            // Reset status validasi
             DB::table('informasi_supplier')
                 ->where('id_informasi_supplier', $id_informasi_supplier)
                 ->update([
-                    'status_informasi_supplier' => 0 // menunggu validasi ulang
+                    'status_informasi_supplier' => 0
                 ]);
-
-            // ============================================================
-            // 4. AMBIL DATA BARANG DINAMIS DARI FORM
-            // ============================================================
-            $nama_barang   = $request->nama_barang_supplier;
-            $jumlah_barang = $request->jumlah_barang;
-            
-            // ============================================================
-            // 5. INSERT BARANG MODAL KELUAR
-            // ============================================================
+    
+            // Ambil nama barang (array)
+            $nama_barang = $request->nama_barang_supplier;
+    
             if (is_array($nama_barang)) {
-            
-                foreach ($nama_barang as $index => $nama) {
-            
-                    // validasi minimal
-                    if (!empty($nama) && !empty($jumlah_barang[$index])) {
-            
+                foreach ($nama_barang as $nama) {
+                    if (!empty($nama)) {
                         DB::table('barang_supplier')->insert([
                             'nama_barang_supplier'        => $nama,
                             'nomor_dapur_barang_supplier' => $nomor_dapur,
@@ -1065,20 +1049,16 @@ class DataSupplierController extends Controller
                     }
                 }
             }
-
+    
             DB::commit();
-
-            return Redirect::back()->with([
-                'success' => 'Data barang supplier berhasil disimpan dan status informasi supplier direset'
-            ]);
-
+    
+            return back()->with('success', 'Nama barang supplier berhasil disimpan');
+    
         } catch (\Exception $e) {
-
+    
             DB::rollBack();
-
-            return Redirect::back()->with([
-                'warning' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ]);
+    
+            return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 

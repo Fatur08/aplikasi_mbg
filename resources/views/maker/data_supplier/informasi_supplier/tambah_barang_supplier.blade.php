@@ -37,23 +37,24 @@ $(document).ready(function () {
         let jumlah = $(this).val();
         let html   = '';
 
-        if (jumlah === '') {
+        if (!jumlah) {
             $('#container-barang').html('');
             return;
         }
 
         for (let i = 1; i <= jumlah; i++) {
-
             html += `
             <div class="border rounded p-3 mb-3">
                 <h4>Masukkan Barang Ke-${i}</h4>
 
                 <div class="input-icon mb-3">
                     <span class="input-icon-addon">📦</span>
-                    <input type="text" name="nama_barang_supplier[]" class="form-control"
-                        placeholder="Nama Barang Ke-${i}" required>
+                    <input type="text"
+                           name="nama_barang_supplier[]"
+                           class="form-control"
+                           placeholder="Nama Barang Ke-${i}"
+                           required>
                 </div>
-                
             </div>`;
         }
 
