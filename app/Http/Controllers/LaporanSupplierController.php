@@ -16,7 +16,7 @@ class LaporanSupplierController extends Controller
     // BAGIAN OWNER
     public function index_owner_laporan_supplier(Request $request)
     {
-        $nomor_dapur = $pilih_dapur;
+        $nomor_dapur = $request->pilih_dapur;
     
         // Data supplier
         $supplier = DB::table('informasi_supplier')
