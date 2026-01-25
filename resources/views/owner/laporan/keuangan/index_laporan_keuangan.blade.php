@@ -467,30 +467,7 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: {
-                    labels: { font: { size: 14 } }
-                },
-                datalabels: {
-                    anchor: 'end',
-                    align: 'top',
-                    color: '#000',
-                    font: {
-                        weight: 'bold',
-                        size: 12
-                    },
-                    formatter: function (value) {
-                        return formatRupiah(value);
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    ticks: {
-                        callback: function (value) {
-                            return formatRupiah(value);
-                        }
-                    }
-                }
+                legend: { labels: { font: { size: 14 } } }
             }
         }
     });
