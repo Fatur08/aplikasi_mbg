@@ -961,21 +961,48 @@ class DataSupplierController extends Controller
         $nomor_dapur        = $maker->nomor_dapur_maker;
         $nama_supplier_cari = $request->nama_supplier_cari;
         $validasi           = $request->pilih_validasi;
-        $query = Supplier::query();
-        $query->select('*');
-        if(!empty($nama_supplier_cari)){
-            $query->where('nama_supplier','like','%'.$nama_supplier_cari.'%');
+
+        $query = InformasiSupplier::with(['BarangSupplier' => function($q) {
+            $q->select('id_informasi_supplier', 'harga_barang_supplier', 'jumlah_barang_supplier');
+        }]);
+
+        if (!empty($nama_supplier_cari)) {
+            $query->where('nama_informasi_supplier', 'like', '%' . $nama_supplier_cari . '%');
         }
-        if ($validasi !== null && $validasi !== '') {
-            $query->where('status_supplier', $validasi);
-        }
+
         if ($nomor_dapur !== null && $nomor_dapur !== '') {
-            $query->where('nomor_dapur_supplier', $nomor_dapur);
+            $query->where('nomor_dapur_informasi_supplier', $nomor_dapur);
         }
-        $supplier = $query->get();
-        $supplier = $query->paginate(1000);
-        $nama_supplier = DB::table('supplier')->select('id_supplier', 'nama_supplier')->get();
-        return view('maker.data_supplier.informasi_supplier.index_informasi_supplier' ,compact('supplier'));
+
+        if ($validasi !== null && $validasi !== '') {
+            $query->where('status_informasi_supplier', $validasi);
+        }
+
+        // Ambil data dengan pagination
+        $informasi_supplier = $query->paginate(1000);
+
+        // Hitung total harga otomatis dari tabel barang supplier
+        foreach ($informasi_supplier as $info) {
+            $info->total_otomatis = $info->BarangSupplier->sum(function($barang) {
+                return $barang->harga_barang_supplier;
+            });
+        }
+
+        $nama_supplier = DB::table('supplier')
+            ->select('supplier.id_supplier', 'supplier.nama_supplier')
+            ->where('supplier.nomor_dapur_supplier', $nomor_dapur) // ✅ filter dapur maker
+            ->where('supplier.status_supplier', 1)                 // ✅ hanya supplier yang DISUTUJUI
+            ->whereNotExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('informasi_supplier')
+                    ->whereColumn(
+                        'informasi_supplier.nama_informasi_supplier',
+                        'supplier.nama_supplier'
+                    );
+            })
+            ->get();
+
+        return view('maker.data_supplier.informasi_supplier.index_informasi_supplier', compact('nama_supplier', 'informasi_supplier'));
     }
 
     public function store_maker_informasi_supplier(Request $request)
