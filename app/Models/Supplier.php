@@ -13,9 +13,9 @@ class Supplier extends Model
 
     protected $fillable = [
         'nama_supplier',
-        'total_harga',
-        'nota',
-        'bukti_terima',
+        'nomor_dapur_supplier',
+        'nota_supplier',
+        'bukti_supplier',
         'status_supplier'
     ];
 }
