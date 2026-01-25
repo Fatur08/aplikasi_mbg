@@ -56,15 +56,15 @@ class LaporanKeuanganController extends Controller
             ->select(
                 DB::raw('MAX(k.id_data_koperasi) AS id_data_koperasi'),
                 DB::raw('MAX(k.id_informasi_supplier) AS id_informasi_supplier'),
-            
+
                 'k.tanggal_laporan_keuangan',
-            
+
                 DB::raw('
                     SUM(COALESCE(bmk.harga_barang_modal_keluar,0)) +
                     SUM(COALESCE(bs.harga_barang_supplier,0))
                     AS total_harga
                 '),
-            
+
                 DB::raw('
                     MAX(CASE 
                         WHEN bs.id_informasi_supplier IS NOT NULL 
@@ -72,7 +72,7 @@ class LaporanKeuanganController extends Controller
                         ELSE NULL 
                     END) AS id_informasi_supplier
                 '),
-            
+
                 DB::raw('
                     MAX(CASE 
                         WHEN bmk.id_data_koperasi IS NOT NULL 
@@ -80,7 +80,7 @@ class LaporanKeuanganController extends Controller
                         ELSE NULL 
                     END) AS id_data_koperasi
                 '),
-            
+
                 DB::raw('MAX(CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
                 DB::raw('MAX(CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
             )
@@ -90,6 +90,7 @@ class LaporanKeuanganController extends Controller
 
             ->orderBy('k.tanggal_laporan_keuangan', 'desc')
             ->get();
+            dd($data);
         
         
         /* ================= FLAG STATUS ================= */
