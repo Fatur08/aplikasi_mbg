@@ -180,7 +180,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
-                                <form action="/maker/laporan/harian_dapur" method="GET" id="FormLaporanHarianDapur">
+                                <form action="/maker/laporan/dapur" method="GET" id="FormLaporanHarianDapur">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="input-icon">
