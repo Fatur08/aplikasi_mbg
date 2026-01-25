@@ -961,20 +961,20 @@ class DataSupplierController extends Controller
         $nomor_dapur        = $maker->nomor_dapur_maker;
         $nama_supplier_cari = $request->nama_supplier_cari;
         $validasi           = $request->pilih_validasi;
-        $query = Supplier::query();
+        $query = InformasiSupplier::query();
         $query->select('*');
         if(!empty($nama_supplier_cari)){
-            $query->where('nama_supplier','like','%'.$nama_supplier_cari.'%');
+            $query->where('nama_informasi_supplier','like','%'.$nama_supplier_cari.'%');
         }
         if ($validasi !== null && $validasi !== '') {
-            $query->where('status_supplier', $validasi);
+            $query->where('status_informasi_supplier', $validasi);
         }
         if ($nomor_dapur !== null && $nomor_dapur !== '') {
-            $query->where('nomor_dapur_supplier', $nomor_dapur);
+            $query->where('nomor_dapur_informasi_supplier', $nomor_dapur);
         }
         $supplier = $query->get();
         $supplier = $query->paginate(1000);
-        $nama_supplier = DB::table('supplier')->select('id_supplier', 'nama_supplier')->get();
+        $nama_supplier = DB::table('supplier')->select('id_informasi_supplier', 'nama_informasi_supplier')->get();
         return view('maker.data_supplier.informasi_supplier.index_informasi_supplier' ,compact('supplier'));
     }
 
