@@ -488,7 +488,11 @@ class DataKoperasiController extends Controller
             // ===============================
             DB::table('keuangan')
                 ->where('id_data_koperasi', $id)
-                ->where('nomor_dapur_keuangan', $dataKoperasi->nomor_dapur_koperasi)
+                ->where('nomor_dapur_keuangan', $dataKoperasi->nomor_dapur_data_koperasi)
+                ->whereDate(
+                    'tanggal_laporan_keuangan',
+                    $dataKoperasi->tanggal_data_koperasi
+                )
                 ->delete();
 
             DB::commit();
