@@ -430,7 +430,7 @@
             }
         
             // ✅ JIKA SUDAH LENGKAP, BARU BUKA HALAMAN CETAK
-            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?dapur=${pilih_dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}&pilih_supplier_koperasi=${pilih_supplier_koperasi}`;
+            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?pilih_dapur=${pilih_dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}&pilih_supplier_koperasi=${pilih_supplier_koperasi}`;
             window.open(url, '_blank');
         });
 
