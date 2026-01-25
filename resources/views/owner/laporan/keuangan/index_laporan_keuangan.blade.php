@@ -446,10 +446,20 @@
 
     // === BAGIAN DIAGRAM BATANG ===
     let koperasiData = @json($grafik);
-
-    const labels      = koperasiData.map(item => item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal');
-    const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
-
+    
+    const labels = koperasiData.map(item =>
+        item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal'
+    );
+    
+    const modalKeluar = koperasiData.map(item =>
+        item.total_pengeluaran
+    );
+    
+    // FORMAT RUPIAH
+    function formatRupiah(angka) {
+        return 'Rp.' + Number(angka).toLocaleString('id-ID');
+    }
+    
     const ctxBar = document.getElementById('koperasiChartOwner').getContext('2d');
     new Chart(ctxBar, {
         type: 'bar',
@@ -467,9 +477,33 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { labels: { font: { size: 14 } } }
+                legend: {
+                    labels: { font: { size: 14 } }
+                },
+                datalabels: {
+                    anchor: 'end',
+                    align: 'top',
+                    color: '#000',
+                    font: {
+                        weight: 'bold',
+                        size: 12
+                    },
+                    formatter: function (value) {
+                        return formatRupiah(value);
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: {
+                        callback: function (value) {
+                            return formatRupiah(value);
+                        }
+                    }
+                }
             }
-        }
+        },
+        plugins: [ChartDataLabels]
     });
 </script>
 @endpush
