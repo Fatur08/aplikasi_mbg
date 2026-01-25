@@ -444,74 +444,67 @@
 
 
 
-    // === BAGIAN DIAGRAM BATANG ===
+    Chart.register(ChartDataLabels);
+
 let koperasiData = @json($grafik);
 
-if (!koperasiData || koperasiData.length === 0) {
-    console.warn('DATA GRAFIK KOSONG');
-}
-
 const labels = koperasiData.map(item =>
-    item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal'
+    item.tanggal_laporan_keuangan
 );
 
 const modalKeluar = koperasiData.map(item =>
     Number(item.total_pengeluaran) || 0
 );
 
-// FORMAT RUPIAH
-function formatRupiah(angka) {
-    return 'Rp.' + angka.toLocaleString('id-ID');
-}
+const ctx = document
+    .getElementById('koperasiChartOwner')
+    .getContext('2d');
 
-const canvas = document.getElementById('koperasiChartOwner');
-
-if (canvas) {
-    const ctxBar = canvas.getContext('2d');
-
-    new Chart(ctxBar, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Pengeluaran',
-                data: modalKeluar,
-                backgroundColor: 'rgba(255, 0, 0, 0.7)'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    labels: { font: { size: 14 } }
-                },
-                datalabels: {
-                    display: true,
-                    anchor: 'end',
-                    align: 'top',
-                    color: '#000',
-                    font: {
-                        weight: 'bold',
-                        size: 11
-                    },
-                    formatter: function (value) {
-                        return value > 0 ? formatRupiah(value) : '';
-                    }
-                }
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Pengeluaran',
+            data: modalKeluar,
+            backgroundColor: 'rgba(255, 0, 0, 0.7)'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: true
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function (value) {
-                            return formatRupiah(value);
-                        }
+            datalabels: {
+                display: true,
+                anchor: 'end',
+                align: 'end',
+                offset: -4,
+                color: '#000',
+                font: {
+                    weight: 'bold',
+                    size: 12
+                },
+                formatter: function (value) {
+                    return value > 0
+                        ? 'Rp.' + value.toLocaleString('id-ID')
+                        : '';
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function (value) {
+                        return 'Rp.' + value.toLocaleString('id-ID');
                     }
                 }
             }
         }
-    });
-}
+    }
+});
 </script>
 @endpush
