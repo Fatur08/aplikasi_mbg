@@ -296,10 +296,45 @@
         </div>
     </div>
 </div>
+
+
+
+{{-- Modal Lihat Barang Modal Keluar --}}
+<div class="modal modal-blur fade" id="modal-lihatbaranglaporankeuangan" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lihat Barang Laporan Keuangan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loadformlihatbaranglaporankeuangan">
+                
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('myscript')
 <script>
     $(function(){
+        $(".barang_laporan_keuangan").click(function(){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type:'POST',
+                url:'/maker/laporan/keuangan/barang_laporan_keuangan',
+                cache:false,
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    id : id
+                },
+                success:function(respond){
+                    $("#loadformlihatbaranglaporankeuangan").html(respond);
+                }
+            });
+            $("#modal-lihatbaranglaporankeuangan").modal("show");
+        });
+
+
         $("#FormLaporanKeuangan").submit(function(){
             var pilih_dapur    = $("#pilih_dapur").val();
             var dari_tanggal   = $("#dari_tanggal").val();
