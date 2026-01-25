@@ -831,8 +831,33 @@ class DataKoperasiController extends Controller
 
             DB::commit();
 
+
+            // ============================================================
+            // 6. CEK DATA KEUANGAN
+            // ============================================================
+            $dataKeuangan = DB::table('keuangan')
+                ->where('id_data_koperasi', $id_data_koperasi)
+                ->where('nomor_dapur_keuangan', $nomor_dapur)
+                ->where('tanggal_laporan_keuangan', $dataKoperasi->tanggal_data_koperasi)
+                ->first();
+
+            if (!$dataKeuangan) {
+                DB::table('keuangan')->insert([
+                'id_data_koperasi'           => $id_data_koperasi,
+                'nomor_dapur_keuangan'       => $nomor_dapur,
+                'tanggal_laporan_keuangan'   => $dataKoperasi->tanggal_data_koperasi,
+                ]);
+            } else {
+                // ✅ SUDAH ADA → UPDATE id_data_koperasi SAJA
+                DB::table('keuangan')
+                    ->where('id_laporan_keuangan', $dataKeuangan->id_laporan_keuangan)
+                    ->update([
+                        'id_data_koperasi' => $id_data_koperasi
+                ]);
+            }
+
             return Redirect::back()->with([
-                'success' => 'Data barang modal keluar berhasil disimpan dan status koperasi direset'
+                'success' => 'Data barang koperasi berhasil disimpan dan status koperasi direset'
             ]);
 
         } catch (\Exception $e) {
