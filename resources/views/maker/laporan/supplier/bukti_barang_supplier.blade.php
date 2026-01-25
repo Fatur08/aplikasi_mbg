@@ -10,7 +10,7 @@
 
 <div>
     @if(!empty($data->bukti_barang_supplier))
-        <img src="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/' . $item->bukti_barang_supplier) }}"
+        <img src="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/' . $data->bukti_barang_supplier) }}"
              class="bukti-barang_supplier-img">
     @else
         <p class="text-muted text-center">Tidak ada Bukti Terima</p>
