@@ -130,7 +130,7 @@ class LaporanKeuanganController extends Controller
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
     
-        return view('maker.laporan.keuangan.index_laporan_keuangan', compact(
+        return view('owner.laporan.keuangan.index_laporan_keuangan', compact(
             'data',
             'dari_tanggal',
             'sampai_tanggal',
