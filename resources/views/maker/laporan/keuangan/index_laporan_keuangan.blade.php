@@ -241,7 +241,6 @@
                                                         <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
                                                         <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
                                                         <th style="text-align: center; vertical-align: middle;" rowspan="2">Barang</th>
-                                                        <th style="text-align: center; vertical-align: middle;" rowspan="2">Total</th>
                                                         <th style="text-align: center; vertical-align: middle;" colspan="2">Keterangan</th>
                                                     </tr>
                                                     <tr>
@@ -263,8 +262,6 @@
                                                                 👁 Lihat
                                                             </a>
                                                         </td>
-
-                                                        <td></td>
 
                                                         <td class="text-center">
                                                             @if ($d->dari_koperasi)
