@@ -300,6 +300,7 @@ class LaporanKeuanganController extends Controller
             });
     
         return view('owner.laporan.keuangan.cetak_laporan_keuangan', compact(
+            'grafik',
             'laporan',
             'dari_tanggal',
             'sampai_tanggal',
