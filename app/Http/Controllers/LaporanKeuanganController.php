@@ -556,51 +556,60 @@ class LaporanKeuanganController extends Controller
 
     public function barang_maker_laporan_keuangan(Request $request)
     {
-        // id_data_koperasi dikirim dari request
-        $id_data_koperasi = $request->id;
+        
+        $id_laporan = $request->id;
 
-        // Cek data koperasi untuk ambil id_informasi_supplier-nya
+        // ===============================
+        // 1️⃣ Ambil header laporan
+        // ===============================
         $keuangan = DB::table('keuangan')
-            ->where('id_data_koperasi', $id_data_koperasi)
+            ->where('id_laporan_keuangan', $id_laporan)
             ->first();
 
-        $id_informasi_supplier = $keuangan->id_informasi_supplier ?? null;
-        $nomor_dapur = $keuangan->nomor_dapur_keuangan;
+        if (!$keuangan) {
+            return redirect()->back()->with('error', 'Laporan keuangan tidak ditemukan');
+        }
 
-        // Siapkan variabel barang_list
         $barang_list = collect();
 
-        // 1) Coba ambil dari barang_supplier berdasar id_informasi_supplier
-        $barang_list = DB::table('barang_supplier')
-            ->join('informasi_supplier', 'informasi_supplier.id_informasi_supplier', '=', 'barang_supplier.id_informasi_supplier')
-            ->where('barang_supplier.id_informasi_supplier', $id_informasi_supplier)
-            ->where('barang_supplier.nomor_dapur_barang_supplier', $nomor_dapur)
-            ->select(
-                'barang_supplier.id_barang_supplier as id_barang',
-                'barang_supplier.nama_barang_supplier as nama_barang',
-                'barang_supplier.jumlah_barang_supplier as jumlah',
-                'barang_supplier.satuan_barang_supplier as satuan',
-                'barang_supplier.harga_barang_supplier as harga',
-                DB::raw("'Supplier' as sumber_data")
-            )
-            ->get();
-
-        // 2) Jika tidak ada (kosong) → ambil dari barang_modal_keluar berdasar id_data_koperasi
-        if ($barang_list->isEmpty()) {
-            $barang_list = DB::table('barang_modal_keluar')
-                ->where('barang_modal_keluar.id_data_koperasi', $id_data_koperasi)
-                ->where('barang_modal_keluar.nomor_dapur_barang_modal_keluar', $nomor_dapur)
+        // ===============================
+        // 2️⃣ PRIORITAS: SUPPLIER
+        // ===============================
+        if ($keuangan->id_informasi_supplier) {
+            $barang_list = DB::table('barang_supplier')
+                ->where('id_informasi_supplier', $keuangan->id_informasi_supplier)
+                ->where('nomor_dapur_barang_supplier', $keuangan->nomor_dapur_keuangan)
+                ->whereDate('tanggal_barang_supplier', $keuangan->tanggal_laporan_keuangan)
                 ->select(
-                    'barang_modal_keluar.id_barang_modal_keluar as id_barang',
-                    'barang_modal_keluar.nama_barang_modal_keluar as nama_barang',
-                    'barang_modal_keluar.jumlah_barang_modal_keluar as jumlah',
-                    'barang_modal_keluar.satuan_barang_modal_keluar as satuan',
-                    'barang_modal_keluar.harga_barang_modal_keluar as harga',
+                    'id_barang_supplier as id_barang',
+                    'nama_barang_supplier as nama_barang',
+                    'jumlah_barang_supplier as jumlah',
+                    'satuan_barang_supplier as satuan',
+                    'harga_barang_supplier as harga',
+                    DB::raw("'Supplier' as sumber_data")
+                )
+                ->get();
+        }
+
+        // ===============================
+        // 3️⃣ FALLBACK: KOPERASI
+        // ===============================
+        if ($barang_list->isEmpty() && $keuangan->id_data_koperasi) {
+            $barang_list = DB::table('barang_modal_keluar')
+                ->where('id_data_koperasi', $keuangan->id_data_koperasi)
+                ->where('nomor_dapur_barang_modal_keluar', $keuangan->nomor_dapur_keuangan)
+                ->select(
+                    'id_barang_modal_keluar as id_barang',
+                    'nama_barang_modal_keluar as nama_barang',
+                    'jumlah_barang_modal_keluar as jumlah',
+                    'satuan_barang_modal_keluar as satuan',
+                    'harga_barang_modal_keluar as harga',
                     DB::raw("'Koperasi' as sumber_data")
                 )
                 ->get();
         }
 
+        
         // Kirim ke view sebagai barang_list (lebih jelas)
         return view('maker.laporan.keuangan.barang_laporan_keuangan', compact('barang_list'));
     }
