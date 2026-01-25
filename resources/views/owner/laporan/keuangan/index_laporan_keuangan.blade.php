@@ -194,7 +194,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mt-2">
                                             <div class="col-4">
                                                 <div class="input-icon">
                                                     <select name="pilih_supllier_koperasi" id="pilih_supllier_koperasi" class="form-select">
@@ -235,13 +235,6 @@
                                             Data tidak ditemukan
                                         </div>
                                     @else
-                                        @php
-                                            // Grup data berdasarkan tanggal laporan keuangan
-                                            $grouped = $laporan_keuangan->groupBy(function ($item) {
-                                                return \Carbon\Carbon::parse($item->tanggal_laporan_keuangan)->translatedFormat('d F Y');
-                                            });
-                                        @endphp
-
                                         <div style="width: 100%; max-width: 1100px; margin: 0 auto;">
                                             <canvas id="koperasiChartOwner" height="340"></canvas>
                                         </div>
