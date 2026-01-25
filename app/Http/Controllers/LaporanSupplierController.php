@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class LaporanSupplierController extends Controller
 {
     // BAGIAN MAKER
-    public function index_maker_laporan_supplier()
+    public function index_maker_laporan_supplier(Request $request)
     {
         // Ambil data maker yang login
         $makerLogin = DB::table('maker')
@@ -23,11 +23,32 @@ class LaporanSupplierController extends Controller
             ->where('nomor_dapur_informasi_supplier', $nomor_dapur)
             ->get();
     
-        // ✅ Ambil data barang supplier YANG SUDAH ADA TANGGAL
-        $barangSupplier = DB::table('barang_supplier')
+        // Query dasar barang supplier
+        $barangSupplierQuery = DB::table('barang_supplier')
             ->where('nomor_dapur_barang_supplier', $nomor_dapur)
-            ->whereNotNull('tanggal_barang_supplier')   // tidak NULL
-            ->where('tanggal_barang_supplier', '!=', '') // tidak string kosong
+            ->whereNotNull('tanggal_barang_supplier')
+            ->where('tanggal_barang_supplier', '!=', '');
+    
+        // 🔍 Filter dari_tanggal
+        if ($request->filled('dari_tanggal')) {
+            $barangSupplierQuery->whereDate(
+                'tanggal_barang_supplier',
+                '>=',
+                $request->dari_tanggal
+            );
+        }
+    
+        // 🔍 Filter sampai_tanggal
+        if ($request->filled('sampai_tanggal')) {
+            $barangSupplierQuery->whereDate(
+                'tanggal_barang_supplier',
+                '<=',
+                $request->sampai_tanggal
+            );
+        }
+    
+        // Eksekusi query
+        $barangSupplier = $barangSupplierQuery
             ->orderBy('tanggal_barang_supplier', 'desc')
             ->get();
     
