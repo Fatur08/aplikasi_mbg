@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -172,5 +173,21 @@ class LaporanSupplierController extends Controller
         }
 
         return redirect()->back()->with('success', 'Laporan supplier berhasil disimpan');
+    }
+
+
+
+
+
+
+    public function bukti_maker_barang_supplier(Request $request)
+    {
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur_maker = $maker->nomor_dapur_maker;
+
+        $id                 = $request->id;
+        $barang_supplier      = DB::table('barang_supplier')->get();
+        $data               = DB::table('barang_supplier')->where('id_barang_supplier', $id)->first();
+        return view('maker.laporan.supplier.bukti_barang_supplier',compact('barang_supplier','data'));
     }
 }

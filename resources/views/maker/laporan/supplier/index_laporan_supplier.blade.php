@@ -258,6 +258,14 @@
                                                                 @endif
                                                             </td>
 
+                                                            <td class="text-center">
+                                                                <a href="#" class="bukti_barang_supplier btn btn-info btn-sm"
+                                                                   data-id="{{ $d->id_barang_supplier }}">
+                                                                    👁 Lihat
+                                                                </a>
+                                                            </td>
+
+
                                                             <td style="text-align:center">
                                                                 @if($item->status_barang_supplier == 0)
                                                                     <button class="btn btn-warning btn-sm">Menunggu</button>
@@ -362,15 +370,15 @@
 </div>
 
 
-{{-- Modal Edit Laporan Supplier --}}
-<div class="modal modal-blur fade" id="modal-editlaporansupplier" tabindex="-1" role="dialog" aria-hidden="true">
+{{-- Modal Lihat Bukti Barang Supplier --}}
+<div class="modal modal-blur fade" id="modal-lihatbuktibarangsupplier" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Data Laporan supplier</h5>
+                <h5 class="modal-title">Lihat Bukti Barang Supplier</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="loadeditformlaporansupplier">
+            <div class="modal-body" id="formlihatbuktibarangsupplier">
                 
             </div>
         </div>
@@ -479,6 +487,26 @@
 
                 $('#jumlah_item').prop('disabled', false);
             });
+        });
+
+
+
+
+        $(".bukti_barang_supplier").click(function(){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type:'POST',
+                url:'/maker/laporan/supplier/bukti_barang_supplier',
+                cache:false,
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    id : id
+                },
+                success:function(respond){
+                    $("#formlihatbuktibarangsupplier").html(respond);
+                }
+            });
+            $("#modal-lihatbuktibarangsupplier").modal("show");
         });
 
 
