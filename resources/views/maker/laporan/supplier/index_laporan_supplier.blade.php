@@ -230,9 +230,7 @@
                                                             <td>{{ $key + 1 }}</td>
 
                                                             <td>
-                                                                {{ $item->tanggal_barang_supplier
-                                                                    ? \Carbon\Carbon::parse($item->tanggal_barang_supplier)->format('d-m-Y')
-                                                                    : '-' }}
+                                                                {{ \Carbon\Carbon::parse($item->tanggal_barang_supplier)->format('d-m-Y') }}
                                                             </td>
 
                                                             <td>{{ $item->nama_barang_supplier }}</td>
