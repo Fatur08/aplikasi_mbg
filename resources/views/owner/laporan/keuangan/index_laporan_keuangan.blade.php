@@ -321,7 +321,7 @@
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/maker/laporan/keuangan/barang_laporan_keuangan',
+                url:'/owner/laporan/keuangan/barang_laporan_keuangan',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
