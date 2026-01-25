@@ -216,7 +216,7 @@
                                                     <th>Tanggal</th>
                                                     <th>Barang</th>
                                                     <th>Harga</th>
-                                                    <th>Bukti</th>
+                                                    <th>Nota</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>

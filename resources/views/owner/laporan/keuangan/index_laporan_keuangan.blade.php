@@ -247,6 +247,7 @@
                                                             <th style="text-align: center; vertical-align: middle;" rowspan="2">No.</th>
                                                             <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
                                                             <th style="text-align: center; vertical-align: middle;" rowspan="2">Barang</th>
+                                                            <th style="text-align: center; vertical-align: middle;" rowspan="2">Nota</th>
                                                             <th style="text-align: center; vertical-align: middle;" colspan="2">Keterangan</th>
                                                             <th style="text-align: center; vertical-align: middle;" rowspan="2">Dana</th>
                                                         </tr>
@@ -265,6 +266,13 @@
 
                                                             <td class="text-center">
                                                                 <a href="#" class="barang_laporan_keuangan btn btn-info btn-sm"
+                                                                   data-id="{{ $d->id_data_koperasi }}">
+                                                                    👁 Lihat
+                                                                </a>
+                                                            </td>
+
+                                                            <td class="text-center">
+                                                                <a href="#" class="bukti_terima_data_koperasi btn btn-info btn-sm"
                                                                    data-id="{{ $d->id_data_koperasi }}">
                                                                     👁 Lihat
                                                                 </a>
@@ -318,6 +326,24 @@
         </div>
     </div>
 </div>
+
+
+
+
+{{-- Modal Lihat Bukti Terima Data Koperasi --}}
+<div class="modal modal-blur fade" id="modal-lihatbuktiterima" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lihat Bukti Terima</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="loadformlihatbuktiterima">
+                
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('myscript')
 <script>
@@ -338,6 +364,26 @@
             });
             $("#modal-lihatbaranglaporankeuangan").modal("show");
         });
+
+
+        $(".bukti_terima_data_koperasi").click(function(){
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type:'POST',
+                url:'/owner/data_koperasi/bukti_terima_data_koperasi',
+                cache:false,
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    id : id
+                },
+                success:function(respond){
+                    $("#loadformlihatbuktiterima").html(respond);
+                }
+            });
+            $("#modal-lihatbuktiterima").modal("show");
+        });
+
+
 
 
         $("#FormLaporanKeuangan").submit(function(){
