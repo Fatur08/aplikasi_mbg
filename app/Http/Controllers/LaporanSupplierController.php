@@ -125,6 +125,7 @@ class LaporanSupplierController extends Controller
             // ===============================
             $tanggalLaporan = $barangSupplier->tanggal_barang_supplier;
             $nomorDapur     = $barangSupplier->nomor_dapur_barang_supplier;
+            $id_informasi_supplier     = $barangSupplier->id_informasi_supplier;
 
             // ===============================
             // 4️⃣ Cek data keuangan
@@ -137,7 +138,7 @@ class LaporanSupplierController extends Controller
             if (!$keuangan) {
                 // ➕ BELUM ADA → INSERT BARU
                 DB::table('keuangan')->insert([
-                    'id_informasi_supplier'   => $id,
+                    'id_informasi_supplier'   => $id_informasi_supplier,
                     'nomor_dapur_keuangan'    => $nomorDapur,
                     'tanggal_laporan_keuangan'=> $tanggalLaporan,
                 ]);
@@ -146,7 +147,7 @@ class LaporanSupplierController extends Controller
                 DB::table('keuangan')
                     ->where('id_laporan_keuangan', $keuangan->id_laporan_keuangan)
                     ->update([
-                        'id_informasi_supplier' => $id
+                        'id_informasi_supplier' => $id_informasi_supplier
                     ]);
             }
 
@@ -173,7 +174,7 @@ class LaporanSupplierController extends Controller
     public function batalkan_owner_validasi_laporan_supplier(Request $request, $id)
     {
         DB::beginTransaction();
-    
+
         try {
             // ===============================
             // 1️⃣ Ambil data barang supplier
@@ -181,14 +182,14 @@ class LaporanSupplierController extends Controller
             $barangSupplier = DB::table('barang_supplier')
                 ->where('id_barang_supplier', $id)
                 ->first();
-    
+
             if (!$barangSupplier) {
                 return redirect()->back()->with(
                     'error',
                     'Barang supplier tidak ditemukan'
                 );
             }
-    
+
             // ===============================
             // 2️⃣ Batalkan status barang supplier
             // ===============================
@@ -197,7 +198,7 @@ class LaporanSupplierController extends Controller
                 ->update([
                     'status_barang_supplier' => 0
                 ]);
-    
+
             // ===============================
             // 3️⃣ Hapus data di keuangan
             // ===============================
@@ -206,17 +207,17 @@ class LaporanSupplierController extends Controller
                 ->where('nomor_dapur_keuangan', $barangSupplier->nomor_dapur_barang_supplier)
                 ->where('tanggal_laporan_keuangan', $barangSupplier->tanggal_barang_supplier)
                 ->delete();
-    
+
             DB::commit();
-    
+
             return redirect()->back()->with(
                 'success',
                 'Validasi barang supplier berhasil dibatalkan'
             );
-    
+
         } catch (\Exception $e) {
             DB::rollBack();
-    
+
             return redirect()->back()->with(
                 'error',
                 'Terjadi kesalahan: ' . $e->getMessage()
