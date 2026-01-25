@@ -974,7 +974,7 @@ class DataSupplierController extends Controller
         }
         $supplier = $query->get();
         $supplier = $query->paginate(1000);
-        $nama_supplier = DB::table('supplier')->select('id_informasi_supplier', 'nama_informasi_supplier')->get();
+        $nama_supplier = DB::table('informasi_supplier')->select('id_informasi_supplier', 'nama_informasi_supplier')->get();
         return view('maker.data_supplier.informasi_supplier.index_informasi_supplier' ,compact('supplier'));
     }
 
