@@ -166,6 +166,8 @@ Route::middleware(['auth:owner'])->group(function(){
 
     //Informasi Supplier
     Route::get('/owner/data_supplier/informasi_supplier',[DataSupplierController::class,'index_owner_informasi_supplier']);
+    Route::post('/owner/data_supplier/informasi_supplier/lihat_barang_supplier',[DataSupplierController::class,'lihat_owner_barang_supplier']);
+    
     Route::post('/owner/data_supplier/informasi_supplier/store_informasi_supplier',[DataSupplierController::class,'store_owner_informasi_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/nota_informasi_supplier',[DataSupplierController::class,'nota_owner_informasi_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/bukti_terima_informasi_supplier',[DataSupplierController::class,'bukti_terima_owner_informasi_supplier']);
@@ -177,7 +179,6 @@ Route::middleware(['auth:owner'])->group(function(){
     Route::post('/owner/data_supplier/informasi_supplier/{id}/delete_informasi_supplier',[DataSupplierController::class,'delete_owner_informasi_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/tambah_barang_supplier',[DataSupplierController::class,'tambah_owner_barang_supplier']);
     Route::post('/owner/data_supplier/informasi_supplier/{id}/store_barang_supplier',[DataSupplierController::class,'store_owner_barang_supplier']);
-    Route::post('/owner/data_supplier/informasi_supplier/lihat_barang_supplier',[DataSupplierController::class,'lihat_owner_barang_supplier']);
     
 
     //Data Koperasi

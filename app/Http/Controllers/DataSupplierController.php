@@ -742,9 +742,6 @@ class DataSupplierController extends Controller
             ->select(
                 'barang_supplier.*',
                 'barang_supplier.nama_barang_supplier',
-                'barang_supplier.jumlah_barang_supplier',
-                'barang_supplier.satuan_barang_supplier',
-                'barang_supplier.harga_barang_supplier'
             )
             ->get();
 
@@ -1021,23 +1018,23 @@ class DataSupplierController extends Controller
     public function store_maker_barang_supplier(Request $request)
     {
         DB::beginTransaction();
-    
+
         try {
-    
+
             $maker = Auth::guard('maker')->user();
             $nomor_dapur = $maker->nomor_dapur_maker;
             $id_informasi_supplier = $request->id_informasi_supplier;
-    
+
             // Reset status validasi
             DB::table('informasi_supplier')
                 ->where('id_informasi_supplier', $id_informasi_supplier)
                 ->update([
                     'status_informasi_supplier' => 0
                 ]);
-    
+
             // Ambil nama barang (array)
             $nama_barang = $request->nama_barang_supplier;
-    
+
             if (is_array($nama_barang)) {
                 foreach ($nama_barang as $nama) {
                     if (!empty($nama)) {
@@ -1049,15 +1046,15 @@ class DataSupplierController extends Controller
                     }
                 }
             }
-    
+
             DB::commit();
-    
+
             return back()->with('success', 'Nama barang supplier berhasil disimpan');
-    
+
         } catch (\Exception $e) {
-    
+
             DB::rollBack();
-    
+
             return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
