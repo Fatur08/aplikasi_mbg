@@ -30,13 +30,13 @@ class LaporanKeuanganController extends Controller
                      ->where('bs.nomor_dapur_barang_supplier', $pilih_dapur);
             })
             ->where('k.nomor_dapur_keuangan', $pilih_dapur)
-        
+
             // hanya tampilkan yang benar-benar ada barang
             ->where(function ($q) {
                 $q->whereNotNull('bmk.id_data_koperasi')
                   ->orWhereNotNull('bs.id_informasi_supplier');
             })
-        
+
             // filter tanggal
             ->when($dari_tanggal && $sampai_tanggal, function ($query) use ($dari_tanggal, $sampai_tanggal) {
                 $query->whereBetween('k.tanggal_laporan_keuangan', [
@@ -44,7 +44,7 @@ class LaporanKeuanganController extends Controller
                     $sampai_tanggal
                 ]);
             })
-        
+
             // filter instansi
             ->when($pilih_supplier_koperasi === 'Supplier', function ($query) {
                 $query->whereNotNull('bs.id_informasi_supplier');
@@ -52,27 +52,42 @@ class LaporanKeuanganController extends Controller
             ->when($pilih_supplier_koperasi === 'Koperasi', function ($query) {
                 $query->whereNotNull('bmk.id_data_koperasi');
             })
-        
+
             ->select(
-                // 🔑 ambil ID dengan MAX supaya tidak NULL random
                 DB::raw('MAX(k.id_data_koperasi) AS id_data_koperasi'),
                 DB::raw('MAX(k.id_informasi_supplier) AS id_informasi_supplier'),
-        
+            
                 'k.tanggal_laporan_keuangan',
-        
+            
                 DB::raw('
                     SUM(COALESCE(bmk.harga_barang_modal_keluar,0)) +
                     SUM(COALESCE(bs.harga_barang_supplier,0))
                     AS total_harga
                 '),
-        
+            
+                DB::raw('
+                    MAX(CASE 
+                        WHEN bs.id_informasi_supplier IS NOT NULL 
+                        THEN k.id_informasi_supplier 
+                        ELSE NULL 
+                    END) AS id_informasi_supplier
+                '),
+            
+                DB::raw('
+                    MAX(CASE 
+                        WHEN bmk.id_data_koperasi IS NOT NULL 
+                        THEN k.id_data_koperasi 
+                        ELSE NULL 
+                    END) AS id_data_koperasi
+                '),
+            
                 DB::raw('MAX(CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
                 DB::raw('MAX(CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
             )
-        
+
             // ❗ group by hanya tanggal (inti laporan)
             ->groupBy('k.tanggal_laporan_keuangan')
-        
+
             ->orderBy('k.tanggal_laporan_keuangan', 'desc')
             ->get();
         

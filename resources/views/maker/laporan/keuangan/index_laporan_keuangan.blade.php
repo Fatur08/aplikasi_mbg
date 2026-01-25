@@ -260,7 +260,7 @@
                                                         <td class="text-center">
                                                             <a href="#"
                                                                class="barang_laporan_keuangan btn btn-info btn-sm"
-                                                               @if($d->id_informasi_supplier)
+                                                               @if(!empty($d->id_informasi_supplier))
                                                                    data-sumber="supplier"
                                                                    data-id="{{ $d->id_informasi_supplier }}"
                                                                @else
