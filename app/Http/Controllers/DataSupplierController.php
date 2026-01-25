@@ -1007,62 +1007,27 @@ class DataSupplierController extends Controller
 
     public function store_maker_informasi_supplier(Request $request)
     {
-        $id_supplier                = $request->id_supplier;
-        $nama_informasi_supplier    = DB::table('supplier')->where('id_supplier', $id_supplier)->value('nama_supplier');
+        // Ambil data maker yang login
+        $makerLogin      = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
 
-        if($request->hasFile('nota_informasi_supplier')){
-            $nota_informasi_supplier = "Nota_".$nama_informasi_supplier.".".$request
-                ->file('nota_informasi_supplier')
-                ->getClientOriginalExtension();
-        } else {
-            $nota_informasi_supplier = null;
-        }
-
-        if($request->hasFile('bukti_terima_informasi_supplier')){
-            $bukti_terima_informasi_supplier = "Bukti Terima_".$nama_informasi_supplier.".".$request
-                ->file('bukti_terima_informasi_supplier')
-                ->getClientOriginalExtension();
-        } else {
-            $bukti_terima_informasi_supplier = null;
-        }
+        $nomor_dapur     = $makerLogin->nomor_dapur_maker ?? null;
+    
+        $nama_supplier   = $request->nama_supplier;
+        $alamat_supplier = $request->alamat_supplier;
+        $no_hp_supplier  = $request->no_hp_supplier;
 
         $data = [
-            'id_informasi_supplier'             => $id_supplier,
-            'nama_informasi_supplier'           => $nama_informasi_supplier,
-            'nota_informasi_supplier'           =>$nota_informasi_supplier,
-            'bukti_terima_informasi_supplier'   => $bukti_terima_informasi_supplier
+            'nama_supplier'         => $nama_supplier,
+            'nomor_dapur_supplier'  => $nomor_dapur,
+            'alamat_supplier'       => $alamat_supplier,
+            'no_hp_supplier'        => $no_hp_supplier,
+            'status_supplier'       => 0
         ];
 
-        $simpan = DB::table('informasi_supplier')->insert($data);
+        $simpan = DB::table('supplier')->insert($data);
         if ($simpan){
-            if ($request->hasFile('nota_informasi_supplier')) {
-                $nota_informasi_supplier = "Nota_".$nama_informasi_supplier.".".$request
-                    ->file('nota_informasi_supplier')
-                    ->getClientOriginalExtension();
-                $storagePath = 'public/uploads/data_supplier/informasi_supplier/nota/';
-                $request->file('nota_informasi_supplier')->storeAs($storagePath, $nota_informasi_supplier);
-                $publicPath = public_path('storage/uploads/data_supplier/informasi_supplier/nota/');
-                if (!is_dir($publicPath)) {
-                    mkdir($publicPath, 0777, true);
-                }
-                $sourceFile = storage_path('app/' . $storagePath . $nota_informasi_supplier);
-                $destinationFile = public_path('storage/uploads/data_supplier/informasi_supplier/nota/' . $nota_informasi_supplier);
-                copy($sourceFile, $destinationFile);
-            }
-            if ($request->hasFile('bukti_terima_informasi_supplier')) {
-                $bukti_terima_informasi_supplier = "Bukti Terima_".$nama_informasi_supplier.".".$request
-                    ->file('bukti_terima_informasi_supplier')
-                    ->getClientOriginalExtension();
-                $storagePath = 'public/uploads/data_supplier/informasi_supplier/bukti_terima/';
-                $request->file('bukti_terima_informasi_supplier')->storeAs($storagePath, $bukti_terima_informasi_supplier);
-                $publicPath = public_path('storage/uploads/data_supplier/informasi_supplier/bukti_terima/');
-                if (!is_dir($publicPath)) {
-                    mkdir($publicPath, 0777, true);
-                }
-                $sourceFile = storage_path('app/' . $storagePath . $bukti_terima_informasi_supplier);
-                $destinationFile = public_path('storage/uploads/data_supplier/informasi_supplier/bukti_terima/' . $bukti_terima_informasi_supplier);
-                copy($sourceFile, $destinationFile);
-            }
             return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
         } else {
             return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
