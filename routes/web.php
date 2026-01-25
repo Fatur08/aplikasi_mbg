@@ -391,6 +391,7 @@ Route::middleware(['auth:maker'])->group(function(){
     
     //Dapur
     Route::get('/maker/laporan/dapur',[LaporanDapurController::class,'index_maker_dapur']);
+    Route::post('/maker/laporan/dapur/store_pm_dapur',[LaporanDapurController::class,'store_maker_pm_dapur']);
     Route::post('/maker/laporan/dapur/kendala_dapur',[LaporanDapurController::class,'kendala_maker_dapur']);
     Route::post('/maker/laporan/dapur/tambah_operasional_dapur',[LaporanDapurController::class,'tambah_operasional_dapur']);
 

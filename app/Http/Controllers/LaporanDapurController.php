@@ -185,6 +185,38 @@ class LaporanDapurController extends Controller
     }
 
 
+
+
+    public function store_maker_pm_dapur(Request $request)
+    {
+        // Ambil data maker yang login
+        $makerLogin = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+    
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
+
+        $data = [
+            'nomor_dapur_distribusi'   => $nomor_dapur,
+            'tujuan_distribusi'   => $request->tujuan_distribusi,
+            'jenis_distribusi'   => $request->jenis_distribusi,
+            'jumlah_paket' => (int) $request->jumlah_paket
+        ];
+
+        $simpan = DB::table('distribusi')->insert($data);
+
+        if ($simpan){
+            return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
+        } else {
+            return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
+        }
+    }
+
+
+
+
+
+
     public function kendala_maker_dapur(Request $request)
     {
         $tanggal = $request->tanggal;
@@ -218,38 +250,7 @@ class LaporanDapurController extends Controller
     }
 
 
-    public function store_maker_dapur(Request $request)
-    {
-        $kepalaDapur = Auth::guard('kepala_dapur')->user();
-
-        $id = $kepalaDapur->id;
-
-        $distributor = DB::table('distributor')
-                        ->where('id_distributor', $id)
-                        ->first();
-
-        if (!$distributor) {
-            return Redirect::back()->with(['warning' => 'Distributor tidak ditemukan untuk dapur ini']);
-        }
-
-        $data = [
-            'nama_distributor' => $distributor->nama_distributor,
-            'kecamatan_sekolah' => $request->kecamatan_sekolah,
-            'tujuan_distribusi'   => $request->tujuan_distribusi,
-            'tanggal_distribusi' => $request->tanggal_distribusi,
-            'menu_makanan' => $request->menu_makanan,
-            'jumlah_paket' => (int) $request->jumlah_paket,
-            'status_distribusi' => 0
-        ];
-
-        $simpan = DB::table('distribusi')->insert($data);
-
-        if ($simpan){
-            return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
-        } else {
-            return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
-        }
-    }
+    
 
 
 

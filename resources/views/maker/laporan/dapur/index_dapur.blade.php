@@ -307,7 +307,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/murid/store" method="POST" id="FormInputPenerimaManfaat" enctype="multipart/form-data">
+                <form action="/maker/laporan/dapur/store_pm_dapur" method="POST" id="FormInputPenerimaManfaat" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-12">
