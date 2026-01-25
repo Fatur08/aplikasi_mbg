@@ -52,10 +52,16 @@ class LaporanKeuanganController extends Controller
             ->when($pilih_supllier_koperasi === 'Koperasi', function ($query) {
                 $query->whereNotNull('bmk.id_data_koperasi');
             })
-    
             ->select(
                 'k.id_data_koperasi',
                 'k.tanggal_laporan_keuangan',
+
+                DB::raw('
+                    SUM(COALESCE(bmk.harga_barang_modal_keluar,0)) +
+                    SUM(COALESCE(bs.harga_barang_supplier,0))
+                    AS total_harga
+                '),
+
                 DB::raw('MAX(CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
                 DB::raw('MAX(CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
             )
