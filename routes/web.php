@@ -231,9 +231,9 @@ Route::middleware(['auth:owner'])->group(function(){
     //Keuangan
     Route::get('/owner/laporan/keuangan',[LaporanKeuanganController::class,'index_owner_laporan_keuangan']);
     Route::post('/owner/laporan/keuangan/barang_laporan_keuangan',[LaporanKeuanganController::class,'barang_owner_laporan_keuangan']);
+    Route::get('/owner/laporan/keuangan/cetak_laporan_keuangan',[LaporanKeuanganController::class,'cetak_owner_laporan_keuangan']);
     Route::post('/owner/laporan/keuangan/store_laporan_keuangan',[LaporanKeuanganController::class,'store_owner_laporan_keuangan']);
     Route::post('/owner/laporan/keuangan/edit_laporan_keuangan',[LaporanKeuanganController::class,'edit_owner_laporan_keuangan']);
-    Route::get('/owner/laporan/keuangan/cetak_laporan_keuangan',[LaporanKeuanganController::class,'cetak_owner_laporan_keuangan']);
     Route::post('/owner/laporan/keuangan/{id}/update_laporan_keuangan',[LaporanKeuanganController::class,'update_owner_laporan_keuangan']);
     Route::post('/owner/laporan/keuangan/{id}/delete_laporan_keuangan',[LaporanKeuanganController::class,'delete_owner_laporan_keuangan']);
 

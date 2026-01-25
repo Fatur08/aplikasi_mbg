@@ -248,6 +248,7 @@
                                                             <th style="text-align: center; vertical-align: middle;" rowspan="2">Tanggal</th>
                                                             <th style="text-align: center; vertical-align: middle;" rowspan="2">Barang</th>
                                                             <th style="text-align: center; vertical-align: middle;" colspan="2">Keterangan</th>
+                                                            <th style="text-align: center; vertical-align: middle;" rowspan="2">Dana</th>
                                                         </tr>
                                                         <tr>
                                                             <th style="text-align: center; vertical-align: middle;">Koperasi</th>
@@ -279,6 +280,10 @@
                                                                 @if ($d->dari_supplier)
                                                                     ✅
                                                                 @endif
+                                                            </td>
+
+                                                            <td>
+                                                                Rp. {{ number_format($d->total_harga, 0, ',', '.') }}
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -376,9 +381,10 @@
         $("#cetak_laporan_keuangan").click(function(e){
             e.preventDefault(); // Mencegah langsung pindah halaman
                 
-            var pilih_dapur    = $("#pilih_dapur").val();
-            var dari_tanggal   = $("#dari_tanggal").val();
-            var sampai_tanggal = $("#sampai_tanggal").val();
+            var pilih_dapur                = $("#pilih_dapur").val();
+            var dari_tanggal               = $("#dari_tanggal").val();
+            var sampai_tanggal             = $("#sampai_tanggal").val();
+            var pilih_supllier_koperasi    = $("#pilih_supllier_koperasi").val();
                 
             if(pilih_dapur == ""){
                 Swal.fire({
@@ -411,10 +417,20 @@
                     $("#sampai_tanggal").focus();
                 });
                 return false;
+            } else if(pilih_supllier_koperasi == ""){
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Koperasi/Supplier Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then(()=> {
+                    $("#pilih_supllier_koperasi").focus();
+                });
+                return false;
             }
         
             // ✅ JIKA SUDAH LENGKAP, BARU BUKA HALAMAN CETAK
-            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?dapur=${pilih_dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}`;
+            let url = `/owner/laporan/keuangan/cetak_laporan_keuangan?dapur=${pilih_dapur}&dari_tanggal=${dari_tanggal}&sampai_tanggal=${sampai_tanggal}&pilih_supplier_koperasi=${pilih_supplier_koperasi}`;
             window.open(url, '_blank');
         });
 
