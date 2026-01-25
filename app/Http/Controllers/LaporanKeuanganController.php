@@ -502,18 +502,18 @@ class LaporanKeuanganController extends Controller
     {
         $maker = Auth::guard('maker')->user();
         $dapur = $maker->nomor_dapur_maker;
-
+    
         $dari_tanggal   = $request->dari_tanggal;
         $sampai_tanggal = $request->sampai_tanggal;
-
+    
         $data = DB::table('keuangan as k')
             ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($dapur) {
                 $join->on('k.id_data_koperasi', '=', 'bmk.id_data_koperasi')
-                     ->where('bmk.nomor_dapur_barang_modal_keluar', '=', $dapur);
+                     ->where('bmk.nomor_dapur_barang_modal_keluar', $dapur);
             })
             ->leftJoin('barang_supplier as bs', function ($join) use ($dapur) {
                 $join->on('k.id_informasi_supplier', '=', 'bs.id_informasi_supplier')
-                     ->where('bs.nomor_dapur_barang_supplier', '=', $dapur);
+                     ->where('bs.nomor_dapur_barang_supplier', $dapur);
             })
             ->where('k.nomor_dapur_keuangan', $dapur)
             ->when($dari_tanggal && $sampai_tanggal, function ($query) use ($dari_tanggal, $sampai_tanggal) {
@@ -525,12 +525,16 @@ class LaporanKeuanganController extends Controller
             ->select(
                 'k.id_data_koperasi',
                 'k.tanggal_laporan_keuangan',
-                DB::raw('CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END AS dari_koperasi'),
-                DB::raw('CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END AS dari_supplier')
+                DB::raw('MAX(CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
+                DB::raw('MAX(CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
+            )
+            ->groupBy(
+                'k.id_data_koperasi',
+                'k.tanggal_laporan_keuangan'
             )
             ->orderBy('k.tanggal_laporan_keuangan', 'desc')
             ->get();
-
+    
         return view('maker.laporan.keuangan.index_laporan_keuangan', compact(
             'data',
             'dari_tanggal',
