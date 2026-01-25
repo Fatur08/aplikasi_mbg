@@ -364,6 +364,8 @@ Route::middleware(['auth:maker'])->group(function(){
     //Keuangan
     Route::get('/maker/laporan/keuangan',[LaporanKeuanganController::class,'index_maker_laporan_keuangan']);
     Route::post('/maker/laporan/keuangan/barang_laporan_keuangan',[LaporanKeuanganController::class,'barang_maker_laporan_keuangan']);
+Route::post('/maker/laporan/keuangan/bukti_laporan_keuangan',[LaporanKeuanganController::class,'bukti_maker_laporan_keuangan']);
+
     Route::post('/maker/laporan/keuangan/store_laporan_keuangan',[LaporanKeuanganController::class,'store_maker_laporan_keuangan']);
     Route::post('/maker/laporan/keuangan/edit_laporan_keuangan',[LaporanKeuanganController::class,'edit_maker_laporan_keuangan']);
     Route::get('/maker/laporan/keuangan/cetak_laporan_keuangan',[LaporanKeuanganController::class,'cetak_maker_laporan_keuangan']);

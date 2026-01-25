@@ -609,10 +609,79 @@ class LaporanKeuanganController extends Controller
                 ->get();
         }
 
-        
+
         // Kirim ke view sebagai barang_list (lebih jelas)
         return view('maker.laporan.keuangan.barang_laporan_keuangan', compact('barang_list'));
     }
+
+
+
+
+
+    public function bukti_maker_laporan_keuangan(Request $request)
+    {
+        $id_laporan_keuangan = $request->id;
+    
+        // ===============================
+        // 1️⃣ Ambil data keuangan
+        // ===============================
+        $keuangan = DB::table('keuangan')
+            ->where('id_laporan_keuangan', $id_laporan_keuangan)
+            ->first();
+    
+        if (!$keuangan) {
+            return redirect()->back()->with(
+                'error',
+                'Data keuangan tidak ditemukan'
+            );
+        }
+    
+        $bukti = null;
+        $sumber = null;
+    
+        // ===============================
+        // 2️⃣ Jika dari KOPERASI
+        // ===============================
+        if (!empty($keuangan->id_data_koperasi)) {
+            $koperasi = DB::table('data_koperasi')
+                ->where('id_data_koperasi', $keuangan->id_data_koperasi)
+                ->select('bukti_terima_data_koperasi')
+                ->first();
+    
+            if ($koperasi && $koperasi->bukti_terima_data_koperasi) {
+                $bukti  = $koperasi->bukti_terima_data_koperasi;
+                $sumber = 'koperasi';
+            }
+        }
+    
+        // ===============================
+        // 3️⃣ Jika dari SUPPLIER
+        // ===============================
+        if (!empty($keuangan->id_informasi_supplier)) {
+            $supplier = DB::table('barang_supplier')
+                ->where('id_informasi_supplier', $keuangan->id_informasi_supplier)
+                ->whereDate(
+                    'tanggal_barang_supplier',
+                    $keuangan->tanggal_laporan_keuangan
+                )
+                ->select('bukti_barang_supplier')
+                ->first();
+    
+            if ($supplier && $supplier->bukti_barang_supplier) {
+                $bukti  = $supplier->bukti_barang_supplier;
+                $sumber = 'supplier';
+            }
+        }
+    
+        return view(
+            'maker.laporan.keuangan.bukti_laporan_keuangan',
+            compact('bukti', 'sumber')
+        );
+    }
+
+
+
+
 
 
 

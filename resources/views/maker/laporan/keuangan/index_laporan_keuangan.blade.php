@@ -266,8 +266,8 @@
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <a href="#" class="bukti_terima_data_koperasi btn btn-info btn-sm"
-                                                               data-id="{{ $d->id_data_koperasi }}">
+                                                            <a href="#" class="bukti_laporan_keuangan btn btn-info btn-sm"
+                                                               data-id="{{ $d->id_laporan_keuangan }}">
                                                                 👁 Lihat
                                                             </a>
                                                         </td>
@@ -320,15 +320,15 @@
 
 
 
-{{-- Modal Lihat Bukti Terima Data Koperasi --}}
-<div class="modal modal-blur fade" id="modal-lihatbuktiterima" tabindex="-1" role="dialog" aria-hidden="true">
+{{-- Modal Lihat Bukti Laporan Keuangan --}}
+<div class="modal modal-blur fade" id="modal-lihatbuktilaporankeuangan" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Lihat Bukti Terima</h5>
+                <h5 class="modal-title">Lihat Bukti Laporan Keuangan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="loadformlihatbuktiterima">
+            <div class="modal-body" id="formlihatbuktilaporankeuangan">
                 
             </div>
         </div>
@@ -358,21 +358,21 @@
         });
 
 
-        $(".bukti_terima_data_koperasi").click(function(){
+        $(".bukti_laporan_keuangan").click(function(){
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/maker/data_koperasi/bukti_terima_data_koperasi',
+                url:'/maker/laporan/keuangan/bukti_laporan_keuangan',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
                     id : id
                 },
                 success:function(respond){
-                    $("#loadformlihatbuktiterima").html(respond);
+                    $("#laporankeuangan").html(respond);
                 }
             });
-            $("#modal-lihatbuktiterima").modal("show");
+            $("#modal-lihatbuktilaporankeuangan").modal("show");
         });
 
 
