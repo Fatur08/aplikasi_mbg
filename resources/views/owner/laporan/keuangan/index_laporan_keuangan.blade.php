@@ -445,31 +445,73 @@
 
 
     // === BAGIAN DIAGRAM BATANG ===
-    let koperasiData = @json($grafik);
+let koperasiData = @json($grafik);
 
-    const labels      = koperasiData.map(item => item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal');
-    const modalKeluar = koperasiData.map(item => item.total_pengeluaran);
+if (!koperasiData || koperasiData.length === 0) {
+    console.warn('DATA GRAFIK KOSONG');
+}
 
-    const ctxBar = document.getElementById('koperasiChartOwner').getContext('2d');
+const labels = koperasiData.map(item =>
+    item.tanggal_laporan_keuangan ?? 'Tidak Ada Tanggal'
+);
+
+const modalKeluar = koperasiData.map(item =>
+    Number(item.total_pengeluaran) || 0
+);
+
+// FORMAT RUPIAH
+function formatRupiah(angka) {
+    return 'Rp.' + angka.toLocaleString('id-ID');
+}
+
+const canvas = document.getElementById('koperasiChartOwner');
+
+if (canvas) {
+    const ctxBar = canvas.getContext('2d');
+
     new Chart(ctxBar, {
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [
-                {
-                    label: 'Pengeluaran',
-                    data: modalKeluar,
-                    backgroundColor: 'rgba(255, 0, 0, 0.7)'
-                }
-            ]
+            datasets: [{
+                label: 'Pengeluaran',
+                data: modalKeluar,
+                backgroundColor: 'rgba(255, 0, 0, 0.7)'
+            }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { labels: { font: { size: 14 } } }
+                legend: {
+                    labels: { font: { size: 14 } }
+                },
+                datalabels: {
+                    display: true,
+                    anchor: 'end',
+                    align: 'top',
+                    color: '#000',
+                    font: {
+                        weight: 'bold',
+                        size: 11
+                    },
+                    formatter: function (value) {
+                        return value > 0 ? formatRupiah(value) : '';
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function (value) {
+                            return formatRupiah(value);
+                        }
+                    }
+                }
             }
         }
     });
+}
 </script>
 @endpush
