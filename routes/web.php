@@ -251,6 +251,7 @@ Route::middleware(['auth:owner'])->group(function(){
     
     //Dapur
     Route::get('/owner/laporan/dapur',[LaporanDapurController::class,'index_owner_dapur']);
+    
     Route::post('/owner/laporan/dapur/lihat_bahan_terpakai',[LaporanDapurController::class,'lihat_bahan_terpakai']);
     Route::post('/owner/laporan/dapur/lihat_kendala',[LaporanDapurController::class,'lihat_kendala']);
     Route::post('/owner/laporan/dapur/kendala_dapur',[LaporanDapurController::class,'kendala_owner_dapur']);
