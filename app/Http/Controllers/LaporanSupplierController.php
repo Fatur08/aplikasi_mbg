@@ -30,16 +30,16 @@ class LaporanSupplierController extends Controller
         $makerLogin = DB::table('maker')
             ->where('id_maker', auth()->id())
             ->first();
-    
+
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
-    
+
         $jumlah = DB::table('barang_supplier')
             ->where('id_informasi_supplier', $id_supplier)
             ->where('nomor_dapur_barang_supplier', $nomor_dapur)
             ->whereNotNull('nama_barang_supplier')
             ->distinct('nama_barang_supplier')
             ->count('nama_barang_supplier');
-    
+
         return response()->json([
             'jumlah' => $jumlah
         ]);
@@ -51,10 +51,14 @@ class LaporanSupplierController extends Controller
 
     public function getBarangSupplier($id_supplier)
     {
-        $maker = auth()->user();
+        $makerLogin = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
     
         $barang = DB::table('barang_supplier')
-            ->where('nomor_dapur_barang_supplier', $maker->nomor_dapur_maker)
+            ->where('nomor_dapur_barang_supplier', $nomor_dapur)
             ->where('id_informasi_supplier', $id_supplier)
             ->select('nama_barang_supplier')
             ->groupBy('nama_barang_supplier')
@@ -68,7 +72,11 @@ class LaporanSupplierController extends Controller
 
     public function store_maker_laporan_supplier(Request $request)
     {
-        $maker = auth()->user();
+        $makerLogin = DB::table('maker')
+            ->where('id_maker', auth()->id())
+            ->first();
+
+        $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
 
         // upload bukti
         $path = $request->file('bukti_barang_supplier')
@@ -79,7 +87,7 @@ class LaporanSupplierController extends Controller
             // 1️⃣ Cek data barang berdasarkan supplier + dapur + nama barang
             $cekBarang = DB::table('barang_supplier')
                 ->where('id_informasi_supplier', $request->id_informasi_supplier)
-                ->where('nomor_dapur_barang_supplier', $maker->nomor_dapur_maker)
+                ->where('nomor_dapur_barang_supplier', $nomor_dapur)
                 ->where('nama_barang_supplier', $item['nama_barang_supplier'])
                 ->first();
 
@@ -87,15 +95,14 @@ class LaporanSupplierController extends Controller
             if (!$cekBarang) {
 
                 DB::table('barang_supplier')->insert([
-                    'nomor_dapur_barang_supplier' => $maker->nomor_dapur_maker,
+                    'nomor_dapur_barang_supplier' => $nomor_dapur,
                     'id_informasi_supplier'       => $request->id_informasi_supplier,
                     'tanggal_laporan_supplier'   => $request->tanggal_laporan_supplier,
                     'nama_barang_supplier'       => $item['nama_barang_supplier'],
                     'satuan_barang_supplier'     => $item['satuan_barang_supplier'],
                     'jumlah_barang_supplier'     => $item['jumlah_barang_supplier'],
                     'harga_barang_supplier'      => $item['harga_barang_supplier'],
-                    'bukti_barang_supplier'      => $path,
-                    'created_at'                 => now(),
+                    'bukti_barang_supplier'      => $path
                 ]);
 
             } else {
@@ -111,7 +118,6 @@ class LaporanSupplierController extends Controller
                             'jumlah_barang_supplier'   => $item['jumlah_barang_supplier'],
                             'harga_barang_supplier'    => $item['harga_barang_supplier'],
                             'bukti_barang_supplier'    => $path,
-                            'updated_at'               => now(),
                         ]);
 
                 } else {
@@ -126,7 +132,6 @@ class LaporanSupplierController extends Controller
                         'jumlah_barang_supplier'     => $item['jumlah_barang_supplier'],
                         'harga_barang_supplier'      => $item['harga_barang_supplier'],
                         'bukti_barang_supplier'      => $path,
-                        'created_at'                 => now(),
                     ]);
                 }
             }
