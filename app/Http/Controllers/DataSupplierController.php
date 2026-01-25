@@ -1020,108 +1020,70 @@ class DataSupplierController extends Controller
 
     public function store_maker_barang_supplier(Request $request)
     {
-        $maker                  = Auth::guard('maker')->user();
-        $nomor_dapur_maker      = $maker->nomor_dapur_maker;
-        $id_informasi_supplier  = $request->id;
-        $tanggal_hari_ini       = date('Y-m-d');
-
-        // Daftar input barang dari form
-        $inputBarang = [
-            [
-                'nama_barang_supplier'    => $request->nama_barang_supplier_1,
-                'jumlah_barang_supplier'  => $request->jumlah_barang_supplier_1,
-                'satuan_barang_supplier'  => $request->satuan_barang_supplier_1,
-                'harga_barang_supplier'   => $request->harga_barang_supplier_1,
-            ],
-            [
-                'nama_barang_supplier'    => $request->nama_barang_supplier_2,
-                'jumlah_barang_supplier'  => $request->jumlah_barang_supplier_2,
-                'satuan_barang_supplier'  => $request->satuan_barang_supplier_2,
-                'harga_barang_supplier'   => $request->harga_barang_supplier_2,
-            ],
-            [
-                'nama_barang_supplier'    => $request->nama_barang_supplier_3,
-                'jumlah_barang_supplier'  => $request->jumlah_barang_supplier_3,
-                'satuan_barang_supplier'  => $request->satuan_barang_supplier_3,
-                'harga_barang_supplier'   => $request->harga_barang_supplier_3,
-            ],
-        ];
-
-        $dataInsert = [];
-
-        // Loop setiap barang dan hanya ambil yang diisi
-        foreach ($inputBarang as $barang) {
-            if (!empty($barang['nama_barang_supplier'])) {
-                $dataInsert[] = [
-                    'id_informasi_supplier'       => $id_informasi_supplier,
-                    'nomor_dapur_barang_supplier' => $nomor_dapur_maker,
-                    'nama_barang_supplier'        => $barang['nama_barang_supplier'],
-                    'jumlah_barang_supplier'      => $barang['jumlah_barang_supplier'] ?? 0,
-                    'satuan_barang_supplier'      => $barang['satuan_barang_supplier'] ?? '-',
-                    'harga_barang_supplier'       => $barang['harga_barang_supplier'] ?? 0,
-                ];
-            }
-        }
-
-        // Validasi minimal satu barang
-        if (empty($dataInsert)) {
-            return Redirect::back()->with(['warning' => 'Minimal isi satu barang terlebih dahulu']);
-        }
-
         DB::beginTransaction();
 
         try {
-            // Simpan barang supplier baru
-            DB::table('barang_supplier')->insert($dataInsert);
 
-            // Ubah status informasi supplier menjadi 0 (belum divalidasi)
+            // ============================================================
+            // 1. AMBIL DATA DARI FORM
+            // ============================================================
+            $maker                  = Auth::guard('maker')->user();
+            $nomor_dapur            = $maker->nomor_dapur_maker;
+            $id_informasi_supplier  = $request->id_informasi_supplier;
+
+
+            // ============================================================
+            // 2. RESET STATUS VALIDASI INFORMASI SUPPLIER
+            // ============================================================
             DB::table('informasi_supplier')
                 ->where('id_informasi_supplier', $id_informasi_supplier)
-                ->update(['status_informasi_supplier' => 0]);
-
-            // Cek apakah sudah ada data koperasi untuk supplier ini (bukan berdasarkan tanggal)
-            $dataKoperasi = DB::table('data_koperasi')
-                ->where('nomor_dapur_data_koperasi', $nomor_dapur_maker)
-                ->where('id_informasi_supplier', $id_informasi_supplier)
-                ->first();
-                    
-            if (!$dataKoperasi) {
-                // Jika belum ada → buat data koperasi baru
-                DB::table('data_koperasi')->insert([
-                    'id_informasi_supplier'     => $id_informasi_supplier,
-                    'nomor_dapur_data_koperasi' => $nomor_dapur_maker,
-                    'tanggal_data_koperasi'     => $tanggal_hari_ini,
-                    'jenis_data_koperasi'       => 'modal_keluar',
-                    'kategori_data_koperasi'    => 'Pembelian bahan dari supplier',
-                    'status_data_koperasi'      => 0,
+                ->update([
+                    'status_informasi_supplier' => 0 // menunggu validasi ulang
                 ]);
-            } else {                                            // ✅ JIKA SUDAH ADA → RESET STATUS JADI 0 LAGI
-                DB::table('data_koperasi')
-                    ->where('id_data_koperasi', $dataKoperasi->id_data_koperasi)
-                    ->update([
-                        'status_data_koperasi' => 0,
-                    ]);
-                
-                // =========================================
-                // ✅ TAMBAHAN PENGECEKAN TABEL KEUANGAN
-                // =========================================
-                $cekKeuangan = DB::table('keuangan')
-                    ->where('id_data_koperasi', $dataKoperasi->id_data_koperasi)
-                    ->first();
-                            
-                if ($cekKeuangan) {
-                    // ✅ Jika data keuangan SUDAH ADA → HAPUS (karena validasi diulang)
-                    DB::table('keuangan')
-                        ->where('id_data_koperasi', $dataKoperasi->id_data_koperasi)
-                        ->delete();
+
+            // ============================================================
+            // 4. AMBIL DATA BARANG DINAMIS DARI FORM
+            // ============================================================
+            $nama_barang   = $request->nama_barang_supplier;
+            $jumlah_barang = $request->jumlah_barang_supplier;
+            $satuan_barang = $request->satuan_barang_supplier;
+            $harga_barang  = $request->harga_barang_supplier;
+            
+            // ============================================================
+            // 5. INSERT BARANG MODAL KELUAR
+            // ============================================================
+            if (is_array($nama_barang)) {
+            
+                foreach ($nama_barang as $index => $nama) {
+            
+                    // validasi minimal
+                    if (!empty($nama) && !empty($jumlah_barang[$index])) {
+            
+                        DB::table('barang_supplier')->insert([
+                            'nama_barang_supplier'        => $nama,
+                            'jumlah_barang_supplier'      => $jumlah_barang[$index],
+                            'satuan_barang_supplier'      => $satuan_barang[$index] ?? null,
+                            'harga_barang_supplier'       => $harga_barang[$index] ?? 0,
+                            'nomor_dapur_barang_supplier' => $nomor_dapur,
+                            'id_informasi_supplier'       => $id_informasi_supplier,
+                        ]);
+                    }
                 }
             }
 
             DB::commit();
-            return Redirect::back()->with(['success' => 'Data barang supplier berhasil disimpan dan dicatat ke data koperasi']);
+
+            return Redirect::back()->with([
+                'success' => 'Data barang koperasi berhasil disimpan dan status koperasi direset'
+            ]);
+
         } catch (\Exception $e) {
+
             DB::rollBack();
-            return Redirect::back()->with(['warning' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+
+            return Redirect::back()->with([
+                'warning' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ]);
         }
     }
 
