@@ -230,7 +230,7 @@
                                                     <td>{{ $d->nama_informasi_supplier }}</td>
                                                     <td>
                                                         <div class="align-items-center">
-                                                            <a href="#" class="lihat_barang_modal_keluar btn btn-info btn-sm"
+                                                            <a href="#" class="lihat_barang_supplier btn btn-info btn-sm"
                                                                data-id="{{ $d->id_informasi_supplier }}">
                                                                 👁 Lihat
                                                             </a>
