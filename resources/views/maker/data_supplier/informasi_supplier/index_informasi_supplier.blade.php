@@ -221,12 +221,12 @@
                                                     <td>
                                                         <div class="align-items-center">
                                                             <a href="#" class="tambah_barang_supplier btn btn-info btn-sm"
-                                                               data-id="{{ $d->id_data_koperasi }}">
+                                                               data-id="{{ $d->id_informasi_supplier }}">
                                                                 ➕ Tambah
                                                             </a>
 
                                                             <a href="#" class="lihat_barang_modal_keluar btn btn-info btn-sm"
-                                                               data-id="{{ $d->id_data_koperasi }}">
+                                                               data-id="{{ $d->id_informasi_supplier }}">
                                                                 👁 Lihat
                                                             </a>
                                                         </div>
