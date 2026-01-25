@@ -21,15 +21,15 @@ class LaporanKeuanganController extends Controller
         $pilih_supllier_koperasi = $request->pilih_supllier_koperasi;
     
         $data = DB::table('keuangan as k')
-            ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($dapur) {
+            ->leftJoin('barang_modal_keluar as bmk', function ($join) use ($pilih_dapur) {
                 $join->on('k.id_data_koperasi', '=', 'bmk.id_data_koperasi')
-                     ->where('bmk.nomor_dapur_barang_modal_keluar', $dapur);
+                     ->where('bmk.nomor_dapur_barang_modal_keluar', $pilih_dapur);
             })
-            ->leftJoin('barang_supplier as bs', function ($join) use ($dapur) {
+            ->leftJoin('barang_supplier as bs', function ($join) use ($pilih_dapur) {
                 $join->on('k.id_informasi_supplier', '=', 'bs.id_informasi_supplier')
-                     ->where('bs.nomor_dapur_barang_supplier', $dapur);
+                     ->where('bs.nomor_dapur_barang_supplier', $pilih_dapur);
             })
-            ->where('k.nomor_dapur_keuangan', $dapur)
+            ->where('k.nomor_dapur_keuangan', $pilih_dapur)
     
             // HANYA TAMPILKAN JIKA ADA BARANG
             ->where(function ($q) {
