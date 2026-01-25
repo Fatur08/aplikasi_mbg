@@ -69,7 +69,7 @@ $(document).ready(function () {
                 <div class="input-icon mb-3">
                     <span class="input-icon-addon">💰</span>
                     <input type="number" name="harga_barang_modal_keluar[]" class="form-control"
-                        placeholder="Harga Barang Ke-${i}" required>
+                        placeholder="Total Harga Barang Ke-${i}" required>
                 </div>
             </div>`;
         }

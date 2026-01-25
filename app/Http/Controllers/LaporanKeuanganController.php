@@ -518,6 +518,12 @@ class LaporanKeuanganController extends Controller
             })
             ->where('k.nomor_dapur_keuangan', $dapur)
     
+            // HANYA TAMPILKAN JIKA ADA BARANG
+            ->where(function ($q) {
+                $q->whereNotNull('bmk.id_data_koperasi')
+                  ->orWhereNotNull('bs.id_informasi_supplier');
+            })
+    
             // FILTER TANGGAL
             ->when($dari_tanggal && $sampai_tanggal, function ($query) use ($dari_tanggal, $sampai_tanggal) {
                 $query->whereBetween('k.tanggal_laporan_keuangan', [
