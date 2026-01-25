@@ -216,7 +216,7 @@
                                             <tbody>
                                                 @foreach ($informasi_supplier as $d)
                                                 <tr>
-                                                    <td style="text-align:center">{{ $loop->iteration + $supplier->firstItem()-1 }}</td>
+                                                    <td style="text-align:center">{{ $loop->iteration + $informasi_supplier->firstItem()-1 }}</td>
                                                     <td>{{ $d->nama_informasi_supplier }}</td>
                                                     <td>
                                                         <div class="align-items-center">
