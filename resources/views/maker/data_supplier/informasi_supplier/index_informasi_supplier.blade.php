@@ -255,34 +255,55 @@
                                   <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
                                 </span>
-                                <select id="id_supplier" name="id_supplier" class="form-control">
-                                    <option value="">-- Pilih Nama Supplier --</option>
-                                    @foreach($nama_supplier as $d)
-                                        <option value="{{ $d->id_supplier }}">
-                                            {{ $loop->iteration }}. {{ $d->nama_supplier }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <input type="text" value="" id="nama_supplier" class="form-control" name="nama_supplier" placeholder="Masukkan Nama Lengkap">
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-6">
-                            <input type="file" id="nota_informasi_supplier" name="nota_informasi_supplier" class="form-control">
-                        </div>
-                        <div class="col-6 mt-2">
-                            <label>Masukkan Nota</label>
-                        </div>
-                    </div>
-                    <div class="row mt-3 mb-3">
-                        <div class="col-6">
-                            <input type="file" id="bukti_terima_informasi_supplier" name="bukti_terima_informasi_supplier" class="form-control">
-                        </div>
-                        <div class="col-6 mt-2">
-                            <label>Masukkan Bukti Terima</label>
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                  <!-- Download SVG icon from http://tabler-icons.io/i/user -->
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                                </span>
+                                <input type="text" value="" id="alamat_supplier" class="form-control" name="alamat_supplier" placeholder="Masukkan Alamat">
+                              </div>
                         </div>
                     </div>
-                    <div class="row mt-2">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4
+                                                 a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/>
+                                    </svg>
+                                </span>
+                    
+                                <input
+                                    type="text"
+                                    id="no_hp_supplier"
+                                    name="no_hp_supplier"
+                                    class="form-control"
+                                    placeholder="Masukkan Nomor HP"
+                                    inputmode="numeric"
+                                    pattern="[0-9]+"
+                                    minlength="10"
+                                    maxlength="15"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                >
+                            </div>
+                    
+                            <small class="text-muted">
+                                Nomor HP hanya boleh angka (contoh: 08xxxxxxxxxx)
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-12">
                             <div class="form-group">
                                 <button class="btn btn-primary w-100">
