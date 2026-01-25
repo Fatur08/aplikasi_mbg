@@ -54,6 +54,7 @@ class LaporanKeuanganController extends Controller
             })
             ->select(
                 'k.id_data_koperasi',
+                'k.id_informasi_supplier',
                 'k.tanggal_laporan_keuangan',
 
                 DB::raw('
@@ -165,12 +166,12 @@ class LaporanKeuanganController extends Controller
     {
         $sumber = $request->sumber; // supplier | koperasi
         $id     = $request->id;
-    
+
         // ===============================
         // 🔹 JIKA DARI SUPPLIER
         // ===============================
         if ($sumber === 'supplier') {
-    
+
             $barang_list = DB::table('barang_supplier')
                 ->where('id_informasi_supplier', $id)
                 ->select(
@@ -183,13 +184,13 @@ class LaporanKeuanganController extends Controller
                 )
                 ->orderBy('tanggal_barang_supplier', 'asc')
                 ->get();
-    
+
         }
         // ===============================
         // 🔹 JIKA DARI KOPERASI
         // ===============================
         else {
-    
+
             $barang_list = DB::table('barang_modal_keluar')
                 ->where('id_data_koperasi', $id)
                 ->select(
@@ -202,7 +203,7 @@ class LaporanKeuanganController extends Controller
                 )
                 ->get();
         }
-    
+
         return view(
             'owner.laporan.keuangan.barang_laporan_keuangan',
             compact('barang_list')
