@@ -460,43 +460,51 @@ class DataKoperasiController extends Controller
     }
 
 
-    public function batalkan_validasi_owner_data_koperasi($id, Request $request)
+    public function batalkan_validasi_owner_data_koperasi(Request $request, $id)
     {
-        $id = $request->id; // id_data_koperasi
-
         DB::beginTransaction();
 
         try {
-            // ✅ 1. Ambil data koperasi berdasarkan id_data_koperasi
+            // ===============================
+            // 1️⃣ Ambil data koperasi
+            // ===============================
             $dataKoperasi = DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
                 ->first();
 
             if (!$dataKoperasi) {
-                return Redirect::back()->with(['error' => 'Data koperasi tidak ditemukan']);
+                return redirect()->back()->with('error', 'Data koperasi tidak ditemukan');
             }
 
-
-            // ✅ Update status_data_koperasi jadi 0
+            // ===============================
+            // 2️⃣ Batalkan validasi koperasi
+            // ===============================
             DB::table('data_koperasi')
                 ->where('id_data_koperasi', $id)
                 ->update([
                     'status_data_koperasi' => 0
                 ]);
 
+            // ===============================
+            // 3️⃣ Hapus data di keuangan
+            //    (berdasarkan koperasi + dapur)
+            // ===============================
+            DB::table('keuangan')
+                ->where('id_data_koperasi', $id)
+                ->where('nomor_dapur_keuangan', $dataKoperasi->nomor_dapur_koperasi)
+                ->delete();
 
             DB::commit();
 
-            return Redirect::back()->with([
-                'success' => 'Validasi berhasil dibatalkan'
-            ]);
+            return redirect()->back()->with('success', 'Validasi koperasi berhasil dibatalkan');
 
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return Redirect::back()->with([
-                'error' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ]);
+            return redirect()->back()->with(
+                'error',
+                'Terjadi kesalahan: ' . $e->getMessage()
+            );
         }
     }
 
