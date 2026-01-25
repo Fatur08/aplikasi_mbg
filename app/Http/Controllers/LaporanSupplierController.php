@@ -87,7 +87,7 @@ class LaporanSupplierController extends Controller
     public function validasi_owner_barang_supplier(Request $request)
     {
         $id = $request->id;
-        $data = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
+        $data = DB::table('barang_supplier')->where('id_barang_supplier', $id)->first();
         return view('owner.laporan.supplier.validasi_laporan_supplier',compact('data'));
     }
 
