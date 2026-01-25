@@ -184,8 +184,13 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="input-icon">
-                                                <select name="pilih_instansi" id="pilih_instansi" class="form-select">
+                                                <select name="pilih_instansi" id="pilih_instansi" class="form-select" required>
                                                     <option value="">Pilih Instansi</option>
+                                                    @foreach ($distribusi as $d)
+                                                        <option value="{{ $d->tujuan_distribusi }}">
+                                                            {{ $d->tujuan_distribusi }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                               </div>
                                         </div>
@@ -270,7 +275,24 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
+                                                @forelse ($dataDistribusi as $index => $row)
+                                                    <tr>
+                                                        <td style="text-align:center">{{ $index + 1 }}</td>
+                                                        <td style="text-align:center">
+                                                            {{ \Carbon\Carbon::parse($row->tanggal_distribusi)->format('d-m-Y') }}
+                                                        </td>
+                                                        <td>{{ $row->tujuan_distribusi }}</td>
+                                                        <td>{{ $row->menu_makanan }}</td>
+                                                        <td style="text-align:center">{{ $row->jumlah_paket }}</td>
+                                                        <td>{{ $row->kendala_distribusi ?? '-' }}</td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="6" style="text-align:center">
+                                                            Data belum tersedia
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
                                             </tbody>
                                             <tfoot>
                                                 <tr>
