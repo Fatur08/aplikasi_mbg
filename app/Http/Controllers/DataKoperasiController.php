@@ -432,8 +432,6 @@ class DataKoperasiController extends Controller
                     'id_data_koperasi'         => $id,
                     'nomor_dapur_keuangan'     => $nomor_dapur,
                     'tanggal_laporan_keuangan' => $tanggal_data_koperasi,
-                    'created_at'               => now(),
-                    'updated_at'               => now(),
                 ]);
             } else {
                 // 🔁 SUDAH ADA → UPDATE id_data_koperasi
@@ -441,7 +439,6 @@ class DataKoperasiController extends Controller
                     ->where('id_laporan_keuangan', $dataKeuangan->id_laporan_keuangan)
                     ->update([
                         'id_data_koperasi' => $id,
-                        'updated_at'       => now(),
                     ]);
             }
 
