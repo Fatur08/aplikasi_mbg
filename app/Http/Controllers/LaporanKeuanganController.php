@@ -54,9 +54,9 @@ class LaporanKeuanganController extends Controller
             })
 
             ->select(
-                DB::raw('MAX(k.id_data_koperasi) AS id_data_koperasi'),
-                DB::raw('MAX(k.id_informasi_supplier) AS id_informasi_supplier'),
-
+                'k.id_laporan_keuangan', // ⬅️ INI YANG HILANG
+                'k.id_data_koperasi',
+                'k.id_informasi_supplier',
                 'k.tanggal_laporan_keuangan',
 
                 DB::raw('
@@ -65,28 +65,17 @@ class LaporanKeuanganController extends Controller
                     AS total_harga
                 '),
 
-                DB::raw('
-                    MAX(CASE 
-                        WHEN bs.id_informasi_supplier IS NOT NULL 
-                        THEN k.id_informasi_supplier 
-                        ELSE NULL 
-                    END) AS id_informasi_supplier
-                '),
-
-                DB::raw('
-                    MAX(CASE 
-                        WHEN bmk.id_data_koperasi IS NOT NULL 
-                        THEN k.id_data_koperasi 
-                        ELSE NULL 
-                    END) AS id_data_koperasi
-                '),
-
                 DB::raw('MAX(CASE WHEN bmk.id_data_koperasi IS NOT NULL THEN 1 ELSE 0 END) AS dari_koperasi'),
                 DB::raw('MAX(CASE WHEN bs.id_informasi_supplier IS NOT NULL THEN 1 ELSE 0 END) AS dari_supplier')
             )
 
             // ❗ group by hanya tanggal (inti laporan)
-            ->groupBy('k.tanggal_laporan_keuangan')
+            ->groupBy(
+                'k.id_laporan_keuangan',
+                'k.id_data_koperasi',
+                'k.id_informasi_supplier',
+                'k.tanggal_laporan_keuangan'
+            )
 
             ->orderBy('k.tanggal_laporan_keuangan', 'desc')
             ->get();
@@ -184,20 +173,20 @@ class LaporanKeuanganController extends Controller
     public function barang_owner_laporan_keuangan(Request $request)
     {
         $id_laporan = $request->id;
-    
+
         // ===============================
         // 1️⃣ Ambil header laporan
         // ===============================
         $keuangan = DB::table('keuangan')
             ->where('id_laporan_keuangan', $id_laporan)
             ->first();
-    
+
         if (!$keuangan) {
             return redirect()->back()->with('error', 'Laporan keuangan tidak ditemukan');
         }
-    
+
         $barang_list = collect();
-    
+
         // ===============================
         // 2️⃣ PRIORITAS: SUPPLIER
         // ===============================
@@ -216,7 +205,7 @@ class LaporanKeuanganController extends Controller
                 )
                 ->get();
         }
-    
+
         // ===============================
         // 3️⃣ FALLBACK: KOPERASI
         // ===============================
@@ -234,7 +223,7 @@ class LaporanKeuanganController extends Controller
                 )
                 ->get();
         }
-    
+
         return view(
             'owner.laporan.keuangan.barang_laporan_keuangan',
             compact('barang_list')
