@@ -1045,7 +1045,7 @@ class DataSupplierController extends Controller
             // 4. AMBIL DATA BARANG DINAMIS DARI FORM
             // ============================================================
             $nama_barang   = $request->nama_barang_supplier;
-            $jumlah_barang = $request->jumlah_barang_supplier;
+            $jumlah_barang = $request->jumlah_barang;
             
             // ============================================================
             // 5. INSERT BARANG MODAL KELUAR
