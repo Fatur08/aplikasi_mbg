@@ -80,6 +80,56 @@ class LaporanSupplierController extends Controller
         $data               = DB::table('barang_supplier')->where('id_barang_supplier', $id)->first();
         return view('owner.laporan.supplier.bukti_barang_supplier',compact('barang_supplier','data'));
     }
+
+
+
+
+    public function validasi_owner_barang_supplier(Request $request)
+    {
+        $id = $request->id;
+        $data = DB::table('data_koperasi')->where('id_data_koperasi', $id)->first();
+        return view('owner.data_koperasi.validasi_data_koperasi',compact('data'));
+    }
+
+
+    public function update_owner_validasi_barang_supplier($id, Request $request)
+    {
+        $id                     = $request->id; 
+        $status_barang_supplier   = $request->status_barang_supplier;
+    
+        DB::beginTransaction();
+    
+        try {
+            // ✅ 1. Ambil data barang_supplier berdasarkan id_barang_supplier
+            $barang_supplier = DB::table('barang_supplier')
+                ->where('id_barang_supplier', $id)
+                ->first();
+        
+            if (!$barang_supplier) {
+                return Redirect::back()->with(['error' => 'Data Barang Supplier tidak ditemukan']);
+            }
+        
+            // ✅ 2. Update status_barang_supplier
+            DB::table('barang_supplier')
+                ->where('id_barang_supplier', $id)
+                ->update([
+                    'status_barang_supplier' => $status_barang_supplier
+                ]);
+        
+            DB::commit();
+        
+            return Redirect::back()->with([
+                'success' => 'Status barang supplier berhasil diperbarui'
+            ]);
+        
+        } catch (\Exception $e) {
+            DB::rollBack();
+        
+            return Redirect::back()->with([
+                'error' => 'Data Gagal Divalidasi: ' . $e->getMessage()
+            ]);
+        }
+    }
     
 
 

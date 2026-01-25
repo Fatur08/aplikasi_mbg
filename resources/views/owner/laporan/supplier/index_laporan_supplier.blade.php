@@ -278,6 +278,23 @@
                                                                 @elseif($item->status_barang_supplier == 2)
                                                                     <button class="btn btn-danger btn-sm">Ditolak</button>
                                                                 @endif
+
+                                                                <div class="btn-group">
+                                                                    @if ($item->status_barang_supplier == 0)
+                                                                    <a href="#" class="validasi_laporan_supplier btn btn-info btn-sm" id="{{ $item->id_barang_supplier }}" >
+                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                        Validasi
+                                                                    </a>
+                                                                    @else
+                                                                    <form action="/owner/data_koperasi/{{ $item->id_barang_supplier }}/batalkan_validasi_data_koperasi" style="margin-left: 5px;" method="POST">
+                                                                        @csrf  
+                                                                        <a class="btn btn-sm bg-danger batalkan_validasi_data_koperasi">
+                                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10l4 4m0 -4l-4 4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
+                                                                            Batalkan
+                                                                        </a>
+                                                                    </form>
+                                                                    @endif
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     @empty
@@ -388,6 +405,26 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+<!-- VALIDASI LAPORAN SUPPLIER -->
+<div class="modal modal-blur fade" id="modal-valdiasilaporansupplier" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validasi Laporan Supplier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="validasiformlaporansupplier">
+                
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('myscript')
 <script>
@@ -407,6 +444,26 @@
                 }
             });
             $("#modal-lihatbuktibarangsupplier").modal("show");
+        });
+
+
+
+
+        $(".validasi_laporan_supplier").click(function(){
+            var id = $(this).attr('id');
+            $.ajax({
+                type:'POST',
+                url:'/owner/laporan/supplier/validasi_laporan_supplier',
+                cache:false,
+                data:{
+                    _token : "{{ csrf_token() }}",
+                    id : id
+                },
+                success:function(respond){
+                    $("#validasiformlaporansupplier").html(respond);
+                }
+            });
+            $("#modal-valdiasilaporansupplier").modal("show");
         });
         
         
