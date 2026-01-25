@@ -97,7 +97,7 @@ class LaporanSupplierController extends Controller
                 DB::table('barang_supplier')->insert([
                     'nomor_dapur_barang_supplier' => $nomor_dapur,
                     'id_informasi_supplier'       => $request->id_informasi_supplier,
-                    'tanggal_laporan_supplier'   => $request->tanggal_laporan_supplier,
+                    'tanggal_barang_supplier'   => $request->tanggal_laporan_supplier,
                     'nama_barang_supplier'       => $item['nama_barang_supplier'],
                     'satuan_barang_supplier'     => $item['satuan_barang_supplier'],
                     'jumlah_barang_supplier'     => $item['jumlah_barang_supplier'],
@@ -113,7 +113,7 @@ class LaporanSupplierController extends Controller
                     DB::table('barang_supplier')
                         ->where('id_barang_supplier', $cekBarang->id_barang_supplier)
                         ->update([
-                            'tanggal_laporan_supplier' => $request->tanggal_laporan_supplier,
+                            'tanggal_barang_supplier' => $request->tanggal_laporan_supplier,
                             'satuan_barang_supplier'   => $item['satuan_barang_supplier'],
                             'jumlah_barang_supplier'   => $item['jumlah_barang_supplier'],
                             'harga_barang_supplier'    => $item['harga_barang_supplier'],
@@ -126,7 +126,7 @@ class LaporanSupplierController extends Controller
                     DB::table('barang_supplier')->insert([
                         'nomor_dapur_barang_supplier' => $maker->nomor_dapur_maker,
                         'id_informasi_supplier'       => $request->id_informasi_supplier,
-                        'tanggal_laporan_supplier'   => $request->tanggal_laporan_supplier,
+                        'tanggal_barang_supplier'   => $request->tanggal_laporan_supplier,
                         'nama_barang_supplier'       => $item['nama_barang_supplier'],
                         'satuan_barang_supplier'     => $item['satuan_barang_supplier'],
                         'jumlah_barang_supplier'     => $item['jumlah_barang_supplier'],
