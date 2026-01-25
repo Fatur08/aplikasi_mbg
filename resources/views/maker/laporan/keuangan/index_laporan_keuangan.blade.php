@@ -258,8 +258,16 @@
                                                         </td>
 
                                                         <td class="text-center">
-                                                            <a href="#" class="barang_laporan_keuangan btn btn-info btn-sm"
-                                                               data-id="{{ $d->id_data_koperasi }}">
+                                                            <a href="#"
+                                                               class="barang_laporan_keuangan btn btn-info btn-sm"
+                                                               @if($d->id_informasi_supplier)
+                                                                   data-sumber="supplier"
+                                                                   data-id="{{ $d->id_informasi_supplier }}"
+                                                               @else
+                                                                   data-sumber="koperasi"
+                                                                   data-id="{{ $d->id_data_koperasi }}"
+                                                               @endif
+                                                            >
                                                                 👁 Lihat
                                                             </a>
                                                         </td>
@@ -339,13 +347,15 @@
     $(function(){
         $(".barang_laporan_keuangan").click(function(){
             var id = $(this).attr('data-id');
+            var sumber = $(this).attr('data-sumber');
             $.ajax({
                 type:'POST',
                 url:'/maker/laporan/keuangan/barang_laporan_keuangan',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
-                    id : id
+                    id : id,
+                    sumber : sumber
                 },
                 success:function(respond){
                     $("#loadformlihatbaranglaporankeuangan").html(respond);

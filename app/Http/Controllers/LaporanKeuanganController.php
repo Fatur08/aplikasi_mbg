@@ -163,50 +163,35 @@ class LaporanKeuanganController extends Controller
 
     public function barang_owner_laporan_keuangan(Request $request)
     {
-        $id_data_koperasi = $request->id;
+        $sumber = $request->sumber; // supplier | koperasi
+        $id     = $request->id;
     
         // ===============================
-        // 1️⃣ Ambil data keuangan
+        // 🔹 JIKA DARI SUPPLIER
         // ===============================
-        $keuangan = DB::table('keuangan')
-            ->where('id_data_koperasi', $id_data_koperasi)
-            ->first();
+        if ($sumber === 'supplier') {
     
-        if (!$keuangan) {
-            return redirect()->back()->with(
-                'error',
-                'Data keuangan tidak ditemukan'
-            );
+            $barang_list = DB::table('barang_supplier')
+                ->where('id_informasi_supplier', $id)
+                ->select(
+                    'id_barang_supplier as id_barang',
+                    'nama_barang_supplier as nama_barang',
+                    'jumlah_barang_supplier as jumlah',
+                    'satuan_barang_supplier as satuan',
+                    'harga_barang_supplier as harga',
+                    DB::raw("'Supplier' as sumber_data")
+                )
+                ->orderBy('tanggal_barang_supplier', 'asc')
+                ->get();
+    
         }
+        // ===============================
+        // 🔹 JIKA DARI KOPERASI
+        // ===============================
+        else {
     
-        $id_informasi_supplier      = $keuangan->id_informasi_supplier;
-        $nomor_dapur                = $keuangan->nomor_dapur_keuangan;
-        $tanggal_laporan_keuangan   = $keuangan->tanggal_laporan_keuangan;
-    
-        // ===============================
-        // 2️⃣ Ambil BARANG SUPPLIER (STRICT by tanggal)
-        // ===============================
-        $barang_list = DB::table('barang_supplier')
-            ->where('id_informasi_supplier', $id_informasi_supplier)
-            ->where('nomor_dapur_barang_supplier', $nomor_dapur)
-            ->whereDate('tanggal_barang_supplier', $tanggal_laporan_keuangan)
-            ->select(
-                'id_barang_supplier as id_barang',
-                'nama_barang_supplier as nama_barang',
-                'jumlah_barang_supplier as jumlah',
-                'satuan_barang_supplier as satuan',
-                'harga_barang_supplier as harga',
-                DB::raw("'Supplier' as sumber_data")
-            )
-            ->get();
-    
-        // ===============================
-        // 3️⃣ Jika SUPPLIER kosong → ambil dari KOPERASI
-        // ===============================
-        if ($barang_list->isEmpty()) {
             $barang_list = DB::table('barang_modal_keluar')
-                ->where('id_data_koperasi', $id_data_koperasi)
-                ->where('nomor_dapur_barang_modal_keluar', $nomor_dapur)
+                ->where('id_data_koperasi', $id)
                 ->select(
                     'id_barang_modal_keluar as id_barang',
                     'nama_barang_modal_keluar as nama_barang',
