@@ -313,7 +313,7 @@
             var id = $(this).attr('data-id');
             $.ajax({
                 type:'POST',
-                url:'/owner/data_koperasi/lihat_barang_modal_keluar',
+                url:'/owner/laporan/keuangan/barang_laporan_keuangan',
                 cache:false,
                 data:{
                     _token : "{{ csrf_token() }}",
