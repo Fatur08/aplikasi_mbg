@@ -6,6 +6,7 @@ use App\Models\Distributor;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
@@ -189,7 +190,8 @@ class DataDriverController extends Controller
             ->first();
 
         $kecamatan_driver = $dapur->dapur_kecamatan ?? null;
-        $password_driver = 12345;
+        //$password_driver = 12345;
+        $password_driver = Hash::make('owner1112');
         
 
         if($request->hasFile('foto_driver')){
