@@ -183,7 +183,16 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="nama_supplier_cari" id="nama_supplier_cari" placeholder="Nama Supplier" value="{{ Request('nama_supplier_cari') }}">
+                                                <input 
+                                                    type="text"
+                                                    id="nama_supplier_cari"
+                                                    name="nama_supplier_cari"
+                                                    class="form-control"
+                                                    placeholder="Nama Supplier"
+                                                    pattern="[A-Za-z\s]+"
+                                                    title="Nama hanya boleh berisi huruf"
+                                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                                >
                                             </div>
                                         </div>
                                         <div class="col-6">
