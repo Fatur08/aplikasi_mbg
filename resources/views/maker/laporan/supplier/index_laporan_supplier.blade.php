@@ -342,7 +342,7 @@
                             <input type="file" id="bukti_barang_supplier" name="bukti_barang_supplier" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
-                            <label>Masukkan Bukti (Foto)</label>
+                            <label>Masukkan Nota Pembayaran (Foto)</label>
                         </div>
                     </div>
                     <div class="row">
@@ -413,7 +413,15 @@
 
                             <div class="mb-2">
                                 <label>Satuan</label>
-                                <input type="text" name="barang[${i}][satuan_barang_supplier]" class="form-control" required>
+                                <input 
+                                    type="text"
+                                    name="barang[${i}][satuan_barang_supplier]"
+                                    class="form-control"
+                                    placeholder="Masukkan Satuan (kg, liter, dll)"
+                                    pattern="[A-Za-z\s]+"
+                                    title="Satuan hanya boleh berisi huruf"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                >
                             </div>
 
                             <div class="mb-2">
