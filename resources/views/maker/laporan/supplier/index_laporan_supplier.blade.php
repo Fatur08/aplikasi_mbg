@@ -220,7 +220,7 @@
                                                         <th style="text-align: center; vertical-align: middle;">Barang</th>
                                                         <th style="text-align: center; vertical-align: middle;">Jumlah</th>
                                                         <th style="text-align: center; vertical-align: middle;">Harga</th>
-                                                        <th style="text-align: center; vertical-align: middle;">Bukti</th>
+                                                        <th style="text-align: center; vertical-align: middle;">Nota</th>
                                                         <th style="text-align: center; vertical-align: middle;">Status</th>
                                                     </tr>
                                                 </thead>
