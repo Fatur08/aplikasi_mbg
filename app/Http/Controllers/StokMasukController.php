@@ -61,7 +61,7 @@ class StokMasukController extends Controller
         // --- 3️⃣ Data filter dropdown bahan
         $bahan = DB::table('bahan')
             ->select('id_bahan', 'nama_bahan')
-            ->where('nomor_dapur', $maker->nomor_dapur_maker ?? null)
+            ->where('nomor_dapur_bahan', $maker->nomor_dapur_maker ?? null)
             ->orderBy('nama_bahan', 'asc')
             ->get();
     
