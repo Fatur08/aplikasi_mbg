@@ -310,7 +310,7 @@
                             <input type="file" id="bukti_terima_data_koperasi" name="bukti_terima_data_koperasi" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
-                            <label>Masukkan Bukti (Foto)</label>
+                            <label>Masukkan Nota Pembayaran (Foto)</label>
                         </div>
                     </div>
                     <div class="row mt-2">
