@@ -76,8 +76,10 @@ class StokMasukController extends Controller
             ->where('nomor_dapur_barang_modal_keluar', $nomor_dapur);
 
         // gabungkan
-        $bahan = $bahan_supplier
-            ->union($bahan_koperasi)
+        $bahan = DB::query()
+            ->fromSub($bahan_supplier->union($bahan_koperasi), 'bahan')
+            ->select('nama_bahan')
+            ->distinct()
             ->orderBy('nama_bahan','asc')
             ->get();
 
