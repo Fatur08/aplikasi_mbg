@@ -50,20 +50,34 @@ $(document).ready(function () {
 
                 <div class="input-icon mb-3">
                     <span class="input-icon-addon">📦</span>
-                    <input type="text" name="nama_barang_modal_keluar[]" class="form-control"
-                        placeholder="Nama Barang Ke-${i}" required>
+                    <input 
+                        type="text"
+                        name="nama_barang_modal_keluar[]"
+                        class="form-control"
+                        placeholder="Nama Barang Ke-${i}"
+                        pattern="[A-Za-z\s]+"
+                        title="Nama barang hanya boleh berisi huruf"
+                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                    required>
+                </div>
+
+                <div class="input-icon mb-3">
+                    <span class="input-icon-addon">📐</span>
+                    <input 
+                        type="text"
+                        name="satuan_barang_modal_keluar[]"
+                        class="form-control"
+                        placeholder="Satuan Barang Ke-${i}"
+                        pattern="[A-Za-z\s]+"
+                        title="Satuan barang hanya boleh berisi huruf"
+                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                    required>
                 </div>
 
                 <div class="input-icon mb-3">
                     <span class="input-icon-addon">🔢</span>
                     <input type="number" name="jumlah_barang_modal_keluar[]" class="form-control"
                         placeholder="Jumlah Barang Ke-${i}" required>
-                </div>
-
-                <div class="input-icon mb-3">
-                    <span class="input-icon-addon">📐</span>
-                    <input type="text" name="satuan_barang_modal_keluar[]" class="form-control"
-                        placeholder="Satuan Barang Ke-${i}" required>
                 </div>
 
                 <div class="input-icon mb-3">

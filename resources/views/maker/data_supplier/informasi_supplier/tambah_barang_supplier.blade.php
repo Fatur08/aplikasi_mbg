@@ -49,11 +49,16 @@ $(document).ready(function () {
 
                 <div class="input-icon mb-3">
                     <span class="input-icon-addon">📦</span>
-                    <input type="text"
-                           name="nama_barang_supplier[]"
-                           class="form-control"
-                           placeholder="Nama Barang Ke-${i}"
-                           required>
+                    <input 
+                        type="text"
+                        name="nama_barang_supplier[]"
+                        class="form-control"
+                        placeholder="Nama Barang Ke-${i}"
+                        pattern="[A-Za-z\s]+"
+                        title="Nama barang hanya boleh berisi huruf"
+                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                        required
+                    >
                 </div>
             </div>`;
         }
