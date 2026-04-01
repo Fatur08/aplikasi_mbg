@@ -9,7 +9,7 @@
             <label class="form-label">Jumlah Barang</label>
             <select class="form-control" id="jumlah_barang">
                 <option value="">-- Pilih Jumlah Barang --</option>
-                @for($i = 1; $i <= 10; $i++)
+                @for($i = 1; $i <= 50; $i++)
                     <option value="{{ $i }}">{{ $i }} Barang</option>
                 @endfor
             </select>
