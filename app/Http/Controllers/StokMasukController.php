@@ -59,27 +59,18 @@ class StokMasukController extends Controller
             ->sum(); // lalu jumlahkan semua bahan
     
         // --- 3️⃣ Data filter dropdown bahan
-        // bahan dari supplier
         $bahan_supplier = DB::table('barang_supplier')
-            ->select(
-                'id_barang_supplier as id_bahan',
-                'nama_barang_supplier as nama_bahan'
-            )
+            ->select('nama_barang_supplier as nama_bahan')
             ->where('nomor_dapur_barang_supplier', $nomor_dapur);
 
-        // bahan dari koperasi
         $bahan_koperasi = DB::table('barang_modal_keluar')
-            ->select(
-                'id_barang_modal_keluar as id_bahan',
-                'nama_barang_modal_keluar as nama_bahan'
-            )
+            ->select('nama_barang_modal_keluar as nama_bahan')
             ->where('nomor_dapur_barang_modal_keluar', $nomor_dapur);
 
-        // gabungkan
         $bahan = DB::query()
             ->fromSub($bahan_supplier->union($bahan_koperasi), 'bahan')
-            ->select('nama_bahan')
-            ->distinct()
+            ->selectRaw('MIN(nama_bahan) as id_bahan, nama_bahan')
+            ->groupBy('nama_bahan')
             ->orderBy('nama_bahan','asc')
             ->get();
 
