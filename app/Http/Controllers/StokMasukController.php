@@ -72,12 +72,12 @@ class StokMasukController extends Controller
         $union_bahan = $bahan_supplier->union($bahan_koperasi);
 
         $bahan = DB::table('bahan')
-            ->whereIn('nama_bahan', function($query) use ($bahan_supplier,$bahan_koperasi){
-                $query->fromSub($bahan_supplier->union($bahan_koperasi),'union_bahan')
-                      ->select('nama_bahan');
+            ->joinSub($union_bahan, 'union_bahan', function ($join) {
+                $join->on('bahan.nama_bahan', '=', 'union_bahan.nama_bahan');
             })
-            ->select('id_bahan','nama_bahan')
-            ->orderBy('nama_bahan','asc')
+            ->where('bahan.nomor_dapur_bahan', $nomor_dapur) // filter dapur
+            ->select('bahan.id_bahan', 'bahan.nama_bahan')
+            ->orderBy('bahan.nama_bahan','asc')
             ->get();
     
     
