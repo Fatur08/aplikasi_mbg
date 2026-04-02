@@ -204,7 +204,7 @@
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <select name="id_bahan" id="id_bahan" class="form-select">
-                                                    <option value="">Pilih Bahan</option>
+                                                    <option value="">Pilih Bahan (Yang Tersedia Di Dapur)</option>
                                                     @foreach($bahan as $item)
                                                         <option value="{{ $item->id_bahan }}">{{ $item->nama_bahan }}</option>
                                                     @endforeach
@@ -432,16 +432,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                  <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-bowl-chopsticks"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z" /><path d="M19 7l-14 1" /><path d="M19 2l-14 3" /></svg>                                </span>
                                 <input type="text" value="" id="nama_bahan" class="form-control" name="nama_bahan" placeholder="Masukkan Nama Bahan (Jika Belum Ada)">
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-12 mb-3">
                             <select name="id_bahan" id="id_bahan" class="form-select">
@@ -476,12 +475,79 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
+
+                            <!-- Pertanyaan -->
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                  <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bitbucket"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3.648 4a.64 .64 0 0 0 -.64 .744l3.14 14.528c.07 .417 .43 .724 .852 .728h10a.644 .644 0 0 0 .642 -.539l3.35 -14.71a.641 .641 0 0 0 -.64 -.744l-16.704 -.007z" /><path d="M14 15h-4l-1 -6h6z" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icon-tabler-help">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M12 18h.01"/>
+                                        <path d="M12 14a4 4 0 1 0 -4 -4"/>
+                                    </svg>
                                 </span>
-                                <input type="text" value="" id="sumber_stok_masuk" class="form-control" name="sumber_stok_masuk" placeholder="Masukkan Sumber Masuk Stok">
+
+                                <select class="form-control" id="sumber_supplier">
+                                    <option value="">Apakah Sumber Masuk Stok dari Supplier?</option>
+                                    <option value="ya">Ya</option>
+                                    <option value="tidak">Tidak</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Select Supplier -->
+                    <div class="row" id="supplier_container" style="display:none;">
+                        <div class="col-12">
+                            <div class="input-icon mb-3">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icon-tabler-truck">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M3 17h13v-10h-13z"/>
+                                    </svg>
+                                </span>
+
+                                <select name="sumber_stok_masuk" class="form-control">
+                                    <option value="">Pilih Supplier</option>
+
+                                    @foreach($supplier as $item)
+                                        <option value="{{ $item->nama_supplier }}">
+                                            {{ $item->nama_supplier }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Input Manual (Jika bukan supplier / koperasi) -->
+                    <div class="row" id="manual_container" style="display:none;">
+                        <div class="col-12">
+                            <div class="input-icon mb-3">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icon-tabler-edit">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M11 4h-4a2 2 0 0 0 -2 2v12"/>
+                                    </svg>
+                                </span>
+
+                                <input type="text" id="sumber_stok_masuk"
+                                    class="form-control"
+                                    name="sumber_stok_masuk"
+                                    placeholder="Masukkan Sumber Masuk Stok (Misal: Koperasi)">
                             </div>
                         </div>
                     </div>
@@ -548,6 +614,27 @@
         $("#btnTambahStokMasuk").click(function(){
             $("#modal-inputstokmasuk").modal("show");
         });
+
+
+        document.getElementById("sumber_supplier").addEventListener("change", function(){
+            let supplier = document.getElementById("supplier_container");
+            let manual = document.getElementById("manual_container");
+
+            if(this.value === "ya"){
+                supplier.style.display = "block";
+                manual.style.display = "none";
+            }
+            else if(this.value === "tidak"){
+                supplier.style.display = "none";
+                manual.style.display = "block";
+            }
+            else{
+                supplier.style.display = "none";
+                manual.style.display = "none";
+            }
+        });
+
+
 
         $(".edit_stok_masuk").click(function(){
             var id = $(this).attr('id');
