@@ -144,15 +144,25 @@ class StokMasukController extends Controller
             $id_bahan = $cek_bahan->id_bahan;
         }
 
+        $sumber_stok = $request->sumber_stok_masuk;
+
+        $nama_supplier = DB::table('informasi_supplier')
+            ->where('id_informasi_supplier', $sumber_stok)
+            ->value('nama_informasi_supplier');
+        
+        if ($nama_supplier) {
+            $sumber_stok = $nama_supplier;
+        }
+        
         $data_stok_masuk = [
             'id_bahan' => $id_bahan,
             'nomor_dapur_stok_masuk' => $nomor_dapur_maker,
-            'tanggal_masuk'   => $request->tanggal_masuk,
+            'tanggal_masuk' => $request->tanggal_masuk,
             'jumlah_masuk' => $request->jumlah_masuk,
-            'sumber_stok_masuk' => $request->sumber_stok_masuk,
+            'sumber_stok_masuk' => $sumber_stok,
             'keterangan_stok_masuk' => $request->keterangan_stok_masuk
         ];
-
+        
         $simpan_stok = DB::table('stok_masuk')->insert($data_stok_masuk);
 
         if ($simpan_stok) {
