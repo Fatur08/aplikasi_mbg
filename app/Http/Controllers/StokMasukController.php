@@ -76,7 +76,7 @@ class StokMasukController extends Controller
                 $query->fromSub($bahan_supplier->union($bahan_koperasi),'union_bahan')
                       ->select('nama_bahan');
             })
-            ->select('nama_bahan')
+            ->select('id_bahan','nama_bahan')
             ->orderBy('nama_bahan','asc')
             ->get();
     
