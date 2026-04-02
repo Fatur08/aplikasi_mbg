@@ -472,7 +472,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12 mb-3">
                             <select name="tujuan_stok_keluar" id="tujuan_stok_keluar" class="form-select">
                                 <option value="">Pilih Tujuan Penggunaan</option>
                                 <option value="digunakan">Digunakan</option>
