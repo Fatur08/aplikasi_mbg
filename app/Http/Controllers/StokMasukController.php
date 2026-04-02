@@ -61,20 +61,23 @@ class StokMasukController extends Controller
     
     
         // --- 3️⃣ Data dropdown bahan (supplier + koperasi)
-    
         $bahan_supplier = DB::table('barang_supplier')
             ->select('nama_barang_supplier as nama_bahan')
             ->where('nomor_dapur_barang_supplier', $nomor_dapur);
-    
+
         $bahan_koperasi = DB::table('barang_modal_keluar')
             ->select('nama_barang_modal_keluar as nama_bahan')
             ->where('nomor_dapur_barang_modal_keluar', $nomor_dapur);
-    
-        $bahan = DB::query()
-            ->fromSub($bahan_supplier->union($bahan_koperasi), 'bahan')
-            ->selectRaw('MIN(nama_bahan) as id_bahan, nama_bahan')
-            ->groupBy('nama_bahan')
-            ->orderBy('nama_bahan','asc')
+
+        $union_bahan = $bahan_supplier->union($bahan_koperasi);
+
+        $bahan = DB::table('bahan')
+            ->joinSub($union_bahan, 'union_bahan', function ($join) {
+                $join->on('bahan.nama_bahan', '=', 'union_bahan.nama_bahan');
+            })
+            ->select('bahan.id_bahan', 'bahan.nama_bahan')
+            ->distinct()
+            ->orderBy('bahan.nama_bahan','asc')
             ->get();
     
     
