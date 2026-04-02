@@ -434,7 +434,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <select name="id_bahan" id="id_bahan" class="form-select">
+                            <select name="store_id_bahan" id="store_id_bahan" class="form-select">
                                 <option value="">Pilih Bahan (Yang Tersedia Di Dapur)</option>
                                 @foreach($bahan as $item)
                                     <option value="{{ $item->id_bahan }}">{{ $item->nama_bahan }}</option>
@@ -680,7 +680,7 @@
         var supplier_select = $("#supplier_select").val();
         var sumber_manual = $("#sumber_stok_masuk").val();
         var keterangan_stok_masuk = $("#keterangan_stok_masuk").val();
-        var id_bahan = $("#id_bahan").val();
+        var store_id_bahan = $("#store_id_bahan").val();
 
         if(tanggal_masuk==""){
             Swal.fire({
@@ -693,13 +693,13 @@
             return false;
         }
 
-        else if(id_bahan==""){
+        else if(store_id_bahan==""){
             Swal.fire({
                 title: 'Warning!',
                 text: 'Bahan Harus Dipilih',
                 icon: 'warning'
             }).then(()=>{
-                $("#id_bahan").focus();
+                $("#store_id_bahan").focus();
             });
             return false;
         }
