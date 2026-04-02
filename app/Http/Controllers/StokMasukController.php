@@ -18,7 +18,7 @@ class StokMasukController extends Controller
         $filter_bulan = $request->input('bulan');
         $filter_bahan = $request->input('id_bahan');
     
-        // --- 1️⃣ Ambil detail stok masuk per baris (supaya sisa per batch tetap ada)
+        // --- 1️⃣ Ambil detail stok masuk
         $stok = DB::table('stok_masuk')
             ->leftJoin('bahan', 'stok_masuk.id_bahan', '=', 'bahan.id_bahan')
             ->leftJoin(DB::raw('(
@@ -34,12 +34,12 @@ class StokMasukController extends Controller
                 'bahan.nama_bahan',
                 'bahan.satuan_bahan',
                 'stok_masuk.jumlah_masuk',
-                DB::raw('IFNULL(keluar.total_keluar, 0) as total_keluar'),
-                DB::raw('(stok_masuk.jumlah_masuk - IFNULL(keluar.total_keluar, 0)) as sisa_stok'),
+                DB::raw('IFNULL(keluar.total_keluar,0) as total_keluar'),
+                DB::raw('(stok_masuk.jumlah_masuk - IFNULL(keluar.total_keluar,0)) as sisa_stok'),
                 'stok_masuk.sumber_stok_masuk',
                 'stok_masuk.keterangan_stok_masuk'
             );
-        
+    
         if (!empty($filter_bulan)) {
             $stok->whereRaw("MONTH(stok_masuk.tanggal_masuk) = ?", [$filter_bulan]);
         }
@@ -48,48 +48,55 @@ class StokMasukController extends Controller
             $stok->where('stok_masuk.id_bahan', $filter_bahan);
         }
     
-        $stok = $stok->orderBy('stok_masuk.tanggal_masuk', 'asc')->get();
+        $stok = $stok->orderBy('stok_masuk.tanggal_masuk','asc')->get();
     
-        // --- 2️⃣ Hitung total sisa keseluruhan dari semua data di atas
+    
+        // --- 2️⃣ Hitung total sisa stok keseluruhan
         $total_sisa_keseluruhan = $stok
-            ->groupBy('id_bahan') // kelompokkan per bahan
+            ->groupBy('id_bahan')
             ->map(function ($items) {
-                return $items->sum('sisa_stok'); // jumlahkan sisa per bahan
+                return $items->sum('sisa_stok');
             })
-            ->sum(); // lalu jumlahkan semua bahan
+            ->sum();
     
-        // --- 3️⃣ Data filter dropdown bahan
+    
+        // --- 3️⃣ Data dropdown bahan (supplier + koperasi)
+    
         $bahan_supplier = DB::table('barang_supplier')
             ->select('nama_barang_supplier as nama_bahan')
             ->where('nomor_dapur_barang_supplier', $nomor_dapur);
-
+    
         $bahan_koperasi = DB::table('barang_modal_keluar')
             ->select('nama_barang_modal_keluar as nama_bahan')
             ->where('nomor_dapur_barang_modal_keluar', $nomor_dapur);
-
+    
         $bahan = DB::query()
             ->fromSub($bahan_supplier->union($bahan_koperasi), 'bahan')
             ->selectRaw('MIN(nama_bahan) as id_bahan, nama_bahan')
             ->groupBy('nama_bahan')
             ->orderBy('nama_bahan','asc')
             ->get();
-        
-
-        // Data supplier
+    
+    
+        // --- 4️⃣ Data supplier
         $supplier = DB::table('informasi_supplier')
             ->where('nomor_dapur_informasi_supplier', $nomor_dapur)
             ->get();
-
     
+    
+        // --- 5️⃣ Ambil nama bahan dari filter
         $nama_bahan_filter = null;
+    
         if (!empty($filter_bahan)) {
             $nama_bahan_filter = DB::table('bahan')
                 ->where('id_bahan', $filter_bahan)
                 ->value('nama_bahan');
         }
     
+    
         $dataKosong = $stok->isEmpty();
         $sudahCari = !empty($filter_bahan) || !empty($filter_bulan);
+    
     
         return view('maker.stok.stok_masuk.index_stok_masuk_maker', compact(
             'stok',
@@ -125,7 +132,7 @@ class StokMasukController extends Controller
             // jika belum ada → insert
             $id_bahan = DB::table('bahan')->insertGetId([
                 'nama_bahan' => $nama_bahan,
-                'satuan_bahan' => $request->satuan_bahan,
+                'satuan_bahan' => $request->satuan_bahan, // satuan bahan ini seharusnya bisa dihapus untuk menyederhanakan tabel bahan
                 'nomor_dapur_bahan' => $nomor_dapur_maker
             ]);
 
