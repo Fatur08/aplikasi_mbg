@@ -515,16 +515,13 @@
                                 </span>
 
                                 <select name="sumber_stok_masuk" class="form-control">
-                                    <option value="">Pilih Supplier</option>
-
-                                    @foreach($supplier as $item)
-                                        <option value="{{ $item->nama_supplier }}">
-                                            {{ $item->nama_supplier }}
+                                    <option value="">-- Pilih Supplier --</option>
+                                    @foreach ($supplier as $s)
+                                        <option value="{{ $s->id_informasi_supplier }}">
+                                            {{ $s->nama_informasi_supplier }}
                                         </option>
                                     @endforeach
-
                                 </select>
-
                             </div>
                         </div>
                     </div>
