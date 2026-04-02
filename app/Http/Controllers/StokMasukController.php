@@ -145,12 +145,12 @@ class StokMasukController extends Controller
 
         $sumber_stok = $request->sumber_manual;
 
-        if (!empty($request->supplier_id)) {
-        
+        if (!empty($request->supplier_select)) {
+
             $supplier = DB::table('informasi_supplier')
-                ->where('id_informasi_supplier', $request->supplier_id)
+                ->where('id_informasi_supplier', $request->supplier_select)
                 ->first();
-        
+
             if ($supplier) {
                 $sumber_stok = $supplier->nama_informasi_supplier;
             }
