@@ -468,7 +468,6 @@
                                     pattern="[A-Za-z\s]+"
                                     title="Satuan hanya boleh berisi huruf"
                                     oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
-                                    required
                                 >
                             </div>
                         </div>
