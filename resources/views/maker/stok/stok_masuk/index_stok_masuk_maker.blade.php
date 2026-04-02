@@ -466,10 +466,19 @@
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                  <!-- Download SVG icon from http://tabler-icons.io/i/user -->
                                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-number-1-small"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 8h1v8" /></svg>
                                 </span>
-                                <input type="text" value="" id="satuan_bahan" class="form-control" name="satuan_bahan" placeholder="Masukkan Satuan Stok Yang Terkecil">
+                                <input 
+                                    type="text"
+                                    id="satuan_bahan"
+                                    name="satuan_bahan"
+                                    class="form-control"
+                                    placeholder="Masukkan Satuan (kg, liter, dll)"
+                                    pattern="[A-Za-z\s]+"
+                                    title="Satuan hanya boleh berisi huruf"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                    required
+                                >
                             </div>
                         </div>
                     </div>
