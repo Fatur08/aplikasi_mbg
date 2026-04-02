@@ -513,7 +513,7 @@
                                     </svg>
                                 </span>
 
-                                <select name="sumber_stok_masuk" id="supplier_select" class="form-control">
+                                <select name="supplier_select" id="supplier_select" class="form-control">
                                     <option value="">-- Pilih Supplier --</option>
                                     @foreach ($supplier as $s)
                                         <option value="{{ $s->id_informasi_supplier }}">
@@ -540,9 +540,9 @@
                                     </svg>
                                 </span>
 
-                                <input type="text" id="sumber_stok_masuk"
+                                <input type="text" id="sumber_manual"
                                     class="form-control"
-                                    name="sumber_stok_masuk"
+                                    name="sumber_manual"
                                     placeholder="Masukkan Sumber Masuk Stok (Misal: Koperasi)">
                             </div>
                         </div>
@@ -678,7 +678,7 @@
         var satuan_bahan = $("#satuan_bahan").val();
         var sumber_supplier = $("#sumber_supplier").val();
         var supplier_select = $("#supplier_select").val();
-        var sumber_manual = $("#sumber_stok_masuk").val();
+        var sumber_manual = $("#sumber_manual").val();
         var keterangan_stok_masuk = $("#keterangan_stok_masuk").val();
         var store_id_bahan = $("#store_id_bahan").val();
 

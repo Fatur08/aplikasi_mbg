@@ -143,18 +143,17 @@ class StokMasukController extends Controller
             $id_bahan = $cek_bahan->id_bahan;
         }
 
-        $sumber_stok = $request->sumber_stok_masuk;
+        $sumber_stok = $request->sumber_manual;
 
-        if (is_numeric($sumber_stok)) {
-
+        if (!empty($request->supplier_id)) {
+        
             $supplier = DB::table('informasi_supplier')
-                ->where('id_informasi_supplier', $sumber_stok)
+                ->where('id_informasi_supplier', $request->supplier_id)
                 ->first();
-
+        
             if ($supplier) {
                 $sumber_stok = $supplier->nama_informasi_supplier;
             }
-            dd($supplier);
         }
 
         $data_stok_masuk = [
