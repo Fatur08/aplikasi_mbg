@@ -73,6 +73,12 @@ class StokMasukController extends Controller
             ->groupBy('nama_bahan')
             ->orderBy('nama_bahan','asc')
             ->get();
+        
+
+        // Data supplier
+        $supplier = DB::table('informasi_supplier')
+            ->where('nomor_dapur_informasi_supplier', $nomor_dapur)
+            ->get();
 
     
         $nama_bahan_filter = null;
@@ -87,6 +93,7 @@ class StokMasukController extends Controller
     
         return view('maker.stok.stok_masuk.index_stok_masuk_maker', compact(
             'stok',
+            'supplier',
             'maker',
             'bahan',
             'dataKosong',
