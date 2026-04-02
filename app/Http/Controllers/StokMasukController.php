@@ -119,7 +119,6 @@ class StokMasukController extends Controller
     {
         $maker              = Auth::guard('maker')->user();
         $nomor_dapur_maker  = $maker->nomor_dapur_maker;
-        $nama_lengkap       = $maker->nama_lengkap;
     
         // ambil nama bahan dari dropdown
         $id_bahan = $request->store_id_bahan;
@@ -146,14 +145,17 @@ class StokMasukController extends Controller
 
         $sumber_stok = $request->sumber_stok_masuk;
 
-        $nama_supplier = DB::table('informasi_supplier')
-            ->where('id_informasi_supplier', $sumber_stok)
-            ->value('nama_informasi_supplier');
+        if (is_numeric($sumber_stok)) {
         
-        if ($nama_supplier) {
-            $sumber_stok = $nama_supplier;
+            $supplier = DB::table('informasi_supplier')
+                ->where('id_informasi_supplier', $sumber_stok)
+                ->first();
+        
+            if ($supplier) {
+                $sumber_stok = $supplier->nama_informasi_supplier;
+            }
         }
-        
+
         $data_stok_masuk = [
             'id_bahan' => $id_bahan,
             'nomor_dapur_stok_masuk' => $nomor_dapur_maker,
@@ -162,7 +164,7 @@ class StokMasukController extends Controller
             'sumber_stok_masuk' => $sumber_stok,
             'keterangan_stok_masuk' => $request->keterangan_stok_masuk
         ];
-        
+
         $simpan_stok = DB::table('stok_masuk')->insert($data_stok_masuk);
 
         if ($simpan_stok) {
