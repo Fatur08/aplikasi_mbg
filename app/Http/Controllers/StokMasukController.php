@@ -111,13 +111,28 @@ class StokMasukController extends Controller
         $nomor_dapur_maker  = $maker->nomor_dapur_maker;
         $nama_lengkap       = $maker->nama_lengkap;
     
-        if (!empty($request->nama_bahan)) {
+        // ambil nama bahan dari dropdown
+        $nama_bahan = $request->nama_bahan;
+
+        // cek apakah bahan sudah ada di tabel bahan
+        $cek_bahan = DB::table('bahan')
+            ->where('nama_bahan', $nama_bahan)
+            ->where('nomor_dapur_bahan', $nomor_dapur_maker)
+            ->first();
+
+        if (!$cek_bahan) {
+
+            // jika belum ada → insert
             $id_bahan = DB::table('bahan')->insertGetId([
-                'nama_bahan' => $request->nama_bahan,
-                'satuan_bahan' => $request->satuan_bahan
+                'nama_bahan' => $nama_bahan,
+                'satuan_bahan' => $request->satuan_bahan,
+                'nomor_dapur_bahan' => $nomor_dapur_maker
             ]);
+
         } else {
-            $id_bahan = $request->id_bahan;
+
+            // jika sudah ada → gunakan id yang ada
+            $id_bahan = $cek_bahan->id_bahan;
         }
 
         $data_stok_masuk = [
