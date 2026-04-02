@@ -513,7 +513,7 @@
                                     </svg>
                                 </span>
 
-                                <select name="sumber_stok_masuk" class="form-control">
+                                <select name="sumber_stok_masuk" id="supplier_select" class="form-control">
                                     <option value="">-- Pilih Supplier --</option>
                                     @foreach ($supplier as $s)
                                         <option value="{{ $s->id_informasi_supplier }}">
@@ -673,64 +673,104 @@
         });
 
         $("#frmStkMsk").submit(function(){
-            var tanggal_masuk = $("#tanggal_masuk").val();
-            var jumlah_masuk = $("#jumlah_masuk").val();
-            var satuan_bahan = $("#satuan_bahan").val();
-            var sumber_stok_masuk = $("#sumber_stok_masuk").val();
-            var keterangan_stok_masuk = $("#keterangan_stok_masuk").val();
-            var id_bahan = $("#id_bahan").val();
-            if(tanggal_masuk==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Tanggal Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#tanggal_masuk").focus();
-                  });
-                return false;
-            } else if (jumlah_masuk==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Jumlah Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#jumlah_masuk").focus();
-                  });
-                return false;
-            } else if (satuan_bahan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Satuan Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#satuan_bahan").focus();
-                  });
-                return false;
-            } else if (sumber_stok_masuk==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Sumber Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#sumber_stok_masuk").focus();
-                  });
-                return false;
-            } else if (keterangan_stok_masuk==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Keterangan Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#keterangan_stok_masuk").focus();
-                  });
-                return false;
-            }
-        });
+        var tanggal_masuk = $("#tanggal_masuk").val();
+        var jumlah_masuk = $("#jumlah_masuk").val();
+        var satuan_bahan = $("#satuan_bahan").val();
+        var sumber_supplier = $("#sumber_supplier").val();
+        var supplier_select = $("#supplier_select").val();
+        var sumber_manual = $("#sumber_stok_masuk").val();
+        var keterangan_stok_masuk = $("#keterangan_stok_masuk").val();
+        var id_bahan = $("#id_bahan").val();
+
+        if(tanggal_masuk==""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Tanggal Harus Diisi',
+                icon: 'warning'
+            }).then(()=>{
+                $("#tanggal_masuk").focus();
+            });
+            return false;
+        }
+
+        else if(id_bahan==""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Bahan Harus Dipilih',
+                icon: 'warning'
+            }).then(()=>{
+                $("#id_bahan").focus();
+            });
+            return false;
+        }
+
+        else if(jumlah_masuk==""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Jumlah Harus Diisi',
+                icon: 'warning'
+            }).then(()=>{
+                $("#jumlah_masuk").focus();
+            });
+            return false;
+        }
+
+        else if(satuan_bahan==""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Satuan Harus Diisi',
+                icon: 'warning'
+            }).then(()=>{
+                $("#satuan_bahan").focus();
+            });
+            return false;
+        }
+
+        else if(sumber_supplier==""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Silakan pilih apakah sumber stok dari Supplier',
+                icon: 'warning'
+            }).then(()=>{
+                $("#sumber_supplier").focus();
+            });
+            return false;
+        }
+
+        else if(sumber_supplier=="ya" && supplier_select==""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Silakan pilih Supplier terlebih dahulu',
+                icon: 'warning'
+            }).then(()=>{
+                $("#supplier_select").focus();
+            });
+            return false;
+        }
+
+        else if(sumber_supplier=="tidak" && sumber_manual==""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Silakan isi sumber stok masuk',
+                icon: 'warning'
+            }).then(()=>{
+                $("#sumber_stok_masuk").focus();
+            });
+            return false;
+        }
+
+        else if(keterangan_stok_masuk==""){
+            Swal.fire({
+                title: 'Warning!',
+                text: 'Keterangan Harus Diisi',
+                icon: 'warning'
+            }).then(()=>{
+                $("#keterangan_stok_masuk").focus();
+            });
+            return false;
+        }
+
+    });
 
         flatpickr("#dari_tanggal", {
             altInput: true,
