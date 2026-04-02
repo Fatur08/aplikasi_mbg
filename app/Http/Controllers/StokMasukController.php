@@ -122,11 +122,11 @@ class StokMasukController extends Controller
         $nama_lengkap       = $maker->nama_lengkap;
     
         // ambil nama bahan dari dropdown
-        $nama_bahan = $request->nama_bahan;
+        $id_bahan = $request->id_bahan;
 
         // cek apakah bahan sudah ada di tabel bahan
         $cek_bahan = DB::table('bahan')
-            ->where('nama_bahan', $nama_bahan)
+            ->where('id_bahan', $id_bahan)
             ->where('nomor_dapur_bahan', $nomor_dapur_maker)
             ->first();
 
@@ -134,7 +134,6 @@ class StokMasukController extends Controller
 
             // jika belum ada → insert
             $id_bahan = DB::table('bahan')->insertGetId([
-                'nama_bahan' => $nama_bahan,
                 'satuan_bahan' => $request->satuan_bahan, // satuan bahan ini seharusnya bisa dihapus untuk menyederhanakan tabel bahan
                 'nomor_dapur_bahan' => $nomor_dapur_maker
             ]);
