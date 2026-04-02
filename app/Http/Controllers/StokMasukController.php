@@ -122,7 +122,7 @@ class StokMasukController extends Controller
         $nama_lengkap       = $maker->nama_lengkap;
     
         // ambil nama bahan dari dropdown
-        $id_bahan = $request->id_bahan;
+        $id_bahan = $request->store_id_bahan;
 
         // cek apakah bahan sudah ada di tabel bahan
         $cek_bahan = DB::table('bahan')
