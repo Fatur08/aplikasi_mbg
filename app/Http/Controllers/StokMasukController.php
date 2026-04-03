@@ -147,63 +147,55 @@ class StokMasukController extends Controller
         $maker              = Auth::guard('maker')->user();
         $nomor_dapur_maker  = $maker->nomor_dapur_maker;
     
-        // ambil value dari dropdown
-        $store_id_bahan = $request->store_id_bahan;
-        
-        // jika yang dikirim adalah ANGKA → berarti id_bahan sudah ada
-        if (is_numeric($store_id_bahan)) {
-        
-            $cek_bahan = DB::table('bahan')
-                ->where('id_bahan', $store_id_bahan)
-                ->where('nomor_dapur_bahan', $nomor_dapur_maker)
-                ->first();
-        
-            if ($cek_bahan) {
-                $id_bahan = $cek_bahan->id_bahan;
-            }
-        
-        } else {
-        
-            // jika yang dikirim adalah NAMA BAHAN
-            $nama_bahan = trim($store_id_bahan);
-        
-            // cek apakah sudah ada di tabel bahan
-            $cek_bahan = DB::table('bahan')
-                ->where('nama_bahan', $nama_bahan)
-                ->where('nomor_dapur_bahan', $nomor_dapur_maker)
-                ->first();
-        
-            if (!$cek_bahan) {
-        
-                // insert bahan baru
-                $id_bahan = DB::table('bahan')->insertGetId([
-                    'nama_bahan' => $nama_bahan,
-                    'satuan_bahan' => $request->satuan_bahan,
-                    'nomor_dapur_bahan' => $nomor_dapur_maker
-                ]);
-        
-            } else {
-        
-                // gunakan id yang sudah ada
-                $id_bahan = $cek_bahan->id_bahan;
-        
-            }
-        
+        // ambil nama bahan dari dropdown supplier
+        $nama_bahan = trim($request->bahan_supplier);
+    
+        // ambil data barang dari tabel barang_supplier
+        $barang_supplier = DB::table('barang_supplier')
+            ->where('nama_barang_supplier', $nama_bahan)
+            ->where('nomor_dapur_barang_supplier', $nomor_dapur_maker)
+            ->first();
+    
+        if(!$barang_supplier){
+            return Redirect::back()->with(['warning' => 'Barang supplier tidak ditemukan']);
         }
-
+    
+        // cek apakah bahan sudah ada di tabel bahan
+        $cek_bahan = DB::table('bahan')
+            ->where('nama_bahan', $barang_supplier->nama_barang_supplier)
+            ->where('nomor_dapur_bahan', $nomor_dapur_maker)
+            ->first();
+    
+        if(!$cek_bahan){
+    
+            // insert bahan baru dengan satuan dari barang_supplier
+            $id_bahan = DB::table('bahan')->insertGetId([
+                'nama_bahan' => $barang_supplier->nama_barang_supplier,
+                'satuan_bahan' => $barang_supplier->satuan_barang_supplier,
+                'nomor_dapur_bahan' => $nomor_dapur_maker
+            ]);
+    
+        }else{
+    
+            $id_bahan = $cek_bahan->id_bahan;
+    
+        }
+    
+        // menentukan sumber stok
         $sumber_stok = $request->sumber_manual;
-
-        if (!empty($request->supplier_select)) {
-
+    
+        if(!empty($request->supplier_select)){
+    
             $supplier = DB::table('informasi_supplier')
                 ->where('id_informasi_supplier', $request->supplier_select)
                 ->first();
-
-            if ($supplier) {
+    
+            if($supplier){
                 $sumber_stok = $supplier->nama_informasi_supplier;
             }
         }
-
+    
+        // simpan ke stok_masuk
         $data_stok_masuk = [
             'id_bahan' => $id_bahan,
             'nomor_dapur_stok_masuk' => $nomor_dapur_maker,
@@ -212,12 +204,12 @@ class StokMasukController extends Controller
             'sumber_stok_masuk' => $sumber_stok,
             'keterangan_stok_masuk' => $request->keterangan_stok_masuk
         ];
-
+    
         $simpan_stok = DB::table('stok_masuk')->insert($data_stok_masuk);
-
-        if ($simpan_stok) {
+    
+        if($simpan_stok){
             return Redirect::back()->with(['success' => 'Data Bahan dan Stok Masuk Berhasil Disimpan']);
-        } else {
+        }else{
             return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
         }
     }
