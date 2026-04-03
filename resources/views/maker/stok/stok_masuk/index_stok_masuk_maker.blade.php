@@ -511,29 +511,7 @@
                     </div>
 
 
-                    <!-- Pertanyaan Koperasi -->
-                    <div class="row" id="koperasi_question_container" style="display:none;">
-                        <div class="col-12">
-
-                            <div class="input-icon mb-3">
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M12 18h.01"/>
-                                    </svg>
-                                </span>
-
-                                <select class="form-control" id="sumber_koperasi">
-                                    <option value="">Apakah Sumber Stok Masuk dari Koperasi?</option>
-                                    <option value="ya">Ya</option>
-                                    <option value="tidak">Tidak</option>
-                                </select>
-
-                            </div>
-
-                        </div>
-                    </div>
+                    
 
 
                     <div class="row" id="bahan_koperasi_container" style="display:none;">
@@ -552,66 +530,6 @@
                     </div>
 
 
-                    <!-- Input Manual (Jika bukan supplier / koperasi) -->
-                     <div class="row" id="manual_container" style="display:none;">
-                        <div class="col-12">
-                            <div class="input-icon mb-3">
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icon-tabler-box">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M3 7l9 4l9 -4"/>
-                                        <path d="M3 7v10l9 4l9 -4v-10"/>
-                                    </svg>
-                                </span>
-
-                                <input type="text"
-                                class="form-control mb-3"
-                                name="nama_bahan_manual"
-                                placeholder="Masukkan Nama Bahan">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="input-icon mb-3">
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icon-tabler-box">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M3 7l9 4l9 -4"/>
-                                        <path d="M3 7v10l9 4l9 -4v-10"/>
-                                    </svg>
-                                </span>
-
-                                <input type="text"
-                                class="form-control mb-3"
-                                name="satuan_bahan_manual"
-                                placeholder="Masukkan Satuan">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="input-icon mb-3">
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icon-tabler-box">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M3 7l9 4l9 -4"/>
-                                        <path d="M3 7v10l9 4l9 -4v-10"/>
-                                    </svg>
-                                </span>
-
-                                <input type="text"
-                                class="form-control mb-3"
-                                name="sumber_manual"
-                                placeholder="Sumber Stok (Misal: Pasar)">
-                            </div>
-                        </div>
-                    </div>
 
 
 
@@ -749,69 +667,30 @@
 
             let supplier = document.getElementById("supplier_container");
             let bahan_supplier = document.getElementById("bahan_supplier_container");
-            let koperasi_question = document.getElementById("koperasi_question_container");
-
-            let bahan_koperasi = document.getElementById("bahan_koperasi_container");
-            let manual = document.getElementById("manual_container");
+            let koperasi = document.getElementById("bahan_koperasi_container");
 
             if(this.value === "ya"){
 
                 supplier.style.display = "block";
                 bahan_supplier.style.display = "none";
-
-                koperasi_question.style.display = "none";
-                bahan_koperasi.style.display = "none";
-                manual.style.display = "none";
+                koperasi.style.display = "none";
 
             }
             else if(this.value === "tidak"){
 
                 supplier.style.display = "none";
                 bahan_supplier.style.display = "none";
-
-                koperasi_question.style.display = "block";
+                koperasi.style.display = "block";
 
             }
             else{
 
                 supplier.style.display = "none";
                 bahan_supplier.style.display = "none";
-                koperasi_question.style.display = "none";
-                bahan_koperasi.style.display = "none";
-                manual.style.display = "none";
+                koperasi.style.display = "none";
 
             }
 
-        });
-
-
-
-        document.getElementById("sumber_koperasi").addEventListener("change", function(){
-        
-            let bahan_koperasi = document.getElementById("bahan_koperasi_container");
-            let manual = document.getElementById("manual_container");
-        
-            if(this.value === "ya"){
-        
-                bahan_koperasi.style.display = "block";
-                manual.style.display = "none";
-        
-                loadBahanKoperasi();
-        
-            }
-            else if(this.value === "tidak"){
-        
-                bahan_koperasi.style.display = "none";
-                manual.style.display = "block";
-        
-            }
-            else{
-        
-                bahan_koperasi.style.display = "none";
-                manual.style.display = "none";
-        
-            }
-        
         });
 
 
