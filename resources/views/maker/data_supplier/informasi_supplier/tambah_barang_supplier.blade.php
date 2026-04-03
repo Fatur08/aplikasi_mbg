@@ -54,11 +54,10 @@ $(document).ready(function () {
                         name="nama_barang_supplier[]"
                         class="form-control"
                         placeholder="Nama Barang Ke-${i}"
-                        pattern="[A-Za-z\s]+"
-                        title="Nama barang hanya boleh berisi huruf"
-                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
-                        required
-                    >
+                        pattern="[A-Za-z ]+"
+                        title="Nama barang hanya boleh berisi huruf dan spasi"
+                        oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')"
+                        required>
                 </div>
             </div>`;
         }
