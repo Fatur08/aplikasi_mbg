@@ -668,29 +668,32 @@
             let supplier = document.getElementById("supplier_container");
             let bahan_supplier = document.getElementById("bahan_supplier_container");
             let koperasi = document.getElementById("bahan_koperasi_container");
-
+        
             if(this.value === "ya"){
-
+        
                 supplier.style.display = "block";
                 bahan_supplier.style.display = "none";
                 koperasi.style.display = "none";
-
+        
             }
             else if(this.value === "tidak"){
-
+        
                 supplier.style.display = "none";
                 bahan_supplier.style.display = "none";
                 koperasi.style.display = "block";
-
+        
+                // PANGGIL DATA KOPERASI
+                loadBahanKoperasi();
+        
             }
             else{
-
+        
                 supplier.style.display = "none";
                 bahan_supplier.style.display = "none";
                 koperasi.style.display = "none";
-
+        
             }
-
+        
         });
 
 
