@@ -560,17 +560,17 @@
                      <div class="row" id="manual_container" style="display:none;">
                         <div class="col-12">
                             <input type="text"
-                            class="form-control mb-2"
+                            class="form-control mb-3"
                             name="nama_bahan_manual"
                             placeholder="Masukkan Nama Bahan">
 
                             <input type="text"
-                            class="form-control mb-2"
+                            class="form-control mb-3"
                             name="satuan_bahan_manual"
                             placeholder="Masukkan Satuan">
 
                             <input type="text"
-                            class="form-control"
+                            class="form-control mb-3"
                             name="sumber_manual"
                             placeholder="Sumber Stok (Misal: Pasar)">
                         </div>
@@ -820,23 +820,23 @@
                 url: "/maker/stok_masuk/get_bahan_koperasi",
                 type: "GET",
                 success:function(data){
-        
+
                     let select = $("#bahan_koperasi");
-        
+
                     select.empty();
                     select.append('<option value="">-- Pilih Bahan Koperasi --</option>');
-        
+
                     data.forEach(function(item){
-        
+
                         select.append(
                             '<option value="'+item.id_barang_modal_keluar+'">'+item.nama_barang_modal_keluar+'</option>'
                         );
-        
+
                     });
-        
+
                 }
             });
-        
+
         }
 
 
