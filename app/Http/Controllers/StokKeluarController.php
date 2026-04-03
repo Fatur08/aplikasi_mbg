@@ -119,24 +119,33 @@ class StokKeluarController extends Controller
             ->get()
             ->keyBy('nama_bahan');
 
-        // --- Data dropdown bahan (supplier + koperasi)
+        // --- 3️⃣ Data dropdown bahan (supplier + koperasi)
+        // barang dari supplier
         $bahan_supplier = DB::table('barang_supplier')
-            ->select('nama_barang_supplier as nama_bahan')
+            ->selectRaw('TRIM(nama_barang_supplier) as nama_bahan')
             ->where('nomor_dapur_barang_supplier', $nomor_dapur);
 
+        // barang dari koperasi
         $bahan_koperasi = DB::table('barang_modal_keluar')
-            ->select('nama_barang_modal_keluar as nama_bahan')
+            ->selectRaw('TRIM(nama_barang_modal_keluar) as nama_bahan')
             ->where('nomor_dapur_barang_modal_keluar', $nomor_dapur);
 
-        $union_bahan = $bahan_supplier->union($bahan_koperasi);
+        // gabungkan
+        $union_bahan = $bahan_supplier->unionAll($bahan_koperasi);
 
-        $bahan = DB::table('bahan')
-            ->joinSub($union_bahan, 'union_bahan', function ($join) {
-                $join->on('bahan.nama_bahan', '=', 'union_bahan.nama_bahan');
+        // dropdown bahan
+        $bahan = DB::query()
+            ->fromSub($union_bahan, 'u')
+            ->leftJoin('bahan', function ($join) use ($nomor_dapur) {
+                $join->on('bahan.nama_bahan', '=', 'u.nama_bahan')
+                     ->where('bahan.nomor_dapur_bahan', '=', $nomor_dapur);
             })
-            ->where('bahan.nomor_dapur_bahan', $nomor_dapur) // filter dapur
-            ->select('bahan.id_bahan', 'bahan.nama_bahan')
-            ->orderBy('bahan.nama_bahan','asc')
+            ->select(
+                'bahan.id_bahan',
+                'u.nama_bahan'
+            )
+            ->distinct()
+            ->orderBy('u.nama_bahan', 'asc')
             ->get();
         
 
