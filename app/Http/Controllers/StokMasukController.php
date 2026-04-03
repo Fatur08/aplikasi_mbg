@@ -131,7 +131,7 @@ class StokMasukController extends Controller
         $nomor_dapur    = $maker->nomor_dapur_maker;
         
         $bahan_supplier = DB::table('barang_supplier')
-            ->where('id_barang_supplier', $id)
+            ->where('id_informasi_supplier', $id)
             ->where('nomor_dapur_barang_supplier', $nomor_dapur)
             ->select('nama_barang_supplier')
             ->orderBy('nama_barang_supplier','asc')
