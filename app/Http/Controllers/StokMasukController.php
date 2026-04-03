@@ -142,59 +142,74 @@ class StokMasukController extends Controller
     }
 
 
+    public function getBahanKoperasi()
+    {
+        $maker = Auth::guard('maker')->user();
+    
+        $bahan = DB::table('barang_modal_keluar')
+            ->where('nomor_dapur_barang_modal_keluar', $maker->nomor_dapur_maker)
+            ->select('id_barang_modal_keluar','nama_barang_modal_keluar')
+            ->orderBy('nama_barang_modal_keluar','asc')
+            ->get();
+    
+        return response()->json($bahan);
+    }
+
+
+
     public function store_stok_masuk_maker(Request $request)
     {
         $maker              = Auth::guard('maker')->user();
         $nomor_dapur_maker  = $maker->nomor_dapur_maker;
-    
+
         // ambil nama bahan dari dropdown supplier
         $nama_bahan = trim($request->bahan_supplier);
-    
+
         // ambil data barang dari tabel barang_supplier
         $barang_supplier = DB::table('barang_supplier')
             ->where('nama_barang_supplier', $nama_bahan)
             ->where('nomor_dapur_barang_supplier', $nomor_dapur_maker)
             ->first();
-    
+
         if(!$barang_supplier){
             return Redirect::back()->with(['warning' => 'Barang supplier tidak ditemukan']);
         }
-    
+
         // cek apakah bahan sudah ada di tabel bahan
         $cek_bahan = DB::table('bahan')
             ->where('nama_bahan', $barang_supplier->nama_barang_supplier)
             ->where('nomor_dapur_bahan', $nomor_dapur_maker)
             ->first();
-    
+
         if(!$cek_bahan){
-    
+
             // insert bahan baru dengan satuan dari barang_supplier
             $id_bahan = DB::table('bahan')->insertGetId([
                 'nama_bahan' => $barang_supplier->nama_barang_supplier,
                 'satuan_bahan' => $barang_supplier->satuan_barang_supplier,
                 'nomor_dapur_bahan' => $nomor_dapur_maker
             ]);
-    
+
         }else{
-    
+
             $id_bahan = $cek_bahan->id_bahan;
-    
+
         }
-    
+
         // menentukan sumber stok
         $sumber_stok = $request->sumber_manual;
-    
+
         if(!empty($request->supplier_select)){
-    
+
             $supplier = DB::table('informasi_supplier')
                 ->where('id_informasi_supplier', $request->supplier_select)
                 ->first();
-    
+
             if($supplier){
                 $sumber_stok = $supplier->nama_informasi_supplier;
             }
         }
-    
+
         // simpan ke stok_masuk
         $data_stok_masuk = [
             'id_bahan' => $id_bahan,
@@ -204,9 +219,9 @@ class StokMasukController extends Controller
             'sumber_stok_masuk' => $sumber_stok,
             'keterangan_stok_masuk' => $request->keterangan_stok_masuk
         ];
-    
+
         $simpan_stok = DB::table('stok_masuk')->insert($data_stok_masuk);
-    
+
         if($simpan_stok){
             return Redirect::back()->with(['success' => 'Data Bahan dan Stok Masuk Berhasil Disimpan']);
         }else{

@@ -408,6 +408,7 @@ Route::middleware(['auth:maker'])->group(function(){
     Route::post('/maker/stok_masuk/store_stok_masuk',[StokMasukController::class,'store_stok_masuk_maker']);
     Route::post('/maker/stok_masuk/edit_stok_masuk',[StokMasukController::class,'edit_stok_masuk_maker']);
     Route::get('/maker/stok_masuk/get_bahan_supplier/{id}', [StokMasukController::class, 'getBahanSupplier']);
+    Route::get('/maker/stok_masuk/get_bahan_koperasi', [StokMasukController::class, 'getBahanKoperasi']);
     Route::post('/maker/stok_masuk/{id}/update_stok_masuk',[StokMasukController::class,'update_stok_masuk_maker']);
     Route::post('/maker/stok_masuk/{id}/delete_stok_masuk',[StokMasukController::class,'delete_stok_masuk_maker']);
 

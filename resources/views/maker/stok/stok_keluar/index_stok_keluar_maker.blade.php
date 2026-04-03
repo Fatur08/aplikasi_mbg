@@ -450,7 +450,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-12 mb-3">
                             <select name="id_bahan" id="id_bahan" class="form-select">
                                 <option value="">Pilih Bahan (Yang Tersedia Di Dapur)</option>
@@ -459,7 +459,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-12">
                             <div class="input-icon mb-3">

@@ -450,7 +450,7 @@
                                 </span>
 
                                 <select class="form-control" id="sumber_supplier">
-                                    <option value="">Apakah Sumber Masuk Stok dari Supplier?</option>
+                                    <option value="">Apakah Sumber Stok Masuk dari Supplier?</option>
                                     <option value="ya">Ya</option>
                                     <option value="tidak">Tidak</option>
                                 </select>
@@ -511,8 +511,76 @@
                     </div>
 
 
+                    <!-- Pertanyaan Koperasi -->
+                    <div class="row" id="koperasi_question_container" style="display:none;">
+                        <div class="col-12">
+
+                            <div class="input-icon mb-3">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M12 18h.01"/>
+                                    </svg>
+                                </span>
+
+                                <select class="form-control" id="sumber_koperasi">
+                                    <option value="">Apakah Sumber Stok Masuk dari Koperasi?</option>
+                                    <option value="ya">Ya</option>
+                                    <option value="tidak">Tidak</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row" id="bahan_koperasi_container" style="display:none;">
+                        <div class="col-12">
+
+                            <div class="input-icon mb-3">
+
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                                    </svg>
+                                </span>
+
+                                <select name="bahan_koperasi" id="bahan_koperasi" class="form-control">
+                                    <option value="">-- Pilih Bahan Koperasi --</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
                     <!-- Input Manual (Jika bukan supplier / koperasi) -->
-                    <div class="row" id="manual_container" style="display:none;">
+                     <div class="row" id="manual_container" style="display:none;">
+                        <div class="col-12">
+                            <input type="text"
+                            class="form-control mb-2"
+                            name="nama_bahan_manual"
+                            placeholder="Masukkan Nama Bahan">
+
+                            <input type="text"
+                            class="form-control mb-2"
+                            name="satuan_bahan_manual"
+                            placeholder="Masukkan Satuan">
+
+                            <input type="text"
+                            class="form-control"
+                            name="sumber_manual"
+                            placeholder="Sumber Stok (Misal: Pasar)">
+                        </div>
+                    </div>
+
+
+
+
+
+                    <!--<div class="row" id="manual_container" style="display:none;">
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
@@ -531,7 +599,7 @@
                                     placeholder="Masukkan Sumber Masuk Stok (Misal: Koperasi)">
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="row">
                         <div class="col-12">
@@ -643,26 +711,72 @@
         document.getElementById("sumber_supplier").addEventListener("change", function(){
 
             let supplier = document.getElementById("supplier_container");
-            let bahan = document.getElementById("bahan_supplier_container");
+            let bahan_supplier = document.getElementById("bahan_supplier_container");
+            let koperasi_question = document.getElementById("koperasi_question_container");
+
+            let bahan_koperasi = document.getElementById("bahan_koperasi_container");
             let manual = document.getElementById("manual_container");
 
             if(this.value === "ya"){
+
                 supplier.style.display = "block";
-                bahan.style.display = "none";
+                bahan_supplier.style.display = "none";
+
+                koperasi_question.style.display = "none";
+                bahan_koperasi.style.display = "none";
                 manual.style.display = "none";
+
             }
             else if(this.value === "tidak"){
+
                 supplier.style.display = "none";
-                bahan.style.display = "none";
-                manual.style.display = "block";
+                bahan_supplier.style.display = "none";
+
+                koperasi_question.style.display = "block";
+
             }
             else{
+
                 supplier.style.display = "none";
-                bahan.style.display = "none";
+                bahan_supplier.style.display = "none";
+                koperasi_question.style.display = "none";
+                bahan_koperasi.style.display = "none";
                 manual.style.display = "none";
+
             }
 
         });
+
+
+
+        document.getElementById("sumber_koperasi").addEventListener("change", function(){
+        
+            let bahan_koperasi = document.getElementById("bahan_koperasi_container");
+            let manual = document.getElementById("manual_container");
+        
+            if(this.value === "ya"){
+        
+                bahan_koperasi.style.display = "block";
+                manual.style.display = "none";
+        
+                loadBahanKoperasi();
+        
+            }
+            else if(this.value === "tidak"){
+        
+                bahan_koperasi.style.display = "none";
+                manual.style.display = "block";
+        
+            }
+            else{
+        
+                bahan_koperasi.style.display = "none";
+                manual.style.display = "none";
+        
+            }
+        
+        });
+
 
 
         $("#supplier_select").change(function(){
@@ -698,6 +812,32 @@
             }
 
         });
+
+
+        function loadBahanKoperasi(){
+
+            $.ajax({
+                url: "/maker/stok_masuk/get_bahan_koperasi",
+                type: "GET",
+                success:function(data){
+        
+                    let select = $("#bahan_koperasi");
+        
+                    select.empty();
+                    select.append('<option value="">-- Pilih Bahan Koperasi --</option>');
+        
+                    data.forEach(function(item){
+        
+                        select.append(
+                            '<option value="'+item.id_barang_modal_keluar+'">'+item.nama_barang_modal_keluar+'</option>'
+                        );
+        
+                    });
+        
+                }
+            });
+        
+        }
 
 
 
