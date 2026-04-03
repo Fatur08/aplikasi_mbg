@@ -538,9 +538,7 @@
 
                     <div class="row" id="bahan_koperasi_container" style="display:none;">
                         <div class="col-12">
-
                             <div class="input-icon mb-3">
-
                                 <span class="input-icon-addon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
                                     </svg>
@@ -549,9 +547,7 @@
                                 <select name="bahan_koperasi" id="bahan_koperasi" class="form-control">
                                     <option value="">-- Pilih Bahan Koperasi --</option>
                                 </select>
-
                             </div>
-
                         </div>
                     </div>
 
@@ -559,20 +555,61 @@
                     <!-- Input Manual (Jika bukan supplier / koperasi) -->
                      <div class="row" id="manual_container" style="display:none;">
                         <div class="col-12">
-                            <input type="text"
-                            class="form-control mb-3"
-                            name="nama_bahan_manual"
-                            placeholder="Masukkan Nama Bahan">
+                            <div class="input-icon mb-3">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icon-tabler-box">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M3 7l9 4l9 -4"/>
+                                        <path d="M3 7v10l9 4l9 -4v-10"/>
+                                    </svg>
+                                </span>
 
-                            <input type="text"
-                            class="form-control mb-3"
-                            name="satuan_bahan_manual"
-                            placeholder="Masukkan Satuan">
+                                <input type="text"
+                                class="form-control mb-3"
+                                name="nama_bahan_manual"
+                                placeholder="Masukkan Nama Bahan">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-icon mb-3">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icon-tabler-box">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M3 7l9 4l9 -4"/>
+                                        <path d="M3 7v10l9 4l9 -4v-10"/>
+                                    </svg>
+                                </span>
 
-                            <input type="text"
-                            class="form-control mb-3"
-                            name="sumber_manual"
-                            placeholder="Sumber Stok (Misal: Pasar)">
+                                <input type="text"
+                                class="form-control mb-3"
+                                name="satuan_bahan_manual"
+                                placeholder="Masukkan Satuan">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-icon mb-3">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icon-tabler-box">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M3 7l9 4l9 -4"/>
+                                        <path d="M3 7v10l9 4l9 -4v-10"/>
+                                    </svg>
+                                </span>
+
+                                <input type="text"
+                                class="form-control mb-3"
+                                name="sumber_manual"
+                                placeholder="Sumber Stok (Misal: Pasar)">
+                            </div>
                         </div>
                     </div>
 
