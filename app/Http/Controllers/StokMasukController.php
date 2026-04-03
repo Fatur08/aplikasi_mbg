@@ -127,15 +127,18 @@ class StokMasukController extends Controller
 
     public function getBahanSupplier($id)
     {
-    
+        $maker          = Auth::guard('maker')->user();
+        $nomor_dapur    = $maker->nomor_dapur_maker;
+        
         $bahan = DB::table('barang_supplier')
-            ->where('supplier_id', $id)
+            ->where('id_barang_supplier', $id)
+            ->where('nomor_dapur_barang_supplier', $nomor_dapur)
             ->select('nama_barang_supplier')
             ->orderBy('nama_barang_supplier','asc')
             ->get();
-    
+
         return response()->json($bahan);
-    
+
     }
 
 
