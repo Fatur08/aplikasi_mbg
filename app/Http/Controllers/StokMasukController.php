@@ -74,19 +74,19 @@ class StokMasukController extends Controller
         // gabungkan
         $union_bahan = $bahan_supplier->unionAll($bahan_koperasi);
 
-        // ambil dropdown bahan
+        // dropdown bahan
         $bahan = DB::query()
-            ->fromSub($union_bahan, 'union_bahan')
+            ->fromSub($union_bahan, 'u')
             ->leftJoin('bahan', function ($join) use ($nomor_dapur) {
-                $join->on('bahan.nama_bahan', '=', 'union_bahan.nama_bahan')
+                $join->on('bahan.nama_bahan', '=', 'u.nama_bahan')
                      ->where('bahan.nomor_dapur_bahan', '=', $nomor_dapur);
             })
-            ->selectRaw('
-                COALESCE(bahan.id_bahan, union_bahan.nama_bahan) as id_bahan,
-                union_bahan.nama_bahan
-            ')
-            ->groupBy('union_bahan.nama_bahan', 'bahan.id_bahan')
-            ->orderBy('union_bahan.nama_bahan', 'asc')
+            ->select(
+                'bahan.id_bahan',
+                'u.nama_bahan'
+            )
+            ->distinct()
+            ->orderBy('u.nama_bahan', 'asc')
             ->get();
     
     
