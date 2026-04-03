@@ -487,6 +487,30 @@
                     </div>
 
 
+                    <!-- Select Bahan dari Supplier -->
+                    <div class="row" id="bahan_supplier_container" style="display:none;">
+                        <div class="col-12">
+                            <div class="input-icon mb-3">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icon-tabler-box">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M3 7l9 4l9 -4"/>
+                                        <path d="M3 7v10l9 4l9 -4v-10"/>
+                                    </svg>
+                                </span>
+
+                                <select name="bahan_supplier" id="bahan_supplier" class="form-control">
+                                    <option value="">-- Pilih Bahan Supplier --</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
                     <!-- Input Manual (Jika bukan supplier / koperasi) -->
                     <div class="row" id="manual_container" style="display:none;">
                         <div class="col-12">
@@ -615,21 +639,62 @@
 
 
         document.getElementById("sumber_supplier").addEventListener("change", function(){
+
             let supplier = document.getElementById("supplier_container");
+            let bahan = document.getElementById("bahan_supplier_container");
             let manual = document.getElementById("manual_container");
 
             if(this.value === "ya"){
                 supplier.style.display = "block";
+                bahan.style.display = "none";
                 manual.style.display = "none";
             }
             else if(this.value === "tidak"){
                 supplier.style.display = "none";
+                bahan.style.display = "none";
                 manual.style.display = "block";
             }
             else{
                 supplier.style.display = "none";
+                bahan.style.display = "none";
                 manual.style.display = "none";
             }
+
+        });
+
+
+        $("#supplier_select").change(function(){
+
+            let supplier_id = $(this).val();
+
+            if(supplier_id != ""){
+
+                $.ajax({
+                    url: "/maker/stok_masuk/get_bahan_supplier/"+supplier_id,
+                    type: "GET",
+                    success:function(data){
+
+                        let bahan_select = $("#bahan_supplier");
+
+                        bahan_select.empty();
+                        bahan_select.append('<option value="">-- Pilih Bahan Supplier --</option>');
+
+                        data.forEach(function(item){
+                            bahan_select.append(
+                                '<option value="'+item.nama_barang_supplier+'">'+item.nama_barang_supplier+'</option>'
+                            );
+                        });
+
+                        $("#bahan_supplier_container").show();
+                    }
+                });
+
+            }else{
+
+                $("#bahan_supplier_container").hide();
+
+            }
+
         });
 
 

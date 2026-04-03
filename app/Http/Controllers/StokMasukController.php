@@ -124,6 +124,21 @@ class StokMasukController extends Controller
         ));
     }
 
+
+    public function getBahanSupplier($id)
+    {
+    
+        $bahan = DB::table('barang_supplier')
+            ->where('supplier_id', $id)
+            ->select('nama_barang_supplier')
+            ->orderBy('nama_barang_supplier','asc')
+            ->get();
+    
+        return response()->json($bahan);
+    
+    }
+
+
     public function store_stok_masuk_maker(Request $request)
     {
         $maker              = Auth::guard('maker')->user();
