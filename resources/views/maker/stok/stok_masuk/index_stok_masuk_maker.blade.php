@@ -534,16 +534,6 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-12 mb-3">
-                            <select name="store_id_bahan" id="store_id_bahan" class="form-select">
-                                <option value="">Pilih Bahan (Yang Tersedia Di Dapur)</option>
-                                @foreach($bahan as $item)
-                                    <option value="{{ $item->id_bahan ?? $item->nama_bahan }}">{{ $item->nama_bahan }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
@@ -554,7 +544,19 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="row">
+                    <!--
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <select name="store_id_bahan" id="store_id_bahan" class="form-select">
+                                <option value="">Pilih Bahan (Yang Tersedia Di Dapur)</option>
+                                @foreach($bahan as $item)
+                                    <option value="{{ $item->id_bahan ?? $item->nama_bahan }}">{{ $item->nama_bahan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
