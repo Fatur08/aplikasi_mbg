@@ -97,9 +97,9 @@ class LaporanDapurController extends Controller
             ->select('kendala_jadwal_menu_harian')
             ->first();
 
-    if (!$kendala) {
-        return Redirect::back()->with(['warning' => 'Data kendala tidak ditemukan atau tidak sesuai dengan dapur Anda']);
-    }
+        if (!$kendala) {
+            return Redirect::back()->with(['warning' => 'Data kendala tidak ditemukan atau tidak sesuai dengan dapur Anda']);
+        }
 
         return view('owner.laporan.dapur.kendala_dapur', compact('kendala'));
     }
@@ -159,6 +159,7 @@ class LaporanDapurController extends Controller
         // Dropdown instansi (tanpa duplikat)
         // ===============================
         $distribusi = DB::table('distribusi')
+            ->where('nomor_dapur_distribusi', $nomor_dapur) // filter di sini
             ->select('tujuan_distribusi')
             ->groupBy('tujuan_distribusi')
             ->orderBy('tujuan_distribusi', 'asc')
@@ -183,7 +184,7 @@ class LaporanDapurController extends Controller
         $makerLogin = DB::table('maker')
             ->where('id_maker', auth()->id())
             ->first();
-    
+
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
 
         $data = [
@@ -195,7 +196,7 @@ class LaporanDapurController extends Controller
 
         $simpan = DB::table('distribusi')->insert($data);
 
-        if ($simpan){
+        if ($simpan) {
             return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
         } else {
             return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
@@ -258,7 +259,7 @@ class LaporanDapurController extends Controller
     }
 
 
-    
+
 
 
 
@@ -299,8 +300,8 @@ class LaporanDapurController extends Controller
         $nomor_dapur = $kepalaDapur->nomor_dapur_kepala_dapur;
 
         $distributor = DB::table('distributor')
-                        ->where('nomor_dapur_distributor', $nomor_dapur)
-                        ->first();
+            ->where('nomor_dapur_distributor', $nomor_dapur)
+            ->first();
 
         if (!$distributor) {
             return Redirect::back()->with(['warning' => 'Distributor tidak ditemukan untuk dapur ini']);
@@ -338,7 +339,7 @@ class LaporanDapurController extends Controller
         $delete_laporan_distribusi_kepala_dapur = DB::table('distribusi')
             ->where('id_distribusi', $id_distribusi)
             ->delete();
-    
+
         if ($delete_laporan_distribusi_kepala_dapur) {
             return Redirect::back()->with(['success' => 'Data berhasil dihapus']);
         } else {
