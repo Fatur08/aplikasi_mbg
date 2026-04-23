@@ -290,11 +290,17 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="input-icon mb-3">
-                                <select name="pilih_sekolah_atau_b3" id="pilih_sekolah_atau_b3" class="form-select">
-                                    <option value="">Pilih Sekolah / B3</option>
-                                    <option value="Sekolah">Sekolah</option>
-                                    <option value="B3">B3</option>
-                                </select>
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                        <path d="M16 3l0 4" />
+                                        <path d="M8 3l0 4" />
+                                        <path d="M4 11l16 0" />
+                                        <path d="M8 15h2v2h-2z" />
+                                    </svg>
+                                </span>
+                                <input type="text" value="" id="tanggal_operasional" name="tanggal_operasional" class="form-control" placeholder="Masukkan Tanggal" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -302,17 +308,15 @@
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-community">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-star">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" />
-                                        <path d="M13 7l0 .01" />
-                                        <path d="M17 7l0 .01" />
-                                        <path d="M17 11l0 .01" />
-                                        <path d="M17 15l0 .01" />
+                                        <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                        <path d="M9.5 17h-3.5v-14h-2" />
+                                        <path d="M6 5l14 1l-.615 4.302m-6.885 2.698h-6.5" />
+                                        <path d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138" />
                                     </svg>
                                 </span>
-                                <input type="text" value="" id="nama_sekolah_atau_b3" class="form-control" name="nama_sekolah_atau_b3" placeholder="Masukkan Nama Sekolah / B3">
+                                <input type="text" value="" id="kebutuhan_operasional" class="form-control" name="kebutuhan_operasional" placeholder="Masukkan Kebutuhan">
                             </div>
                         </div>
                     </div>
@@ -320,16 +324,31 @@
                         <div class="col-12">
                             <div class="input-icon mb-3">
                                 <span class="input-icon-addon">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-coin">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+                                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                        <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
+                                        <path d="M12 7v10" />
                                     </svg>
                                 </span>
-                                <input type="number" value="" id="jumlah_pm" class="form-control" name="jumlah_pm" placeholder="Masukkan Jumlah Penerima Manfaat">
+                                <input type="number" value="" id="biaya_operasional" class="form-control" name="biaya_operasional" placeholder="Masukkan Biaya">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-icon mb-3">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icon-tabler-note">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M13 20h-7a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8l6 6v8a2 2 0 0 1 -2 2h-3" />
+                                        <path d="M13 4v6h6" />
+                                    </svg>
+                                </span>
+                                <textarea id="keterangan_operasional" name="keterangan_operasional" class="form-control" rows="1" placeholder="Tuliskan keterangan di sini..."></textarea>
                             </div>
                         </div>
                     </div>
