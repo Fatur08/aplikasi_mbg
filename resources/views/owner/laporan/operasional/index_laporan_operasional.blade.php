@@ -145,9 +145,218 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                @if (Session::get('success'))
+                                <div class="alert alert-success">
+                                    {{ Session::get('success') }}
+                                </div>
+                                @endif
+                                @if (Session::get('warning'))
+                                <div class="alert alert-warning">
+                                    {{ Session::get('warning') }}
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <form action="/owner/laporan/operasional" method="GET" id="FormLaporanOperasional">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="input-icon">
+                                                <span class="input-icon-addon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                        <path d="M16 3l0 4" />
+                                                        <path d="M8 3l0 4" />
+                                                        <path d="M4 11l16 0" />
+                                                        <path d="M8 15h2v2h-2z" />
+                                                    </svg>
+                                                </span>
+                                                <input type="text" value="" id="dari_tanggal" name="dari_tanggal" class="form-control" placeholder="Dari Tanggal" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-icon">
+                                                <span class="input-icon-addon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                        <path d="M16 3l0 4" />
+                                                        <path d="M8 3l0 4" />
+                                                        <path d="M4 11l16 0" />
+                                                        <path d="M8 15h2v2h-2z" />
+                                                    </svg>
+                                                </span>
+                                                <input type="text" value="" id="sampai_tanggal" name="sampai_tanggal" class="form-control" placeholder="Sampai Tanggal" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary w-100">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                        <path d="M21 21l-6 -6" />
+                                                    </svg>
+                                                    Cari
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row mt-2 table-container">
+                            <div class="col-12">
+                                <!-- === Table Section === -->
+                                <div class="table-wrapper">
+                                    <div class="table-responsive">
+                                        <table class="table custom-table">
+                                            <thead style="text-align: center; vertical-align: middle;">
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Kebutuhan</th>
+                                                    <th>Biaya</th>
+                                                    <th>Keterangan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('myscript')
 <script>
+    $(function() {
+        $("#btnTambahPM").click(function() {
+            $("#modal-inputpenerima-manfaat").modal("show");
+        });
 
+
+
+        $(".tambah_operasional_dapur").click(function() {
+            $.ajax({
+                type: 'POST',
+                url: '/owner/laporan/dapur/tambah_operasional_dapur',
+                cache: false,
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(respond) {
+                    $("#loadformtambahoperasionaldapur").html(respond);
+                }
+            });
+            $("#modal-tambahoperasionaldapur").modal("show");
+        });
+
+        $(".lihat_kendala").click(function() {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type: 'POST',
+                url: '/owner/laporan/harian_dapur/lihat_kendala',
+                cache: false,
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: id
+                },
+                success: function(respond) {
+                    $("#loadformlihatkendala").html(respond);
+                }
+            });
+            $("#modal-lihatkendala").modal("show");
+        });
+
+        $(".delete-confirm-menuharian").click(function(e) {
+            var form = $(this).closest('form');
+            e.preventDefault();
+            Swal.fire({
+                title: "Apakah Anda Yakin Data ini Mau Di Hapus?",
+                text: "Jika Ya Maka Data Akan Terhapus Permanen",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Hapus Saja"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Data Berhasil Di Hapus",
+                        icon: "success"
+                    });
+                }
+            });
+        });
+
+        $("#FormLaporanOperasional").submit(function() {
+            var pilih_dapur = $("#pilih_dapur").val();
+            var pilih_tanggal = $("#pilih_tanggal").val();
+            if (pilih_dapur == "") {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Dapur Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    $("#pilih_dapur").focus();
+                });
+                return false;
+            } else if (pilih_tanggal == "") {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Tanggal Harus Diisi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    $("#pilih_tanggal").focus();
+                });
+                return false;
+            }
+        });
+
+
+
+        flatpickr("#dari_tanggal", {
+            altInput: true,
+            altFormat: "d F Y", // 15 September 2025
+            dateFormat: "Y-m-d", // dikirim ke backend
+            locale: "id",
+            allowInput: true
+        });
+
+        flatpickr("#sampai_tanggal", {
+            altInput: true,
+            altFormat: "d F Y",
+            dateFormat: "Y-m-d",
+            locale: "id",
+            allowInput: true
+        });
+    });
 </script>
 @endpush
