@@ -479,6 +479,14 @@
             locale: "id",
             allowInput: true
         });
+
+        flatpickr("#tanggal_operasional", {
+            altInput: true,
+            altFormat: "d F Y",
+            dateFormat: "Y-m-d",
+            locale: "id",
+            allowInput: true
+        });
     });
 </script>
 @endpush
