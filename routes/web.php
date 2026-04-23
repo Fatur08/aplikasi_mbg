@@ -261,6 +261,7 @@ Route::middleware(['auth:owner'])->group(function () {
 
     //Operasional
     Route::get('/owner/laporan/operasional', [LaporanOperasionalController::class, 'index_owner_operasional']);
+    Route::get('/owner/laporan/operasional/store_owner_operasional', [LaporanOperasionalController::class, 'store_owner_operasional']);
 });
 
 

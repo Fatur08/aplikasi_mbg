@@ -14,6 +14,7 @@ class Maker extends Authenticatable
     protected $primaryKey = 'id_maker';
 
     protected $fillable = [
+        'id_owner',
         'nama_maker',
         'email_maker',
         'alamat_maker',
