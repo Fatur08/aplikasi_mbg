@@ -1,3 +1,6 @@
+@php
+$owner = Auth::guard('owner')->user();
+@endphp
 <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -430,6 +433,7 @@
                 Dapur
               </span>
             </a>
+            @if($owner && $owner->id == 2)
             <a class="nav-link" href="/owner/laporan/operasional" style="margin-left: 26px;">
               <span class="nav-link-icon d-md-none d-lg-inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
@@ -442,6 +446,7 @@
                 Operasional
               </span>
             </a>
+            @endif
           </div>
         </li>
       </ul>
