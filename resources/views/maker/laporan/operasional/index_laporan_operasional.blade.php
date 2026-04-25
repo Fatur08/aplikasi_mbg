@@ -304,7 +304,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                                <h5 class="text-start" style="font-size:16pt;">Jenis Operasional</h5>
+                                <h5 class="text-start" style="font-size:12pt;">Jenis Operasional</h5>
                             </div>
                         </div>
                         <div class="row">
