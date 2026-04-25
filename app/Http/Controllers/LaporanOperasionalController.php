@@ -28,7 +28,7 @@ class LaporanOperasionalController extends Controller
         $data = DB::table('informasi_operasional')
             ->where('id_owner', $maker->id_owner)
             ->where('nomor_dapur_informasi_operasional', $maker->nomor_dapur_maker)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('jenis_informasi_operasional', 'asc')
             ->get();
 
         return view('maker.operasional.informasi_operasional.index_informasi_operasional', compact('data'));
