@@ -21,10 +21,10 @@ use App\Http\Controllers\KepalaDapurController;
 use App\Http\Controllers\LaporanDistribusiController;
 use App\Http\Controllers\LaporanKeuanganController;
 use App\Http\Controllers\LaporanDapurController;
-use App\Http\Controllers\LaporanOperasionalController;
 use App\Http\Controllers\LaporanStokController;
 use App\Http\Controllers\LaporanSupplierController;
 use App\Http\Controllers\MenuHarianController;
+use App\Http\Controllers\OperasionalController;
 use App\Http\Controllers\PengirimanDataDriverController;
 use App\Http\Controllers\ProfilDataDriverController;
 use App\Http\Controllers\RiwayatDataDriverController;
@@ -433,13 +433,17 @@ Route::middleware(['auth:maker'])->group(function () {
 
     //Operasional
     //Informasi Operasional
-    Route::get('/maker/operasional/informasi_operasional', [LaporanOperasionalController::class, 'index_maker_informasi_operasional']);
-    Route::post('/maker/operasional/informasi_operasional/store_maker_informasi_operasional', [LaporanOperasionalController::class, 'store_maker_informasi_operasional']);
+    Route::get(
+        '/maker/operasional/informasi_operasional',
+        [OperasionalController::class, 'index_maker_informasi_operasional']
+    )->middleware('cek.operasional');
+
+    Route::post('/maker/operasional/informasi_operasional/store_maker_informasi_operasional', [OperasionalController::class, 'store_maker_informasi_operasional']);
 
 
     //Laporan Operasional
-    Route::get('/maker/operasional/laporan_operasional', [LaporanOperasionalController::class, 'index_maker_laporan_operasional']);
-    Route::post('/maker/operasional/laporan_operasional/store_maker_laporan_operasional', [LaporanOperasionalController::class, 'store_maker_laporan_operasional']);
+    Route::get('/maker/operasional/laporan_operasional', [OperasionalController::class, 'index_maker_laporan_operasional']);
+    Route::post('/maker/operasional/laporan_operasional/store_maker_laporan_operasional', [OperasionalController::class, 'store_maker_laporan_operasional']);
 
 
 

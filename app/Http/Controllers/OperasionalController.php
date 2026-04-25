@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class LaporanOperasionalController extends Controller
+class OperasionalController extends Controller
 {
     // OWNER
     public function index_owner_operasional(Request $request)
@@ -25,6 +25,14 @@ class LaporanOperasionalController extends Controller
     public function index_maker_informasi_operasional(Request $request)
     {
         $maker = Auth::guard('maker')->user();
+
+        // CEK APAKAH AKUN SUKADANA ILIR ATAU BUKAN 
+        $allowedDapur = 6;
+        $allowedOwner = 2;
+
+        if (!($maker->nomor_dapur_maker == $allowedDapur && $maker->id_owner == $allowedOwner)) {
+            abort(403, 'Akses ditolak');
+        }
 
         $query = DB::table('informasi_operasional')
             ->where('id_owner', $maker->id_owner)
