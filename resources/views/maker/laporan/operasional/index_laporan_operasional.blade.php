@@ -333,6 +333,11 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
+                                <h5 class="text-start" style="font-size:12pt;">Jumlah Jenis</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="input-icon mb-3">
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -350,6 +355,11 @@
                                     <input type="number" value="" id="jumlah_jenis_operasional" class="form-control"
                                         name="jumlah_jenis_operasional" placeholder="Masukkan Jumlah Jenis">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="text-start" style="font-size:12pt;">Harga Satuan</h5>
                             </div>
                         </div>
                         <div class="row">
@@ -374,6 +384,12 @@
                             </div>
                         </div>
                         <div class="row" id="wrapper_harga_operasional" style="display:none;">
+
+                            <!-- Judul ikut disembunyikan -->
+                            <div class="col-12">
+                                <h5 class="text-start" style="font-size:12pt;">Harga Operasional</h5>
+                            </div>
+
                             <div class="col-12">
                                 <div class="input-icon mb-3">
                                     <span class="input-icon-addon">💰</span>
@@ -386,6 +402,7 @@
                                     <input type="hidden" id="harga_operasional" name="harga_operasional">
                                 </div>
                             </div>
+
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
