@@ -193,7 +193,8 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/maker/laporan/operasional" method="GET" id="FormLaporanOperasional">
+                                    <form action="/maker/operasional/informasi_operasional" method="GET"
+                                        id="FormLaporanOperasional">
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="input-icon mb-3">
@@ -281,7 +282,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/maker/laporan/operasional/store_maker_operasional" method="POST"
+                    <form action="/maker/operasional/informasi_operasional/store_maker_informasi_operasional" method="POST"
                         id="FormInputOperasional" enctype="multipart/form-data">
                         @csrf
                         <div class="row">

@@ -419,27 +419,40 @@ Route::middleware(['auth:maker'])->group(function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     //Operasional
-    Route::get('/maker/laporan/operasional', [LaporanOperasionalController::class, 'index_maker_operasional']);
-    Route::get('/maker/laporan/operasional/store_maker_operasional', [LaporanOperasionalController::class, 'store_maker_operasional']);
+    //Informasi Operasional
+    Route::get('/maker/operasional/informasi_operasional', [LaporanOperasionalController::class, 'index_maker_informasi_operasional']);
+    Route::get('/maker/operasional/informasi_operasional/store_maker_informasi_operasional', [LaporanOperasionalController::class, 'store_maker_informasi_operasional']);
 
 
 
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
     //Stok
     //Stok Masuk
     Route::get('/maker/stok_masuk', [StokMasukController::class, 'index_stok_masuk_maker']);

@@ -19,8 +19,8 @@ class LaporanOperasionalController extends Controller
 
 
     // MAKER
-    public function index_maker_operasional(Request $request)
+    public function index_maker_informasi_operasional(Request $request)
     {
-        return view('maker.laporan.operasional.index_laporan_operasional');
+        return view('maker.operasional.informasi_operasional.index_informasi_operasional');
     }
 }
