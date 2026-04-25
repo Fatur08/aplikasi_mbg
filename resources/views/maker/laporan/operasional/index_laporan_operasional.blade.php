@@ -237,7 +237,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="row mt-2 table-container">
+                            <div class="row mt-1 table-container">
                                 <div class="col-12">
                                     <!-- === Table Section === -->
                                     <div class="table-wrapper">
