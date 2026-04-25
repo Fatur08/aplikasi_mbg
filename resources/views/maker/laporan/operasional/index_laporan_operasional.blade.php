@@ -309,13 +309,16 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart-star">
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-building">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                            <path d="M9.5 17h-3.5v-14h-2" />
-                                            <path d="M6 5l14 1l-.615 4.302m-6.885 2.698h-6.5" />
-                                            <path
-                                                d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138" />
+                                            <path d="M3 21l18 0" />
+                                            <path d="M9 8l1 0" />
+                                            <path d="M9 12l1 0" />
+                                            <path d="M9 16l1 0" />
+                                            <path d="M14 8l1 0" />
+                                            <path d="M14 12l1 0" />
+                                            <path d="M14 16l1 0" />
+                                            <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
                                         </svg>
                                     </span>
                                     <input type="text" value="" id="jenis_operasional" class="form-control"
@@ -330,12 +333,13 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-coin">
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-settings-plus">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
                                             <path
-                                                d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
-                                            <path d="M12 7v10" />
+                                                d="M12.483 20.935c-.862 .239 -1.898 -.178 -2.158 -1.252a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.08 .262 1.496 1.308 1.247 2.173" />
+                                            <path d="M16 19h6" />
+                                            <path d="M19 16v6" />
+                                            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                                         </svg>
                                     </span>
                                     <input type="number" value="" id="jumlah_jenis_operasional" class="form-control"
@@ -350,12 +354,13 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-coin">
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-settings-dollar">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
                                             <path
-                                                d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" />
-                                            <path d="M12 7v10" />
+                                                d="M13.038 20.666c-.902 .665 -2.393 .337 -2.713 -.983a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 .402 2.248" />
+                                            <path d="M15 12a3 3 0 1 0 -1.724 2.716" />
+                                            <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                            <path d="M19 21v1m0 -8v1" />
                                         </svg>
                                     </span>
                                     <input type="number" value="" id="harga_satuan_operasional" class="form-control"
