@@ -371,11 +371,14 @@
                         <div class="row" id="wrapper_harga_operasional" style="display:none;">
                             <div class="col-12">
                                 <div class="input-icon mb-3">
-                                    <span class="input-icon-addon">
-                                        💰
-                                    </span>
-                                    <input type="number" id="harga_operasional" class="form-control"
-                                        name="harga_operasional" placeholder="Total Harga Operasional" readonly>
+                                    <span class="input-icon-addon">💰</span>
+
+                                    <!-- Untuk ditampilkan ke user -->
+                                    <input type="text" id="harga_operasional_view" class="form-control mb-2"
+                                        placeholder="Total Harga Operasional (Rp)" readonly>
+
+                                    <!-- Untuk dikirim ke server -->
+                                    <input type="hidden" id="harga_operasional" name="harga_operasional">
                                 </div>
                             </div>
                         </div>
@@ -410,7 +413,12 @@
             const jumlahInput = document.getElementById('jumlah_jenis_operasional');
             const hargaInput = document.getElementById('harga_satuan_operasional');
             const totalInput = document.getElementById('harga_operasional');
+            const totalView = document.getElementById('harga_operasional_view');
             const wrapperTotal = document.getElementById('wrapper_harga_operasional');
+
+            function formatRupiah(angka) {
+                return new Intl.NumberFormat('id-ID').format(angka);
+            }
 
             function hitungTotal() {
                 let jumlah = parseFloat(jumlahInput.value);
@@ -419,11 +427,17 @@
                 if (!isNaN(jumlah) && !isNaN(harga)) {
                     let total = jumlah * harga;
 
+                    // simpan angka asli
                     totalInput.value = total;
-                    wrapperTotal.style.display = 'block'; // tampilkan
+
+                    // tampilkan format Rp
+                    totalView.value = 'Rp ' + formatRupiah(total);
+
+                    wrapperTotal.style.display = 'block';
                 } else {
                     totalInput.value = '';
-                    wrapperTotal.style.display = 'none'; // sembunyikan
+                    totalView.value = '';
+                    wrapperTotal.style.display = 'none';
                 }
             }
 
