@@ -19,7 +19,10 @@ class CekDapurOperasional
     {
         $maker = Auth::guard('maker')->user();
 
-        if ($maker->nomor_dapur_maker != 'SUKADANA_ILIR') {
+        $allowedDapur = 6;
+        $allowedOwner = 2;
+
+        if (!($maker->nomor_dapur_maker == $allowedDapur && $maker->id_owner == $allowedOwner)) {
             abort(403, 'Akses ditolak');
         }
 
