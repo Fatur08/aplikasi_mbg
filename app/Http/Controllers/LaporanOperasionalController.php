@@ -25,11 +25,16 @@ class LaporanOperasionalController extends Controller
     {
         $maker = Auth::guard('maker')->user();
 
-        $data = DB::table('informasi_operasional')
+        $query = DB::table('informasi_operasional')
             ->where('id_owner', $maker->id_owner)
-            ->where('nomor_dapur_informasi_operasional', $maker->nomor_dapur_maker)
-            ->orderBy('jenis_informasi_operasional', 'asc')
-            ->get();
+            ->where('nomor_dapur_informasi_operasional', $maker->nomor_dapur_maker);
+
+        // 🔍 Filter pencarian
+        if ($request->filled('cari_jenis_informasi_operasional')) {
+            $query->where('jenis_informasi_operasional', 'like', '%' . $request->cari_jenis_informasi_operasional . '%');
+        }
+
+        $data = $query->orderBy('jenis_informasi_operasional', 'asc')->get();
 
         return view('maker.operasional.informasi_operasional.index_informasi_operasional', compact('data'));
     }
