@@ -369,7 +369,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" id="wrapper_harga_operasional" style="display:none;">
+                        <div class="row" id="wrapper_harga_informasi_operasional" style="display:none;">
 
                             <!-- Judul ikut disembunyikan -->
                             <div class="col-12">
@@ -381,11 +381,12 @@
                                     <span class="input-icon-addon">💰</span>
 
                                     <!-- Untuk ditampilkan ke user -->
-                                    <input type="text" id="harga_operasional_view" class="form-control mb-2"
+                                    <input type="text" id="harga_informasi_operasional_view" class="form-control mb-2"
                                         placeholder="Total Harga Operasional (Rp)" readonly>
 
                                     <!-- Untuk dikirim ke server -->
-                                    <input type="hidden" id="harga_operasional" name="harga_operasional">
+                                    <input type="hidden" id="harga_informasi_operasional"
+                                        name="harga_informasi_operasional">
                                 </div>
                             </div>
 
@@ -418,11 +419,11 @@
     <script>
         $(function () {
             // BAGIAN HARGA OPERASIONAL
-            const jumlahInput = document.getElementById('jumlah_jenis_operasional');
-            const hargaInput = document.getElementById('harga_satuan_operasional');
-            const totalInput = document.getElementById('harga_operasional');
-            const totalView = document.getElementById('harga_operasional_view');
-            const wrapperTotal = document.getElementById('wrapper_harga_operasional');
+            const jumlahInput = document.getElementById('jumlah_jenis_informasi_operasional');
+            const hargaInput = document.getElementById('harga_satuan_informasi_operasional');
+            const totalInput = document.getElementById('harga_informasi_operasional');
+            const totalView = document.getElementById('harga_informasi_operasional_view');
+            const wrapperTotal = document.getElementById('wrapper_harga_informasi_operasional');
 
             function formatRupiah(angka) {
                 return new Intl.NumberFormat('id-ID').format(angka);
