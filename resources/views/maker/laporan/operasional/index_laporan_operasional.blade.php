@@ -304,6 +304,11 @@
                         @csrf
                         <div class="row">
                             <div class="col-12">
+                                <h5 class="text-start" style="font-size:16pt;">Jenis Operasional</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="input-icon mb-3">
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
