@@ -264,10 +264,10 @@
                                                 <thead style="text-align: center; vertical-align: middle;">
                                                     <tr>
                                                         <th>No.</th>
-                                                        <th>Tanggal</th>
-                                                        <th>Kebutuhan</th>
-                                                        <th>Biaya</th>
-                                                        <th>Keterangan</th>
+                                                        <th>Jenis Operasional</th>
+                                                        <th>Jumlah Jenis</th>
+                                                        <th>Harga Satuan</th>
+                                                        <th>Harga Operasional</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
