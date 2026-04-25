@@ -485,12 +485,12 @@
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-stack-push">
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-file-info">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M6 10l-2 1l8 4l8 -4l-2 -1" />
-                    <path d="M4 15l8 4l8 -4" />
-                    <path d="M12 4v7" />
-                    <path d="M15 8l-3 3l-3 -3" />
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+                    <path d="M11 14h1v4h1" />
+                    <path d="M12 11h.01" />
                   </svg>
                 </span>
                 <span class="nav-link-title">
@@ -501,12 +501,14 @@
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-stack-pop">
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-list">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M7 9.5l-3 1.5l8 4l8 -4l-3 -1.5" />
-                    <path d="M4 15l8 4l8 -4" />
-                    <path d="M12 11v-7" />
-                    <path d="M9 7l3 -3l3 3" />
+                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                    <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2" />
+                    <path d="M9 12l.01 0" />
+                    <path d="M13 12l2 0" />
+                    <path d="M9 16l.01 0" />
+                    <path d="M13 16l2 0" />
                   </svg>
                 </span>
                 <span class="nav-link-title">
