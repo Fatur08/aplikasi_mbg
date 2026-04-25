@@ -21,6 +21,7 @@ class LaporanOperasionalController extends Controller
 
 
     // MAKER
+    // Informasi Operasional
     public function index_maker_informasi_operasional(Request $request)
     {
         $maker = Auth::guard('maker')->user();
@@ -56,5 +57,15 @@ class LaporanOperasionalController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Data operasional berhasil disimpan');
+    }
+
+
+
+
+
+    // Laporan Operasional
+    public function index_maker_laporan_operasional(Request $request)
+    {
+        return view('maker.operasional.laporan_operasional.index_laporan_operasional');
     }
 }
