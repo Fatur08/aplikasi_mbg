@@ -368,6 +368,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" id="wrapper_harga_operasional" style="display:none;">
+                            <div class="col-12">
+                                <div class="input-icon mb-3">
+                                    <span class="input-icon-addon">
+                                        💰
+                                    </span>
+                                    <input type="number" id="harga_operasional" class="form-control"
+                                        name="harga_operasional" placeholder="Total Harga Operasional" readonly>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row mt-2">
                             <div class="col-12">
                                 <div class="form-group">
@@ -395,6 +406,34 @@
 @push('myscript')
     <script>
         $(function () {
+            // BAGIAN HARGA OPERASIONAL
+            const jumlahInput = document.getElementById('jumlah_jenis_operasional');
+            const hargaInput = document.getElementById('harga_satuan_operasional');
+            const totalInput = document.getElementById('harga_operasional');
+            const wrapperTotal = document.getElementById('wrapper_harga_operasional');
+
+            function hitungTotal() {
+                let jumlah = parseFloat(jumlahInput.value);
+                let harga = parseFloat(hargaInput.value);
+
+                if (!isNaN(jumlah) && !isNaN(harga)) {
+                    let total = jumlah * harga;
+
+                    totalInput.value = total;
+                    wrapperTotal.style.display = 'block'; // tampilkan
+                } else {
+                    totalInput.value = '';
+                    wrapperTotal.style.display = 'none'; // sembunyikan
+                }
+            }
+
+            jumlahInput.addEventListener('input', hitungTotal);
+            hargaInput.addEventListener('input', hitungTotal);
+            // --
+
+
+
+
             $("#btnTambahOperasional").click(function () {
                 $("#modal-input-operasional").modal("show");
             });
