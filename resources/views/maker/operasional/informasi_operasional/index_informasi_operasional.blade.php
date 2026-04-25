@@ -147,7 +147,7 @@
                                     </h2>
                                 </td>
                                 <td style="text-align:right">
-                                    <a href="#" class="btn btn-primary" id="btnTambahOperasional">
+                                    <a href="#" class="btn btn-primary" id="btnTambahInformasiOperasional">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round"
@@ -273,8 +273,9 @@
 
 
 
-    <!-- Modal Tambah Operasional -->
-    <div class="modal modal-blur fade" id="modal-input-operasional" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Modal Tambah Informasi Operasional -->
+    <div class="modal modal-blur fade" id="modal-input-informasi-operasional" tabindex="-1" role="dialog"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -309,8 +310,8 @@
                                             <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
                                         </svg>
                                     </span>
-                                    <input type="text" value="" id="jenis_operasional" class="form-control"
-                                        name="jenis_operasional" placeholder="Masukkan Jenis Operasional">
+                                    <input type="text" value="" id="jenis_informasi_operasional" class="form-control"
+                                        name="jenis_informasi_operasional" placeholder="Masukkan Jenis Operasional">
                                 </div>
                             </div>
                         </div>
@@ -335,8 +336,9 @@
                                             <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                                         </svg>
                                     </span>
-                                    <input type="number" value="" id="jumlah_jenis_operasional" class="form-control"
-                                        name="jumlah_jenis_operasional" placeholder="Masukkan Jumlah Jenis">
+                                    <input type="number" value="" id="jumlah_jenis_informasi_operasional"
+                                        class="form-control" name="jumlah_jenis_informasi_operasional"
+                                        placeholder="Masukkan Jumlah Jenis">
                                 </div>
                             </div>
                         </div>
@@ -361,8 +363,9 @@
                                             <path d="M19 21v1m0 -8v1" />
                                         </svg>
                                     </span>
-                                    <input type="number" value="" id="harga_satuan_operasional" class="form-control"
-                                        name="harga_satuan_operasional" placeholder="Masukkan Harga Satuan">
+                                    <input type="number" value="" id="harga_satuan_informasi_operasional"
+                                        class="form-control" name="harga_satuan_informasi_operasional"
+                                        placeholder="Masukkan Harga Satuan">
                                 </div>
                             </div>
                         </div>
@@ -453,8 +456,8 @@
 
 
 
-            $("#btnTambahOperasional").click(function () {
-                $("#modal-input-operasional").modal("show");
+            $("#btnTambahInformasiOperasional").click(function () {
+                $("#modal-input-informasi-operasional").modal("show");
             });
 
 
