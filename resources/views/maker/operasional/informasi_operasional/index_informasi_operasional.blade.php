@@ -254,7 +254,24 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
+                                                    @forelse ($data as $key => $item)
+                                                        @php
+                                                            $total = $item->jumlah_jenis_operasional * $item->harga_satuan_operasional;
+                                                        @endphp
+                                                        <tr style="text-align: center;">
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $item->jenis_operasional }}</td>
+                                                            <td>{{ $item->jumlah_jenis_operasional }}</td>
+                                                            <td>Rp
+                                                                {{ number_format($item->harga_satuan_operasional, 0, ',', '.') }}
+                                                            </td>
+                                                            <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="5" style="text-align: center;">Data belum tersedia</td>
+                                                        </tr>
+                                                    @endforelse
                                                 </tbody>
                                             </table>
                                         </div>

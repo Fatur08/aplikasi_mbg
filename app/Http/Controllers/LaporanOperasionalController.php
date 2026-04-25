@@ -23,7 +23,15 @@ class LaporanOperasionalController extends Controller
     // MAKER
     public function index_maker_informasi_operasional(Request $request)
     {
-        return view('maker.operasional.informasi_operasional.index_informasi_operasional');
+        $maker = Auth::guard('maker')->user();
+
+        $data = DB::table('informasi_operasional')
+            ->where('id_owner', $maker->id_owner)
+            ->where('nomor_dapur_informasi_operasional', $maker->nomor_dapur_maker)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('maker.operasional.informasi_operasional.index_informasi_operasional', compact('data'));
     }
 
 
