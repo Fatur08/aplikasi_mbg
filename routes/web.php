@@ -439,6 +439,9 @@ Route::middleware(['auth:maker'])->group(function () {
     )->middleware('cek.operasional');
 
     Route::post('/maker/operasional/informasi_operasional/store_maker_informasi_operasional', [OperasionalController::class, 'store_maker_informasi_operasional']);
+    Route::post('/maker/operasional/informasi_operasional/edit_maker_informasi_operasional', [OperasionalController::class, 'edit_maker_informasi_operasional']);
+    Route::post('/maker/operasional/informasi_operasional/{id}/update_maker_informasi_operasional', [OperasionalController::class, 'update_maker_informasi_operasional']);
+    Route::post('/maker/operasional/informasi_operasional/{id}/delete_maker_informasi_operasional', [OperasionalController::class, 'delete_maker_informasi_operasional']);
 
 
     //Laporan Operasional
