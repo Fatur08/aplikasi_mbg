@@ -554,6 +554,44 @@
 
 
 
+            // BAGIAN EDIT HARGA OPERASIONAL
+            document.addEventListener("shown.bs.modal", function (event) {
+
+                if (event.target.id !== 'modal-editinformasioperasional') return;
+
+                const jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional');
+                const harga = document.getElementById('edit_harga_satuan_informasi_operasional');
+                const totalView = document.getElementById('edit_harga_informasi_operasional_view');
+                const totalInput = document.getElementById('edit_harga_informasi_operasional');
+
+                if (!jumlah || !harga || !totalView) return;
+
+                function hitungTotal() {
+                    let jml = parseFloat(jumlah.value) || 0;
+                    let hrg = parseFloat(harga.value) || 0;
+
+                    let total = jml * hrg;
+
+                    totalView.value = total.toLocaleString('id-ID');
+
+                    if (totalInput) {
+                        totalInput.value = total;
+                    }
+                }
+
+                // 🔥 WAJIB: hitung langsung saat modal dibuka
+                hitungTotal();
+
+                // 🔥 realtime saat input berubah
+                jumlah.addEventListener('input', hitungTotal);
+                harga.addEventListener('input', hitungTotal);
+
+            });
+
+
+
+
+
 
 
 
@@ -634,19 +672,5 @@
                 allowInput: true
             });
         });
-
-        // BAGIAN EDIT HARGA OPERASIONAL
-        function hitungTotal() {
-            let jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional')?.value;
-            let harga = document.getElementById('edit_harga_satuan_informasi_operasional')?.value;
-
-            let total = (parseFloat(jumlah) || 0) * (parseFloat(harga) || 0);
-
-            let view = document.getElementById('edit_harga_informasi_operasional_view');
-            let hidden = document.getElementById('edit_harga_informasi_operasional');
-
-            if (view) view.value = total.toLocaleString('id-ID');
-            if (hidden) hidden.value = total;
-        }
     </script>
 @endpush

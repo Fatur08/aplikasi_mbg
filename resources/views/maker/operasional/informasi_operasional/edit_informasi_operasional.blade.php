@@ -94,14 +94,10 @@
 
         <div class="col-12">
             <div class="input-icon mb-3">
-                @php
-                    $total = $data->jumlah_jenis_informasi_operasional * $data->harga_satuan_informasi_operasional;
-                @endphp
                 <span class="input-icon-addon">💰</span>
 
                 <!-- Untuk ditampilkan ke user -->
-                <input type="text" value="Rp.{{ number_format($total, 0, ',', '.') }}" class="form-control mb-2"
-                    placeholder="Total Harga Operasional (Rp)" readonly>
+                <input type="text" class="form-control mb-2" placeholder="Total Harga Operasional (Rp)" readonly>
             </div>
         </div>
 
