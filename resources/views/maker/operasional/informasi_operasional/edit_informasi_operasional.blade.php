@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="edit_wrapper_harga_informasi_operasional" style="display:none;">
+    <div class="row">
 
         <!-- Judul ikut disembunyikan -->
         <div class="col-12">
@@ -92,14 +92,14 @@
 
         <div class="col-12">
             <div class="input-icon mb-3">
+                @php
+                    $total = $data->jumlah_jenis_informasi_operasional * $data->harga_satuan_informasi_operasional;
+                @endphp
                 <span class="input-icon-addon">💰</span>
 
                 <!-- Untuk ditampilkan ke user -->
-                <input type="text" id="edit_harga_informasi_operasional_view" class="form-control mb-2"
+                <input type="text" value="{{ number_format($total, 0, ',', '.') }}" class="form-control mb-2"
                     placeholder="Total Harga Operasional (Rp)" readonly>
-
-                <!-- Untuk dikirim ke server -->
-                <input type="hidden" id="edit_harga_informasi_operasional" name="edit_harga_informasi_operasional">
             </div>
         </div>
 

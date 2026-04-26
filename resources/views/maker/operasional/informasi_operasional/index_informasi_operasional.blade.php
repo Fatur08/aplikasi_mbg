@@ -551,42 +551,6 @@
             });
 
 
-            // BAGIAN SCRIPT EDIT INFORMASI OPERASIONAL
-            const EditjumlahInput = document.getElementById('edit_jumlah_jenis_informasi_operasional');
-            const EdithargaInput = document.getElementById('edit_harga_satuan_informasi_operasional');
-            const EdittotalInput = document.getElementById('edit_harga_informasi_operasional');
-            const EdittotalView = document.getElementById('edit_harga_informasi_operasional_view');
-            const EditwrapperTotal = document.getElementById('edit_wrapper_harga_informasi_operasional');
-
-            function EditformatRupiah(angka) {
-                return new Intl.NumberFormat('id-ID').format(angka);
-            }
-
-            function EdithitungTotal() {
-                let jumlah = parseFloat(EditjumlahInput.value);
-                let harga = parseFloat(EdithargaInput.value);
-
-                if (!isNaN(jumlah) && !isNaN(harga)) {
-                    let total = jumlah * harga;
-
-                    // simpan angka asli
-                    EdittotalInput.value = total;
-
-                    // tampilkan format Rp
-                    EdittotalView.value = 'Rp ' + EditformatRupiah(total);
-
-                    EditwrapperTotal.style.display = 'block';
-                } else {
-                    EdittotalInput.value = '';
-                    EdittotalView.value = '';
-                    EditwrapperTotal.style.display = 'none';
-                }
-            }
-
-            EditjumlahInput.addEventListener('input', EdithitungTotal);
-            EdithargaInput.addEventListener('input', EdithitungTotal);
-
-
 
 
 
