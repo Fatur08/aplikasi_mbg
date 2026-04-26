@@ -86,7 +86,7 @@ class OperasionalController extends Controller
 
         // ✅ Ambil data jenis operasional (distinct biar tidak duplikat)
         $jenisOperasional = DB::table('informasi_operasional')
-            ->select('id_informasi_operasional', 'jenis_operasional')
+            ->select('id_informasi_operasional', 'jenis_informasi_operasional')
             ->where('id_owner', $maker->id_owner)
             ->where('nomor_dapur_informasi_operasional', $maker->nomor_dapur_maker)
             ->distinct()
