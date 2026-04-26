@@ -306,7 +306,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/maker/operasional/informasi_operasional/store_maker_informasi_operasional" method="POST"
+                    <form action="/maker/operasional/laporan_operasional/store_maker_laporan_operasional" method="POST"
                         id="FormInputOperasional" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -362,7 +362,7 @@
                                         </svg>
                                     </span>
 
-                                    <select id="jenis_informasi_operasional" name="jenis_informasi_operasional"
+                                    <select id="id_informasi_operasional" name="id_informasi_operasional"
                                         class="form-control">
 
                                         <option value="">-- Pilih Jenis Operasional --</option>

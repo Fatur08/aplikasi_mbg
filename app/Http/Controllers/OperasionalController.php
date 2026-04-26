@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class OperasionalController extends Controller
 {
@@ -96,5 +97,62 @@ class OperasionalController extends Controller
             'maker.operasional.laporan_operasional.index_laporan_operasional',
             compact('jenisOperasional')
         );
+    }
+
+
+
+    public function store_maker_laporan_operasional(Request $request)
+    {
+        $maker = Auth::guard('maker')->user();
+
+        // 🔒 Validasi akses
+        $allowedDapur = 6;
+        $allowedOwner = 2;
+
+        if (!($maker->nomor_dapur_maker == $allowedDapur && $maker->id_owner == $allowedOwner)) {
+            abort(403, 'Akses ditolak');
+        }
+
+        // ✅ Upload file (jika ada)
+        if ($request->hasFile('nota_laporan_operasional')) {
+            $file = $request->file('nota_laporan_operasional');
+            $timestamp = date('Ymd_His'); // contoh: 20260426_153045
+            $nota_laporan_operasional = "Nota_Laporan_Operasional_" . $timestamp . "." . $file->getClientOriginalExtension();
+        } else {
+            $nota_laporan_operasional = null;
+        }
+
+        // ✅ Simpan ke database
+        $data = [
+            'id_owner' => $maker->id_owner,
+            'nomor_dapur_laporan_operasional' => $maker->nomor_dapur_maker,
+
+            'tanggal_laporan_operasional' => $request->tanggal_laporan_operasional,
+            'id_informasi_operasional' => $request->id_informasi_operasional,
+
+            'jumlah_laporan_operasional' => $request->jumlah_laporan_operasional,
+            'harga_yang_dibeli' => $request->harga_yang_dibeli_laporan_operasional,
+            'harga_diajukan' => $request->harga_diajukan_laporan_operasional,
+
+            'nota_laporan_operasional' => $nota_laporan_operasional
+        ];
+
+        $simpan = DB::table('laporan_operasional')->insert($data);
+        if ($simpan) {
+            if ($request->hasFile('nota_laporan_operasional')) {
+                $storagePath = 'public/uploads/maker/operasional/laporan_operasional/';
+                $request->file('nota_laporan_operasional')->storeAs($storagePath, $nota_laporan_operasional);
+                $publicPath = public_path('storage/uploads/maker/operasional/laporan_operasional/');
+                if (!is_dir($publicPath)) {
+                    mkdir($publicPath, 0777, true);
+                }
+                $sourceFile = storage_path('app/' . $storagePath . $nota_laporan_operasional);
+                $destinationFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $nota_laporan_operasional);
+                copy($sourceFile, $destinationFile);
+            }
+            return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
+        } else {
+            return Redirect::back()->with(['warning' => 'Data Gagal Disimpan']);
+        }
     }
 }
