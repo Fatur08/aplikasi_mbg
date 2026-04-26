@@ -541,6 +541,23 @@
             </div>
         </div>
     </div>
+
+
+
+    {{-- Modal Nota Laporan Operasional --}}
+    <div class="modal modal-blur fade" id="modal-nota-laporan-operasional" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nota Laporan Operasional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="load-nota-laporan-operasional">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('myscript')
     <script>
@@ -551,36 +568,21 @@
 
 
 
-            $(".tambah_operasional_dapur").click(function () {
+            $(".lihat_nota_laporan_operasional").click(function () {
+                var id = $(this).attr('id');
                 $.ajax({
                     type: 'POST',
-                    url: '/maker/laporan/dapur/tambah_operasional_dapur',
-                    cache: false,
-                    data: {
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function (respond) {
-                        $("#loadformtambahoperasionaldapur").html(respond);
-                    }
-                });
-                $("#modal-tambahoperasionaldapur").modal("show");
-            });
-
-            $(".lihat_kendala").click(function () {
-                var id = $(this).attr('data-id');
-                $.ajax({
-                    type: 'POST',
-                    url: '/maker/laporan/harian_dapur/lihat_kendala',
+                    url: '/maker/operasional/laporan_operasional/lihat_nota_laporan_operasional',
                     cache: false,
                     data: {
                         _token: "{{ csrf_token() }}",
                         id: id
                     },
                     success: function (respond) {
-                        $("#loadformlihatkendala").html(respond);
+                        $("#load-nota-laporan-operasional").html(respond);
                     }
                 });
-                $("#modal-lihatkendala").modal("show");
+                $("#modal-nota-laporan-operasional").modal("show");
             });
 
             $(".delete-confirm-menuharian").click(function (e) {

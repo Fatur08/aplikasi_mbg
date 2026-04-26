@@ -444,6 +444,7 @@ Route::middleware(['auth:maker'])->group(function () {
     //Laporan Operasional
     Route::get('/maker/operasional/laporan_operasional', [OperasionalController::class, 'index_maker_laporan_operasional']);
     Route::post('/maker/operasional/laporan_operasional/store_maker_laporan_operasional', [OperasionalController::class, 'store_maker_laporan_operasional']);
+    Route::post('/maker/operasional/laporan_operasional/lihat_nota_laporan_operasional', [OperasionalController::class, 'lihat_nota_laporan_operasional']);
 
 
 
