@@ -552,8 +552,10 @@
 
 
             // BAGIAN SCRIPT EDIT INFORMASI OPERASIONAL
-            document.getElementById('modal-editinformasioperasional')
-                .addEventListener('shown.bs.modal', function () {
+            const modal = document.getElementById('modal-editinformasioperasional');
+
+            if (modal) {
+                modal.addEventListener('shown.bs.modal', function () {
 
                     const jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional');
                     const harga = document.getElementById('edit_harga_satuan_informasi_operasional');
@@ -573,13 +575,17 @@
                         }
                     }
 
-                    // hitung saat modal pertama kali dibuka
-                    hitungTotal();
+                    // delay kecil biar value kebaca
+                    setTimeout(() => {
+                        hitungTotal();
+                    }, 100);
 
                     jumlah.addEventListener('input', hitungTotal);
                     harga.addEventListener('input', hitungTotal);
 
                 });
+            }
+
 
 
 
