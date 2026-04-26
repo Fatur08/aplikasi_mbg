@@ -558,11 +558,11 @@
             const EdittotalView = document.getElementById('edit_harga_informasi_operasional_view');
             const EditwrapperTotal = document.getElementById('edit_wrapper_harga_informasi_operasional');
 
-            function formatRupiah(angka) {
+            function EditformatRupiah(angka) {
                 return new Intl.NumberFormat('id-ID').format(angka);
             }
 
-            function hitungTotal() {
+            function EdithitungTotal() {
                 let jumlah = parseFloat(EditjumlahInput.value);
                 let harga = parseFloat(EdithargaInput.value);
 
@@ -573,7 +573,7 @@
                     EdittotalInput.value = total;
 
                     // tampilkan format Rp
-                    EdittotalView.value = 'Rp ' + formatRupiah(total);
+                    EdittotalView.value = 'Rp ' + EditformatRupiah(total);
 
                     EditwrapperTotal.style.display = 'block';
                 } else {
@@ -583,8 +583,8 @@
                 }
             }
 
-            EditjumlahInput.addEventListener('input', hitungTotal);
-            EdithargaInput.addEventListener('input', hitungTotal);
+            EditjumlahInput.addEventListener('input', EdithitungTotal);
+            EdithargaInput.addEventListener('input', EdithitungTotal);
 
 
 
