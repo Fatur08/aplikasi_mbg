@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -93,16 +94,35 @@ class OperasionalController extends Controller
             ->distinct()
             ->get();
 
-        // ✅ Ambil data laporan operasional + join
-        $laporan = DB::table('laporan_operasional')
-            ->join('informasi_operasional', 'laporan_operasional.id_informasi_operasional', '=', 'informasi_operasional.id_informasi_operasional')
+        // ✅ Query dasar laporan
+        $laporanQuery = DB::table('laporan_operasional')
+            ->join(
+                'informasi_operasional',
+                'laporan_operasional.id_informasi_operasional',
+                '=',
+                'informasi_operasional.id_informasi_operasional'
+            )
             ->where('laporan_operasional.id_owner', $maker->id_owner)
-            ->where('laporan_operasional.nomor_dapur_laporan_operasional', $maker->nomor_dapur_maker)
+            ->where('laporan_operasional.nomor_dapur_laporan_operasional', $maker->nomor_dapur_maker);
+
+        // 🔍 FILTER TANGGAL (fleksibel)
+        if ($request->filled('dari_tanggal')) {
+            $dari = Carbon::parse($request->dari_tanggal)->format('Y-m-d');
+            $laporanQuery->whereDate('laporan_operasional.tanggal_laporan_operasional', '>=', $dari);
+        }
+
+        if ($request->filled('sampai_tanggal')) {
+            $sampai = Carbon::parse($request->sampai_tanggal)->format('Y-m-d');
+            $laporanQuery->whereDate('laporan_operasional.tanggal_laporan_operasional', '<=', $sampai);
+        }
+
+        // ✅ Eksekusi query
+        $laporan = $laporanQuery
             ->select(
                 'laporan_operasional.*',
                 'informasi_operasional.jenis_informasi_operasional'
             )
-            ->orderBy('tanggal_laporan_operasional', 'desc')
+            ->orderBy('laporan_operasional.tanggal_laporan_operasional', 'desc')
             ->get();
 
         return view(
