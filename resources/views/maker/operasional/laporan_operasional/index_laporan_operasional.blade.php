@@ -311,6 +311,34 @@
                         @csrf
                         <div class="row">
                             <div class="col-12">
+                                <h5 class="text-start" style="font-size:12pt;">Tanggal Operasional</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-icon mb-3">
+                                    <span class="input-icon-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                            <path d="M16 3l0 4" />
+                                            <path d="M8 3l0 4" />
+                                            <path d="M4 11l16 0" />
+                                            <path d="M8 15h2v2h-2z" />
+                                        </svg>
+                                    </span>
+                                    <input type="text" value="" id="tanggal_laporan_operasional"
+                                        name="tanggal_laporan_operasional" class="form-control" placeholder="Sampai Tanggal"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
                                 <h5 class="text-start" style="font-size:12pt;">Jenis Operasional</h5>
                             </div>
                         </div>
@@ -340,7 +368,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <h5 class="text-start" style="font-size:12pt;">Jumlah Jenis</h5>
+                                <h5 class="text-start" style="font-size:12pt;">Jumlah (pcs)</h5>
                             </div>
                         </div>
                         <div class="row">
@@ -359,15 +387,14 @@
                                             <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                                         </svg>
                                     </span>
-                                    <input type="number" value="" id="jumlah_jenis_informasi_operasional"
-                                        class="form-control" name="jumlah_jenis_informasi_operasional"
-                                        placeholder="Masukkan Jumlah Jenis">
+                                    <input type="number" value="" id="jumlah_laporan_operasional" class="form-control"
+                                        name="jumlah_laporan_operasional" placeholder="Masukkan Jumlah Jenis">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <h5 class="text-start" style="font-size:12pt;">Harga Satuan</h5>
+                                <h5 class="text-start" style="font-size:12pt;">Harga Yang Dibeli</h5>
                             </div>
                         </div>
                         <div class="row">
@@ -386,33 +413,38 @@
                                             <path d="M19 21v1m0 -8v1" />
                                         </svg>
                                     </span>
-                                    <input type="number" value="" id="harga_satuan_informasi_operasional"
-                                        class="form-control" name="harga_satuan_informasi_operasional"
-                                        placeholder="Masukkan Harga Satuan">
+                                    <input type="number" value="" id="harga_yang_dibeli_laporan_operasional"
+                                        class="form-control" name="harga_yang_dibeli_laporan_operasional"
+                                        placeholder="Masukkan Harga Yang Dibeli">
                                 </div>
+                            </div>
+                        </div>div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="text-start" style="font-size:12pt;">Harga Diajukan</h5>
                             </div>
                         </div>
-                        <div class="row" id="wrapper_harga_informasi_operasional" style="display:none;">
-
-                            <!-- Judul ikut disembunyikan -->
-                            <div class="col-12">
-                                <h5 class="text-start" style="font-size:12pt;">Harga Operasional</h5>
-                            </div>
-
+                        <div class="row">
                             <div class="col-12">
                                 <div class="input-icon mb-3">
-                                    <span class="input-icon-addon">💰</span>
-
-                                    <!-- Untuk ditampilkan ke user -->
-                                    <input type="text" id="harga_informasi_operasional_view" class="form-control mb-2"
-                                        placeholder="Total Harga Operasional (Rp)" readonly>
-
-                                    <!-- Untuk dikirim ke server -->
-                                    <input type="hidden" id="harga_informasi_operasional"
-                                        name="harga_informasi_operasional">
+                                    <span class="input-icon-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-settings-dollar">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M13.038 20.666c-.902 .665 -2.393 .337 -2.713 -.983a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 .402 2.248" />
+                                            <path d="M15 12a3 3 0 1 0 -1.724 2.716" />
+                                            <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                            <path d="M19 21v1m0 -8v1" />
+                                        </svg>
+                                    </span>
+                                    <input type="number" value="" id="harga_diajukan_laporan_operasional"
+                                        class="form-control" name="harga_diajukan_laporan_operasional"
+                                        placeholder="Masukkan Harga Diajukan">
                                 </div>
                             </div>
-
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
@@ -585,7 +617,7 @@
                 allowInput: true
             });
 
-            flatpickr("#tanggal_operasional", {
+            flatpickr("#tanggal_laporan_operasional", {
                 altInput: true,
                 altFormat: "d F Y",
                 dateFormat: "Y-m-d",
