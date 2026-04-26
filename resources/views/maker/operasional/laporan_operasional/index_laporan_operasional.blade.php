@@ -285,7 +285,7 @@
                                                             <td>{{ $loop->iteration }}</td>
 
                                                             <!-- Format tanggal -->
-                                                            <td>{{ date('d-m-Y', strtotime($item->tanggal_laporan_operasional)) }}
+                                                            <td>{{ \Carbon\Carbon::parse($item->tanggal_laporan_operasional)->translatedFormat('d F Y') }}
                                                             </td>
 
                                                             <td>{{ $item->jenis_informasi_operasional }}</td>
