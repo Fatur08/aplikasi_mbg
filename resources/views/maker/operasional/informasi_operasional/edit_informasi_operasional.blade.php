@@ -25,8 +25,8 @@
                         <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
                     </svg>
                 </span>
-                <input type="text" value="" id="jenis_informasi_operasional" class="form-control"
-                    name="jenis_informasi_operasional" placeholder="Masukkan Jenis Operasional">
+                <input type="text" value="{{ $data->jenis_informasi_operasional }}" id="jenis_informasi_operasional"
+                    class="form-control" name="jenis_informasi_operasional" placeholder="Masukkan Jenis Operasional">
             </div>
         </div>
     </div>
@@ -50,7 +50,8 @@
                         <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                     </svg>
                 </span>
-                <input type="number" value="" id="jumlah_jenis_informasi_operasional" class="form-control"
+                <input type="number" value="{{ $data->jumlah_jenis_informasi_operasional }}"
+                    id="jumlah_jenis_informasi_operasional" class="form-control"
                     name="jumlah_jenis_informasi_operasional" placeholder="Masukkan Jumlah Jenis">
             </div>
         </div>
@@ -75,12 +76,13 @@
                         <path d="M19 21v1m0 -8v1" />
                     </svg>
                 </span>
-                <input type="number" value="" id="harga_satuan_informasi_operasional" class="form-control"
+                <input type="number" value="{{ $data->harga_satuan_informasi_operasional }}"
+                    id="harga_satuan_informasi_operasional" class="form-control"
                     name="harga_satuan_informasi_operasional" placeholder="Masukkan Harga Satuan">
             </div>
         </div>
     </div>
-    <div class="row" id="wrapper_harga_informasi_operasional" style="display:none;">
+    <div class="row" id="wrapper_harga_informasi_operasional">
 
         <!-- Judul ikut disembunyikan -->
         <div class="col-12">
@@ -91,12 +93,13 @@
             <div class="input-icon mb-3">
                 <span class="input-icon-addon">💰</span>
 
-                <!-- Untuk ditampilkan ke user -->
+                <!-- Ditampilkan ke user -->
                 <input type="text" id="harga_informasi_operasional_view" class="form-control mb-2"
-                    placeholder="Total Harga Operasional (Rp)" readonly>
+                    value="{{ number_format($data->harga_informasi_operasional, 0, ',', '.') }}" readonly>
 
-                <!-- Untuk dikirim ke server -->
-                <input type="hidden" id="harga_informasi_operasional" name="harga_informasi_operasional">
+                <!-- Dikirim ke server -->
+                <input type="hidden" id="harga_informasi_operasional" name="harga_informasi_operasional"
+                    value="{{ $data->harga_informasi_operasional }}">
             </div>
         </div>
 

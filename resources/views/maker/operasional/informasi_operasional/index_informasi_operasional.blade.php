@@ -551,6 +551,31 @@
             });
 
 
+            // BAGIAN SCRIPT EDIT INFORMASI OPERASIONAL
+            document.getElementById('modal-editinformasioperasional')
+                .addEventListener('shown.bs.modal', function () {
+
+                    const jumlah = document.getElementById('jumlah_jenis_informasi_operasional');
+                    const harga = document.getElementById('harga_satuan_informasi_operasional');
+                    const totalView = document.getElementById('harga_informasi_operasional_view');
+                    const totalInput = document.getElementById('harga_informasi_operasional');
+
+                    function hitungTotal() {
+                        let jml = parseFloat(jumlah.value) || 0;
+                        let hrg = parseFloat(harga.value) || 0;
+
+                        let total = jml * hrg;
+
+                        totalView.value = total.toLocaleString('id-ID');
+                        totalInput.value = total;
+                    }
+
+                    jumlah.addEventListener('input', hitungTotal);
+                    harga.addEventListener('input', hitungTotal);
+
+                });
+
+
 
 
 
