@@ -98,7 +98,7 @@
                 <span class="input-icon-addon">💰</span>
 
                 <!-- Untuk ditampilkan ke user -->
-                <input type="text" value="{{ number_format($total, 0, ',', '.') }}" class="form-control mb-2"
+                <input type="text" value="Rp.{{ number_format($total, 0, ',', '.') }}" class="form-control mb-2"
                     placeholder="Total Harga Operasional (Rp)" readonly>
             </div>
         </div>
