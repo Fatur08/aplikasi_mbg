@@ -131,8 +131,8 @@ class OperasionalController extends Controller
             'id_informasi_operasional' => $request->id_informasi_operasional,
 
             'jumlah_laporan_operasional' => $request->jumlah_laporan_operasional,
-            'harga_yang_dibeli' => $request->harga_yang_dibeli_laporan_operasional,
-            'harga_diajukan' => $request->harga_diajukan_laporan_operasional,
+            'beli_laporan_operasional' => $request->beli_laporan_operasional,
+            'jual_laporan_operasional' => $request->jual_laporan_operasional,
 
             'nota_laporan_operasional' => $nota_laporan_operasional
         ];

@@ -410,7 +410,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <h5 class="text-start" style="font-size:12pt;">Harga Yang Dibeli</h5>
+                                <h5 class="text-start" style="font-size:12pt;">Harga Yang Dibeli (Beli)</h5>
                             </div>
                         </div>
                         <div class="row">
@@ -429,15 +429,14 @@
                                             <path d="M19 21v1m0 -8v1" />
                                         </svg>
                                     </span>
-                                    <input type="number" value="" id="harga_yang_dibeli_laporan_operasional"
-                                        class="form-control" name="harga_yang_dibeli_laporan_operasional"
-                                        placeholder="Masukkan Harga Yang Dibeli">
+                                    <input type="number" value="" id="beli_laporan_operasional" class="form-control"
+                                        name="beli_laporan_operasional" placeholder="Masukkan Harga Yang Dibeli">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <h5 class="text-start" style="font-size:12pt;">Harga Diajukan</h5>
+                                <h5 class="text-start" style="font-size:12pt;">Harga Diajukan (Jual)</h5>
                             </div>
                         </div>
                         <div class="row">
@@ -456,9 +455,8 @@
                                             <path d="M19 21v1m0 -8v1" />
                                         </svg>
                                     </span>
-                                    <input type="number" value="" id="harga_diajukan_laporan_operasional"
-                                        class="form-control" name="harga_diajukan_laporan_operasional"
-                                        placeholder="Masukkan Harga Diajukan">
+                                    <input type="number" value="" id="jual_laporan_operasional" class="form-control"
+                                        name="jual_laporan_operasional" placeholder="Masukkan Harga Diajukan">
                                 </div>
                             </div>
                         </div>
