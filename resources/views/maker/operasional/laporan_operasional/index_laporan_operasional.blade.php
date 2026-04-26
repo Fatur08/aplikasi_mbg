@@ -193,7 +193,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/maker/operasional/informasi_operasional" method="GET"
+                                    <form action="/maker/operasional/laporan_operasional" method="GET"
                                         id="FormLaporanOperasional">
                                         <div class="row">
                                             <div class="col-md-4">
@@ -256,7 +256,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="row mt-1 table-container">
+                            <div class="row mt-2 table-container">
                                 <div class="col-12">
                                     <!-- === Table Section === -->
                                     <div class="table-wrapper">
@@ -316,7 +316,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div class="input-icon mb-3">
+                                <div class="input-icon mb-4">
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -344,7 +344,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div class="input-icon mb-3">
+                                <div class="input-icon mb-4">
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -373,7 +373,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div class="input-icon mb-3">
+                                <div class="input-icon mb-4">
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -399,7 +399,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div class="input-icon mb-3">
+                                <div class="input-icon mb-4">
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -418,7 +418,7 @@
                                         placeholder="Masukkan Harga Yang Dibeli">
                                 </div>
                             </div>
-                        </div>div>
+                        </div>
                         <div class="row">
                             <div class="col-12">
                                 <h5 class="text-start" style="font-size:12pt;">Harga Diajukan</h5>
@@ -426,7 +426,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div class="input-icon mb-3">
+                                <div class="input-icon mb-4">
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
