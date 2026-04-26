@@ -270,6 +270,7 @@
                                                         <th colspan="2">Ket</th>
                                                         <th rowspan="2">Saldo</th>
                                                         <th rowspan="2">Nota</th>
+                                                        <th rowspan="2">Aksi</th>
                                                     </tr>
                                                     <tr>
                                                         <th>Beli</th>
@@ -319,10 +320,41 @@
                                                                     -
                                                                 @endif
                                                             </td>
+                                                            <td>
+                                                                <div class="d-flex flex-column align-items-stretch gap-1">
+
+                                                                    <a href="#"
+                                                                        class="edit_laporan_operasional btn btn-info btn-sm w-100"
+                                                                        id="{{ $item->id_laporan_operasional }}">
+                                                                        Edit
+                                                                    </a>
+
+                                                                    <form
+                                                                        action="/maker/operasional/laporan_operasional/{{ $item->id_laporan_operasional }}/delete_maker_laporan_operasional"
+                                                                        method="POST" class="w-100">
+                                                                        @csrf
+                                                                        <button type="submit"
+                                                                            class="btn btn-danger btn-sm delete-confirm-laporan-operasional w-100">
+                                                                            Hapus
+                                                                        </button>
+                                                                    </form>
+
+                                                                    @if($item->validasi_laporan_operasional == 0)
+                                                                        <button
+                                                                            class="btn btn-warning btn-sm w-100">Menunggu</button>
+                                                                    @elseif($item->validasi_laporan_operasional == 1)
+                                                                        <button
+                                                                            class="btn btn-success btn-sm w-100">Disetujui</button>
+                                                                    @elseif($item->validasi_laporan_operasional == 2)
+                                                                        <button class="btn btn-danger btn-sm w-100">Ditolak</button>
+                                                                    @endif
+
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="7" style="text-align:center;">
+                                                            <td colspan="8" style="text-align:center;">
                                                                 Data belum tersedia
                                                             </td>
                                                         </tr>
