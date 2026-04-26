@@ -96,6 +96,9 @@
                 <!-- Ditampilkan ke user -->
                 <input type="text" id="harga_informasi_operasional_view" class="form-control mb-2"
                     placeholder="Total Harga Operasional (Rp)" readonly>
+
+                <!-- OPTIONAL: kalau mau tetap dikirim ke server -->
+                <input type="hidden" id="harga_informasi_operasional" name="harga_informasi_operasional">
             </div>
         </div>
 
