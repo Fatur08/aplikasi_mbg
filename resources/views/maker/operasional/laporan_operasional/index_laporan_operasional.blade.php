@@ -462,6 +462,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-6">
+                                <input type="file" id="nota_laporan_operasional" name="nota_laporan_operasional"
+                                    class="form-control">
+                            </div>
+                            <div class="col-6 mt-2">
+                                <label>Foto Nota</label>
+                            </div>
+                        </div>
                         <div class="row mt-2">
                             <div class="col-12">
                                 <div class="form-group">
