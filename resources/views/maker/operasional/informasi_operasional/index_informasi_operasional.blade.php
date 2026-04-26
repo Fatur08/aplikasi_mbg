@@ -306,6 +306,13 @@
                                                                             Hapus
                                                                         </a>
                                                                     </form>
+                                                                    @if($d->status_informasi_supplier == 0)
+                                                                        <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                                    @elseif($d->status_informasi_supplier == 1)
+                                                                        <button class="btn btn-success btn-sm">Disetujui</button>
+                                                                    @elseif($d->status_informasi_supplier == 2)
+                                                                        <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                                    @endif
                                                                 </div>
                                                             </td>
                                                         </tr>
