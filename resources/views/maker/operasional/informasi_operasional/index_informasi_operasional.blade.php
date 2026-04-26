@@ -553,6 +553,20 @@
 
 
 
+            // BAGIAN EDIT HARGA OPERASIONAL
+            function hitungTotal() {
+                let jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional').value;
+                let harga = document.getElementById('edit_harga_satuan_informasi_operasional').value;
+
+                let total = (parseFloat(jumlah) || 0) * (parseFloat(harga) || 0);
+
+                document.getElementById('edit_harga_informasi_operasional_view').value = total.toLocaleString('id-ID');
+                document.getElementById('edit_harga_informasi_operasional').value = total;
+            }
+
+
+
+
 
 
 
