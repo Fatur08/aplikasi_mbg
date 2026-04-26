@@ -535,6 +535,7 @@
 
             $(".edit_informasi_operasional").click(function () {
                 var id = $(this).attr('id');
+
                 $.ajax({
                     type: 'POST',
                     url: '/maker/operasional/informasi_operasional/edit_maker_informasi_operasional',
@@ -546,23 +547,32 @@
                     success: function (respond) {
                         $("#loadeditinformasioperasional").html(respond);
 
-                        // 🔥 HITUNG LANGSUNG SETELAH LOAD
-                        setTimeout(() => {
-                            let jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional')?.value;
-                            let harga = document.getElementById('edit_harga_satuan_informasi_operasional')?.value;
+                        // 🔥 HITUNG LANGSUNG DI SINI (PASTI ADA ELEMEN)
+                        let jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional');
+                        let harga = document.getElementById('edit_harga_satuan_informasi_operasional');
+                        let totalView = document.getElementById('edit_harga_informasi_operasional_view');
 
-                            let total = (parseFloat(jumlah) || 0) * (parseFloat(harga) || 0);
+                        if (jumlah && harga && totalView) {
+                            let total = (parseFloat(jumlah.value) || 0) * (parseFloat(harga.value) || 0);
+                            totalView.value = total.toLocaleString('id-ID');
 
-                            let totalView = document.getElementById('edit_harga_informasi_operasional_view');
-
-                            if (totalView) {
+                            // 🔥 BONUS: biar realtime
+                            jumlah.addEventListener('input', function () {
+                                let total = (parseFloat(jumlah.value) || 0) * (parseFloat(harga.value) || 0);
                                 totalView.value = total.toLocaleString('id-ID');
-                            }
-                        }, 100);
+                            });
+
+                            harga.addEventListener('input', function () {
+                                let total = (parseFloat(jumlah.value) || 0) * (parseFloat(harga.value) || 0);
+                                totalView.value = total.toLocaleString('id-ID');
+                            });
+                        }
                     }
                 });
+
                 $("#modal-editinformasioperasional").modal("show");
             });
+
 
 
 
