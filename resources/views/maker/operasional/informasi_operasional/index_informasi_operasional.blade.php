@@ -567,8 +567,14 @@
                         let total = jml * hrg;
 
                         totalView.value = total.toLocaleString('id-ID');
-                        totalInput.value = total;
+
+                        if (totalInput) {
+                            totalInput.value = total;
+                        }
                     }
+
+                    // hitung saat modal pertama kali dibuka
+                    hitungTotal();
 
                     jumlah.addEventListener('input', hitungTotal);
                     harga.addEventListener('input', hitungTotal);

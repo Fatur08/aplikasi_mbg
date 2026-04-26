@@ -95,11 +95,7 @@
 
                 <!-- Ditampilkan ke user -->
                 <input type="text" id="harga_informasi_operasional_view" class="form-control mb-2"
-                    value="{{ number_format($data->harga_informasi_operasional, 0, ',', '.') }}" readonly>
-
-                <!-- Dikirim ke server -->
-                <input type="hidden" id="harga_informasi_operasional" name="harga_informasi_operasional"
-                    value="{{ $data->harga_informasi_operasional }}">
+                    placeholder="Total Harga Operasional (Rp)" readonly>
             </div>
         </div>
 
