@@ -212,7 +212,7 @@
                                                             <path d="M8 15h2v2h-2z" />
                                                         </svg>
                                                     </span>
-                                                    <input type="text" value="" id="dari_tanggal" name="dari_tanggal"
+                                                    <input type="text" value="{{ request('dari_tanggal') }}"  id="dari_tanggal" name="dari_tanggal"
                                                         class="form-control" placeholder="Dari Tanggal" autocomplete="off">
                                                 </div>
                                             </div>
@@ -232,7 +232,7 @@
                                                             <path d="M8 15h2v2h-2z" />
                                                         </svg>
                                                     </span>
-                                                    <input type="text" value="" id="sampai_tanggal" name="sampai_tanggal"
+                                                    <input type="text" value="{{ request('sampai_tanggal') }}" id="sampai_tanggal" name="sampai_tanggal"
                                                         class="form-control" placeholder="Sampai Tanggal"
                                                         autocomplete="off">
                                                 </div>
