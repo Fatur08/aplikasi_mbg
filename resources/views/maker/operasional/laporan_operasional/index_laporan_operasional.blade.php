@@ -468,7 +468,7 @@
                                     class="form-control">
                             </div>
                             <div class="col-6 mt-2">
-                                <label>Foto Nota</label>
+                                <h5 class="text-start" style="font-size:12pt;">Foto Nota</h5>
                             </div>
                         </div>
                         <div class="row mt-2">
