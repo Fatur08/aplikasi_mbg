@@ -53,8 +53,7 @@
                 </span>
                 <input type="number" value="{{ $data->jumlah_jenis_informasi_operasional }}"
                     id="edit_jumlah_jenis_informasi_operasional" class="form-control"
-                    name="edit_jumlah_jenis_informasi_operasional" oninput="hitungTotal()"
-                    placeholder="Masukkan Jumlah Jenis">
+                    name="edit_jumlah_jenis_informasi_operasional" placeholder="Masukkan Jumlah Jenis">
             </div>
         </div>
     </div>
@@ -80,8 +79,7 @@
                 </span>
                 <input type="number" value="{{ $data->harga_satuan_informasi_operasional }}"
                     id="edit_harga_satuan_informasi_operasional" class="form-control"
-                    name="edit_harga_satuan_informasi_operasional" oninput="hitungTotal()"
-                    placeholder="Masukkan Harga Satuan">
+                    name="edit_harga_satuan_informasi_operasional" placeholder="Masukkan Harga Satuan">
             </div>
         </div>
     </div>
