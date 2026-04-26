@@ -107,12 +107,12 @@ class OperasionalController extends Controller
 
         // 🔍 FILTER TANGGAL (fleksibel)
         if ($request->filled('dari_tanggal')) {
-            $dari = Carbon::createFromFormat('d-m-Y', $request->dari_tanggal)->format('Y-m-d');
+            $dari = Carbon::parse($request->dari_tanggal)->format('Y-m-d');
             $laporanQuery->whereDate('laporan_operasional.tanggal_laporan_operasional', '>=', $dari);
         }
 
         if ($request->filled('sampai_tanggal')) {
-            $sampai = Carbon::createFromFormat('d-m-Y', $request->sampai_tanggal)->format('Y-m-d');
+            $sampai = Carbon::parse($request->sampai_tanggal)->format('Y-m-d');
             $laporanQuery->whereDate('laporan_operasional.tanggal_laporan_operasional', '<=', $sampai);
         }
 
