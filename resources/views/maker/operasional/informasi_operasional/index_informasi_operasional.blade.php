@@ -563,11 +563,15 @@
                 const totalView = modal.querySelector('#edit_harga_informasi_operasional_view');
                 const totalInput = modal.querySelector('#edit_harga_informasi_operasional');
 
+                console.log("INI TOTAL VIEW:", totalView); // 🔍 cek
+
                 function hitungTotal() {
                     let jml = parseFloat(jumlah.value) || 0;
                     let hrg = parseFloat(harga.value) || 0;
 
                     let total = jml * hrg;
+
+                    console.log("ISI KE INPUT:", total);
 
                     totalView.value = total.toLocaleString('id-ID');
 
@@ -582,6 +586,7 @@
                 harga.addEventListener('input', hitungTotal);
 
             });
+
 
 
 
