@@ -85,7 +85,7 @@ class OperasionalController extends Controller
             abort(403, 'Akses ditolak');
         }
 
-        // ✅ Ambil data jenis operasional (distinct biar tidak duplikat)
+        // ✅ Dropdown jenis operasional
         $jenisOperasional = DB::table('informasi_operasional')
             ->select('id_informasi_operasional', 'jenis_informasi_operasional')
             ->where('id_owner', $maker->id_owner)
@@ -93,9 +93,21 @@ class OperasionalController extends Controller
             ->distinct()
             ->get();
 
+        // ✅ Ambil data laporan operasional + join
+        $laporan = DB::table('laporan_operasional')
+            ->join('informasi_operasional', 'laporan_operasional.id_informasi_operasional', '=', 'informasi_operasional.id_informasi_operasional')
+            ->where('laporan_operasional.id_owner', $maker->id_owner)
+            ->where('laporan_operasional.nomor_dapur_laporan_operasional', $maker->nomor_dapur_maker)
+            ->select(
+                'laporan_operasional.*',
+                'informasi_operasional.jenis_informasi_operasional'
+            )
+            ->orderBy('tanggal_laporan_operasional', 'desc')
+            ->get();
+
         return view(
             'maker.operasional.laporan_operasional.index_laporan_operasional',
-            compact('jenisOperasional')
+            compact('jenisOperasional', 'laporan')
         );
     }
 

@@ -277,7 +277,56 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @forelse ($laporan as $item)
+                                                        @php
+                                                            $saldo = $item->jual_laporan_operasional - $item->beli_laporan_operasional;
+                                                        @endphp
+                                                        <tr style="text-align:center; vertical-align:middle;">
+                                                            <td>{{ $loop->iteration }}</td>
 
+                                                            <!-- Format tanggal -->
+                                                            <td>{{ date('d-m-Y', strtotime($item->tanggal_laporan_operasional)) }}
+                                                            </td>
+
+                                                            <td>{{ $item->jenis_informasi_operasional }}</td>
+
+                                                            <!-- Ket -->
+                                                            <td>Rp {{ number_format($item->beli_laporan_operasional, 0, ',', '.') }}
+                                                            </td>
+                                                            <td>Rp {{ number_format($item->jual_laporan_operasional, 0, ',', '.') }}</td>
+
+                                                            <!-- Saldo -->
+                                                            <td>
+                                                                Rp {{ number_format($saldo, 0, ',', '.') }}
+                                                            </td>
+
+                                                            <!-- Nota -->
+                                                            <td>
+                                                                @if ($item->nota_laporan_operasional)
+                                                                    <a href="#" class="lihat_nota_laporan_operasional btn btn-info btn-sm" id="{{ $item->id_laporan_operasional }}">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                            <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                                            <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
+                                                                                     c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                                        </svg>
+                                                                        <span>Lihat</span>
+                                                                    </a>
+                                                                @else
+                                                                    -
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="7" style="text-align:center;">
+                                                                Data belum tersedia
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
                                                 </tbody>
                                             </table>
                                         </div>
