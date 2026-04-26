@@ -545,6 +545,20 @@
                     },
                     success: function (respond) {
                         $("#loadeditinformasioperasional").html(respond);
+
+                        // 🔥 HITUNG LANGSUNG SETELAH LOAD
+                        setTimeout(() => {
+                            let jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional')?.value;
+                            let harga = document.getElementById('edit_harga_satuan_informasi_operasional')?.value;
+
+                            let total = (parseFloat(jumlah) || 0) * (parseFloat(harga) || 0);
+
+                            let totalView = document.getElementById('edit_harga_informasi_operasional_view');
+
+                            if (totalView) {
+                                totalView.value = total.toLocaleString('id-ID');
+                            }
+                        }, 100);
                     }
                 });
                 $("#modal-editinformasioperasional").modal("show");
@@ -555,37 +569,24 @@
 
 
             // BAGIAN EDIT HARGA OPERASIONAL
-            document.addEventListener("shown.bs.modal", function (event) {
+            document.addEventListener("input", function (e) {
 
-                if (event.target.id !== 'modal-editinformasioperasional') return;
+                if (
+                    e.target.id === 'edit_jumlah_jenis_informasi_operasional' ||
+                    e.target.id === 'edit_harga_satuan_informasi_operasional'
+                ) {
 
-                const jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional');
-                const harga = document.getElementById('edit_harga_satuan_informasi_operasional');
-                const totalView = document.getElementById('edit_harga_informasi_operasional_view');
-                const totalInput = document.getElementById('edit_harga_informasi_operasional');
+                    let jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional')?.value;
+                    let harga = document.getElementById('edit_harga_satuan_informasi_operasional')?.value;
 
-                if (!jumlah || !harga || !totalView) return;
+                    let total = (parseFloat(jumlah) || 0) * (parseFloat(harga) || 0);
 
-                function hitungTotal() {
-                    console.log("KEPANGGIL");
-                    let jml = parseFloat(jumlah.value) || 0;
-                    let hrg = parseFloat(harga.value) || 0;
+                    let totalView = document.getElementById('edit_harga_informasi_operasional_view');
 
-                    let total = jml * hrg;
-
-                    totalView.value = total.toLocaleString('id-ID');
-
-                    if (totalInput) {
-                        totalInput.value = total;
+                    if (totalView) {
+                        totalView.value = total.toLocaleString('id-ID');
                     }
                 }
-
-                // 🔥 WAJIB: hitung langsung saat modal dibuka
-                hitungTotal();
-
-                // 🔥 realtime saat input berubah
-                jumlah.addEventListener('input', hitungTotal);
-                harga.addEventListener('input', hitungTotal);
 
             });
 
