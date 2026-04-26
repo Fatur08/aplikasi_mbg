@@ -196,30 +196,48 @@
                                     <form action="/maker/operasional/informasi_operasional" method="GET"
                                         id="FormLaporanOperasional">
                                         <div class="row">
-                                            <div class="col-6">
-                                                <div class="input-icon mb-3">
+                                            <div class="col-md-4">
+                                                <div class="input-icon">
                                                     <span class="input-icon-addon">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-building">
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
                                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M3 21l18 0" />
-                                                            <path d="M9 8l1 0" />
-                                                            <path d="M9 12l1 0" />
-                                                            <path d="M9 16l1 0" />
-                                                            <path d="M14 8l1 0" />
-                                                            <path d="M14 12l1 0" />
-                                                            <path d="M14 16l1 0" />
-                                                            <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
+                                                            <path
+                                                                d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                            <path d="M16 3l0 4" />
+                                                            <path d="M8 3l0 4" />
+                                                            <path d="M4 11l16 0" />
+                                                            <path d="M8 15h2v2h-2z" />
                                                         </svg>
                                                     </span>
-                                                    <input type="text" value="" id="cari_jenis_informasi_operasional"
-                                                        class="form-control" name="cari_jenis_informasi_operasional"
-                                                        placeholder="Cari Jenis Operasional">
+                                                    <input type="text" value="" id="dari_tanggal" name="dari_tanggal"
+                                                        class="form-control" placeholder="Dari Tanggal" autocomplete="off">
                                                 </div>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-md-4">
+                                                <div class="input-icon">
+                                                    <span class="input-icon-addon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                            <path d="M16 3l0 4" />
+                                                            <path d="M8 3l0 4" />
+                                                            <path d="M4 11l16 0" />
+                                                            <path d="M8 15h2v2h-2z" />
+                                                        </svg>
+                                                    </span>
+                                                    <input type="text" value="" id="sampai_tanggal" name="sampai_tanggal"
+                                                        class="form-control" placeholder="Sampai Tanggal"
+                                                        autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-primary w-100">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
