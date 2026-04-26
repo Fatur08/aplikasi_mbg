@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="edit_wrapper_harga_informasi_operasional">
+    <div class="row" id="edit_wrapper_harga_informasi_operasional" style="display:none;">
 
         <!-- Judul ikut disembunyikan -->
         <div class="col-12">
@@ -94,11 +94,11 @@
             <div class="input-icon mb-3">
                 <span class="input-icon-addon">💰</span>
 
-                <!-- Ditampilkan ke user -->
+                <!-- Untuk ditampilkan ke user -->
                 <input type="text" id="edit_harga_informasi_operasional_view" class="form-control mb-2"
                     placeholder="Total Harga Operasional (Rp)" readonly>
 
-                <!-- OPTIONAL: kalau mau tetap dikirim ke server -->
+                <!-- Untuk dikirim ke server -->
                 <input type="hidden" id="edit_harga_informasi_operasional" name="edit_harga_informasi_operasional">
             </div>
         </div>

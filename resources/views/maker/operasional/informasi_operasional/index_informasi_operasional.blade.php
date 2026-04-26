@@ -552,40 +552,39 @@
 
 
             // BAGIAN SCRIPT EDIT INFORMASI OPERASIONAL
-            document.addEventListener("shown.bs.modal", function (event) {
+            const EditjumlahInput = document.getElementById('edit_jumlah_jenis_informasi_operasional');
+            const EdithargaInput = document.getElementById('edit_harga_satuan_informasi_operasional');
+            const EdittotalInput = document.getElementById('edit_harga_informasi_operasional');
+            const EdittotalView = document.getElementById('edit_harga_informasi_operasional_view');
+            const EditwrapperTotal = document.getElementById('edit_wrapper_harga_informasi_operasional');
 
-                if (event.target.id !== 'modal-editinformasioperasional') return;
+            function formatRupiah(angka) {
+                return new Intl.NumberFormat('id-ID').format(angka);
+            }
 
-                const modal = event.target;
+            function hitungTotal() {
+                let jumlah = parseFloat(EditjumlahInput.value);
+                let harga = parseFloat(EdithargaInput.value);
 
-                const jumlah = modal.querySelector('#edit_jumlah_jenis_informasi_operasional');
-                const harga = modal.querySelector('#edit_harga_satuan_informasi_operasional');
-                const totalView = modal.querySelector('#edit_harga_informasi_operasional_view');
-                const totalInput = modal.querySelector('#edit_harga_informasi_operasional');
+                if (!isNaN(jumlah) && !isNaN(harga)) {
+                    let total = jumlah * harga;
 
-                console.log("INI TOTAL VIEW:", totalView); // 🔍 cek
+                    // simpan angka asli
+                    EdittotalInput.value = total;
 
-                function hitungTotal() {
-                    let jml = parseFloat(jumlah.value) || 0;
-                    let hrg = parseFloat(harga.value) || 0;
+                    // tampilkan format Rp
+                    EdittotalView.value = 'Rp ' + formatRupiah(total);
 
-                    let total = jml * hrg;
-
-                    console.log("ISI KE INPUT:", total);
-
-                    totalView.value = total.toLocaleString('id-ID');
-
-                    if (totalInput) {
-                        totalInput.value = total;
-                    }
+                    EditwrapperTotal.style.display = 'block';
+                } else {
+                    EdittotalInput.value = '';
+                    EdittotalView.value = '';
+                    EditwrapperTotal.style.display = 'none';
                 }
+            }
 
-                setTimeout(hitungTotal, 100);
-
-                jumlah.addEventListener('input', hitungTotal);
-                harga.addEventListener('input', hitungTotal);
-
-            });
+            EditjumlahInput.addEventListener('input', hitungTotal);
+            EdithargaInput.addEventListener('input', hitungTotal);
 
 
 
