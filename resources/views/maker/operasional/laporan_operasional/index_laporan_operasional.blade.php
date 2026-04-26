@@ -473,45 +473,6 @@
 @push('myscript')
     <script>
         $(function () {
-            // BAGIAN HARGA OPERASIONAL
-            const jumlahInput = document.getElementById('jumlah_jenis_informasi_operasional');
-            const hargaInput = document.getElementById('harga_satuan_informasi_operasional');
-            const totalInput = document.getElementById('harga_informasi_operasional');
-            const totalView = document.getElementById('harga_informasi_operasional_view');
-            const wrapperTotal = document.getElementById('wrapper_harga_informasi_operasional');
-
-            function formatRupiah(angka) {
-                return new Intl.NumberFormat('id-ID').format(angka);
-            }
-
-            function hitungTotal() {
-                let jumlah = parseFloat(jumlahInput.value);
-                let harga = parseFloat(hargaInput.value);
-
-                if (!isNaN(jumlah) && !isNaN(harga)) {
-                    let total = jumlah * harga;
-
-                    // simpan angka asli
-                    totalInput.value = total;
-
-                    // tampilkan format Rp
-                    totalView.value = 'Rp ' + formatRupiah(total);
-
-                    wrapperTotal.style.display = 'block';
-                } else {
-                    totalInput.value = '';
-                    totalView.value = '';
-                    wrapperTotal.style.display = 'none';
-                }
-            }
-
-            jumlahInput.addEventListener('input', hitungTotal);
-            hargaInput.addEventListener('input', hitungTotal);
-            // --
-
-
-
-
             $("#btnTambahInformasiOperasional").click(function () {
                 $("#modal-input-informasi-operasional").modal("show");
             });
