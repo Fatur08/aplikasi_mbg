@@ -547,26 +547,14 @@
                     success: function (respond) {
                         $("#loadeditinformasioperasional").html(respond);
 
-                        // 🔥 HITUNG LANGSUNG DI SINI (PASTI ADA ELEMEN)
-                        let jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional');
-                        let harga = document.getElementById('edit_harga_satuan_informasi_operasional');
-                        let totalView = document.getElementById('edit_harga_informasi_operasional_view');
+                        // 🔥 WAJIB: jalankan setelah HTML masuk
+                        hitungTotalEdit();
 
-                        if (jumlah && harga && totalView) {
-                            let total = (parseFloat(jumlah.value) || 0) * (parseFloat(harga.value) || 0);
-                            totalView.value = total.toLocaleString('id-ID');
-
-                            // 🔥 BONUS: biar realtime
-                            jumlah.addEventListener('input', function () {
-                                let total = (parseFloat(jumlah.value) || 0) * (parseFloat(harga.value) || 0);
-                                totalView.value = total.toLocaleString('id-ID');
+                        // 🔥 pasang event setelah elemen ada
+                        $("#edit_jumlah_jenis_informasi_operasional, #edit_harga_satuan_informasi_operasional")
+                            .on('input', function () {
+                                hitungTotalEdit();
                             });
-
-                            harga.addEventListener('input', function () {
-                                let total = (parseFloat(jumlah.value) || 0) * (parseFloat(harga.value) || 0);
-                                totalView.value = total.toLocaleString('id-ID');
-                            });
-                        }
                     }
                 });
 
@@ -578,27 +566,8 @@
 
 
 
-            // BAGIAN EDIT HARGA OPERASIONAL
-            document.addEventListener("input", function (e) {
 
-                if (
-                    e.target.id === 'edit_jumlah_jenis_informasi_operasional' ||
-                    e.target.id === 'edit_harga_satuan_informasi_operasional'
-                ) {
 
-                    let jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional')?.value;
-                    let harga = document.getElementById('edit_harga_satuan_informasi_operasional')?.value;
-
-                    let total = (parseFloat(jumlah) || 0) * (parseFloat(harga) || 0);
-
-                    let totalView = document.getElementById('edit_harga_informasi_operasional_view');
-
-                    if (totalView) {
-                        totalView.value = total.toLocaleString('id-ID');
-                    }
-                }
-
-            });
 
 
 
@@ -684,5 +653,20 @@
                 allowInput: true
             });
         });
+
+
+        // BAGIAN EDIT HARGA OPERASIONAL
+        function hitungTotalEdit() {
+            let jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional')?.value;
+            let harga = document.getElementById('edit_harga_satuan_informasi_operasional')?.value;
+
+            let total = (parseFloat(jumlah) || 0) * (parseFloat(harga) || 0);
+
+            let totalView = document.getElementById('edit_harga_informasi_operasional_view');
+
+            if (totalView) {
+                totalView.value = total.toLocaleString('id-ID');
+            }
+        }
     </script>
 @endpush
