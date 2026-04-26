@@ -369,7 +369,7 @@
 
                                         @foreach ($jenisOperasional as $item)
                                             <option value="{{ $item->id_informasi_operasional }}">
-                                                {{ $item->jenis_operasional }}
+                                                {{ $item->jenis_informasi_operasional }}
                                             </option>
                                         @endforeach
 
