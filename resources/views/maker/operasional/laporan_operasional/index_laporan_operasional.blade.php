@@ -191,7 +191,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="row mt-2 mb-2">
+                            <div class="row mt-2 mb-4">
                                 <div class="col-12">
                                     <form action="/maker/operasional/laporan_operasional" method="GET"
                                         id="FormLaporanOperasional">
