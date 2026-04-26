@@ -249,7 +249,7 @@
                                                         <th rowspan="2">No.</th>
                                                         <th rowspan="2">Tanggal</th>
                                                         <th rowspan="2">Jenis Operasional</th>
-                                                        <th>Ket</th>
+                                                        <th colspan="2">Ket</th>
                                                         <th rowspan="2">Saldo</th>
                                                         <th rowspan="2">Nota</th>
                                                     </tr>
