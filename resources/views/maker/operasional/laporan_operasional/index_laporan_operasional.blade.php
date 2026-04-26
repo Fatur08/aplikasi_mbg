@@ -246,11 +246,16 @@
                                             <table class="table custom-table">
                                                 <thead style="text-align: center; vertical-align: middle;">
                                                     <tr>
-                                                        <th>No.</th>
-                                                        <th>Jenis Operasional</th>
-                                                        <th>Jumlah Jenis</th>
-                                                        <th>Harga Satuan</th>
-                                                        <th>Harga Operasional</th>
+                                                        <th colspan="2">No.</th>
+                                                        <th colspan="2">Tanggal</th>
+                                                        <th colspan="2">Jenis Operasional</th>
+                                                        <th>Ket</th>
+                                                        <th colspan="2">Saldo</th>
+                                                        <th colspan="2">Nota</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Beli</th>
+                                                        <th>Jual</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
