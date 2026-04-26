@@ -246,12 +246,12 @@
                                             <table class="table custom-table">
                                                 <thead style="text-align: center; vertical-align: middle;">
                                                     <tr>
-                                                        <th colspan="2">No.</th>
-                                                        <th colspan="2">Tanggal</th>
-                                                        <th colspan="2">Jenis Operasional</th>
+                                                        <th rowspan="2">No.</th>
+                                                        <th rowspan="2">Tanggal</th>
+                                                        <th rowspan="2">Jenis Operasional</th>
                                                         <th>Ket</th>
-                                                        <th colspan="2">Saldo</th>
-                                                        <th colspan="2">Nota</th>
+                                                        <th rowspan="2">Saldo</th>
+                                                        <th rowspan="2">Nota</th>
                                                     </tr>
                                                     <tr>
                                                         <th>Beli</th>
