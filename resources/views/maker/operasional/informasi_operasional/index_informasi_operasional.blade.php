@@ -561,19 +561,19 @@
                 const jumlah = modal.querySelector('#edit_jumlah_jenis_informasi_operasional');
                 const harga = modal.querySelector('#edit_harga_satuan_informasi_operasional');
                 const totalView = modal.querySelector('#edit_harga_informasi_operasional_view');
+                const totalInput = modal.querySelector('#edit_harga_informasi_operasional');
 
                 function hitungTotal() {
                     let jml = parseFloat(jumlah.value) || 0;
                     let hrg = parseFloat(harga.value) || 0;
 
-                    console.log("Jumlah:", jml);
-                    console.log("Harga:", hrg);
-
                     let total = jml * hrg;
 
-                    console.log("Total:", total);
-
                     totalView.value = total.toLocaleString('id-ID');
+
+                    if (totalInput) {
+                        totalInput.value = total;
+                    }
                 }
 
                 setTimeout(hitungTotal, 100);
@@ -582,6 +582,7 @@
                 harga.addEventListener('input', hitungTotal);
 
             });
+
 
 
 
