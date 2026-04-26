@@ -268,7 +268,7 @@
                                                             </td>
                                                             <td>Rp {{ number_format($total, 0, ',', '.') }}</td>
                                                             <td>
-                                                                <div class="d-flex flex-column align-items-center gap-1">
+                                                                <div class="d-flex flex-column align-items-stretch gap-1">
 
                                                                     <a href="#"
                                                                         class="edit_informasi_operasional btn btn-info btn-sm w-100"
@@ -278,7 +278,7 @@
 
                                                                     <form
                                                                         action="/maker/operasional/informasi_operasional/{{ $item->id_informasi_operasional }}/delete_informasi_operasional"
-                                                                        method="POST">
+                                                                        method="POST" class="w-100">
                                                                         @csrf
                                                                         <button type="submit"
                                                                             class="btn btn-danger btn-sm delete-confirm-informasi-operasional w-100">
