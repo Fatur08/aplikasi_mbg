@@ -567,6 +567,7 @@
                 if (!jumlah || !harga || !totalView) return;
 
                 function hitungTotal() {
+                    console.log("KEPANGGIL");
                     let jml = parseFloat(jumlah.value) || 0;
                     let hrg = parseFloat(harga.value) || 0;
 
