@@ -214,8 +214,10 @@
                                                             <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
                                                         </svg>
                                                     </span>
-                                                    <input type="text" value="" id="cari_jenis_informasi_operasional"
-                                                        class="form-control" name="cari_jenis_informasi_operasional"
+                                                    <input type="text"
+                                                        value="{{ request('cari_jenis_informasi_operasional') }}"
+                                                        id="cari_jenis_informasi_operasional" class="form-control"
+                                                        name="cari_jenis_informasi_operasional"
                                                         placeholder="Cari Jenis Operasional">
                                                 </div>
                                             </div>
