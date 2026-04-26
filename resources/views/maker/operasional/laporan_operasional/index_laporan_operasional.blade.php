@@ -191,7 +191,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="row mt-2 mb-4">
+                            <div class="row mt-2 mb-3">
                                 <div class="col-12">
                                     <form action="/maker/operasional/laporan_operasional" method="GET"
                                         id="FormLaporanOperasional">
@@ -361,8 +361,19 @@
                                             <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
                                         </svg>
                                     </span>
-                                    <input type="text" value="" id="jenis_informasi_operasional" class="form-control"
-                                        name="jenis_informasi_operasional" placeholder="Masukkan Jenis Operasional">
+
+                                    <select id="jenis_informasi_operasional" name="jenis_informasi_operasional"
+                                        class="form-control">
+
+                                        <option value="">-- Pilih Jenis Operasional --</option>
+
+                                        @foreach ($jenisOperasional as $item)
+                                            <option value="{{ $item->id_informasi_operasional }}">
+                                                {{ $item->jenis_operasional }}
+                                            </option>
+                                        @endforeach
+
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -378,13 +389,18 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-settings-plus">
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-calculator">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
-                                                d="M12.483 20.935c-.862 .239 -1.898 -.178 -2.158 -1.252a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.08 .262 1.496 1.308 1.247 2.173" />
-                                            <path d="M16 19h6" />
-                                            <path d="M19 16v6" />
-                                            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                                d="M4 5a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -14" />
+                                            <path
+                                                d="M8 8a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1l0 -1" />
+                                            <path d="M8 14l0 .01" />
+                                            <path d="M12 14l0 .01" />
+                                            <path d="M16 14l0 .01" />
+                                            <path d="M8 17l0 .01" />
+                                            <path d="M12 17l0 .01" />
+                                            <path d="M16 17l0 .01" />
                                         </svg>
                                     </span>
                                     <input type="number" value="" id="jumlah_laporan_operasional" class="form-control"

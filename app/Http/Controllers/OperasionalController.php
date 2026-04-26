@@ -74,6 +74,27 @@ class OperasionalController extends Controller
     // Laporan Operasional
     public function index_maker_laporan_operasional(Request $request)
     {
-        return view('maker.operasional.laporan_operasional.index_laporan_operasional');
+        $maker = Auth::guard('maker')->user();
+
+        // 🔒 Validasi akses
+        $allowedDapur = 6;
+        $allowedOwner = 2;
+
+        if (!($maker->nomor_dapur_maker == $allowedDapur && $maker->id_owner == $allowedOwner)) {
+            abort(403, 'Akses ditolak');
+        }
+
+        // ✅ Ambil data jenis operasional (distinct biar tidak duplikat)
+        $jenisOperasional = DB::table('informasi_operasional')
+            ->select('id_informasi_operasional', 'jenis_operasional')
+            ->where('id_owner', $maker->id_owner)
+            ->where('nomor_dapur_informasi_operasional', $maker->nomor_dapur_maker)
+            ->distinct()
+            ->get();
+
+        return view(
+            'maker.operasional.laporan_operasional.index_laporan_operasional',
+            compact('jenisOperasional')
+        );
     }
 }
