@@ -279,7 +279,7 @@
                                                                     </a>
 
                                                                     <form
-                                                                        action="/maker/operasional/informasi_operasional/{{ $item->id_informasi_operasional }}/delete_informasi_operasional"
+                                                                        action="/maker/operasional/informasi_operasional/{{ $item->id_informasi_operasional }}/delete_maker_informasi_operasional"
                                                                         method="POST" class="w-100">
                                                                         @csrf
                                                                         <button type="submit"
@@ -567,18 +567,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-            $(".delete-confirm-menuharian").click(function (e) {
+            $(".delete-confirm-informasi-operasional").click(function (e) {
                 var form = $(this).closest('form');
                 e.preventDefault();
                 Swal.fire({
@@ -601,27 +590,38 @@
                 });
             });
 
-            $("#FormLaporanOperasional").submit(function () {
-                var pilih_dapur = $("#pilih_dapur").val();
-                var pilih_tanggal = $("#pilih_tanggal").val();
-                if (pilih_dapur == "") {
+            $("#modal-input-informasi-operasional").submit(function () {
+                var jenis_informasi_operasional = $("#jenis_informasi_operasional").val();
+                var jumlah_jenis_informasi_operasional = $("#jumlah_jenis_informasi_operasional").val();
+                var harga_satuan_informasi_operasional = $("#harga_satuan_informasi_operasional").val();
+                if (jenis_informasi_operasional == "") {
                     Swal.fire({
                         title: 'Warning!',
-                        text: 'Dapur Harus Diisi',
+                        text: 'Jenis Harus Diisi',
                         icon: 'warning',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        $("#pilih_dapur").focus();
+                        $("#jenis_informasi_operasional").focus();
                     });
                     return false;
-                } else if (pilih_tanggal == "") {
+                } else if (jumlah_jenis_informasi_operasional == "") {
                     Swal.fire({
                         title: 'Warning!',
-                        text: 'Tanggal Harus Diisi',
+                        text: 'Jumlah Jenis Harus Diisi',
                         icon: 'warning',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        $("#pilih_tanggal").focus();
+                        $("#jumlah_jenis_informasi_operasional").focus();
+                    });
+                    return false;
+                } else if (harga_satuan_informasi_operasional == "") {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'Harga Satuan Harus Diisi',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        $("#harga_satuan_informasi_operasional").focus();
                     });
                     return false;
                 }
