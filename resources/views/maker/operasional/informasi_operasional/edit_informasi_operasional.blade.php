@@ -25,8 +25,9 @@
                         <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
                     </svg>
                 </span>
-                <input type="text" value="{{ $data->jenis_informasi_operasional }}" id="jenis_informasi_operasional"
-                    class="form-control" name="jenis_informasi_operasional" placeholder="Masukkan Jenis Operasional">
+                <input type="text" value="{{ $data->jenis_informasi_operasional }}"
+                    id="edit_jenis_informasi_operasional" class="form-control" name="edit_jenis_informasi_operasional"
+                    placeholder="Masukkan Jenis Operasional">
             </div>
         </div>
     </div>
@@ -51,8 +52,8 @@
                     </svg>
                 </span>
                 <input type="number" value="{{ $data->jumlah_jenis_informasi_operasional }}"
-                    id="jumlah_jenis_informasi_operasional" class="form-control"
-                    name="jumlah_jenis_informasi_operasional" placeholder="Masukkan Jumlah Jenis">
+                    id="edit_jumlah_jenis_informasi_operasional" class="form-control"
+                    name="edit_jumlah_jenis_informasi_operasional" placeholder="Masukkan Jumlah Jenis">
             </div>
         </div>
     </div>
@@ -77,12 +78,12 @@
                     </svg>
                 </span>
                 <input type="number" value="{{ $data->harga_satuan_informasi_operasional }}"
-                    id="harga_satuan_informasi_operasional" class="form-control"
-                    name="harga_satuan_informasi_operasional" placeholder="Masukkan Harga Satuan">
+                    id="edit_harga_satuan_informasi_operasional" class="form-control"
+                    name="edit_harga_satuan_informasi_operasional" placeholder="Masukkan Harga Satuan">
             </div>
         </div>
     </div>
-    <div class="row" id="wrapper_harga_informasi_operasional">
+    <div class="row" id="edit_wrapper_harga_informasi_operasional">
 
         <!-- Judul ikut disembunyikan -->
         <div class="col-12">
@@ -94,11 +95,11 @@
                 <span class="input-icon-addon">💰</span>
 
                 <!-- Ditampilkan ke user -->
-                <input type="text" id="harga_informasi_operasional_view" class="form-control mb-2"
+                <input type="text" id="edit_harga_informasi_operasional_view" class="form-control mb-2"
                     placeholder="Total Harga Operasional (Rp)" readonly>
 
                 <!-- OPTIONAL: kalau mau tetap dikirim ke server -->
-                <input type="hidden" id="harga_informasi_operasional" name="harga_informasi_operasional">
+                <input type="hidden" id="edit_harga_informasi_operasional" name="edit_harga_informasi_operasional">
             </div>
         </div>
 

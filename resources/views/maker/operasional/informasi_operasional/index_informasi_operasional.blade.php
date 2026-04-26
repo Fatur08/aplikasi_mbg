@@ -555,10 +555,10 @@
             document.getElementById('modal-editinformasioperasional')
                 .addEventListener('shown.bs.modal', function () {
 
-                    const jumlah = document.getElementById('jumlah_jenis_informasi_operasional');
-                    const harga = document.getElementById('harga_satuan_informasi_operasional');
-                    const totalView = document.getElementById('harga_informasi_operasional_view');
-                    const totalInput = document.getElementById('harga_informasi_operasional');
+                    const jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional');
+                    const harga = document.getElementById('edit_harga_satuan_informasi_operasional');
+                    const totalView = document.getElementById('edit_harga_informasi_operasional_view');
+                    const totalInput = document.getElementById('edit_harga_informasi_operasional');
 
                     function hitungTotal() {
                         let jml = parseFloat(jumlah.value) || 0;
