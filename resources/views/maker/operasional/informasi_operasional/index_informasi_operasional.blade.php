@@ -552,39 +552,37 @@
 
 
             // BAGIAN SCRIPT EDIT INFORMASI OPERASIONAL
-            const modal = document.getElementById('modal-editinformasioperasional');
+            document.addEventListener("shown.bs.modal", function (event) {
 
-            if (modal) {
-                modal.addEventListener('shown.bs.modal', function () {
+                if (event.target.id !== 'modal-editinformasioperasional') return;
 
-                    const jumlah = document.getElementById('edit_jumlah_jenis_informasi_operasional');
-                    const harga = document.getElementById('edit_harga_satuan_informasi_operasional');
-                    const totalView = document.getElementById('edit_harga_informasi_operasional_view');
-                    const totalInput = document.getElementById('edit_harga_informasi_operasional');
+                const modal = event.target;
 
-                    function hitungTotal() {
-                        let jml = parseFloat(jumlah.value) || 0;
-                        let hrg = parseFloat(harga.value) || 0;
+                const jumlah = modal.querySelector('#edit_jumlah_jenis_informasi_operasional');
+                const harga = modal.querySelector('#edit_harga_satuan_informasi_operasional');
+                const totalView = modal.querySelector('#edit_harga_informasi_operasional_view');
 
-                        let total = jml * hrg;
+                function hitungTotal() {
+                    let jml = parseFloat(jumlah.value) || 0;
+                    let hrg = parseFloat(harga.value) || 0;
 
-                        totalView.value = total.toLocaleString('id-ID');
+                    console.log("Jumlah:", jml);
+                    console.log("Harga:", hrg);
 
-                        if (totalInput) {
-                            totalInput.value = total;
-                        }
-                    }
+                    let total = jml * hrg;
 
-                    // delay kecil biar value kebaca
-                    setTimeout(() => {
-                        hitungTotal();
-                    }, 100);
+                    console.log("Total:", total);
 
-                    jumlah.addEventListener('input', hitungTotal);
-                    harga.addEventListener('input', hitungTotal);
+                    totalView.value = total.toLocaleString('id-ID');
+                }
 
-                });
-            }
+                setTimeout(hitungTotal, 100);
+
+                jumlah.addEventListener('input', hitungTotal);
+                harga.addEventListener('input', hitungTotal);
+
+            });
+
 
 
 
