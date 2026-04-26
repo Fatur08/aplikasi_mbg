@@ -95,7 +95,8 @@
                 <span class="input-icon-addon">💰</span>
 
                 <!-- Untuk ditampilkan ke user -->
-                <input type="text" class="form-control mb-2" placeholder="Total Harga Operasional (Rp)" readonly>
+                <input type="text" id="edit_harga_informasi_operasional_view" class="form-control mb-2"
+                    placeholder="Total Harga Operasional (Rp)" readonly>
             </div>
         </div>
 
