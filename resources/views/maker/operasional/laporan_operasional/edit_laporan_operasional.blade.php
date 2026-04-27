@@ -22,8 +22,7 @@
                         <path d="M8 15h2v2h-2z" />
                     </svg>
                 </span>
-                <input type="text"
-                    value="{{ \Carbon\Carbon::parse($data->tanggal_laporan_operasional)->format('d-m-Y') }}"
+                <input type="text" value="{{ $data->tanggal_laporan_operasional }}"
                     id="edit_tanggal_laporan_operasional" name="edit_tanggal_laporan_operasional" class="form-control"
                     placeholder="Sampai Tanggal" autocomplete="off">
             </div>
