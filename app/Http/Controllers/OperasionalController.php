@@ -63,6 +63,7 @@ class OperasionalController extends Controller
                 'jenis_informasi_operasional' => $request->edit_jenis_informasi_operasional,
                 'jumlah_jenis_informasi_operasional' => $request->edit_jumlah_jenis_informasi_operasional,
                 'harga_satuan_informasi_operasional' => $request->edit_harga_satuan_informasi_operasional,
+                'validasi_informasi_operasional' => 1
             ]);
 
         // 🔥 Redirect / response
@@ -234,7 +235,8 @@ class OperasionalController extends Controller
 
             'jenis_informasi_operasional' => $request->jenis_informasi_operasional,
             'jumlah_jenis_informasi_operasional' => $request->jumlah_jenis_informasi_operasional,
-            'harga_satuan_informasi_operasional' => $request->harga_satuan_informasi_operasional
+            'harga_satuan_informasi_operasional' => $request->harga_satuan_informasi_operasional,
+            'validasi_informasi_operasional' => 0
         ]);
 
         return redirect()->back()->with('success', 'Data operasional berhasil disimpan');
