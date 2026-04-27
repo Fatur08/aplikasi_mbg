@@ -449,6 +449,8 @@ Route::middleware(['auth:maker'])->group(function () {
     Route::post('/maker/operasional/laporan_operasional/store_maker_laporan_operasional', [OperasionalController::class, 'store_maker_laporan_operasional']);
     Route::post('/maker/operasional/laporan_operasional/nota_maker_laporan_operasional', [OperasionalController::class, 'nota_maker_laporan_operasional']);
     Route::post('/maker/operasional/laporan_operasional/edit_maker_laporan_operasional', [OperasionalController::class, 'edit_maker_laporan_operasional']);
+    Route::post('/maker/operasional/laporan_operasional/{id}/update_maker_laporan_operasional', [OperasionalController::class, 'update_maker_laporan_operasional']);
+    Route::post('/maker/operasional/laporan_operasional/{id}/delete_maker_laporan_operasional', [OperasionalController::class, 'delete_maker_laporan_operasional']);
 
 
 
