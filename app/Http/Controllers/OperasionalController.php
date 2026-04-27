@@ -19,12 +19,12 @@ class OperasionalController extends Controller
         // CEK APAKAH AKUN SUKADANA ILIR ATAU BUKAN 
         $allowedOwner = 2;
 
-        if (!($owner->id_owner == $allowedOwner)) {
+        if (!($owner->id == $allowedOwner)) {
             abort(403, 'Akses ditolak');
         }
 
         $query = DB::table('informasi_operasional')
-            ->where('id_owner', $owner->id_owner)
+            ->where('id_owner', $owner->id)
             ->where('nomor_dapur_informasi_operasional', $owner->nomor_dapur_owner);
 
         // 🔍 Filter pencarian

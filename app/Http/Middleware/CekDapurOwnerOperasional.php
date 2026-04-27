@@ -21,7 +21,7 @@ class CekDapurOwnerOperasional
 
         $allowedOwner = 2;
 
-        if (!($owner->id_owner == $allowedOwner)) {
+        if (!($owner->id == $allowedOwner)) {
             abort(403, 'Akses ditolak');
         }
 
