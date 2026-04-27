@@ -25,8 +25,7 @@ class OperasionalController extends Controller
         }
 
         $query = DB::table('informasi_operasional')
-            ->where('id_owner', $owner->id)
-            ->where('nomor_dapur_informasi_operasional', $owner->nomor_dapur_owner);
+            ->where('id_owner', $owner->id);
 
         // 🔍 Filter pencarian
         if ($request->filled('cari_jenis_informasi_operasional')) {
