@@ -307,7 +307,7 @@
                                                                             <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
                                                                             <path
                                                                                 d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
-                                                                                                                                                                                                                                                 c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                                                                                                                                                                                                                                                                             c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
                                                                         </svg>
                                                                         <span>Lihat</span>
                                                                     </a>
@@ -343,7 +343,23 @@
                                                                     @elseif($item->validasi_laporan_operasional == 2)
                                                                         <button class="btn btn-danger btn-sm w-100">Ditolak</button>
                                                                     @endif
-
+                                                                    @if ($item->validasi_laporan_operasional == 0)
+                                                                        <a href="#"
+                                                                            class="validasi_laporan_operasional btn btn-secondary btn-sm w-100"
+                                                                            id="{{ $item->id_laporan_operasional }}">
+                                                                            Validasi
+                                                                        </a>
+                                                                    @else
+                                                                        <form
+                                                                            action="/owner/operasional/laporan_operasional/{{ $item->id_laporan_operasional }}/batalkan_validasi_laporan_operasional"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <a
+                                                                                class="btn btn-sm bg-danger batalkan_validasi_laporan_operasional w-100">
+                                                                                Batalkan
+                                                                            </a>
+                                                                        </form>
+                                                                    @endif
                                                                 </div>
                                                             </td>
                                                         </tr>

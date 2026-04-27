@@ -1,5 +1,5 @@
 <form
-    action="/maker/operasional/laporan_operasional/{{ $data->id_laporan_operasional }}/update_maker_laporan_operasional"
+    action="/owner/operasional/laporan_operasional/{{ $data->id_laporan_operasional }}/update_owner_laporan_operasional"
     method="POST" id="FormEditInformasiOperasional" enctype="multipart/form-data">
     @csrf
     <div class="row">

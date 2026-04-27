@@ -219,6 +219,138 @@ class OperasionalController extends Controller
 
 
 
+    public function nota_owner_laporan_operasional(Request $request)
+    {
+        $id = $request->id;
+        $laporan_operasional = DB::table('laporan_operasional')->get();
+        $data = DB::table('laporan_operasional')->where('id_laporan_operasional', $id)->first();
+        return view('owner.operasional.laporan_operasional.nota_laporan_operasional', compact('laporan_operasional', 'data'));
+    }
+
+
+
+
+
+
+
+    public function edit_owner_laporan_operasional(Request $request)
+    {
+        $id = $request->id;
+
+        $data = DB::table('laporan_operasional')
+            ->where('id_laporan_operasional', $id)
+            ->first();
+
+        // 🔥 INI YANG KURANG
+        $jenisOperasional = DB::table('informasi_operasional')->get();
+
+        return view(
+            'owner.operasional.laporan_operasional.edit_laporan_operasional',
+            compact('data', 'jenisOperasional')
+        );
+    }
+
+
+
+
+    public function update_owner_laporan_operasional($id, Request $request)
+    {
+        $edit_tanggal_laporan_operasional = $request->edit_tanggal_laporan_operasional;
+        $edit_id_informasi_operasional = $request->edit_id_informasi_operasional;
+        $edit_jumlah_laporan_operasional = $request->edit_jumlah_laporan_operasional;
+        $edit_beli_laporan_operasional = $request->edit_beli_laporan_operasional;
+        $edit_jual_laporan_operasional = $request->edit_jual_laporan_operasional;
+
+
+        // Ambil data laporan operasional
+        $laporan_operasional = DB::table('laporan_operasional')
+            ->where('id_laporan_operasional', $id)
+            ->first();
+
+
+
+        // --- Handle Nota Laporan Operasional ---
+        if ($request->hasFile('edit_nota_laporan_operasional')) {
+            $file = $request->file('edit_nota_laporan_operasional');
+            $timestamp = date('Ymd_His'); // contoh: 20260426_153045
+            $newNota = "Nota_Laporan_Operasional_" . $timestamp . "." . $file->getClientOriginalExtension();
+
+
+            $folderNota = "public/uploads/owner/operasional/laporan_operasional/";
+            $oldFile = $folderNota . $laporan_operasional->nota_laporan_operasional;
+            $newFile = $folderNota . $newNota;
+
+            if (Storage::exists($oldFile)) {
+                Storage::delete($oldFile);
+            }
+
+            // hapus file lama di public 🔥 (INI YANG KURANG)
+            $oldPublicFile = public_path('storage/uploads/owner/operasional/laporan_operasional/' . $laporan_operasional->nota_laporan_operasional);
+            if (file_exists($oldPublicFile)) {
+                unlink($oldPublicFile);
+            }
+
+
+            $file->storeAs($folderNota, $newNota);
+            $publicPath = public_path('storage/uploads/owner/operasional/laporan_operasional/');
+            if (!is_dir($publicPath)) {
+                mkdir($publicPath, 0777, true);
+            }
+            $sourceFile = storage_path('app/' . $folderNota . $newNota);
+            $destinationFile = public_path('storage/uploads/owner/operasional/laporan_operasional/' . $newNota);
+            copy($sourceFile, $destinationFile);
+        } else {
+            $newNota = $laporan_operasional->nota_laporan_operasional;
+        }
+
+        try {
+            // Update Laporan Operasional
+            $data = [
+                'tanggal_laporan_operasional' => $edit_tanggal_laporan_operasional,
+                'id_informasi_operasional' => $edit_id_informasi_operasional,
+                'jumlah_laporan_operasional' => $edit_jumlah_laporan_operasional,
+                'beli_laporan_operasional' => $edit_beli_laporan_operasional,
+                'jual_laporan_operasional' => $edit_jual_laporan_operasional,
+                'nota_laporan_operasional' => $newNota,
+                'validasi_laporan_operasional' => 0
+            ];
+            $update = DB::table('laporan_operasional')->where('id_laporan_operasional', $id)->update($data);
+
+            return Redirect::back()->with(['success' => 'Data Berhasil Diupdate']);
+        } catch (\Exception $e) {
+            // dd($e);
+            return Redirect::back()->with(['error' => 'Data Gagal Diupdate']);
+        }
+    }
+
+
+
+
+
+
+    public function delete_owner_laporan_operasional(Request $request, $id)
+    {
+        // 🔥 Cek apakah data ada
+        $data = DB::table('laporan_operasional')
+            ->where('id_laporan_operasional', $id)
+            ->first();
+
+        if (!$data) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        // 🔥 Hapus data
+        DB::table('laporan_operasional')
+            ->where('id_laporan_operasional', $id)
+            ->delete();
+
+        // 🔥 Redirect
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
+    }
+
+
+
+
 
 
 
