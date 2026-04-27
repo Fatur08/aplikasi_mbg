@@ -284,25 +284,23 @@
                                                                     @elseif($item->validasi_informasi_operasional == 2)
                                                                         <button class="btn btn-danger btn-sm w-100">Ditolak</button>
                                                                     @endif
-                                                                    <div class="btn-group">
-                                                                        @if ($item->validasi_informasi_operasional == 0)
-                                                                            <a href="#"
-                                                                                class="validasi_informasi_operasional btn btn-secondary btn-sm w-100"
-                                                                                id="{{ $item->id_informasi_operasional }}">
-                                                                                Validasi
+                                                                    @if ($item->validasi_informasi_operasional == 0)
+                                                                        <a href="#"
+                                                                            class="validasi_informasi_operasional btn btn-secondary btn-sm w-100"
+                                                                            id="{{ $item->id_informasi_operasional }}">
+                                                                            Validasi
+                                                                        </a>
+                                                                    @else
+                                                                        <form
+                                                                            action="/owner/operasional/informasi_operasional/{{ $item->id_informasi_operasional }}/batalkan_validasi_informasi_operasional"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <a
+                                                                                class="btn btn-sm bg-danger batalkan_validasi_informasi_operasional w-100">
+                                                                                Batalkan
                                                                             </a>
-                                                                        @else
-                                                                            <form
-                                                                                action="/owner/operasional/informasi_operasional/{{ $item->id_informasi_operasional }}/batalkan_validasi_informasi_operasional"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                <a
-                                                                                    class="btn btn-sm bg-danger batalkan_validasi_informasi_operasional w-100">
-                                                                                    Batalkan
-                                                                                </a>
-                                                                            </form>
-                                                                        @endif
-                                                                    </div>
+                                                                        </form>
+                                                                    @endif
                                                                 </div>
                                                             </td>
                                                         </tr>
