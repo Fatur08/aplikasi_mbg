@@ -313,6 +313,14 @@ class OperasionalController extends Controller
             if (Storage::exists($oldFile)) {
                 Storage::delete($oldFile);
             }
+
+            // hapus file lama di public 🔥 (INI YANG KURANG)
+            $oldPublicFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $laporan_operasional->nota_laporan_operasional);
+            if (file_exists($oldPublicFile)) {
+                unlink($oldPublicFile);
+            }
+
+
             $file->storeAs($folderNota, $newNota);
             $publicPath = public_path('storage/uploads/maker/operasional/laporan_operasional/');
             if (!is_dir($publicPath)) {
