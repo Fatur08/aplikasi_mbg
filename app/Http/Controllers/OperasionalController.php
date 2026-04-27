@@ -54,7 +54,20 @@ class OperasionalController extends Controller
 
 
 
+    public function update_owner_informasi_operasional(Request $request, $id)
+    {
+        // 🔥 Update data
+        DB::table('informasi_operasional')
+            ->where('id_informasi_operasional', $id)
+            ->update([
+                'jenis_informasi_operasional' => $request->edit_jenis_informasi_operasional,
+                'jumlah_jenis_informasi_operasional' => $request->edit_jumlah_jenis_informasi_operasional,
+                'harga_satuan_informasi_operasional' => $request->edit_harga_satuan_informasi_operasional,
+            ]);
 
+        // 🔥 Redirect / response
+        return redirect()->back()->with('success', 'Data berhasil diupdate');
+    }
 
 
 
