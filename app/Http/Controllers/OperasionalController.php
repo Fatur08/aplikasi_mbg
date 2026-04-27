@@ -279,4 +279,28 @@ class OperasionalController extends Controller
         );
     }
 
+
+
+
+
+
+    public function delete_maker_laporan_operasional(Request $request, $id)
+    {
+        // 🔥 Cek apakah data ada
+        $data = DB::table('laporan_operasional')
+            ->where('id_laporan_operasional', $id)
+            ->first();
+
+        if (!$data) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        // 🔥 Hapus data
+        DB::table('laporan_operasional')
+            ->where('id_laporan_operasional', $id)
+            ->delete();
+
+        // 🔥 Redirect
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
+    }
 }
