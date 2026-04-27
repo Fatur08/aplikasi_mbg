@@ -639,14 +639,14 @@ class OperasionalController extends Controller
         $simpan = DB::table('laporan_operasional')->insert($data);
         if ($simpan) {
             if ($request->hasFile('nota_laporan_operasional')) {
-                $storagePath = 'public/uploads/maker/operasional/laporan_operasional/';
+                $storagePath = 'public/uploads/operasional/laporan_operasional/';
                 $request->file('nota_laporan_operasional')->storeAs($storagePath, $nota_laporan_operasional);
-                $publicPath = public_path('storage/uploads/maker/operasional/laporan_operasional/');
+                $publicPath = public_path('storage/uploads/operasional/laporan_operasional/');
                 if (!is_dir($publicPath)) {
                     mkdir($publicPath, 0777, true);
                 }
                 $sourceFile = storage_path('app/' . $storagePath . $nota_laporan_operasional);
-                $destinationFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $nota_laporan_operasional);
+                $destinationFile = public_path('storage/uploads/operasional/laporan_operasional/' . $nota_laporan_operasional);
                 copy($sourceFile, $destinationFile);
             }
             return Redirect::back()->with(['success' => 'Data Berhasil Disimpan']);
