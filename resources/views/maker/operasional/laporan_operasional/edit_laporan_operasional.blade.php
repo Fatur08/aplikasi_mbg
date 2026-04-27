@@ -1,4 +1,5 @@
-<form action="/maker/operasional/laporan_operasional/{{ $data->id_laporan_operasional }}/laporan_operasional"
+<form
+    action="/maker/operasional/laporan_operasional/{{ $data->id_laporan_operasional }}/update_maker_laporan_operasional"
     method="POST" id="FormEditInformasiOperasional" enctype="multipart/form-data">
     @csrf
     <div class="row">
@@ -21,8 +22,9 @@
                         <path d="M8 15h2v2h-2z" />
                     </svg>
                 </span>
-                <input type="text" value="" id="tanggal_laporan_operasional" name="tanggal_laporan_operasional"
-                    class="form-control" placeholder="Sampai Tanggal" autocomplete="off">
+                <input type="text" value="{{ $data->tanggal_laporan_operasional }}" id="tanggal_laporan_operasional"
+                    name="tanggal_laporan_operasional" class="form-control" placeholder="Sampai Tanggal"
+                    autocomplete="off">
             </div>
         </div>
     </div>
@@ -55,7 +57,7 @@
                     <option value="">-- Pilih Jenis Operasional --</option>
 
                     @foreach ($jenisOperasional as $item)
-                        <option value="{{ $item->id_informasi_operasional }}">
+                        <option value="{{ $item->id_informasi_operasional }}" {{ $item->id_informasi_operasional == $data->id_informasi_operasional ? 'selected' : '' }}>
                             {{ $item->jenis_informasi_operasional }}
                         </option>
                     @endforeach
@@ -87,8 +89,8 @@
                         <path d="M16 17l0 .01" />
                     </svg>
                 </span>
-                <input type="number" value="" id="jumlah_laporan_operasional" class="form-control"
-                    name="jumlah_laporan_operasional" placeholder="Masukkan Jumlah Jenis">
+                <input type="number" value="{{ $data->jumlah_laporan_operasional }}" id="jumlah_laporan_operasional"
+                    class="form-control" name="jumlah_laporan_operasional" placeholder="Masukkan Jumlah Jenis">
             </div>
         </div>
     </div>
@@ -112,8 +114,8 @@
                         <path d="M19 21v1m0 -8v1" />
                     </svg>
                 </span>
-                <input type="number" value="" id="beli_laporan_operasional" class="form-control"
-                    name="beli_laporan_operasional" placeholder="Masukkan Harga Yang Dibeli">
+                <input type="number" value="{{ $data->beli_laporan_operasional }}" id="beli_laporan_operasional"
+                    class="form-control" name="beli_laporan_operasional" placeholder="Masukkan Harga Yang Dibeli">
             </div>
         </div>
     </div>
@@ -137,8 +139,8 @@
                         <path d="M19 21v1m0 -8v1" />
                     </svg>
                 </span>
-                <input type="number" value="" id="jual_laporan_operasional" class="form-control"
-                    name="jual_laporan_operasional" placeholder="Masukkan Harga Diajukan">
+                <input type="number" value="{{ $data->jual_laporan_operasional }}" id="jual_laporan_operasional"
+                    class="form-control" name="jual_laporan_operasional" placeholder="Masukkan Harga Diajukan">
             </div>
         </div>
     </div>
