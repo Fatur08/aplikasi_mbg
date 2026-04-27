@@ -290,13 +290,40 @@ class OperasionalController extends Controller
         $edit_jumlah_laporan_operasional = $request->edit_jumlah_laporan_operasional;
         $edit_beli_laporan_operasional = $request->edit_beli_laporan_operasional;
         $edit_jual_laporan_operasional = $request->edit_jual_laporan_operasional;
-        $edit_nota_laporan_operasional = $request->edit_nota_laporan_operasional;
 
 
         // Ambil data laporan operasional
         $laporan_operasional = DB::table('laporan_operasional')
             ->where('id_laporan_operasional', $id)
             ->first();
+
+
+
+        // --- Handle Nota Laporan Operasional ---
+        if ($request->hasFile('edit_nota_laporan_operasional')) {
+            $file = $request->file('edit_nota_laporan_operasional');
+            $timestamp = date('Ymd_His'); // contoh: 20260426_153045
+            $newNota = "Nota_Laporan_Operasional_" . $timestamp . "." . $file->getClientOriginalExtension();
+
+
+            $folderNota = "public/uploads/data_supplier/informasi_supplier/nota/";
+            $oldFile = $folderNota . $laporan_operasional->nota_laporan_operasional;
+            $newFile = $folderNota . $newNota;
+
+            // Rename file di storage
+            if ($oldFile !== $newFile && Storage::exists($oldFile)) {
+                Storage::move($oldFile, $newFile);
+            }
+
+            // Rename juga file di folder public
+            $oldPublicFile = public_path('storage/uploads/data_supplier/informasi_supplier/nota/' . $laporan_operasional->nota_laporan_operasional);
+            $newPublicFile = public_path('storage/uploads/data_supplier/informasi_supplier/nota/' . $newNota);
+            if (file_exists($oldPublicFile)) {
+                rename($oldPublicFile, $newPublicFile);
+            }
+        } else {
+            $newNota = $laporan_operasional->nota_laporan_operasional;
+        }
 
         try {
             // Update Laporan Operasional
@@ -306,38 +333,12 @@ class OperasionalController extends Controller
                 'jumlah_laporan_operasional' => $edit_jumlah_laporan_operasional,
                 'beli_laporan_operasional' => $edit_beli_laporan_operasional,
                 'jual_laporan_operasional' => $edit_jual_laporan_operasional,
-                'nota_laporan_operasional' => $edit_nota_laporan_operasional,
+                'nota_laporan_operasional' => $newNota,
                 'validasi_laporan_operasional' => 0
             ];
             $update = DB::table('laporan_operasional')->where('id_laporan_operasional', $id)->update($data);
 
-            if ($update) {
-                // --- Handle Nota Laporan Operasional ---
-                if ($request->hasFile('edit_nota_laporan_operasional')) {
-                    $file = $request->file('edit_nota_laporan_operasional');
-                    $timestamp = date('Ymd_His'); // contoh: 20260426_153045
-                    $newNota = "Nota_Laporan_Operasional_" . $timestamp . "." . $file->getClientOriginalExtension();
-
-
-                    $folderNota = "public/uploads/data_supplier/informasi_supplier/nota/";
-                    $oldFile = $folderNota . $laporan_operasional->nota_laporan_operasional;
-                    $newFile = $folderNota . $newNota;
-
-                    // Rename file di storage
-                    if ($oldFile !== $newFile && Storage::exists($oldFile)) {
-                        Storage::move($oldFile, $newFile);
-                    }
-
-                    // Rename juga file di folder public
-                    $oldPublicFile = public_path('storage/uploads/data_supplier/informasi_supplier/nota/' . $laporan_operasional->nota_laporan_operasional);
-                    $newPublicFile = public_path('storage/uploads/data_supplier/informasi_supplier/nota/' . $newNota);
-                    if (file_exists($oldPublicFile)) {
-                        rename($oldPublicFile, $newPublicFile);
-                    }
-                }
-
-                return Redirect::back()->with(['success' => 'Data Berhasil Diupdate']);
-            }
+            return Redirect::back()->with(['success' => 'Data Berhasil Diupdate']);
         } catch (\Exception $e) {
             // dd($e);
             return Redirect::back()->with(['error' => 'Data Gagal Diupdate']);
