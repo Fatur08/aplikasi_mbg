@@ -276,7 +276,7 @@ class OperasionalController extends Controller
             $newNota = "Nota_Laporan_Operasional_" . $timestamp . "." . $file->getClientOriginalExtension();
 
 
-            $folderNota = "public/uploads/owner/operasional/laporan_operasional/";
+            $folderNota = "public/uploads/operasional/laporan_operasional/";
             $oldFile = $folderNota . $laporan_operasional->nota_laporan_operasional;
             $newFile = $folderNota . $newNota;
 
@@ -285,19 +285,19 @@ class OperasionalController extends Controller
             }
 
             // hapus file lama di public 🔥 (INI YANG KURANG)
-            $oldPublicFile = public_path('storage/uploads/owner/operasional/laporan_operasional/' . $laporan_operasional->nota_laporan_operasional);
+            $oldPublicFile = public_path('storage/uploads/operasional/laporan_operasional/' . $laporan_operasional->nota_laporan_operasional);
             if (file_exists($oldPublicFile)) {
                 unlink($oldPublicFile);
             }
 
 
             $file->storeAs($folderNota, $newNota);
-            $publicPath = public_path('storage/uploads/owner/operasional/laporan_operasional/');
+            $publicPath = public_path('storage/uploads/operasional/laporan_operasional/');
             if (!is_dir($publicPath)) {
                 mkdir($publicPath, 0777, true);
             }
             $sourceFile = storage_path('app/' . $folderNota . $newNota);
-            $destinationFile = public_path('storage/uploads/owner/operasional/laporan_operasional/' . $newNota);
+            $destinationFile = public_path('storage/uploads/operasional/laporan_operasional/' . $newNota);
             copy($sourceFile, $destinationFile);
         } else {
             $newNota = $laporan_operasional->nota_laporan_operasional;
@@ -346,6 +346,56 @@ class OperasionalController extends Controller
 
         // 🔥 Redirect
         return redirect()->back()->with('success', 'Data berhasil dihapus');
+    }
+
+
+    public function validasi_laporan_operasional(Request $request)
+    {
+        $id = $request->id;
+        $laporan_operasional = DB::table('laporan_operasional')->get();
+        $data = DB::table('laporan_operasional')->where('id_laporan_operasional', $id)->first();
+        return view('owner.operasional.laporan_operasional.validasi_laporan_operasional', compact('laporan_operasional', 'data'));
+    }
+
+
+
+
+    public function update_validasi_laporan_operasional($id, Request $request)
+    {
+        try {
+            $validasi_laporan_operasional = $request->validasi_laporan_operasional;
+
+            // Update hanya kolom yang perlu
+            $update = DB::table('laporan_operasional')
+                ->where('id_laporan_operasional', $id)
+                ->update([
+                    'validasi_laporan_operasional' => $validasi_laporan_operasional
+                ]);
+
+            if ($update) {
+                return Redirect::back()->with(['success' => 'Status Berhasil Diubah']);
+            } else {
+                return Redirect::back()->with(['warning' => 'Tidak ada perubahan data']);
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->with(['error' => 'Data Gagal Diproses']);
+        }
+    }
+
+
+    public function batalkan_validasi_laporan_operasional($id, Request $request)
+    {
+        $update = DB::table('laporan_operasional')
+            ->where('id_laporan_operasional', $id)
+            ->update([
+                'validasi_laporan_operasional' => 0
+            ]);
+
+        if ($update) {
+            return Redirect::back()->with(['success' => 'Status Berhasil Dibatalkan']);
+        } else {
+            return Redirect::back()->with(['warning' => 'Data Gagal Diproses']);
+        }
     }
 
 
@@ -668,7 +718,7 @@ class OperasionalController extends Controller
             $newNota = "Nota_Laporan_Operasional_" . $timestamp . "." . $file->getClientOriginalExtension();
 
 
-            $folderNota = "public/uploads/maker/operasional/laporan_operasional/";
+            $folderNota = "public/uploads/operasional/laporan_operasional/";
             $oldFile = $folderNota . $laporan_operasional->nota_laporan_operasional;
             $newFile = $folderNota . $newNota;
 
@@ -677,19 +727,19 @@ class OperasionalController extends Controller
             }
 
             // hapus file lama di public 🔥 (INI YANG KURANG)
-            $oldPublicFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $laporan_operasional->nota_laporan_operasional);
+            $oldPublicFile = public_path('storage/uploads/operasional/laporan_operasional/' . $laporan_operasional->nota_laporan_operasional);
             if (file_exists($oldPublicFile)) {
                 unlink($oldPublicFile);
             }
 
 
             $file->storeAs($folderNota, $newNota);
-            $publicPath = public_path('storage/uploads/maker/operasional/laporan_operasional/');
+            $publicPath = public_path('storage/uploads/operasional/laporan_operasional/');
             if (!is_dir($publicPath)) {
                 mkdir($publicPath, 0777, true);
             }
             $sourceFile = storage_path('app/' . $folderNota . $newNota);
-            $destinationFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $newNota);
+            $destinationFile = public_path('storage/uploads/operasional/laporan_operasional/' . $newNota);
             copy($sourceFile, $destinationFile);
         } else {
             $newNota = $laporan_operasional->nota_laporan_operasional;
