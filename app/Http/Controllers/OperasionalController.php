@@ -39,6 +39,23 @@ class OperasionalController extends Controller
 
 
 
+
+
+    public function edit_owner_informasi_operasional(Request $request)
+    {
+        $id = $request->id;
+        $informasi_operasional = DB::table('informasi_operasional')->get();
+        $data = DB::table('informasi_operasional')->where('id_informasi_operasional', $id)->first();
+        return view('owner.operasional.informasi_operasional.edit_informasi_operasional', compact('informasi_operasional', 'data'));
+    }
+
+
+
+
+
+
+
+
     // Laporan Operasional
     public function index_owner_laporan_operasional(Request $request)
     {
