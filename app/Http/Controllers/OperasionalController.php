@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class OperasionalController extends Controller
 {
     // OWNER
-    public function index_owner_operasional(Request $request)
+    public function index_owner_informasi_operasional(Request $request)
     {
         $owner = Auth::guard('owner')->user();
 
