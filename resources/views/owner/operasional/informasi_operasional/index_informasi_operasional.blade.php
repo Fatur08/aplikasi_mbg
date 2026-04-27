@@ -606,7 +606,7 @@
                 var id = $(this).attr('id');
                 $.ajax({
                     type: 'POST',
-                    url: '/owner/operasional/laporan_operasional/nota_owner_laporan_operasional',
+                    url: '/owner/operasional/informasi_operasional/validasi_informasi_operasional',
                     cache: false,
                     data: {
                         _token: "{{ csrf_token() }}",
