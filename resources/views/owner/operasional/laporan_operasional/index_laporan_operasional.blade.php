@@ -307,7 +307,7 @@
                                                                             <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
                                                                             <path
                                                                                 d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
-                                                                                                                                                                                                                                                                                                                                                             c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                                                                                                                                                                                                                                                                                                                                         c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
                                                                         </svg>
                                                                         <span>Lihat</span>
                                                                     </a>
@@ -511,6 +511,31 @@
                     }
                 });
                 $("#modal-validasi-laporan-operasional").modal("show");
+            });
+
+
+
+            $(".batalkan_validasi_laporan_operasional").click(function (e) {
+                var form = $(this).closest('form');
+                e.preventDefault();
+                Swal.fire({
+                    title: "Apakah Anda Yakin ingin batalkan",
+                    text: "Jika Ya Maka Status Validasi akan berubah",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Batalkan Saja"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Data Berhasil Di Batalkan",
+                            icon: "success"
+                        });
+                    }
+                });
             });
 
 
