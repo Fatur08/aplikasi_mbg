@@ -310,6 +310,9 @@ class OperasionalController extends Controller
             $oldFile = $folderNota . $laporan_operasional->nota_laporan_operasional;
             $newFile = $folderNota . $newNota;
 
+            // ✅ SIMPAN FILE BARU (INI YANG KURANG)
+            $file->storeAs($folderNota, $newNota);
+
             // Rename file di storage
             if ($oldFile !== $newFile && Storage::exists($oldFile)) {
                 Storage::move($oldFile, $newFile);
