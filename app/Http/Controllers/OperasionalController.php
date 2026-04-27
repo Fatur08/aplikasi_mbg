@@ -306,7 +306,7 @@ class OperasionalController extends Controller
             $newNota = "Nota_Laporan_Operasional_" . $timestamp . "." . $file->getClientOriginalExtension();
 
 
-            $folderNota = "public/uploads/data_supplier/informasi_supplier/nota/";
+            $folderNota = "public/uploads/maker/operasional/laporan_operasional/";
             $oldFile = $folderNota . $laporan_operasional->nota_laporan_operasional;
             $newFile = $folderNota . $newNota;
 
@@ -316,8 +316,8 @@ class OperasionalController extends Controller
             }
 
             // Rename juga file di folder public
-            $oldPublicFile = public_path('storage/uploads/data_supplier/informasi_supplier/nota/' . $laporan_operasional->nota_laporan_operasional);
-            $newPublicFile = public_path('storage/uploads/data_supplier/informasi_supplier/nota/' . $newNota);
+            $oldPublicFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $laporan_operasional->nota_laporan_operasional);
+            $newPublicFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $newNota);
             if (file_exists($oldPublicFile)) {
                 rename($oldPublicFile, $newPublicFile);
             }
