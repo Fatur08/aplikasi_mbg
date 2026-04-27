@@ -313,13 +313,13 @@ class OperasionalController extends Controller
             if (Storage::exists($oldFile)) {
                 Storage::delete($oldFile);
             }
-            $file->storeAs($folderNota, $newNota);
+            $file->storeAs($folderNota, $newFile);
             $publicPath = public_path('storage/uploads/maker/operasional/laporan_operasional/');
             if (!is_dir($publicPath)) {
                 mkdir($publicPath, 0777, true);
             }
-            $sourceFile = storage_path('app/' . $folderNota . $newNota);
-            $destinationFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $newNota);
+            $sourceFile = storage_path('app/' . $folderNota . $newFile);
+            $destinationFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $newFile);
             copy($sourceFile, $destinationFile);
         } else {
             $newNota = $laporan_operasional->nota_laporan_operasional;
