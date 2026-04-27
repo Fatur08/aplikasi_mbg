@@ -270,6 +270,10 @@ Route::middleware(['auth:owner'])->group(function () {
     Route::post('/owner/operasional/informasi_operasional/edit_owner_informasi_operasional', [OperasionalController::class, 'edit_owner_informasi_operasional']);
     Route::post('/owner/operasional/informasi_operasional/{id}/update_owner_informasi_operasional', [OperasionalController::class, 'update_owner_informasi_operasional']);
     Route::post('/owner/operasional/informasi_operasional/{id}/delete_owner_informasi_operasional', [OperasionalController::class, 'delete_owner_informasi_operasional']);
+    Route::post('/owner/operasional/informasi_operasional/validasi_informasi_operasional', [OperasionalController::class, 'validasi_informasi_operasional']);
+    Route::post('/owner/operasional/informasi_operasional/{id}/update_validasi_informasi_operasional', [OperasionalController::class, 'update_validasi_informasi_operasional']);
+    Route::post('/owner/operasional/informasi_operasional/{id}/batalkan_validasi_informasi_operasional', [OperasionalController::class, 'batalkan_validasi_informasi_operasional']);
+
 
 
     //Laporan Operasional

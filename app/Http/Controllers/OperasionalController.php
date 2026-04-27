@@ -98,6 +98,65 @@ class OperasionalController extends Controller
 
 
 
+    public function validasi_informasi_operasional(Request $request)
+    {
+        $id = $request->id;
+        $informasi_operasional = DB::table('informasi_operasional')->get();
+        $data = DB::table('informasi_operasional')->where('id_informasi_operasional', $id)->first();
+        return view('owner.operasional.informasi_operasional.validasi_informasi_operasional', compact('informasi_operasional', 'data'));
+    }
+
+
+
+
+    public function update_validasi_informasi_operasional($id, Request $request)
+    {
+        try {
+            $validasi_informasi_operasional = $request->validasi_informasi_operasional;
+
+            // Update hanya kolom yang perlu
+            $update = DB::table('informasi_operasional')
+                ->where('id_informasi_operasional', $id)
+                ->update([
+                    'validasi_informasi_operasional' => $validasi_informasi_operasional
+                ]);
+
+            if ($update) {
+                return Redirect::back()->with(['success' => 'Status Berhasil Diubah']);
+            } else {
+                return Redirect::back()->with(['warning' => 'Tidak ada perubahan data']);
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->with(['error' => 'Data Gagal Diproses']);
+        }
+    }
+
+
+    public function batalkan_owner_validasi_relawan($id, Request $request)
+    {
+        $update = DB::table('relawan')
+            ->where('id_relawan', $id)
+            ->update([
+                'status_validasi_relawan' => 0
+            ]);
+
+        if ($update) {
+            return Redirect::back()->with(['success' => 'Status Berhasil Dibatalkan']);
+        } else {
+            return Redirect::back()->with(['warning' => 'Data Gagal Diproses']);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

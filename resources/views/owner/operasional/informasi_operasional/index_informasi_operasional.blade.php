@@ -284,7 +284,37 @@
                                                                     @elseif($item->validasi_informasi_operasional == 2)
                                                                         <button class="btn btn-danger btn-sm w-100">Ditolak</button>
                                                                     @endif
-
+                                                                    <div class="btn-group">
+                                                                        @if ($item->validasi_informasi_operasional == 0)
+                                                                            <a href="#"
+                                                                                class="validasi_informasi_operasional btn btn-warning btn-sm w-100"
+                                                                                id="{{ $item->id_informasi_operasional }}">
+                                                                                Validasi
+                                                                            </a>
+                                                                        @else
+                                                                            <form
+                                                                                action="/owner/operasional/informasi_operasional/{{ $item->id_informasi_operasional }}/batalkan_validasi_informasi_operasional"
+                                                                                style="margin-left: 5px;" method="POST">
+                                                                                @csrf
+                                                                                <a
+                                                                                    class="btn btn-sm bg-danger batalkan_validasi_informasi_operasional">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                        width="24" height="24" viewBox="0 0 24 24"
+                                                                                        fill="none" stroke="currentColor"
+                                                                                        stroke-width="2" stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x">
+                                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                                            fill="none" />
+                                                                                        <path d="M10 10l4 4m0 -4l-4 4" />
+                                                                                        <path
+                                                                                            d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                                                                    </svg>
+                                                                                    Batalkan
+                                                                                </a>
+                                                                            </form>
+                                                                        @endif
+                                                                    </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -471,6 +501,25 @@
             </div>
         </div>
     </div>
+
+
+
+
+    {{-- Modal Validasi Informasi Operasional --}}
+    <div class="modal modal-blur fade" id="modal-validasi-informasi-operasional" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Validasi Informasi Operasional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="load-validasi-informasi-operasional">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('myscript')
     <script>
@@ -546,6 +595,54 @@
                 });
 
                 $("#modal-editinformasioperasional").modal("show");
+            });
+
+
+
+
+
+
+            $(".validasi_informasi_operasional").click(function () {
+                var id = $(this).attr('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/owner/operasional/laporan_operasional/nota_owner_laporan_operasional',
+                    cache: false,
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id
+                    },
+                    success: function (respond) {
+                        $("#load-validasi-informasi-operasional").html(respond);
+                    }
+                });
+                $("#modal-validasi-informasi-operasional").modal("show");
+            });
+
+
+
+
+            $(".batalkan_validasi_informasi_operasional").click(function (e) {
+                var form = $(this).closest('form');
+                e.preventDefault();
+                Swal.fire({
+                    title: "Apakah Anda Yakin ingin batalkan",
+                    text: "Jika Ya Maka Status Validasi akan berubah",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Batalkan Saja"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Data Berhasil Di Batalkan",
+                            icon: "success"
+                        });
+                    }
+                });
             });
 
 
