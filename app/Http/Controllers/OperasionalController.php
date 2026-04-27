@@ -248,11 +248,25 @@ class OperasionalController extends Controller
 
 
 
-    public function lihat_nota_laporan_operasional(Request $request)
+    public function nota_maker_laporan_operasional(Request $request)
     {
         $id = $request->id;
         $laporan_operasional = DB::table('laporan_operasional')->get();
         $data = DB::table('laporan_operasional')->where('id_laporan_operasional', $id)->first();
         return view('maker.operasional.laporan_operasional.nota_laporan_operasional', compact('laporan_operasional', 'data'));
+    }
+
+
+
+
+
+
+
+    public function edit_maker_laporan_operasional(Request $request)
+    {
+        $id = $request->id;
+        $laporan_operasional = DB::table('laporan_operasional')->get();
+        $data = DB::table('laporan_operasional')->where('laporan_operasional', $id)->first();
+        return view('maker.operasional.laporan_operasional.edit_laporan_operasional', compact('laporan_operasional', 'data'));
     }
 }

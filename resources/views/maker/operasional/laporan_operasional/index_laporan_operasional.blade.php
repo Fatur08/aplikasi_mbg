@@ -212,8 +212,9 @@
                                                             <path d="M8 15h2v2h-2z" />
                                                         </svg>
                                                     </span>
-                                                    <input type="text" value="{{ request('dari_tanggal') }}"  id="dari_tanggal" name="dari_tanggal"
-                                                        class="form-control" placeholder="Dari Tanggal" autocomplete="off">
+                                                    <input type="text" value="{{ request('dari_tanggal') }}"
+                                                        id="dari_tanggal" name="dari_tanggal" class="form-control"
+                                                        placeholder="Dari Tanggal" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -232,9 +233,9 @@
                                                             <path d="M8 15h2v2h-2z" />
                                                         </svg>
                                                     </span>
-                                                    <input type="text" value="{{ request('sampai_tanggal') }}" id="sampai_tanggal" name="sampai_tanggal"
-                                                        class="form-control" placeholder="Sampai Tanggal"
-                                                        autocomplete="off">
+                                                    <input type="text" value="{{ request('sampai_tanggal') }}"
+                                                        id="sampai_tanggal" name="sampai_tanggal" class="form-control"
+                                                        placeholder="Sampai Tanggal" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="col-4">
@@ -292,9 +293,12 @@
                                                             <td>{{ $item->jenis_informasi_operasional }}</td>
 
                                                             <!-- Ket -->
-                                                            <td>Rp {{ number_format($item->beli_laporan_operasional, 0, ',', '.') }}
+                                                            <td>Rp
+                                                                {{ number_format($item->beli_laporan_operasional, 0, ',', '.') }}
                                                             </td>
-                                                            <td>Rp {{ number_format($item->jual_laporan_operasional, 0, ',', '.') }}</td>
+                                                            <td>Rp
+                                                                {{ number_format($item->jual_laporan_operasional, 0, ',', '.') }}
+                                                            </td>
 
                                                             <!-- Saldo -->
                                                             <td>
@@ -304,15 +308,19 @@
                                                             <!-- Nota -->
                                                             <td>
                                                                 @if ($item->nota_laporan_operasional)
-                                                                    <a href="#" class="lihat_nota_laporan_operasional btn btn-info btn-sm" id="{{ $item->id_laporan_operasional }}">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                                    <a href="#"
+                                                                        class="lihat_nota_laporan_operasional btn btn-info btn-sm"
+                                                                        id="{{ $item->id_laporan_operasional }}">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                                            stroke="currentColor" stroke-width="2"
                                                                             stroke-linecap="round" stroke-linejoin="round"
                                                                             class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
-                                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                                             <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                                                            <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
-                                                                                     c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                                            <path
+                                                                                d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
+                                                                                                                                                 c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
                                                                         </svg>
                                                                         <span>Lihat</span>
                                                                     </a>
@@ -590,6 +598,24 @@
             </div>
         </div>
     </div>
+
+
+
+
+    {{-- Modal Edit Laporan Operasional --}}
+    <div class="modal modal-blur fade" id="modal-edit-laporan-operasional" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Laporan Operasional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="load-edit-laporan-operasional">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('myscript')
     <script>
@@ -604,7 +630,7 @@
                 var id = $(this).attr('id');
                 $.ajax({
                     type: 'POST',
-                    url: '/maker/operasional/laporan_operasional/lihat_nota_laporan_operasional',
+                    url: '/maker/operasional/laporan_operasional/nota_maker_laporan_operasional',
                     cache: false,
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -616,6 +642,28 @@
                 });
                 $("#modal-nota-laporan-operasional").modal("show");
             });
+
+
+
+
+            $(".edit_laporan_operasional").click(function () {
+                var id = $(this).attr('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/maker/operasional/laporan_operasional/edit_maker_laporan_operasional',
+                    cache: false,
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id
+                    },
+                    success: function (respond) {
+                        $("#load-edit-laporan-operasional").html(respond);
+                    }
+                });
+                $("#modal-edit-laporan-operasional").modal("show");
+            });
+
+
 
             $(".delete-confirm-menuharian").click(function (e) {
                 var form = $(this).closest('form');
