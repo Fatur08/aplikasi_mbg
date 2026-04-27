@@ -283,9 +283,9 @@ Route::middleware(['auth:owner'])->group(function () {
     Route::post('/owner/operasional/laporan_operasional/edit_owner_laporan_operasional', [OperasionalController::class, 'edit_owner_laporan_operasional']);
     Route::post('/owner/operasional/laporan_operasional/{id}/update_owner_laporan_operasional', [OperasionalController::class, 'update_owner_laporan_operasional']);
     Route::post('/owner/operasional/laporan_operasional/{id}/delete_owner_laporan_operasional', [OperasionalController::class, 'delete_owner_laporan_operasional']);
-    Route::post('/owner/operasionai_laporan_operasional/validasi_laporan_operasional', [OperasionalController::class, 'validasi_laporan_operasional']);
-    Route::post('/owner/operasionai_laporan_operasional/{id}/update_validasi_laporan_operasional', [OperasionalController::class, 'update_validasi_laporan_operasional']);
-    Route::post('/owner/operasionai_laporan_operasional/{id}/batalkan_validasi_laporan_operasional', [OperasionalController::class, 'batalkan_validasi_laporan_operasional']);
+    Route::post('/owner/operasionai/laporan_operasional/validasi_laporan_operasional', [OperasionalController::class, 'validasi_laporan_operasional']);
+    Route::post('/owner/operasionai/laporan_operasional/{id}/update_validasi_laporan_operasional', [OperasionalController::class, 'update_validasi_laporan_operasional']);
+    Route::post('/owner/operasionai/laporan_operasional/{id}/batalkan_validasi_laporan_operasional', [OperasionalController::class, 'batalkan_validasi_laporan_operasional']);
 });
 
 
