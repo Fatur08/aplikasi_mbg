@@ -287,7 +287,7 @@
                                                                     <div class="btn-group">
                                                                         @if ($item->validasi_informasi_operasional == 0)
                                                                             <a href="#"
-                                                                                class="validasi_informasi_operasional btn btn-info btn-sm w-100"
+                                                                                class="validasi_informasi_operasional btn btn-secondary btn-sm w-100"
                                                                                 id="{{ $item->id_informasi_operasional }}">
                                                                                 Validasi
                                                                             </a>
