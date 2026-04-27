@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class OperasionalController extends Controller
 {
@@ -277,6 +278,70 @@ class OperasionalController extends Controller
             'maker.operasional.laporan_operasional.edit_laporan_operasional',
             compact('data', 'jenisOperasional')
         );
+    }
+
+
+
+
+    public function update_maker_laporan_operasional($id, Request $request)
+    {
+        $edit_tanggal_laporan_operasional = $request->edit_tanggal_laporan_operasional;
+        $edit_id_informasi_operasional = $request->edit_id_informasi_operasional;
+        $edit_jumlah_laporan_operasional = $request->edit_jumlah_laporan_operasional;
+        $edit_beli_laporan_operasional = $request->edit_beli_laporan_operasional;
+        $edit_jual_laporan_operasional = $request->edit_jual_laporan_operasional;
+        $edit_nota_laporan_operasional = $request->edit_nota_laporan_operasional;
+
+
+        // Ambil data laporan operasional
+        $laporan_operasional = DB::table('laporan_operasional')
+            ->where('id_laporan_operasional', $id)
+            ->first();
+
+        try {
+            // Update Laporan Operasional
+            $data = [
+                'tanggal_laporan_operasional' => $edit_tanggal_laporan_operasional,
+                'id_informasi_operasional' => $edit_id_informasi_operasional,
+                'jumlah_laporan_operasional' => $edit_jumlah_laporan_operasional,
+                'beli_laporan_operasional' => $edit_beli_laporan_operasional,
+                'jual_laporan_operasional' => $edit_jual_laporan_operasional,
+                'nota_laporan_operasional' => $edit_nota_laporan_operasional,
+                'validasi_laporan_operasional' => 0
+            ];
+            $update = DB::table('laporan_operasional')->where('id_laporan_operasional', $id)->update($data);
+
+            if ($update) {
+                // --- Handle Nota Laporan Operasional ---
+                if ($request->hasFile('edit_nota_laporan_operasional')) {
+                    $file = $request->file('edit_nota_laporan_operasional');
+                    $timestamp = date('Ymd_His'); // contoh: 20260426_153045
+                    $newNota = "Nota_Laporan_Operasional_" . $timestamp . "." . $file->getClientOriginalExtension();
+
+
+                    $folderNota = "public/uploads/data_supplier/informasi_supplier/nota/";
+                    $oldFile = $folderNota . $laporan_operasional->nota_laporan_operasional;
+                    $newFile = $folderNota . $newNota;
+
+                    // Rename file di storage
+                    if ($oldFile !== $newFile && Storage::exists($oldFile)) {
+                        Storage::move($oldFile, $newFile);
+                    }
+
+                    // Rename juga file di folder public
+                    $oldPublicFile = public_path('storage/uploads/data_supplier/informasi_supplier/nota/' . $laporan_operasional->nota_laporan_operasional);
+                    $newPublicFile = public_path('storage/uploads/data_supplier/informasi_supplier/nota/' . $newNota);
+                    if (file_exists($oldPublicFile)) {
+                        rename($oldPublicFile, $newPublicFile);
+                    }
+                }
+
+                return Redirect::back()->with(['success' => 'Data Berhasil Diupdate']);
+            }
+        } catch (\Exception $e) {
+            // dd($e);
+            return Redirect::back()->with(['error' => 'Data Gagal Diupdate']);
+        }
     }
 
 
