@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class OperasionalController extends Controller
 {
     // OWNER
+    // Informasi Operasional
     public function index_owner_informasi_operasional(Request $request)
     {
         $owner = Auth::guard('owner')->user();
@@ -36,6 +37,94 @@ class OperasionalController extends Controller
 
         return view('owner.operasional.informasi_operasional.index_informasi_operasional', compact('data'));
     }
+
+
+
+    // Laporan Operasional
+    public function index_owner_laporan_operasional(Request $request)
+    {
+        $owner = Auth::guard('owner')->user();
+
+        // CEK APAKAH AKUN SUKADANA ILIR ATAU BUKAN 
+        $allowedOwner = 2;
+
+        if (!($owner->id == $allowedOwner)) {
+            abort(403, 'Akses ditolak');
+        }
+
+        // ✅ Dropdown jenis operasional
+        $jenisOperasional = DB::table('informasi_operasional')
+            ->select('id_informasi_operasional', 'jenis_informasi_operasional')
+            ->where('id_owner', $owner->id_owner)
+            ->where('nomor_dapur_informasi_operasional', $owner->nomor_dapur_owner)
+            ->distinct()
+            ->get();
+
+        // ✅ Query dasar laporan
+        $laporanQuery = DB::table('laporan_operasional')
+            ->join(
+                'informasi_operasional',
+                'laporan_operasional.id_informasi_operasional',
+                '=',
+                'informasi_operasional.id_informasi_operasional'
+            )
+            ->where('laporan_operasional.id_owner', $owner->id_owner)
+            ->where('laporan_operasional.nomor_dapur_laporan_operasional', $owner->nomor_dapur_owner);
+
+        // 🔍 FILTER TANGGAL (fleksibel)
+        if ($request->filled('dari_tanggal')) {
+            $dari = Carbon::parse($request->dari_tanggal)->format('Y-m-d');
+            $laporanQuery->whereDate('laporan_operasional.tanggal_laporan_operasional', '>=', $dari);
+        }
+
+        if ($request->filled('sampai_tanggal')) {
+            $sampai = Carbon::parse($request->sampai_tanggal)->format('Y-m-d');
+            $laporanQuery->whereDate('laporan_operasional.tanggal_laporan_operasional', '<=', $sampai);
+        }
+
+        // ✅ Eksekusi query
+        $laporan = $laporanQuery
+            ->select(
+                'laporan_operasional.*',
+                'informasi_operasional.jenis_informasi_operasional'
+            )
+            ->orderBy('laporan_operasional.tanggal_laporan_operasional', 'desc')
+            ->get();
+
+        return view(
+            'owner.operasional.laporan_operasional.index_laporan_operasional',
+            compact('jenisOperasional', 'laporan')
+        );
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
