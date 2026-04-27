@@ -312,7 +312,7 @@ class OperasionalController extends Controller
                 'beli_laporan_operasional' => $edit_beli_laporan_operasional,
                 'jual_laporan_operasional' => $edit_jual_laporan_operasional,
                 'nota_laporan_operasional' => $newNota,
-                'validasi_laporan_operasional' => 0
+                'validasi_laporan_operasional' => 1
             ];
             $update = DB::table('laporan_operasional')->where('id_laporan_operasional', $id)->update($data);
 
