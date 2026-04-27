@@ -56,6 +56,38 @@ class OperasionalController extends Controller
 
 
 
+
+
+
+
+
+    public function delete_owner_informasi_operasional(Request $request, $id)
+    {
+        // 🔥 Cek apakah data ada
+        $data = DB::table('informasi_operasional')
+            ->where('id_informasi_operasional', $id)
+            ->first();
+
+        if (!$data) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        // 🔥 Hapus data
+        DB::table('informasi_operasional')
+            ->where('id_informasi_operasional', $id)
+            ->delete();
+
+        // 🔥 Redirect
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
+    }
+
+
+
+
+
+
+
+
     // Laporan Operasional
     public function index_owner_laporan_operasional(Request $request)
     {
