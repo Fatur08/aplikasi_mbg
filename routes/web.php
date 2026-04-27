@@ -264,7 +264,7 @@ Route::middleware(['auth:owner'])->group(function () {
     Route::get(
         '/owner/operasional/informasi_operasional',
         [OperasionalController::class, 'index_owner_informasi_operasional']
-    )->middleware('cek.operasional');
+    )->middleware('cek.owner.operasional');
 
     Route::post('/owner/operasional/informasi_operasional/store_owner_informasi_operasional', [OperasionalController::class, 'store_owner_informasi_operasional']);
     Route::post('/owner/operasional/informasi_operasional/edit_owner_informasi_operasional', [OperasionalController::class, 'edit_owner_informasi_operasional']);

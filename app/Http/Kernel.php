@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         'cek.maker.operasional' => \App\Http\Middleware\CekDapurMakerOperasional::class,
+        'cek.owner.operasional' => \App\Http\Middleware\CekDapurOwnerOperasional::class,
     ];
 }

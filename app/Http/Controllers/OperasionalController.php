@@ -14,7 +14,27 @@ class OperasionalController extends Controller
     // OWNER
     public function index_owner_operasional(Request $request)
     {
-        return view('owner.laporan.operasional.index_laporan_operasional');
+        $owner = Auth::guard('owner')->user();
+
+        // CEK APAKAH AKUN SUKADANA ILIR ATAU BUKAN 
+        $allowedOwner = 2;
+
+        if (!($owner->id_owner == $allowedOwner)) {
+            abort(403, 'Akses ditolak');
+        }
+
+        $query = DB::table('informasi_operasional')
+            ->where('id_owner', $owner->id_owner)
+            ->where('nomor_dapur_informasi_operasional', $owner->nomor_dapur_owner);
+
+        // 🔍 Filter pencarian
+        if ($request->filled('cari_jenis_informasi_operasional')) {
+            $query->where('jenis_informasi_operasional', 'like', '%' . $request->cari_jenis_informasi_operasional . '%');
+        }
+
+        $data = $query->orderBy('jenis_informasi_operasional', 'asc')->get();
+
+        return view('owner.operasional.informasi_operasional.index_informasi_operasional', compact('data'));
     }
 
 
