@@ -176,8 +176,7 @@ class OperasionalController extends Controller
         // ✅ Dropdown jenis operasional
         $jenisOperasional = DB::table('informasi_operasional')
             ->select('id_informasi_operasional', 'jenis_informasi_operasional')
-            ->where('id_owner', $owner->id_owner)
-            ->where('nomor_dapur_informasi_operasional', $owner->nomor_dapur_owner)
+            ->where('id_owner', $owner->id)
             ->distinct()
             ->get();
 
@@ -189,8 +188,7 @@ class OperasionalController extends Controller
                 '=',
                 'informasi_operasional.id_informasi_operasional'
             )
-            ->where('laporan_operasional.id_owner', $owner->id_owner)
-            ->where('laporan_operasional.nomor_dapur_laporan_operasional', $owner->nomor_dapur_owner);
+            ->where('laporan_operasional.id_owner', $owner->id);
 
         // 🔍 FILTER TANGGAL (fleksibel)
         if ($request->filled('dari_tanggal')) {
