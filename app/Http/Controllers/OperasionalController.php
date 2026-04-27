@@ -132,12 +132,12 @@ class OperasionalController extends Controller
     }
 
 
-    public function batalkan_owner_validasi_relawan($id, Request $request)
+    public function batalkan_validasi_informasi_operasional($id, Request $request)
     {
-        $update = DB::table('relawan')
-            ->where('id_relawan', $id)
+        $update = DB::table('informasi_operasional')
+            ->where('id_informasi_operasional', $id)
             ->update([
-                'status_validasi_relawan' => 0
+                'validasi_informasi_operasional' => 0
             ]);
 
         if ($update) {
