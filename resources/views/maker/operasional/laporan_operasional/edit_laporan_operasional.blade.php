@@ -24,7 +24,7 @@
                 </span>
                 <input type="text"
                     value="{{ \Carbon\Carbon::parse($data->tanggal_laporan_operasional)->format('d-m-Y') }}"
-                    id="tanggal_laporan_operasional" name="tanggal_laporan_operasional" class="form-control"
+                    id="edit_tanggal_laporan_operasional" name="edit_tanggal_laporan_operasional" class="form-control"
                     placeholder="Sampai Tanggal" autocomplete="off">
             </div>
         </div>
@@ -53,7 +53,7 @@
                     </svg>
                 </span>
 
-                <select id="id_informasi_operasional" name="id_informasi_operasional" class="form-control">
+                <select id="edit_id_informasi_operasional" name="edit_id_informasi_operasional" class="form-control">
 
                     <option value="">-- Pilih Jenis Operasional --</option>
 
@@ -90,8 +90,9 @@
                         <path d="M16 17l0 .01" />
                     </svg>
                 </span>
-                <input type="number" value="{{ $data->jumlah_laporan_operasional }}" id="jumlah_laporan_operasional"
-                    class="form-control" name="jumlah_laporan_operasional" placeholder="Masukkan Jumlah Jenis">
+                <input type="number" value="{{ $data->jumlah_laporan_operasional }}"
+                    id="edit_jumlah_laporan_operasional" class="form-control" name="edit_jumlah_laporan_operasional"
+                    placeholder="Masukkan Jumlah Jenis">
             </div>
         </div>
     </div>
@@ -115,8 +116,8 @@
                         <path d="M19 21v1m0 -8v1" />
                     </svg>
                 </span>
-                <input type="number" value="{{ $data->beli_laporan_operasional }}" id="beli_laporan_operasional"
-                    class="form-control" name="beli_laporan_operasional" placeholder="Masukkan Harga Yang Dibeli">
+                <input type="number" value="{{ $data->beli_laporan_operasional }}" id="edit_beli_laporan_operasional"
+                    class="form-control" name="edit_beli_laporan_operasional" placeholder="Masukkan Harga Yang Dibeli">
             </div>
         </div>
     </div>
@@ -140,14 +141,15 @@
                         <path d="M19 21v1m0 -8v1" />
                     </svg>
                 </span>
-                <input type="number" value="{{ $data->jual_laporan_operasional }}" id="jual_laporan_operasional"
-                    class="form-control" name="jual_laporan_operasional" placeholder="Masukkan Harga Diajukan">
+                <input type="number" value="{{ $data->jual_laporan_operasional }}" id="edit_jual_laporan_operasional"
+                    class="form-control" name="edit_jual_laporan_operasional" placeholder="Masukkan Harga Diajukan">
             </div>
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-6">
-            <input type="file" id="nota_laporan_operasional" name="nota_laporan_operasional" class="form-control">
+            <input type="file" id="edit_nota_laporan_operasional" name="edit_nota_laporan_operasional"
+                class="form-control">
         </div>
         <div class="col-6 mt-2">
             <h5 class="text-start" style="font-size:12pt;">Foto Nota</h5>
