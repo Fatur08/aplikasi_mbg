@@ -1,4 +1,4 @@
-@extends('layouts.maker.tabler')
+@extends('layouts.owner.tabler')
 @section('content')
     <style>
         /* === Section Info Dapur === */
@@ -193,7 +193,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <form action="/maker/operasional/informasi_operasional" method="GET"
+                                    <form action="/owner/operasional/informasi_operasional" method="GET"
                                         id="FormLaporanOperasional">
                                         <div class="row">
                                             <div class="col-6">
@@ -279,7 +279,7 @@
                                                                     </a>
 
                                                                     <form
-                                                                        action="/maker/operasional/informasi_operasional/{{ $item->id_informasi_operasional }}/delete_maker_informasi_operasional"
+                                                                        action="/owner/operasional/informasi_operasional/{{ $item->id_informasi_operasional }}/delete_owner_informasi_operasional"
                                                                         method="POST" class="w-100">
                                                                         @csrf
                                                                         <button type="submit"
@@ -334,7 +334,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/maker/operasional/informasi_operasional/store_maker_informasi_operasional" method="POST"
+                    <form action="/owner/operasional/informasi_operasional/store_owner_informasi_operasional" method="POST"
                         id="FormInputOperasional" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -538,7 +538,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/maker/operasional/informasi_operasional/edit_maker_informasi_operasional',
+                    url: '/owner/operasional/informasi_operasional/edit_owner_informasi_operasional',
                     cache: false,
                     data: {
                         _token: "{{ csrf_token() }}",
