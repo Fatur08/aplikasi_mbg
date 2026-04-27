@@ -310,20 +310,17 @@ class OperasionalController extends Controller
             $oldFile = $folderNota . $laporan_operasional->nota_laporan_operasional;
             $newFile = $folderNota . $newNota;
 
-            // ✅ SIMPAN FILE BARU (INI YANG KURANG)
+            if (Storage::exists($oldFile)) {
+                Storage::delete($oldFile);
+            }
             $file->storeAs($folderNota, $newNota);
-
-            // Rename file di storage
-            if ($oldFile !== $newFile && Storage::exists($oldFile)) {
-                Storage::move($oldFile, $newFile);
+            $publicPath = public_path('storage/uploads/maker/operasional/laporan_operasional/');
+            if (!is_dir($publicPath)) {
+                mkdir($publicPath, 0777, true);
             }
-
-            // Rename juga file di folder public
-            $oldPublicFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $laporan_operasional->nota_laporan_operasional);
-            $newPublicFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $newNota);
-            if (file_exists($oldPublicFile)) {
-                rename($oldPublicFile, $newPublicFile);
-            }
+            $sourceFile = storage_path('app/' . $folderNota . $newNota);
+            $destinationFile = public_path('storage/uploads/maker/operasional/laporan_operasional/' . $newNota);
+            copy($sourceFile, $destinationFile);
         } else {
             $newNota = $laporan_operasional->nota_laporan_operasional;
         }
