@@ -64,6 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        'cek.operasional' => \App\Http\Middleware\CekDapurOperasional::class,
+        'cek.maker.operasional' => \App\Http\Middleware\CekDapurMakerOperasional::class,
     ];
 }

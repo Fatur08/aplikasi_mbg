@@ -260,8 +260,25 @@ Route::middleware(['auth:owner'])->group(function () {
 
 
     //Operasional
-    Route::get('/owner/laporan/operasional', [LaporanOperasionalController::class, 'index_owner_operasional']);
-    Route::get('/owner/laporan/operasional/store_owner_operasional', [LaporanOperasionalController::class, 'store_owner_operasional']);
+    //Informasi Operasional
+    Route::get(
+        '/owner/operasional/informasi_operasional',
+        [OperasionalController::class, 'index_owner_informasi_operasional']
+    )->middleware('cek.operasional');
+
+    Route::post('/owner/operasional/informasi_operasional/store_owner_informasi_operasional', [OperasionalController::class, 'store_owner_informasi_operasional']);
+    Route::post('/owner/operasional/informasi_operasional/edit_owner_informasi_operasional', [OperasionalController::class, 'edit_owner_informasi_operasional']);
+    Route::post('/owner/operasional/informasi_operasional/{id}/update_owner_informasi_operasional', [OperasionalController::class, 'update_owner_informasi_operasional']);
+    Route::post('/owner/operasional/informasi_operasional/{id}/delete_owner_informasi_operasional', [OperasionalController::class, 'delete_owner_informasi_operasional']);
+
+
+    //Laporan Operasional
+    Route::get('/owner/operasional/laporan_operasional', [OperasionalController::class, 'index_owner_laporan_operasional']);
+    Route::post('/owner/operasional/laporan_operasional/store_owner_laporan_operasional', [OperasionalController::class, 'store_owner_laporan_operasional']);
+    Route::post('/owner/operasional/laporan_operasional/nota_owner_laporan_operasional', [OperasionalController::class, 'nota_owner_laporan_operasional']);
+    Route::post('/owner/operasional/laporan_operasional/edit_owner_laporan_operasional', [OperasionalController::class, 'edit_owner_laporan_operasional']);
+    Route::post('/owner/operasional/laporan_operasional/{id}/update_owner_laporan_operasional', [OperasionalController::class, 'update_owner_laporan_operasional']);
+    Route::post('/owner/operasional/laporan_operasional/{id}/delete_owner_laporan_operasional', [OperasionalController::class, 'delete_owner_laporan_operasional']);
 });
 
 
@@ -436,7 +453,7 @@ Route::middleware(['auth:maker'])->group(function () {
     Route::get(
         '/maker/operasional/informasi_operasional',
         [OperasionalController::class, 'index_maker_informasi_operasional']
-    )->middleware('cek.operasional');
+    )->middleware('cek.maker.operasional');
 
     Route::post('/maker/operasional/informasi_operasional/store_maker_informasi_operasional', [OperasionalController::class, 'store_maker_informasi_operasional']);
     Route::post('/maker/operasional/informasi_operasional/edit_maker_informasi_operasional', [OperasionalController::class, 'edit_maker_informasi_operasional']);
