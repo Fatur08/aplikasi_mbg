@@ -147,18 +147,18 @@
                                     </h2>
                                 </td>
                                 <!--<td style="text-align:right">
-                                    <a href="#" class="btn btn-primary" id="TambahLaporansupplier">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                             class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <path d="M12 5l0 14" />
-                                            <path d="M5 12l14 0" />
-                                        </svg>
-                                        Tambah Data
-                                    </a>
-                                </td>-->
+                                            <a href="#" class="btn btn-primary" id="TambahLaporansupplier">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <path d="M12 5l0 14" />
+                                                    <path d="M5 12l14 0" />
+                                                </svg>
+                                                Tambah Data
+                                            </a>
+                                        </td>-->
                             </tr>
                         </tbody>
                     </table>
@@ -242,7 +242,8 @@
                                                             <option value="">Pilih Dapur</option>
                                                             @foreach($dapurList as $dapur)
                                                                 <option value="{{ $dapur->nomor_dapur }}">
-                                                                    {{ $dapur->nama_dapur }}</option>
+                                                                    {{ $dapur->nama_dapur }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -604,6 +605,7 @@
             $("#FormLaporansupplier").submit(function () {
                 var dari_tanggal = $("#dari_tanggal").val();
                 var sampai_tanggal = $("#sampai_tanggal").val();
+                var pilih_dapur = $("#pilih_dapur").val();
                 if (dari_tanggal == "") {
                     Swal.fire({
                         title: 'Warning!',
@@ -622,6 +624,16 @@
                         confirmButtonText: 'OK'
                     }).then(() => {
                         $("#sampai_tanggal").focus();
+                    });
+                    return false;
+                } else if (pilih_dapur == "") {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'Dapur Harus Diisi',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        $("#pilih_dapur").focus();
                     });
                     return false;
                 }
