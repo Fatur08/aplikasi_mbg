@@ -11,7 +11,7 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         background-color: #ffffff;
     }
-    
+
     .custom-table thead th {
         background: linear-gradient(135deg, #007bff, #00bcd4);
         color: white;
@@ -22,14 +22,14 @@
         padding: 12px;
         border: none;
     }
-    
+
     .custom-table thead tr:first-child th {
         background: linear-gradient(135deg, #0069d9, #17a2b8);
         font-size: 17px;
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    
+
     .custom-table tbody td, 
     .custom-table tbody th {
         padding: 12px;
@@ -39,18 +39,25 @@
         font-size: 16px;
         color: #333;
     }
-    
+
     .custom-table tbody tr:nth-child(even) {
         background-color: #f8f9fa;
     }
-    
+
     .custom-table tbody tr:hover {
         background-color: #e9f5ff;
         transition: 0.3s;
     }
-    
+
     .table-container {
         max-width: 1600px;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 768px) {
+        .table-modern {
+            font-size: 13px;
+        }
     }
 </style>
 <div class="page-header d-print-none">
