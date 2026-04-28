@@ -62,7 +62,6 @@
 
         body {
             font-feature-settings: "cv03", "cv04", "cv11";
-            padding-bottom: 100px;
         }
 
         html,
