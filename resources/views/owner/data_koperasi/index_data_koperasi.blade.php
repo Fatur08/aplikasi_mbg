@@ -272,9 +272,9 @@
                                                             <td>
                                                                 <div class="align-items-center">
                                                                     <!--<a href="#" class="tambah_barang_modal_keluar btn btn-info btn-sm"
-                                                                                                       data-id="{{ $d->id_data_koperasi }}">
-                                                                                                        ➕ Tambah
-                                                                                                    </a>-->
+                                                                                                                                       data-id="{{ $d->id_data_koperasi }}">
+                                                                                                                                        ➕ Tambah
+                                                                                                                                    </a>-->
 
                                                                     <a href="#"
                                                                         class="lihat_barang_modal_keluar btn btn-info btn-sm"
@@ -541,7 +541,7 @@
                 var pilih_dapur = $("#pilih_dapur").val();
                 var dari_tanggal = $("#dari_tanggal").val();
                 var sampai_tanggal = $("#sampai_tanggal").val();
-                if (pilih_dapur == "") {
+                if (dari_tanggal == "") {
                     Swal.fire({
                         title: 'Warning!',
                         text: 'Dari Tanggal Harus Diisi',
@@ -551,7 +551,7 @@
                         $("#dari_tanggal").focus();
                     });
                     return false;
-                } else if (dari_tanggal == "") {
+                } else if (sampai_tanggal == "") {
                     Swal.fire({
                         title: 'Warning!',
                         text: 'Sampai Tanggal Harus Diisi',
@@ -561,7 +561,7 @@
                         $("#sampai_tanggal").focus();
                     });
                     return false;
-                } else if (sampai_tanggal == "") {
+                } else if (pilih_dapur == "") {
                     Swal.fire({
                         title: 'Warning!',
                         text: 'Dapur Harus Diisi',
