@@ -22,7 +22,7 @@
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
                     <span class="avatar avatar-sm" style="background-image: url('{{ $path }}')"></span>
-                    <div class="ps-2" style="max-width: 150px;">
+                    <div class="ps-2" style="max-width: 250px;">
                         <div class="fw-bold text-truncate">{{ $maker->nama_maker }}</div>
                         <div class="small text-secondary text-truncate">
                             Maker ({{ $nama_dapur ?? 'Tidak Ada Dapur' }})
