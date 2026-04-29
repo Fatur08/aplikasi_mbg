@@ -6,7 +6,8 @@
                     aria-label="Open user menu">
                     <span class="avatar avatar-sm" style="background-image: url(../../assets/img/nophoto.jpg)"></span>
                     <div class="ps-2" style="max-width: 250px;">
-                        <div class="mt-1 small text-secondary">{{ Auth::guard('owner')->user()->name }}</div>
+                        <div class="fw-bold text-truncate">Owner</div>
+                        <div class="small text-secondary text-truncate">({{ Auth::guard('owner')->user()->name }})</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
