@@ -66,6 +66,7 @@ class StokLimitController extends Controller
         $bahan = DB::table('bahan')
             ->where('nomor_dapur_bahan', $nomor_dapur)
             ->select('id_bahan', 'nama_bahan')
+            ->groupBy('nama_bahan')
             ->orderBy('nama_bahan', 'asc')
             ->get();
 
