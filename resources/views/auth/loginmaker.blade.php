@@ -144,6 +144,15 @@
     <!-- Tabler Core -->
     <script src="{{ asset('tabler/dist/js/tabler.min.js?1685973381') }}" defer></script>
     <script src="{{ asset('tabler/dist/js/demo.min.js?1685973381') }}" defer></script>
+    <script>
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function () {
+                setTimeout(() => {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            });
+        });
+    </script>
 </body>
 
 </html>
