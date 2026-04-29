@@ -65,7 +65,7 @@ class StokLimitController extends Controller
         // --- 3️⃣ Data filter dropdown bahan
         $bahan = DB::table('bahan')
             ->where('nomor_dapur_bahan', $nomor_dapur)
-            ->select('id_bahan', 'nama_bahan')
+            ->select(DB::raw('MIN(id_bahan) as id_bahan'), 'nama_bahan')
             ->groupBy('nama_bahan')
             ->orderBy('nama_bahan', 'asc')
             ->get();
