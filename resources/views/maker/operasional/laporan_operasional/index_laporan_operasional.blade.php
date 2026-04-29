@@ -195,7 +195,7 @@
                                 <div class="col-12">
                                     <form action="/maker/operasional/laporan_operasional" method="GET"
                                         id="FormLaporanOperasional">
-                                        <div class="row">
+                                        <div class="row g-2 align-items-end">
                                             <div class="col-md-4">
                                                 <div class="input-icon">
                                                     <span class="input-icon-addon">
@@ -320,7 +320,7 @@
                                                                             <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
                                                                             <path
                                                                                 d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
-                                                                                                                                                                                                                                                 c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                                                                                                                                                                                                                             c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
                                                                         </svg>
                                                                         <span>Lihat</span>
                                                                     </a>
