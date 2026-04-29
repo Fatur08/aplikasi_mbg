@@ -14,9 +14,9 @@ class LaporanDapurController extends Controller
     {
         // ✅ Ambil filter dari form
         $nomor_dapur = $request->pilih_dapur;
-        $pilih_instansi  = $request->pilih_instansi;
-        $dari_tanggal    = $request->dari_tanggal;
-        $sampai_tanggal  = $request->sampai_tanggal;
+        $pilih_instansi = $request->pilih_instansi;
+        $dari_tanggal = $request->dari_tanggal;
+        $sampai_tanggal = $request->sampai_tanggal;
 
         // ===============================
         // Query utama data distribusi
@@ -130,9 +130,9 @@ class LaporanDapurController extends Controller
         $maker = Auth::guard('maker')->user();
         $nomor_dapur = $maker->nomor_dapur_maker;
 
-        $pilih_instansi  = $request->pilih_instansi;
-        $dari_tanggal    = $request->dari_tanggal;
-        $sampai_tanggal  = $request->sampai_tanggal;
+        $pilih_instansi = $request->pilih_instansi;
+        $dari_tanggal = $request->dari_tanggal;
+        $sampai_tanggal = $request->sampai_tanggal;
 
         // ===============================
         // Query utama data distribusi
@@ -188,9 +188,9 @@ class LaporanDapurController extends Controller
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
 
         $data = [
-            'nomor_dapur_distribusi'   => $nomor_dapur,
-            'kategori_distribusi'   => $request->pilih_sekolah_atau_b3,
-            'tujuan_distribusi'   => $request->nama_sekolah_atau_b3,
+            'nomor_dapur_distribusi' => $nomor_dapur,
+            'kategori_distribusi' => $request->pilih_sekolah_atau_b3,
+            'tujuan_distribusi' => $request->nama_sekolah_atau_b3,
             'jumlah_paket' => (int) $request->jumlah_pm
         ];
 
@@ -237,7 +237,11 @@ class LaporanDapurController extends Controller
 
     public function tambah_maker_operasional_dapur(Request $request)
     {
+        $maker = Auth::guard('maker')->user();
+        $nomor_dapur = $maker->nomor_dapur_maker;
+
         $distribusi = DB::table('distribusi')
+            ->where('nomor_dapur_distribusi', $nomor_dapur) // filter di sini
             ->select('tujuan_distribusi', 'jumlah_paket')
             ->groupBy('tujuan_distribusi', 'jumlah_paket')
             ->orderBy('tujuan_distribusi', 'asc')
@@ -249,10 +253,10 @@ class LaporanDapurController extends Controller
     public function update_maker_operasional_dapur(Request $request)
     {
         DB::table('distribusi')->insert([
-            'tanggal_distribusi'   => $request->tanggal_operasional_dapur,
-            'menu_makanan'         => $request->menu_operasional_dapur,
-            'kendala_distribusi'   => $request->kendala_operasional_dapur,
-            'tujuan_distribusi'    => $request->pilih_instansi,
+            'tanggal_distribusi' => $request->tanggal_operasional_dapur,
+            'menu_makanan' => $request->menu_operasional_dapur,
+            'kendala_distribusi' => $request->kendala_operasional_dapur,
+            'tujuan_distribusi' => $request->pilih_instansi,
         ]);
 
         return redirect()->back()->with('success', 'Data operasional dapur berhasil disimpan');
@@ -315,14 +319,14 @@ class LaporanDapurController extends Controller
             : $request->tujuan_distribusi;
 
         $data = [
-            'nomor_dapur_distribusi'      => $nomor_dapur,
-            'nama_distributor'            => $distributor->nama_distributor,
-            'kecamatan_sekolah'           => $request->kecamatan_sekolah,
-            'tujuan_distribusi'           => $tujuan_distribusi,
-            'tanggal_distribusi'          => $request->tanggal_distribusi,
-            'menu_makanan'                => $request->nama_menu_harian,
-            'jumlah_paket'                => (int) $request->jumlah_paket,
-            'status_distribusi'           => 0
+            'nomor_dapur_distribusi' => $nomor_dapur,
+            'nama_distributor' => $distributor->nama_distributor,
+            'kecamatan_sekolah' => $request->kecamatan_sekolah,
+            'tujuan_distribusi' => $tujuan_distribusi,
+            'tanggal_distribusi' => $request->tanggal_distribusi,
+            'menu_makanan' => $request->nama_menu_harian,
+            'jumlah_paket' => (int) $request->jumlah_paket,
+            'status_distribusi' => 0
         ];
 
         $simpan = DB::table('distribusi')->insert($data);
