@@ -316,7 +316,6 @@
                                                                 <td style="text-align:left; font-weight:bold;">
                                                                     {{ number_format($row['stok_akhir'], 0, ',', '.') }}
                                                                 </td>
-                                                                <!--<td></td>-->
                                                             </tr>
                                                         @empty
                                                             <tr>
@@ -346,7 +345,13 @@
             altFormat: "d F Y",      // 15 September 2025
             dateFormat: "Y-m-d",     // dikirim ke backend
             locale: "id",
-            allowInput: true
+            allowInput: true,
+
+            appendTo: document.body,
+            position: "auto",
+            disableMobile: true, // 🔥 WAJIB
+            clickOpens: true,
+            allowInput: false,
         });
 
         flatpickr("#sampai_tanggal", {
@@ -354,7 +359,13 @@
             altFormat: "d F Y",
             dateFormat: "Y-m-d",
             locale: "id",
-            allowInput: true
+            allowInput: true,
+
+            appendTo: document.body,
+            position: "auto",
+            disableMobile: true, // 🔥 WAJIB
+            clickOpens: true,
+            allowInput: false,
         });
 
 

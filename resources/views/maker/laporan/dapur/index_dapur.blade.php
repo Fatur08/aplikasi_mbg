@@ -147,18 +147,18 @@
                                     </h2>
                                 </td>
                                 <!--<td style="text-align:right">
-                                                <a href="#" class="btn btn-primary" id="btnTambahMenuHarian">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                                                         class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                        <path d="M12 5l0 14" />
-                                                        <path d="M5 12l14 0" />
-                                                    </svg>
-                                                    Tambah Menu
-                                                </a>
-                                            </td>-->
+                                                    <a href="#" class="btn btn-primary" id="btnTambahMenuHarian">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                                             class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                            <path d="M12 5l0 14" />
+                                                            <path d="M5 12l14 0" />
+                                                        </svg>
+                                                        Tambah Menu
+                                                    </a>
+                                                </td>-->
                             </tr>
                         </tbody>
                     </table>
@@ -661,7 +661,14 @@
                 altFormat: "d F Y",      // 15 September 2025
                 dateFormat: "Y-m-d",     // dikirim ke backend
                 locale: "id",
-                allowInput: true
+                allowInput: true,
+
+                appendTo: document.body,
+                position: "auto",
+
+                disableMobile: true, // 🔥 WAJIB
+                clickOpens: true,
+                allowInput: false,
             });
 
             flatpickr("#sampai_tanggal", {
@@ -669,7 +676,14 @@
                 altFormat: "d F Y",
                 dateFormat: "Y-m-d",
                 locale: "id",
-                allowInput: true
+                allowInput: true,
+
+                appendTo: document.body,
+                position: "auto",
+
+                disableMobile: true, // 🔥 WAJIB
+                clickOpens: true,
+                allowInput: false,
             });
         });
     </script>
