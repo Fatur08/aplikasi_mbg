@@ -14,10 +14,10 @@ class StokLimitController extends Controller
     {
         $maker = Auth::guard('maker')->user();
         $nomor_dapur = $maker->nomor_dapur_maker;
-    
+
         $filter_bulan = $request->input('bulan');
         $filter_bahan = $request->input('id_bahan');
-    
+
         // --- 1️⃣ Ambil detail stok masuk per baris (supaya sisa per batch tetap ada)
         $stok = DB::table('stok_masuk')
             ->leftJoin('bahan', 'stok_masuk.id_bahan', '=', 'bahan.id_bahan')
@@ -43,17 +43,17 @@ class StokLimitController extends Controller
             )
             ->orderBy('stok_masuk.id_bahan', 'asc')
             ->orderBy('stok_masuk.tanggal_masuk', 'asc');
-        
+
         if (!empty($filter_bulan)) {
             $stok->whereRaw("MONTH(stok_masuk.tanggal_masuk) = ?", [$filter_bulan]);
         }
-    
+
         if (!empty($filter_bahan)) {
             $stok->where('stok_masuk.id_bahan', $filter_bahan);
         }
-    
+
         $stok = $stok->orderBy('stok_masuk.id_bahan', 'asc')->get();
-    
+
         // --- 2️⃣ Hitung total sisa keseluruhan dari semua data di atas
         $total_sisa_keseluruhan = $stok
             ->groupBy('id_bahan') // kelompokkan per bahan
@@ -61,20 +61,21 @@ class StokLimitController extends Controller
                 return $items->sum('sisa_stok'); // jumlahkan sisa per bahan
             })
             ->sum(); // lalu jumlahkan semua bahan
-    
+
         // --- 3️⃣ Data filter dropdown bahan
         $bahan = DB::table('bahan')
+            ->where('nomor_dapur_bahan', $nomor_dapur)
             ->select('id_bahan', 'nama_bahan')
             ->orderBy('nama_bahan', 'asc')
             ->get();
-    
+
         $nama_bahan_filter = null;
         if (!empty($filter_bahan)) {
             $nama_bahan_filter = DB::table('bahan')
                 ->where('id_bahan', $filter_bahan)
                 ->value('nama_bahan');
         }
-    
+
         return view('maker.stok.stok_limit.index_stok_limit_maker', compact(
             'stok',
             'maker',
@@ -111,15 +112,15 @@ class StokLimitController extends Controller
     public function tambah_tanggal_kadaluarsa_maker(Request $request)
     {
         $id_stok_masuk = $request->id;
-    
+
         // Ambil data stok berdasarkan id_stok_masuk
         $stok = \App\Models\StokMasuk::find($id_stok_masuk);
-    
+
         // Jika data tidak ditemukan
         if (!$stok) {
             return redirect()->back()->with('error', 'Data stok tidak ditemukan.');
         }
-    
+
         // Kirim data stok ke view
         return view('maker.stok.stok_limit.tambah_tanggal_kadaluarsa', compact('stok'));
     }
@@ -146,44 +147,44 @@ class StokLimitController extends Controller
             ]);
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // -- KEPALA DAPUR
     public function index_stok_limit_kepala_dapur(Request $request)
     {
         $kepala_dapur = Auth::guard('kepala_dapur')->user();
         $nomor_dapur = $kepala_dapur->nomor_dapur_kepala_dapur;
-    
+
         $filter_bulan = $request->input('bulan');
         $filter_bahan = $request->input('id_bahan');
-    
+
         // --- 1️⃣ Ambil detail stok masuk per baris (supaya sisa per batch tetap ada)
         $stok = DB::table('stok_masuk')
             ->leftJoin('bahan', 'stok_masuk.id_bahan', '=', 'bahan.id_bahan')
@@ -209,17 +210,17 @@ class StokLimitController extends Controller
             )
             ->orderBy('stok_masuk.id_bahan', 'asc')
             ->orderBy('stok_masuk.tanggal_masuk', 'asc');
-        
+
         if (!empty($filter_bulan)) {
             $stok->whereRaw("MONTH(stok_masuk.tanggal_masuk) = ?", [$filter_bulan]);
         }
-    
+
         if (!empty($filter_bahan)) {
             $stok->where('stok_masuk.id_bahan', $filter_bahan);
         }
-    
+
         $stok = $stok->orderBy('stok_masuk.id_bahan', 'asc')->get();
-    
+
         // --- 2️⃣ Hitung total sisa keseluruhan dari semua data di atas
         $total_sisa_keseluruhan = $stok
             ->groupBy('id_bahan') // kelompokkan per bahan
@@ -227,20 +228,20 @@ class StokLimitController extends Controller
                 return $items->sum('sisa_stok'); // jumlahkan sisa per bahan
             })
             ->sum(); // lalu jumlahkan semua bahan
-    
+
         // --- 3️⃣ Data filter dropdown bahan
         $bahan = DB::table('bahan')
             ->select('id_bahan', 'nama_bahan')
             ->orderBy('nama_bahan', 'asc')
             ->get();
-    
+
         $nama_bahan_filter = null;
         if (!empty($filter_bahan)) {
             $nama_bahan_filter = DB::table('bahan')
                 ->where('id_bahan', $filter_bahan)
                 ->value('nama_bahan');
         }
-    
+
         return view('kepala_dapur.stok_limit.index_stok_limit_kepala_dapur', compact(
             'stok',
             'kepala_dapur',
@@ -277,15 +278,15 @@ class StokLimitController extends Controller
     public function tambah_tanggal_kadaluarsa(Request $request)
     {
         $id_stok_masuk = $request->id;
-    
+
         // Ambil data stok berdasarkan id_stok_masuk
         $stok = \App\Models\StokMasuk::find($id_stok_masuk);
-    
+
         // Jika data tidak ditemukan
         if (!$stok) {
             return redirect()->back()->with('error', 'Data stok tidak ditemukan.');
         }
-    
+
         // Kirim data stok ke view
         return view('kepala_dapur.stok_limit.tambah_tanggal_kadaluarsa', compact('stok'));
     }
