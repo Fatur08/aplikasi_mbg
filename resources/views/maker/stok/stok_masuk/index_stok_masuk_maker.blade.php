@@ -191,7 +191,7 @@
                             <div class="row mt-2">
                                 <div class="col-12">
                                     <form action="/maker/stok_masuk" method="GET">
-                                        <div class="row">
+                                        <div class="row g-2 align-items-end">
                                             <div class="col-md-4">
                                                 <div class="input-icon">
                                                     <select name="bulan" id="bulan" class="form-select">
@@ -211,7 +211,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <select name="id_bahan" id="id_bahan" class="form-select">
                                                         <option value="">Pilih Bahan (Yang Tersedia Di Dapur)</option>
@@ -222,7 +222,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-primary w-100">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -636,25 +636,25 @@
 
 
                         <!--<div class="row" id="manual_container" style="display:none;">
-                                        <div class="col-12">
-                                            <div class="input-icon mb-3">
-                                                <span class="input-icon-addon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icon-tabler-edit">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                        <path d="M11 4h-4a2 2 0 0 0 -2 2v12"/>
-                                                    </svg>
-                                                </span>
+                                            <div class="col-12">
+                                                <div class="input-icon mb-3">
+                                                    <span class="input-icon-addon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icon-tabler-edit">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                            <path d="M11 4h-4a2 2 0 0 0 -2 2v12"/>
+                                                        </svg>
+                                                    </span>
 
-                                                <input type="text" id="sumber_manual"
-                                                    class="form-control"
-                                                    name="sumber_manual"
-                                                    placeholder="Masukkan Sumber Masuk Stok (Misal: Koperasi)">
+                                                    <input type="text" id="sumber_manual"
+                                                        class="form-control"
+                                                        name="sumber_manual"
+                                                        placeholder="Masukkan Sumber Masuk Stok (Misal: Koperasi)">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>-->
+                                        </div>-->
 
                         <div class="row">
                             <div class="col-12">
@@ -684,36 +684,36 @@
                             </div>
                         </div>
                         <!--
-                                    <div class="row">
-                                        <div class="col-12 mb-3">
-                                            <select name="store_id_bahan" id="store_id_bahan" class="form-select">
-                                                <option value="">Pilih Bahan (Yang Tersedia Di Dapur)</option>
-                                                @foreach($bahan as $item)
-                                                    <option value="{{ $item->id_bahan ?? $item->nama_bahan }}">{{ $item->nama_bahan }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="input-icon mb-3">
-                                                <span class="input-icon-addon">
-                                                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-number-1-small"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 8h1v8" /></svg>
-                                                </span>
-                                                <input 
-                                                    type="text"
-                                                    id="satuan_bahan"
-                                                    name="satuan_bahan"
-                                                    class="form-control"
-                                                    placeholder="Masukkan Satuan (kg, liter, dll)"
-                                                    pattern="[A-Za-z\s]+"
-                                                    title="Satuan hanya boleh berisi huruf"
-                                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
-                                                >
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <select name="store_id_bahan" id="store_id_bahan" class="form-select">
+                                                    <option value="">Pilih Bahan (Yang Tersedia Di Dapur)</option>
+                                                    @foreach($bahan as $item)
+                                                        <option value="{{ $item->id_bahan ?? $item->nama_bahan }}">{{ $item->nama_bahan }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
-                                    </div>-->
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="input-icon mb-3">
+                                                    <span class="input-icon-addon">
+                                                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-number-1-small"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 8h1v8" /></svg>
+                                                    </span>
+                                                    <input 
+                                                        type="text"
+                                                        id="satuan_bahan"
+                                                        name="satuan_bahan"
+                                                        class="form-control"
+                                                        placeholder="Masukkan Satuan (kg, liter, dll)"
+                                                        pattern="[A-Za-z\s]+"
+                                                        title="Satuan hanya boleh berisi huruf"
+                                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>-->
                         <div class="row">
                             <div class="col-12">
                                 <div class="input-icon mb-3">
