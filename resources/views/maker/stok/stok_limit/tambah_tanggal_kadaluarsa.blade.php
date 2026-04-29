@@ -52,10 +52,12 @@
 @push('myscript')
     <script>
         $(function () {
-            $(".flatpickr").datepicker({
-                format: "yyyy-mm-dd",
-                autoclose: true,
-                todayHighlight: true,
+            flatpickr("#tanggal_kadaluarsa", {
+                altInput: true,
+                altFormat: "d F Y",
+                dateFormat: "Y-m-d",
+                locale: "id",
+                allowInput: true,
 
                 appendTo: document.body,
                 position: "auto",
@@ -63,7 +65,7 @@
                 disableMobile: true, // 🔥 WAJIB
                 clickOpens: true,
                 allowInput: false,
-            })
+            });
 
             $("#frmdatakoperasi").submit(function () {
                 var modal_masuk = $("#modal_masuk").val();
