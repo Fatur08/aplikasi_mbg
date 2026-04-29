@@ -767,7 +767,7 @@
                 }
             });
 
-            flatpickr("#dari_tanggal", {
+            flatpickr("#tanggal_keluar", {
                 altInput: true,
                 altFormat: "d F Y",
                 dateFormat: "Y-m-d",
