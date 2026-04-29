@@ -478,43 +478,43 @@
 
                 for (let i = 0; i < jumlah; i++) {
                     $('#container-barang').append(`
-                                                                        <div class="card mb-3">
-                                                                            <div class="card-body">
-                                                                                <h5 class="text-center">Barang Ke-${i + 1}</h5>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="text-center">Barang Ke-${i + 1}</h5>
 
-                                                                                <div class="mb-2">
-                                                                                    <label>Nama Barang</label>
-                                                                                    <select name="barang[${i}][nama_barang_supplier]" class="form-select nama-barang" required>
-                                                                                        <option value="">-- Pilih Barang --</option>
-                                                                                    </select>
-                                                                                </div>
+                                    <div class="mb-2">
+                                        <label>Nama Barang</label>
+                                        <select name="barang[${i}][nama_barang_supplier]" class="form-select nama-barang" required>
+                                            <option value="">-- Pilih Barang --</option>
+                                        </select>
+                                    </div>
 
-                                                                                <div class="mb-2">
-                                                                                    <label>Satuan</label>
-                                                                                    <input 
-                                                                                        type="text"
-                                                                                        name="barang[${i}][satuan_barang_supplier]"
-                                                                                        class="form-control"
-                                                                                        placeholder="Masukkan Satuan (kg, liter, dll)"
-                                                                                        pattern="[A-Za-z\s]+"
-                                                                                        title="Satuan hanya boleh berisi huruf"
-                                                                                        oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
-                                                                                        required
-                                                                                    >
-                                                                                </div>
+                                    <div class="mb-2">
+                                        <label>Satuan</label>
+                                        <input 
+                                            type="text"
+                                            name="barang[${i}][satuan_barang_supplier]"
+                                            class="form-control"
+                                            placeholder="Masukkan Satuan (kg, liter, dll)"
+                                            pattern="[A-Za-z\s]+"
+                                            title="Satuan hanya boleh berisi huruf"
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                            required
+                                        >
+                                    </div>
 
-                                                                                <div class="mb-2">
-                                                                                    <label>Jumlah</label>
-                                                                                    <input type="number" name="barang[${i}][jumlah_barang_supplier]" class="form-control" placeholder="Masukkan Jumlah" required>
-                                                                                </div>
+                                    <div class="mb-2">
+                                        <label>Jumlah</label>
+                                        <input type="number" name="barang[${i}][jumlah_barang_supplier]" class="form-control" placeholder="Masukkan Jumlah" required>
+                                    </div>
 
-                                                                                <div class="mb-2">
-                                                                                    <label>Harga</label>
-                                                                                    <input type="number" name="barang[${i}][harga_barang_supplier]" class="form-control" placeholder="Masukkan Total Harga" required>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    `);
+                                    <div class="mb-2">
+                                        <label>Harga</label>
+                                        <input type="number" name="barang[${i}][harga_barang_supplier]" class="form-control" placeholder="Masukkan Total Harga" required>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
                 }
 
                 loadBarangSupplier();
@@ -529,8 +529,8 @@
                         select.html('<option value="">-- Pilih Barang --</option>');
                         data.forEach(item => {
                             select.append(`<option value="${item.nama_barang_supplier}">
-                                        ${item.nama_barang_supplier}
-                                    </option>`);
+                                                        ${item.nama_barang_supplier}
+                                                    </option>`);
                         });
                     });
                 });
