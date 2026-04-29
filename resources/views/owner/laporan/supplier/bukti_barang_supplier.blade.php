@@ -1,17 +1,23 @@
 <style>
     .bukti-barang_supplier-img {
-        max-width: 500px;   /* atur ukuran maksimal */
-        max-height: 450px;  /* biar tidak terlalu besar */
+        width: 100%;
+        /* isi penuh container */
+        max-width: 100%;
+        /* jangan lebih dari modal */
+        height: auto;
+        /* jaga rasio */
+        max-height: 80vh;
+        /* biar tidak keluar layar HP */
         object-fit: contain;
         display: block;
-        margin: auto;       /* center */
+        margin: auto;
     }
 </style>
 
 <div>
     @if(!empty($data->bukti_barang_supplier))
         <img src="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/' . $data->bukti_barang_supplier) }}"
-             class="bukti-barang_supplier-img">
+            class="bukti-barang_supplier-img">
     @else
         <p class="text-muted text-center">Tidak ada Bukti Terima</p>
     @endif
