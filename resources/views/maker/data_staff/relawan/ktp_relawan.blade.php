@@ -1,10 +1,16 @@
 <style>
     .ktp-relawan-img {
-        max-width: 500px;   /* atur ukuran maksimal */
-        max-height: 450px;  /* biar tidak terlalu besar */
+        width: 100%;
+        /* isi penuh container */
+        max-width: 100%;
+        /* jangan lebih dari modal */
+        height: auto;
+        /* jaga rasio */
+        max-height: 80vh;
+        /* biar tidak keluar layar HP */
         object-fit: contain;
         display: block;
-        margin: auto;       /* center */
+        margin: auto;
     }
 </style>
 

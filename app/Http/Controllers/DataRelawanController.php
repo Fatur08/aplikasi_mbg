@@ -13,7 +13,7 @@ class DataRelawanController extends Controller
     public function index_owner_data_staff_relawan(Request $request)
     {
         $pilih_dapur = $request->pilih_dapur;
-        $cari_nama   = $request->cari_nama;
+        $cari_nama = $request->cari_nama;
 
         // Query data staff relawan
         $query = Relawan::query();
@@ -38,8 +38,8 @@ class DataRelawanController extends Controller
             ->select('nomor_dapur', 'nama_dapur')
             ->groupBy('nomor_dapur', 'nama_dapur')
             ->get();
-        
-        
+
+
         // ✅ Ambil nama dapur
         $namaDapur = $pilih_dapur
             ? DB::table('dapur')
@@ -53,11 +53,11 @@ class DataRelawanController extends Controller
 
 
     public function ktp_owner_data_staff_relawan(Request $request)
-    {        
-        $id         = $request->id;
-        $relawan    = DB::table('relawan')->get();
-        $data       = DB::table('relawan')->where('id_relawan', $id)->first();
-        return view('owner.data_staff.relawan.ktp_relawan',compact('relawan','data'));
+    {
+        $id = $request->id;
+        $relawan = DB::table('relawan')->get();
+        $data = DB::table('relawan')->where('id_relawan', $id)->first();
+        return view('owner.data_staff.relawan.ktp_relawan', compact('relawan', 'data'));
     }
 
 
@@ -68,7 +68,7 @@ class DataRelawanController extends Controller
         $id = $request->id;
         $relawan = DB::table('relawan')->get();
         $data = DB::table('relawan')->where('id_relawan', $id)->first();
-        return view('owner.data_staff.relawan.validasi_relawan',compact('relawan','data'));
+        return view('owner.data_staff.relawan.validasi_relawan', compact('relawan', 'data'));
     }
 
 
@@ -99,18 +99,18 @@ class DataRelawanController extends Controller
     public function batalkan_owner_validasi_relawan($id, Request $request)
     {
         $update = DB::table('relawan')
-            ->where('id_relawan',$id)
+            ->where('id_relawan', $id)
             ->update([
                 'status_validasi_relawan' => 0
             ]);
 
-        if($update){
-            return Redirect::back()->with(['success'=>'Status Berhasil Dibatalkan']);
+        if ($update) {
+            return Redirect::back()->with(['success' => 'Status Berhasil Dibatalkan']);
         } else {
-            return Redirect::back()->with(['warning'=>'Data Gagal Diproses']);
+            return Redirect::back()->with(['warning' => 'Data Gagal Diproses']);
         }
     }
-    
+
 
 
 
@@ -136,7 +136,7 @@ class DataRelawanController extends Controller
             ->first();
 
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
-        $cari_nama   = $request->cari_nama;
+        $cari_nama = $request->cari_nama;
 
         // Query data staff relawan
         $query = Relawan::query();
@@ -158,6 +158,7 @@ class DataRelawanController extends Controller
             ->select('divisi_relawan')
             ->whereNotNull('divisi_relawan')
             ->where('divisi_relawan', '!=', '')
+            ->where('nomor_dapur_relawan', $nomor_dapur)
             ->distinct()
             ->get();
 
@@ -176,21 +177,21 @@ class DataRelawanController extends Controller
             ->first();
 
         $nomor_dapur = $makerLogin->nomor_dapur_maker ?? null;
-    
-        $nama_relawan       = $request->nama_relawan;
-        $no_hp_relawan      = $request->no_hp_relawan;
-        $foto_relawan       = $request->foto_relawan;
-        $ktp_relawan        = $request->ktp_relawan;
-        $divisi_relawan     = $request->divisi_relawan;
+
+        $nama_relawan = $request->nama_relawan;
+        $no_hp_relawan = $request->no_hp_relawan;
+        $foto_relawan = $request->foto_relawan;
+        $ktp_relawan = $request->ktp_relawan;
+        $divisi_relawan = $request->divisi_relawan;
         $old_divisi_relawan = $request->old_divisi_relawan;
 
         $final_divisi_relawan = !empty($divisi_relawan)
             ? $divisi_relawan
             : $old_divisi_relawan;
-    
 
-        if($request->hasFile('foto_relawan')){
-            $foto_relawan = $nama_relawan.".".$request
+
+        if ($request->hasFile('foto_relawan')) {
+            $foto_relawan = $nama_relawan . "." . $request
                 ->file('foto_relawan')
                 ->getClientOriginalExtension();
         } else {
@@ -198,8 +199,8 @@ class DataRelawanController extends Controller
         }
 
 
-        if($request->hasFile('ktp_relawan')){
-            $ktp_relawan = $nama_relawan.".".$request
+        if ($request->hasFile('ktp_relawan')) {
+            $ktp_relawan = $nama_relawan . "." . $request
                 ->file('ktp_relawan')
                 ->getClientOriginalExtension();
         } else {
@@ -207,19 +208,19 @@ class DataRelawanController extends Controller
         }
 
         $data = [
-            'nama_relawan'             => $nama_relawan,
-            'nomor_dapur_relawan'      => $nomor_dapur,
-            'divisi_relawan'           => $final_divisi_relawan,
-            'no_hp_relawan'            => $no_hp_relawan,
-            'foto_relawan'             => $foto_relawan,
-            'ktp_relawan'              => $ktp_relawan,
-            'status_validasi_relawan'  => 0
+            'nama_relawan' => $nama_relawan,
+            'nomor_dapur_relawan' => $nomor_dapur,
+            'divisi_relawan' => $final_divisi_relawan,
+            'no_hp_relawan' => $no_hp_relawan,
+            'foto_relawan' => $foto_relawan,
+            'ktp_relawan' => $ktp_relawan,
+            'status_validasi_relawan' => 0
         ];
 
         $simpan = DB::table('relawan')->insert($data);
-        if ($simpan){
+        if ($simpan) {
             if ($request->hasFile('foto_relawan')) {
-                $foto_relawan = $nama_relawan.".".$request
+                $foto_relawan = $nama_relawan . "." . $request
                     ->file('foto_relawan')
                     ->getClientOriginalExtension();
                 $storagePath = 'public/uploads/data_staff/relawan/foto/';
@@ -233,7 +234,7 @@ class DataRelawanController extends Controller
                 copy($sourceFile, $destinationFile);
             }
             if ($request->hasFile('ktp_relawan')) {
-                $ktp_relawan = $nama_relawan.".".$request
+                $ktp_relawan = $nama_relawan . "." . $request
                     ->file('ktp_relawan')
                     ->getClientOriginalExtension();
                 $storagePath = 'public/uploads/data_staff/relawan/ktp/';
@@ -258,10 +259,10 @@ class DataRelawanController extends Controller
 
 
     public function ktp_maker_data_staff_relawan(Request $request)
-    {        
-        $id         = $request->id;
-        $relawan    = DB::table('relawan')->get();
-        $data       = DB::table('relawan')->where('id_relawan', $id)->first();
-        return view('maker.data_staff.relawan.ktp_relawan',compact('relawan','data'));
+    {
+        $id = $request->id;
+        $relawan = DB::table('relawan')->get();
+        $data = DB::table('relawan')->where('id_relawan', $id)->first();
+        return view('maker.data_staff.relawan.ktp_relawan', compact('relawan', 'data'));
     }
 }

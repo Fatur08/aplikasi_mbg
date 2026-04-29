@@ -1,7 +1,13 @@
 <style>
     .bukti-terima-img {
-        max-width: 500px;
-        max-height: 450px;
+        width: 100%;
+        /* isi penuh container */
+        max-width: 100%;
+        /* jangan lebih dari modal */
+        height: auto;
+        /* jaga rasio */
+        max-height: 80vh;
+        /* biar tidak keluar layar HP */
         object-fit: contain;
         display: block;
         margin: auto;
@@ -10,18 +16,12 @@
 
 <div>
     @if($bukti && $sumber === 'koperasi')
-        <img
-            src="{{ asset('storage/uploads/data_koperasi/bukti_terima/'.$bukti) }}"
-            class="bukti-terima-img"
-            alt="Bukti Koperasi"
-        >
+        <img src="{{ asset('storage/uploads/data_koperasi/bukti_terima/' . $bukti) }}" class="bukti-terima-img"
+            alt="Bukti Koperasi">
 
     @elseif($bukti && $sumber === 'supplier')
-        <img
-            src="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/'.$bukti) }}"
-            class="bukti-terima-img"
-            alt="Bukti Supplier"
-        >
+        <img src="{{ asset('storage/uploads/data_supplier/informasi_supplier/bukti_terima/' . $bukti) }}"
+            class="bukti-terima-img" alt="Bukti Supplier">
 
     @else
         <p class="text-muted text-center">
