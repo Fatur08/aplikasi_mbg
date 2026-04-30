@@ -1,284 +1,340 @@
 @extends('layouts.owner.tabler')
 @section('content')
-<style>
-/* === Section Info Dapur === */
-.section-info {
-    margin-top: 40px;
-    margin-bottom: 25px;
-    text-align: center;
-}
-.info-card {
-    display: inline-block;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    padding: 25px 40px;
-    border: 1px solid #e5e7eb;
-    transition: 0.2s;
-}
-.info-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-}
-.info-card h4 {
-    color: #111827;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 20px;
-}
-.info-card p {
-    color: #6b7280;
-    margin: 0;
-    font-size: 18px;
-}
+    <style>
+        /* === Section Info Dapur === */
+        .section-info {
+            margin-top: 40px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
 
-/* === Table Style === */
-.custom-table {
-    border-collapse: separate;
-    border-spacing: 0;
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    background-color: #ffffff;
-}
+        .info-card {
+            display: inline-block;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            padding: 25px 40px;
+            border: 1px solid #e5e7eb;
+            transition: 0.2s;
+        }
 
-.custom-table thead th {
-    background: linear-gradient(135deg, #007bff, #00bcd4);
-    color: white;
-    text-align: center;
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 0.5px;
-    padding: 12px;
-    border: none;
-}
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
 
-.custom-table thead tr:first-child th {
-    background: linear-gradient(135deg, #0069d9, #17a2b8);
-    font-size: 17px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+        .info-card h4 {
+            color: #111827;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
 
-.custom-table tbody td, 
-.custom-table tbody th {
-    padding: 12px;
-    text-align: center;
-    vertical-align: middle;
-    border: 1px solid #dee2e6;
-    font-size: 16px;
-    color: #333;
-}
+        .info-card p {
+            color: #6b7280;
+            margin: 0;
+            font-size: 18px;
+        }
 
-.custom-table tbody tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
+        /* === Table Style === */
+        .custom-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            background-color: #ffffff;
+        }
 
-.custom-table tbody tr:hover {
-    background-color: #e9f5ff;
-    transition: 0.3s;
-}
+        .custom-table thead th {
+            background: linear-gradient(135deg, #007bff, #00bcd4);
+            color: white;
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            padding: 12px;
+            border: none;
+        }
 
-.table-container {
-    max-width: 1600px;
-}
+        .custom-table thead tr:first-child th {
+            background: linear-gradient(135deg, #0069d9, #17a2b8);
+            font-size: 17px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-/* === Buttons === */
-.btn-status {
-    font-size: 13px;
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-weight: 600;
-    border: none;
-    color: #fff;
-}
-.btn-menunggu {
-    background-color: #facc15;
-    color: #111827;
-}
-.btn-validasi {
-    background-color: #38bdf8;
-}
-.btn-menunggu:hover {
-    background-color: #eab308;
-}
-.btn-validasi:hover {
-    background-color: #0ea5e9;
-}
+        .custom-table tbody td,
+        .custom-table tbody th {
+            padding: 12px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #dee2e6;
+            font-size: 16px;
+            color: #333;
+        }
 
-/* === Responsive === */
-@media (max-width: 768px) {
-    .info-card {
-        width: 100%;
-        padding: 20px;
-    }
-    .info-card h4 {
-        font-size: 18px;
-    }
-    .table-modern {
-        font-size: 13px;
-    }
-}
-</style>
-<div class="page-header d-print-none">
-    <div class="container-xl">
-        <div class="row g-2 align-items-center">
-            <div class="col">
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="page-pretitle">
-                                    Halaman
-                                </div>
-                                <h2 class="page-title">
-                                    Data Relawan
-                                </h2>
-                            </td>
-                            <td style="text-align:right">
-                                <a href="{{ url('/owner/data_staff') }}" class="btn btn-primary">
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
-                                    Kembali
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        .custom-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .custom-table tbody tr:hover {
+            background-color: #e9f5ff;
+            transition: 0.3s;
+        }
+
+        .table-container {
+            max-width: 1600px;
+        }
+
+        /* === Buttons === */
+        .btn-status {
+            font-size: 13px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            border: none;
+            color: #fff;
+        }
+
+        .btn-menunggu {
+            background-color: #facc15;
+            color: #111827;
+        }
+
+        .btn-validasi {
+            background-color: #38bdf8;
+        }
+
+        .btn-menunggu:hover {
+            background-color: #eab308;
+        }
+
+        .btn-validasi:hover {
+            background-color: #0ea5e9;
+        }
+
+        /* === Responsive === */
+        @media (max-width: 768px) {
+            .info-card {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .info-card h4 {
+                font-size: 18px;
+            }
+
+            .table-modern {
+                font-size: 13px;
+            }
+        }
+    </style>
+    <div class="page-header d-print-none">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="page-pretitle">
+                                        Halaman
+                                    </div>
+                                    <h2 class="page-title">
+                                        Data Relawan
+                                    </h2>
+                                </td>
+                                <td style="text-align:right">
+                                    <a href="{{ url('/owner/data_staff') }}" class="btn btn-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M15 6l-6 6l6 6" />
+                                        </svg>
+                                        Kembali
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="page-body">
-    <div class="container-xl">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                @if (Session::get('success'))
-                                    <div class="alert alert-success">
-                                        {{ Session::get('success') }}
-                                    </div>
-                                @endif
-                                @if (Session::get('warning'))
-                                    <div class="alert alert-warning">
-                                        {{ Session::get('warning') }}
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <form action="/owner/data_staff/relawan" method="GET">
+    <div class="page-body">
+        <div class="container-xl">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
                                 <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="cari_nama" id="cari_nama" placeholder="Masukkan Nama Lengkap" value="{{ Request('cari_nama') }}">
-                                            </div>
+                                    @if (Session::get('success'))
+                                        <div class="alert alert-success">
+                                            {{ Session::get('success') }}
                                         </div>
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <select name="pilih_dapur" id="pilih_dapur" class="form-select">
-                                                    <option value="">Pilih Dapur</option>
-                                                    @foreach($dapurList as $dapur)
-                                                        <option value="{{ $dapur->nomor_dapur }}">{{ $dapur->nama_dapur }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                    @endif
+                                    @if (Session::get('warning'))
+                                        <div class="alert alert-warning">
+                                            {{ Session::get('warning') }}
                                         </div>
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-primary w-100">
-                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-                                                    Cari    
-                                                </button>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <form action="/owner/data_staff/relawan" method="GET">
+                                    <div class="col-12">
+                                        <div class="row g-2 align-items-end">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="cari_nama" id="cari_nama"
+                                                        placeholder="Masukkan Nama Lengkap"
+                                                        value="{{ Request('cari_nama') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <select name="pilih_dapur" id="pilih_dapur" class="form-select">
+                                                        <option value="">Pilih Dapur</option>
+                                                        @foreach($dapurList as $dapur)
+                                                            <option value="{{ $dapur->nomor_dapur }}">{{ $dapur->nama_dapur }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-primary w-100">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                            <path d="M21 21l-6 -6" />
+                                                        </svg>
+                                                        Cari
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="row mt-2 table-container">
-                            <div class="col-12">
-                                <div class="table-wrapper">
-                                    <div class="table-responsive">
-                                        <table class="table custom-table">
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="7" style="text-align: left;">Nama Dapur : {{ $namaDapur }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>No.</th>
-                                                    <th>Nama</th>
-                                                    <th>Divisi</th>
-                                                    <th>No. HP</th>
-                                                    <th>Foto</th>
-                                                    <th>KTP</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($relawan as $d)
-                                                @php
-                                                    $path = Storage::url('uploads/data_staff/relawan/foto/'.$d->foto_relawan);
-                                                @endphp
-                                                <tr>
-                                                    <td>{{ $loop->iteration + $relawan->firstItem()-1 }}</td>
-                                                    <td>{{ $d->nama_relawan }}</td>
-                                                    <td>{{ $d->divisi_relawan }}</td>
-                                                    <td>{{ $d->no_hp_relawan }}</td>
-                                                    <td>
-                                                        @if (empty($d->foto_relawan))
-                                                        <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar" alt="">
-                                                        @else
-                                                        <img src="{{ url($path) }}" class="avatar" alt="">
-                                                        @endif
-                                                    </td>
-                                                    <td style="text-align:center"> 
-                                                        <a href="#" class="ktp_relawan btn btn-info btn-sm" id="{{ $d->id_relawan }}">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
-                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
-                                                                         c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                                                            </svg>
-                                                            <span>Lihat</span>
-                                                        </a>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if($d->status_validasi_relawan == 0)
-                                                            <button class="btn btn-warning btn-sm">Menunggu</button>
-                                                        @elseif($d->status_validasi_relawan == 1)
-                                                            <button class="btn btn-success btn-sm">Disetujui</button>
-                                                        @else
-                                                            <button class="btn btn-danger btn-sm">Ditolak</button>
-                                                        @endif
-                                                        <div class="btn-group">
-                                                            @if ($d->status_validasi_relawan == 0)
-                                                            <a href="#" class="validasi_relawan btn btn-info btn-sm" id="{{ $d->id_relawan }}" >
-                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                Validasi
-                                                            </a>
-                                                            @else
-                                                            <form action="/owner/data_staff/relawan/{{ $d->id_relawan }}/batalkan_validasi_relawan" style="margin-left: 5px;" method="POST">
-                                                                @csrf  
-                                                                <a class="btn btn-sm bg-danger batalkan_validasi_relawan">
-                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10l4 4m0 -4l-4 4" /><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" /></svg>
-                                                                    Batalkan
+                                </form>
+                            </div>
+                            <div class="row mt-2 table-container">
+                                <div class="col-12">
+                                    <div class="table-wrapper">
+                                        <div class="table-responsive">
+                                            <table class="table custom-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="7" style="text-align: left;">Nama Dapur :
+                                                            {{ $namaDapur }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Nama</th>
+                                                        <th>Divisi</th>
+                                                        <th>No. HP</th>
+                                                        <th>Foto</th>
+                                                        <th>KTP</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($relawan as $d)
+                                                        @php
+                                                            $path = Storage::url('uploads/data_staff/relawan/foto/' . $d->foto_relawan);
+                                                        @endphp
+                                                        <tr>
+                                                            <td>{{ $loop->iteration + $relawan->firstItem() - 1 }}</td>
+                                                            <td>{{ $d->nama_relawan }}</td>
+                                                            <td>{{ $d->divisi_relawan }}</td>
+                                                            <td>{{ $d->no_hp_relawan }}</td>
+                                                            <td>
+                                                                @if (empty($d->foto_relawan))
+                                                                    <img src="{{ asset('assets/img/nophoto.jpg') }}" class="avatar"
+                                                                        alt="">
+                                                                @else
+                                                                    <img src="{{ url($path) }}" class="avatar" alt="">
+                                                                @endif
+                                                            </td>
+                                                            <td style="text-align:center">
+                                                                <a href="#" class="ktp_relawan btn btn-info btn-sm"
+                                                                    id="{{ $d->id_relawan }}">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
+                                                                                 c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                                    </svg>
+                                                                    <span>Lihat</span>
                                                                 </a>
-                                                            </form>
-                                                            @endif
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if($d->status_validasi_relawan == 0)
+                                                                    <button class="btn btn-warning btn-sm">Menunggu</button>
+                                                                @elseif($d->status_validasi_relawan == 1)
+                                                                    <button class="btn btn-success btn-sm">Disetujui</button>
+                                                                @else
+                                                                    <button class="btn btn-danger btn-sm">Ditolak</button>
+                                                                @endif
+                                                                <div class="btn-group">
+                                                                    @if ($d->status_validasi_relawan == 0)
+                                                                        <a href="#" class="validasi_relawan btn btn-info btn-sm"
+                                                                            id="{{ $d->id_relawan }}">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                                <path
+                                                                                    d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                                                <path
+                                                                                    d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                                                <path d="M16 5l3 3" />
+                                                                            </svg>
+                                                                            Validasi
+                                                                        </a>
+                                                                    @else
+                                                                        <form
+                                                                            action="/owner/data_staff/relawan/{{ $d->id_relawan }}/batalkan_validasi_relawan"
+                                                                            style="margin-left: 5px;" method="POST">
+                                                                            @csrf
+                                                                            <a
+                                                                                class="btn btn-sm bg-danger batalkan_validasi_relawan">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                                    stroke="currentColor" stroke-width="2"
+                                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-x">
+                                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                                        fill="none" />
+                                                                                    <path d="M10 10l4 4m0 -4l-4 4" />
+                                                                                    <path
+                                                                                        d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                                                                </svg>
+                                                                                Batalkan
+                                                                            </a>
+                                                                        </form>
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -288,159 +344,158 @@
             </div>
         </div>
     </div>
-</div>
 
 
 
 
 
-<!-- VALIDASI DATA RELAWAN -->
-<div class="modal modal-blur fade" id="modal-validasirelawan" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Validasi Data Relawan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="formvalidasirelawan">
-                
-            </div>
-        </div>
-    </div>
-</div>
+    <!-- VALIDASI DATA RELAWAN -->
+    <div class="modal modal-blur fade" id="modal-validasirelawan" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Validasi Data Relawan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="formvalidasirelawan">
 
-
-
-{{-- Modal KTP Relawan --}}
-<div class="modal modal-blur fade" id="modal-ktprelawan" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">KTP Data Pekerja</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="loadktprelawan">
-                
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+
+
+    {{-- Modal KTP Relawan --}}
+    <div class="modal modal-blur fade" id="modal-ktprelawan" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">KTP Data Pekerja</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="loadktprelawan">
+
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('myscript')
-<script>
-    $(function(){
-        $("#TambahRelawan").click(function(){
-            $("#modal-inputmaker").modal("show");
-        });
-
-
-
-        $(".ktp_relawan").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/owner/data_staff/relawan/ktp_relawan',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#loadktprelawan").html(respond);
-                }
+    <script>
+        $(function () {
+            $("#TambahRelawan").click(function () {
+                $("#modal-inputmaker").modal("show");
             });
-            $("#modal-ktprelawan").modal("show");
-        });
 
-        $(".validasi_relawan").click(function(){
-            var id = $(this).attr('id');
-            $.ajax({
-                type:'POST',
-                url:'/owner/data_staff/relawan/validasi_relawan',
-                cache:false,
-                data:{
-                    _token : "{{ csrf_token() }}",
-                    id : id
-                },
-                success:function(respond){
-                    $("#formvalidasirelawan").html(respond);
-                }
+
+
+            $(".ktp_relawan").click(function () {
+                var id = $(this).attr('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/owner/data_staff/relawan/ktp_relawan',
+                    cache: false,
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id
+                    },
+                    success: function (respond) {
+                        $("#loadktprelawan").html(respond);
+                    }
+                });
+                $("#modal-ktprelawan").modal("show");
             });
-            $("#modal-validasirelawan").modal("show");
-        });
+
+            $(".validasi_relawan").click(function () {
+                var id = $(this).attr('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/owner/data_staff/relawan/validasi_relawan',
+                    cache: false,
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id
+                    },
+                    success: function (respond) {
+                        $("#formvalidasirelawan").html(respond);
+                    }
+                });
+                $("#modal-validasirelawan").modal("show");
+            });
 
 
 
-        $(".batalkan_validasi_relawan").click(function(e){
-            var form = $(this).closest('form');
-            e.preventDefault();
-            Swal.fire({
-                title: "Apakah Anda Yakin ingin batalkan",
-                text: "Jika Ya Maka Status Validasi akan berubah",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Batalkan Saja"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
+            $(".batalkan_validasi_relawan").click(function (e) {
+                var form = $(this).closest('form');
+                e.preventDefault();
+                Swal.fire({
+                    title: "Apakah Anda Yakin ingin batalkan",
+                    text: "Jika Ya Maka Status Validasi akan berubah",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Batalkan Saja"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Data Berhasil Di Batalkan",
+                            icon: "success"
+                        });
+                    }
+                });
+            });
+
+            $("#FormTambahRelawan").submit(function () {
+                var nama_relawan = $("#nama_relawan").val();
+                var no_hp_relawan = $("#no_hp_relawan").val();
+                var foto_relawan = $("#FormTambahRelawan").find("#foto_relawan").val();
+                var ktp_relawan = $("#FormTambahRelawan").find("#ktp_relawan").val();
+                if (nama_relawan == "") {
                     Swal.fire({
-                        title: "Deleted!",
-                        text: "Data Berhasil Di Batalkan",
-                        icon: "success"
-                  });
+                        title: 'Warning!',
+                        text: 'Nama Lengkap Harus Diisi',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        $("#nama_relawan").focus();
+                    });
+                    return false;
+                } else if (no_hp_relawan == "") {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'No. HP Harus Diisi',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        $("#no_hp_relawan").focus();
+                    });
+                    return false;
+                } else if (foto_relawan == "") {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'Foto Harus Diisi',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        $("#foto_relawan").focus();
+                    });
+                    return false;
+                } else if (ktp_relawan == "") {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'KTP Harus Diisi',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        $("#ktp_relawan").focus();
+                    });
+                    return false;
                 }
             });
         });
-
-        $("#FormTambahRelawan").submit(function(){
-            var nama_relawan = $("#nama_relawan").val();
-            var no_hp_relawan = $("#no_hp_relawan").val();
-            var foto_relawan = $("#FormTambahRelawan").find("#foto_relawan").val();
-            var ktp_relawan = $("#FormTambahRelawan").find("#ktp_relawan").val();
-            if(nama_relawan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Nama Lengkap Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#nama_relawan").focus();
-                  });
-                return false;
-            } else if (no_hp_relawan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'No. HP Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#no_hp_relawan").focus();
-                  });
-                return false;
-            } else if (foto_relawan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'Foto Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#foto_relawan").focus();
-                  });
-                return false;
-            } else if (ktp_relawan==""){
-                Swal.fire({
-                    title: 'Warning!',
-                    text: 'KTP Harus Diisi',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                  }).then(()=> {
-                      $("#ktp_relawan").focus();
-                  });
-                return false;
-            }
-        });
-    });
-</script>
+    </script>
 @endpush
